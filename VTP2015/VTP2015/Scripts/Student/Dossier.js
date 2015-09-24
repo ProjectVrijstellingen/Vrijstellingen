@@ -43,7 +43,7 @@ function drag(ev) {
 
 function changed(partimdetail) {
     clearTimeout(timer);
-    $(partimdetail).find("#status").text("Saving...");
+    $(partimdetail).find("#status").text("wachten...");
     var cons = false;
     $.each(partimdetails, function() {
         if ($(this).attr("id") === $(partimdetail).attr("id")) cons = true;

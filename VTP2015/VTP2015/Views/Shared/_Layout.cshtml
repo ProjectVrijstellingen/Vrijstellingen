@@ -31,20 +31,20 @@
                     <li>
                         @* TODO: Misschien ENUM gebruiken ipv string *@
                         @if (im.HasRole(User.Identity.Name, "Student"))
-                        {@Html.RouteLink("Student panel", new {controller = "Student", action = "Index"})
+                        {@Html.RouteLink("Student", new {controller = "Student", action = "Index"})
                         }
                     </li>
                     <li>
                         @if (im.HasRole(User.Identity.Name, "Docent"))
-                        {@Html.RouteLink("Docent panel", new { controller = "Docent", action = "Index" })}
+                        {@Html.RouteLink("Docent", new { controller = "Docent", action = "Index" })}
                     </li>
                     <li>
                         @if (im.HasRole(User.Identity.Name, "TrajectBegeleider"))
-                        {@Html.RouteLink("Traject begeleider panel", new { controller = "TrajectBegeleider", action = "Index" })}
+                        {@Html.RouteLink("Traject begeleider", new { controller = "TrajectBegeleider", action = "Index" })}
                     </li>
                     <li>                        
                         @if (im.HasRole(User.Identity.Name, "Admin"))
-                        {@Html.RouteLink("Admin panel", new { controller = "Admin", action = "Index" })}
+                        {@Html.RouteLink("Admin", new { controller = "Admin", action = "Index" })}
                     </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -59,7 +59,7 @@
             <hr />
             <footer>
                 <p>&copy; @DateTime.Now.Year - Vrijstellingen / Trajecten tool Howest</p>
-                <p>By Joachim, Sam, Tiem & Toon</p>
+                <p>Door Joachim, Sam, Tiem & Toon</p>
             </footer>
         }
     </div>

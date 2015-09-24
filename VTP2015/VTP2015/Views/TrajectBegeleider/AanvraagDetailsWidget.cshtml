@@ -11,7 +11,7 @@
         @foreach (var aanvraag in Model)
         {
             <div id="aanvraag-@getoondeAanvraagId" class="aanvraag hide" data-dossierid="@aanvraag.DossierId" data-aanvraagid="@aanvraag.AanvraagId">
-                <button class="btn btn-danger herinnering">Poke docent</button>
+                <button class="btn btn-danger herinnering">Por docent</button>
                 <p>@aanvraag.PartimInformatie.Module.Naam - @aanvraag.PartimInformatie.Partim.Naam</p>
                 <label for="argumentatie" class="control-label">Argumentatie:</label>
                 <textarea id="argumentatie" class="form-control" readonly="">@aanvraag.Argumentatie</textarea>

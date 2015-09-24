@@ -223,7 +223,7 @@ namespace VTP2015.Controllers
                 Bewijzen = bewijzen
             };
 
-            return Content(!_aanvraagRepository.SyncAanvraagInDossier(aanvraag) ? "Don't cheat!" : "Saved!");
+            return Content(!_aanvraagRepository.SyncAanvraagInDossier(aanvraag) ? "Fout!" : "Opgeslaan!");
 
             //if (!_mailRepository.EmailExists(aanvraag.PartimInformatie.Docent.Email))
             //{
