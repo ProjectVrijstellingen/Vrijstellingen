@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using VTP2015.DataAccess.Bamaflex;
 
@@ -20,11 +21,6 @@ namespace VTP2015.Repositories.Remote_Services
         public string GetModuduleNameBySuperCode(string supercode)
         {
             return _client.GetPartimInformatie(supercode)[0].Module.Naam;
-        }
-
-        public IEnumerable<PartimInformatie> GetPartimInformatieList(string studentId, string academieJaar)
-        {
-            return _client.GetStudentTraject(studentId.Split('|')[0], academieJaar).Partims;
         }
 
         public string GetOpleidingByStudentId(string id)
@@ -58,6 +54,21 @@ namespace VTP2015.Repositories.Remote_Services
             return "docent@howest.be";
             // doesnt work
             return _client.GetDocentenByOpleidingsOnderdeel(superCode)[0];
+        }
+
+        IEnumerable<Entities.Opleiding> IBamaflexRepository.GetOpleidingen()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICollection<OpleidingsProgramma> GetKeuzeTrajecten(Entities.Opleiding opleiding)
+        {
+            return _client.GetOpleidingsprogrammaByOpleidingscode(opleiding.code).KeuzeTrajecten;
+        }
+
+        public PartimInformatie GetPartimInformationBySupercode(string supercode)
+        {
+            return _client.GetPartimInformatie(supercode)[0];
         }
     }
 }

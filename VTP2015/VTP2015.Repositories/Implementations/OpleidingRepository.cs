@@ -31,7 +31,7 @@ namespace VTP2015.Repositories.Implementations
         public IQueryable<Opleiding> GetOpleidingen()
         {
             if(!_genericRepository.GetAll().Any()) SyncOpleidingen();
-            return _genericRepository.AsQueryable(o => o.OpleidingId > 0);
+            return _genericRepository.GetAll();
         }
 
         private void SyncOpleidingen()
@@ -39,8 +39,8 @@ namespace VTP2015.Repositories.Implementations
             var opleidingen = _bamaflexRepository.GetOpleidingen();
             foreach (var entity in opleidingen.Select(opleiding => new Opleiding
             {
-                OpleidingId = Convert.ToInt32(opleiding.Id),
-                Naam = opleiding.Naam
+                code = opleiding.code,
+                Name = opleiding.Name
             }))
             {
                 _genericRepository.Insert(entity);

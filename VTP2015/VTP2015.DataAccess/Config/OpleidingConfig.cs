@@ -8,11 +8,11 @@ namespace VTP2015.DataAccess.Config
         public OpleidingConfig()
         {
             // Primary Key
-            HasKey(t => t.OpleidingId);
+            HasKey(t => t.code);
 
             // Properties
             ToTable("Opleidingen");
-            Property(t => t.Naam).HasMaxLength(255).IsRequired();
+            Property(t => t.Name).HasMaxLength(255).IsRequired();
 
             // Relationships
 

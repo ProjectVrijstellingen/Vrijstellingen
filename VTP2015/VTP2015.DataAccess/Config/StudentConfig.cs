@@ -23,14 +23,8 @@ namespace VTP2015.DataAccess.Config
                 .WithMany(t => t.Studenten)
                 .HasForeignKey(d => d.OpleidingId);
 
-            HasMany(t => t.PartimInformatie)
-                .WithMany(t => t.Studenten)
-                .Map(m =>
-                {
-                    m.ToTable("StudentPartimInformatie");
-                    m.MapLeftKey("StudentId");
-                    m.MapRightKey("SuperCode");
-                });
+            HasRequired(t => t.KeuzeTraject)
+                .WithMany(t => t.Studenten);
         }
     }
 }

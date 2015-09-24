@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Aanvraag.cs" />
     <Compile Include="Feedback.cs" />
+    <Compile Include="KeuzeTraject.cs" />
     <Compile Include="TrajectBegeleider.cs" />
     <Compile Include="Bewijs.cs" />
     <Compile Include="Docent.cs" />

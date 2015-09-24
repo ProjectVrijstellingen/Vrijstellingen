@@ -32,6 +32,8 @@ namespace VTP2015.Repositories.Implementations
         {
             return _db.Context.Studenten
                 .Where(s => s.Email == email)
+                .Select(s => s.Opleiding)
+                .SelectMany(s => s.KeuzeTrajecten)
                 .SelectMany(s => s.PartimInformatie)
                 .Except(GetAangevraagdePartims(email, dossierId));
         }
@@ -41,80 +43,68 @@ namespace VTP2015.Repositories.Implementations
             return _genericRepository.AsQueryable(p => p.SuperCode == superCode).First();
         }
 
-        public bool SyncStudentPartims(string email, string academieJaar)
+        public bool SyncStudentPartims(string email, string academicYear)
         {
-            if (_db.Context.Studenten.Where(s => s.Email == email).SelectMany(s => s.Dossiers).Any(d => d.AcademieJaar == academieJaar)) return false;
+            if (_db.Context.Studenten.Where(s => s.Email == email).SelectMany(s => s.Dossiers).Any(d => d.AcademieJaar == academicYear)) return false;
             var student = _db.Context.Studenten.First(x => x.Email == email);
-            var bamaflexInformatie = _bamaflexRepository.GetPartimInformatieList(student.StudentId, academieJaar);
-
-            foreach (var partimInformatie in bamaflexInformatie.Where(partimInformatie => !IsStudentLinkedToPartim(partimInformatie, student)))
+            if (!IsOpleidingCached(student.Opleiding, academicYear))
             {
-                if (IsPartimCached(partimInformatie, student))
+                var keuzeTrajecten = _bamaflexRepository.GetKeuzeTrajecten(student.Opleiding);
+                foreach(var keuzeTraject in keuzeTrajecten)
                 {
-                    var informatie = partimInformatie;
-                    student.PartimInformatie.Add(_genericRepository.AsQueryable(p => p.SuperCode == informatie.Supercode.Supercode1).First());
-                    continue;
-                }
-                
-                var partim = new PartimInformatie
-                {
-                    SuperCode = partimInformatie.Supercode.Supercode1,
-                    Docent = _db.Context.Docenten.First(d => d.Email == "docent@howest.be")
-                };
+                    var traject = _db.Context.KeuzeTraject.Add(
+                        new KeuzeTraject
+                        {
+                            Name = keuzeTraject.Naam
+                        }
+                        );
+                    _db.Context.Opleidingen.Find(student.Opleiding).KeuzeTrajecten.Add(traject);
+                    foreach (var supercode in keuzeTraject.Modules.SelectMany(x => x.Partims).Select(x => x.Supercode))
+                    {
+                        var partimInformation = _bamaflexRepository.GetPartimInformationBySupercode(supercode);
+                        var partimInfo = new PartimInformatie
+                        {
+                            SuperCode = partimInformation.Supercode.Supercode1,
+                            Docent = _db.Context.Docenten.First(d => d.Email == "docent@howest.be")//Needs real input!!!
+                        };
 
-                if (student.PartimInformatie.Any(m => m.Partim.PartimId == partimInformatie.Partim.Id))
-                {
-                    partim.Partim = student.PartimInformatie
-                        .Select(p => p.Partim)
-                        .First(m => m.PartimId == partimInformatie.Partim.Id);
-                }
-                else if (_db.Context.Partims.Any(p => p.PartimId == partimInformatie.Partim.Id))
-                {
-                    partim.Partim = _db.Context.Partims.First(m => m.PartimId == partimInformatie.Partim.Id);
-                }
-                else
-                {
-                    partim.Partim = new Partim { PartimId = partimInformatie.Partim.Id, Naam = partimInformatie.Partim.Naam };
+                        if (_db.Context.Partims.Any(p => p.PartimId == partimInformation.Partim.Id))
+                        {
+                            partimInfo.Partim = _db.Context.Partims.First(m => m.PartimId == partimInformation.Partim.Id);
+                        }
+                        else
+                        {
+                            partimInfo.Partim = new Partim { PartimId = partimInformation.Partim.Id, Naam = partimInformation.Partim.Naam };
 
-                }
+                        }
 
-                if (student.PartimInformatie.Any(m => m.Module.ModuleId == partimInformatie.Module.Id))
-                {
-                    partim.Module = student.PartimInformatie
-                        .Select(p => p.Module)
-                        .First(m => m.ModuleId == partimInformatie.Module.Id);
-                }
-                else if (_db.Context.Modules.Any(m => m.ModuleId == partimInformatie.Module.Id))
-                {
-                    partim.Module = _db.Context.Modules.First(m => m.ModuleId == partimInformatie.Module.Id);
-                }
-                else
-                {
-                    partim.Module = new Module { ModuleId = partimInformatie.Module.Id, Naam = partimInformatie.Module.Naam };
+                        if (_db.Context.Modules.Any(m => m.ModuleId == partimInformation.Module.Id))
+                        {
+                            partimInfo.Module = _db.Context.Modules.First(m => m.ModuleId == partimInformation.Module.Id);
+                        }
+                        else
+                        {
+                            partimInfo.Module = new Module { ModuleId = partimInformation.Module.Id, Naam = partimInformation.Module.Naam };
 
+                        }
+                        traject.PartimInformatie.Add(partimInfo);
+                        _genericRepository.Insert(partimInfo);
+                    }
                 }
-
-                student.PartimInformatie.Add(partim);
             }
 
             _db.Context.SaveChanges();
             return true;
         }
 
-        private bool IsPartimCached(DataAccess.Bamaflex.PartimInformatie partim, Student student)
+        private bool IsOpleidingCached(Opleiding opleiding, string academicYear)
         {
-            return _genericRepository.AsQueryable(p => p.SuperCode == partim.Supercode.Supercode1).Any() ||
-                student.PartimInformatie.Any(p => p.SuperCode == partim.Supercode.Supercode1);
+            return _db.Context.Opleidingen.Find(opleiding).AcademicYear == academicYear;
         }
 
-        private bool IsStudentLinkedToPartim(DataAccess.Bamaflex.PartimInformatie partim, Student student)
+        private bool IsPartimCached(DataAccess.Bamaflex.PartimInformatie partim, Student student)
         {
-            return _db.Context.Studenten
-                .Where(s => s.StudentId == student.StudentId)
-                .SelectMany(s => s.PartimInformatie)
-                .Any(p => p.SuperCode == partim.Supercode.Supercode1) ||
-                student.PartimInformatie
-                .Any(p => p.SuperCode == partim.Supercode.Supercode1);
+            return student.Opleiding.KeuzeTrajecten.SelectMany(x => x.PartimInformatie).Any(p => p.SuperCode == partim.Supercode.Supercode1);
         }
     }
 }

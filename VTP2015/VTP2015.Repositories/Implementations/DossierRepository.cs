@@ -55,7 +55,7 @@ namespace VTP2015.Repositories.Implementations
 
         public IQueryable<Dossier> GetFromBegeleider(string email, string academiejaar)
         {
-            var opleidingId = _db.Context.TrajectBegeleiders.First(t => t.Email == email).Opleiding.OpleidingId;
+            var opleidingId = _db.Context.TrajectBegeleiders.First(t => t.Email == email).Opleiding.code;
             return
                 _genericRepository.AsQueryable(
                     d => d.Aanvragen.Count > 0 && d.AcademieJaar == academiejaar && d.Student.OpleidingId == opleidingId);

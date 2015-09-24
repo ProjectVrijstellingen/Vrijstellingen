@@ -60,7 +60,7 @@ namespace VTP2015.Controllers
         public ActionResult ChangeOpleiding(string opleiding)
         {
             //TODO: 1 repository call
-            _loginRepository.ChangeOpleiding(User.Identity.Name, _opleidingRepository.GetOpleidingen().First(x => x.Naam == opleiding));
+            _loginRepository.ChangeOpleiding(User.Identity.Name, _opleidingRepository.GetOpleidingen().First(x => x.Name == opleiding));
             return Json("Changed!");
         }
 

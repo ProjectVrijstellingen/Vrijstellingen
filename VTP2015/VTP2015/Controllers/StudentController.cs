@@ -195,7 +195,8 @@ namespace VTP2015.Controllers
             {
                 StudentId = studentId,
                 AanmaakDatum = DateTime.Now,
-                AfstudeerRichting = "",
+                Opleiding = _studentRepository.GetByEmail(User.Identity.Name).Opleiding,
+                KeuzeTraject = null,
                 Editable = true,
                 AcademieJaar = academieJaar
             };

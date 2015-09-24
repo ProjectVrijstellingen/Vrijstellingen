@@ -12,7 +12,7 @@ namespace VTP2015.Entities
         public virtual Partim Partim { get; set; }
         public virtual Module Module { get; set; }
         public virtual Docent Docent { get; set; }
-        public virtual ICollection<Student> Studenten { get; set; }
+        public virtual KeuzeTraject KeuzeTraject { get; set; }
         public virtual ICollection<Aanvraag> Aanvragen { get; set; }
 
     }
