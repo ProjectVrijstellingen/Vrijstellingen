@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
+using VTP2015.ServiceLayer.Interfaces;
 
-namespace VTP2015.ServiceLayer
+namespace VTP2015.ServiceLayer.Implementations
 {
-    class LecturerFacade : ILecturerFacade
+    public class LecturerFacade : ILecturerFacade
     {
         private readonly Repository<Request> _requestRepository;
         private readonly Repository<Lecturer> _lecturerRepository;

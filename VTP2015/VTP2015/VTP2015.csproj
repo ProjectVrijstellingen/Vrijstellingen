@@ -185,6 +185,7 @@
     <Compile Include="Config\IDefaultConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
+    <Compile Include="Infrastructure\Registries\ServiceLayerRegistry.cs" />
     <Compile Include="Validation\DayMonthValidation.cs" />
     <Compile Include="Validation\FileValidation.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />

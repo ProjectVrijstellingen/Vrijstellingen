@@ -2,7 +2,7 @@
 using VTP2015.DataAccess.Identity;
 using VTP2015.Entities;
 
-namespace VTP2015.ServiceLayer
+namespace VTP2015.ServiceLayer.Interfaces
 {
     public interface IAuthenticationFacade
     {

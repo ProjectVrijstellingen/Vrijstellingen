@@ -1,13 +1,13 @@
 using System.IO;
 using System.Linq;
-using VTP2015.DataAccess.Identity;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
+using VTP2015.ServiceLayer.Interfaces;
 using File = VTP2015.Entities.File;
 
-namespace VTP2015.ServiceLayer
+namespace VTP2015.ServiceLayer.Implementations
 {
-    class StudentFacade : IStudentFacade
+    public class StudentFacade : IStudentFacade
     {
         private readonly Repository<Student> _studentRepository;
         private readonly Repository<Evidence> _evidenceRepository;

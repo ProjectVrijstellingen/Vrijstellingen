@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
+using VTP2015.ServiceLayer.Interfaces;
 
-namespace VTP2015.ServiceLayer
+namespace VTP2015.ServiceLayer.Implementations
 {
-    class CounselorFacade : ICounselorFacade
+    public class CounselorFacade : ICounselorFacade
     {
         private readonly Repository<Request> _requestRepository;
         private readonly Repository<Student> _studentRepository;

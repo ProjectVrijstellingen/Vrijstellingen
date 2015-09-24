@@ -6,6 +6,7 @@ using Microsoft.Owin.Security;
 using System.IO;
 using VTP2015.Identity;
 using VTP2015.ServiceLayer;
+using VTP2015.ServiceLayer.Interfaces;
 using VTP2015.ViewModels.Authentication;
 
 namespace VTP2015.Controllers

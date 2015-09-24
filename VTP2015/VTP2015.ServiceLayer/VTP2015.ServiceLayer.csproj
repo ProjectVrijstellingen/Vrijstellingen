@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VTP2015.ServiceLayer</RootNamespace>
     <AssemblyName>VTP2015.ServiceLayer</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,15 +51,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CounselorFacade.cs" />
-    <Compile Include="FeedbackFacade.cs" />
-    <Compile Include="IAuthenticationFacade.cs" />
-    <Compile Include="ICounselorFacade.cs" />
-    <Compile Include="IFeedbackFacade.cs" />
-    <Compile Include="ILecturerFacade.cs" />
-    <Compile Include="IStudentFacade.cs" />
-    <Compile Include="LecturerFacade.cs" />
-    <Compile Include="StudentFacade.cs" />
+    <Compile Include="Implementations\AuthenticationFacade.cs" />
+    <Compile Include="Implementations\CounselorFacade.cs" />
+    <Compile Include="Implementations\FeedbackFacade.cs" />
+    <Compile Include="Implementations\LecturerFacade.cs" />
+    <Compile Include="Implementations\StudentFacade.cs" />
+    <Compile Include="Interfaces\IAuthenticationFacade.cs" />
+    <Compile Include="Interfaces\ICounselorFacade.cs" />
+    <Compile Include="Interfaces\IFeedbackFacade.cs" />
+    <Compile Include="Interfaces\ILecturerFacade.cs" />
+    <Compile Include="Interfaces\IStudentFacade.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VTP2015.DataAccess\VTP2015.DataAccess.csproj">
@@ -70,6 +72,7 @@
       <Name>VTP2015.Entities</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

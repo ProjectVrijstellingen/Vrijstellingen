@@ -1,10 +1,11 @@
 using System.Linq;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
+using VTP2015.ServiceLayer.Interfaces;
 
-namespace VTP2015.ServiceLayer
+namespace VTP2015.ServiceLayer.Implementations
 {
-    class FeedbackFacade : IFeedbackFacade
+    public class FeedbackFacade : IFeedbackFacade
     {
         private readonly Repository<Student> _studentRepository;
         private readonly Repository<Feedback> _feedbackRepository;
