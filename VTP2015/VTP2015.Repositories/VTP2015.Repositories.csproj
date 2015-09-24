@@ -59,6 +59,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementations\AanvraagRepository.cs" />
+    <Compile Include="Implementations\BewijsRepository.cs" />
+    <Compile Include="Implementations\DocentRepository.cs" />
+    <Compile Include="Implementations\DossierRepository.cs" />
+    <Compile Include="Implementations\FeedbackRepository.cs" />
+    <Compile Include="Implementations\GenericRepository.cs" />
+    <Compile Include="Implementations\LoginRepository.cs" />
+    <Compile Include="Implementations\OpleidingRepository.cs" />
+    <Compile Include="Implementations\PartimInformatieRepository.cs" />
+    <Compile Include="Implementations\StudentRepository.cs" />
     <Compile Include="Interfaces\IAanvraagRepository.cs" />
     <Compile Include="Interfaces\IBewijsRepository.cs" />
     <Compile Include="Interfaces\IDocentRepository.cs" />
