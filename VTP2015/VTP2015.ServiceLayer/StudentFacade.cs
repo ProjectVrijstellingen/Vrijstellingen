@@ -1,6 +1,9 @@
+using System.IO;
 using System.Linq;
+using VTP2015.DataAccess.Identity;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
+using File = VTP2015.Entities.File;
 
 namespace VTP2015.ServiceLayer
 {
@@ -50,9 +53,20 @@ namespace VTP2015.ServiceLayer
                     .Any(d => d.Id == fileId);
         }
 
-        public void DeleteEvidence(Evidence evidence)
+        public bool DeleteEvidence(int evidenceId, string mapPath)
         {
+            var evidence = _evidenceRepository.GetById(evidenceId);
+
+            var path = Path.Combine(mapPath, evidence.Path);
+
+            if (!System.IO.File.Exists(path))
+                return false;
+
+            System.IO.File.Delete(path);
+
             _evidenceRepository.Delete(evidence);
+
+            return true;
         }
 
         public IQueryable<File> GetFilesByStudentEmail(string email)

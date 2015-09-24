@@ -8,7 +8,7 @@ namespace VTP2015.DataAccess.Config
         public BewijsConfig()
         {
             // Primary Key
-            HasKey(t => t.EvidenceId);
+            HasKey(t => t.Id);
 
             // Properties
             ToTable("Evidence");

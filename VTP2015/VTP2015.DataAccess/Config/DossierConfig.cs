@@ -8,11 +8,11 @@ namespace VTP2015.DataAccess.Config
         public DossierConfig()
         {
             // Primary Key
-            HasKey(t => t.FileId);
+            HasKey(t => t.Id);
 
             // Properties
             ToTable("Files");
-            Property(t => t.AanmaakDatum).IsRequired();
+            Property(t => t.DateCreated).IsRequired();
             Property(t => t.AcademicYear).HasMaxLength(8).IsRequired();
             Property(t => t.Editable).IsRequired();
 

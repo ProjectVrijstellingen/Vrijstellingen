@@ -14,7 +14,7 @@ namespace VTP2015.DataAccess.Config
         public DocentConfig()
         {
             // Primary Key
-            HasKey(t => t.LecturerId);
+            HasKey(t => t.Id);
 
             // Properties
             ToTable("Docenten");

@@ -8,7 +8,7 @@ namespace VTP2015.DataAccess.Config
         public FeedbackConfig()
         {
             // Primary key
-            HasKey(t => t.FeedbackId);
+            HasKey(t => t.Id);
 
             // Properties
             Property(t => t.Text).IsRequired();

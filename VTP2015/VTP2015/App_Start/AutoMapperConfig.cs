@@ -19,7 +19,7 @@ namespace VTP2015
             Mapper.CreateMap<Evidence, Student.BewijsListViewModel>();
             Mapper.CreateMap<PartimInformation, Student.PartimViewModel>()
                 .ForMember(m => m.ModuleId,
-                    opt => opt.MapFrom(i => i.Module.ModuleId))
+                    opt => opt.MapFrom(i => i.Module.Id))
                 .ForMember(m => m.ModuleNaam,
                     opt => opt.MapFrom(i => i.Module.Name))
                 .ForMember(m => m.PartimNaam,
@@ -31,7 +31,7 @@ namespace VTP2015
                 .ForMember(m => m.PercentageVoltooid,
                     opt => opt.MapFrom(i => i.Requests.Count != 0 ? (int)((i.Requests.Count(a => a.Status != 0) / (i.Requests.Count * 1.0)) * 100) : 0));
             Mapper.CreateMap<Request, TrajectBegeleider.AanvraagDetailsViewModel>();
-            Mapper.CreateMap<Opleiding, TrajectBegeleider.OpleidingViewModel>();
+            Mapper.CreateMap<Education, TrajectBegeleider.OpleidingViewModel>();
 
 
             //Lecturer

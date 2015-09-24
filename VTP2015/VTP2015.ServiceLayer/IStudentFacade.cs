@@ -9,7 +9,7 @@ namespace VTP2015.ServiceLayer
         void InsertEvidence(Evidence evidence);
         bool IsEvidenceFromStudent(string email);
         bool IsRequestFromStudent(int fileId, string supercode, string email);
-        void DeleteEvidence(Evidence evidenceId);
+        bool DeleteEvidence(int evidenceId, string mapPath);
         IQueryable<File> GetFilesByStudentEmail(string email);
         IQueryable<Evidence> GetEvidenceByStudentEmail(string email);
         bool IsFileFromStudent(string email, int fileId);

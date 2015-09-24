@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FCE6CC8C-02F0-4636-8920-5569B3A33CE0}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VTP2015.ServiceLayer</RootNamespace>
     <AssemblyName>VTP2015.ServiceLayer</AssemblyName>
@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
@@ -49,6 +52,7 @@
   <ItemGroup>
     <Compile Include="CounselorFacade.cs" />
     <Compile Include="FeedbackFacade.cs" />
+    <Compile Include="IAuthenticationFacade.cs" />
     <Compile Include="ICounselorFacade.cs" />
     <Compile Include="IFeedbackFacade.cs" />
     <Compile Include="ILecturerFacade.cs" />

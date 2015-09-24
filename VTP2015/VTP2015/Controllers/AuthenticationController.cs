@@ -2,12 +2,10 @@
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using System.IO;
 using VTP2015.Identity;
-using VTP2015.Repositories.Interfaces;
-using VTP2015.Repositories.Remote_Services;
+using VTP2015.ServiceLayer;
 using VTP2015.ViewModels.Authentication;
 
 namespace VTP2015.Controllers
@@ -15,21 +13,12 @@ namespace VTP2015.Controllers
     [Authorize]
     public class AuthenticationController : Controller
     {
-        private readonly ILoginRepository _loginRepository;
-        private readonly IIdentityRepository _identityRepository;
-        private readonly IStudentRepository _studentRepository;
+        private readonly IAuthenticationFacade _authenticationFacade;
 
-        public AuthenticationController(ILoginRepository loginRepository, IIdentityRepository identityRepository, IStudentRepository studentRepository)
-            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
-        {
-            _loginRepository = loginRepository;
-            _identityRepository = identityRepository;
-            _studentRepository = studentRepository;
-        }
-
-        public AuthenticationController(UserManager<ApplicationUser> userManager)
+        public AuthenticationController(UserManager<ApplicationUser> userManager, IAuthenticationFacade authenticationFacade)
         {
             UserManager = userManager;
+            _authenticationFacade = authenticationFacade;
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
@@ -60,7 +49,7 @@ namespace VTP2015.Controllers
             var user = await UserManager.FindAsync(model.Email, model.Password);
             if (user == null)
             {
-                if (!_identityRepository.AuthenticateUserByEmail(model.Email, model.Password))
+                if (!_authenticationFacade.AuthenticateUserByEmail(model.Email, model.Password))
                 {
                     ModelState.AddModelError("", "Invalid username or password.");
                     return View(model);
@@ -73,7 +62,7 @@ namespace VTP2015.Controllers
                 }
                 if (GetRole(model.Email) == "Student")
                 {
-                    _studentRepository.SyncStudentByUser(_identityRepository.GetUserByUsername(model.Email));
+                    _authenticationFacade.SyncStudentByUser(_authenticationFacade.GetUserByUsername(model.Email));
                     var name = model.Email.Split('@')[0];
                     var path = Server.MapPath("/bewijzen/" + name);
                     Directory.CreateDirectory(path);
@@ -121,10 +110,7 @@ namespace VTP2015.Controllers
 
         #region Helpers
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get { return HttpContext.GetOwinContext().Authentication; }
-        }
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
         private async Task SignInAsync(ApplicationUser user, bool isPersistent)
         {
@@ -143,7 +129,7 @@ namespace VTP2015.Controllers
         private string GetRole(string email){
             if (email.Contains("@howest.be"))
             {
-                return _loginRepository.IsBegeleider(email) ? "Counselor" : "Lecturer";
+                return _authenticationFacade.IsBegeleider(email) ? "Counselor" : "Lecturer";
             }
             return email.Contains("@student.howest.be") ? "Student" : "Authentication";
         }

@@ -19,7 +19,7 @@ namespace VTP2015.DataAccess
         public DbSet<File> Dossiers { get; set; }
         public DbSet<Student> Studenten { get; set; }
         public DbSet<Counselor> TrajectBegeleiders { get; set; }
-        public DbSet<Opleiding> Opleidingen { get; set; }
+        public DbSet<Education> Opleidingen { get; set; }
         public DbSet<Partim> Partims { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Lecturer> Docenten { get; set; }

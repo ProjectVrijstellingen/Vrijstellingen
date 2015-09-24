@@ -9,7 +9,7 @@ namespace VTP2015.DataAccess.Config
         public ModuleConfig()
         {
             // Primary Key
-            HasKey(t => t.ModuleId);
+            HasKey(t => t.Id);
 
             // Properties
             ToTable("Modules");

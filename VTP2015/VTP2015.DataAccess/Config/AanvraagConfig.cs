@@ -8,7 +8,7 @@ namespace VTP2015.DataAccess.Config
         public AanvraagConfig()
         {
             // Primary Key
-            HasKey(t => t.RequestId);
+            HasKey(t => t.Id);
 
             // Properties
             ToTable("Requests");
@@ -31,7 +31,7 @@ namespace VTP2015.DataAccess.Config
                 .WithMany(t => t.Requests)
                 .Map(m =>
                 {
-                    m.ToTable("BewijsAanvraag");
+                    m.ToTable("EvidenceRequest");
                     m.MapLeftKey("RequestId");
                     m.MapRightKey("EvidenceId");
                 });

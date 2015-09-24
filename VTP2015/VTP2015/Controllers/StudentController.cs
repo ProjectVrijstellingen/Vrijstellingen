@@ -74,13 +74,11 @@ namespace VTP2015.Controllers
             if (!_studentFacade.IsEvidenceFromStudent(User.Identity.Name))
                 return Content("bewijs bestaat niet voor gebruiker!");
 
-            var name = User.Identity.Name.Split('@')[0];
-            var path = Path.Combine(Request.MapPath("/bewijzen/" + name), _studentFacade.DeleteEvidence(bewijsId));
+            var mapPath = Request.MapPath("/bewijzen/" + User.Identity.Name.Split('@')[0]);
 
-            if (!System.IO.File.Exists(path)) return Content("gegeven bestand kon niet verwijdert worden!");
-
-            System.IO.File.Delete(path);
-            return Content("Voltooid!");
+            return Content(!_studentFacade.DeleteEvidence(bewijsId, mapPath)
+                ? "gegeven bestand kon niet verwijdert worden!"
+                : "Voltooid!");
         }
 
         [Route("DossierWidget")]

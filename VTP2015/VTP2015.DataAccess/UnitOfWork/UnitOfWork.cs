@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.UnitOfWork
 {
@@ -51,12 +52,12 @@ namespace VTP2015.DataAccess.UnitOfWork
 
             var type = typeof(T).Name;
 
-            if (_repositories.ContainsKey(type)) return (Repository<t>) _repositories[type];
+            if (_repositories.ContainsKey(type)) return (Repository<T>) _repositories[type];
 
             var repositoryType = typeof(Repository<>);
             var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), _context);
             _repositories.Add(type, repositoryInstance);
-            return (Repository<t>)_repositories[type];
+            return (Repository<T>)_repositories[type];
         }
     }
 }

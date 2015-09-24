@@ -8,15 +8,15 @@ namespace VTP2015.DataAccess.Config
         public TrajectBegeleiderConfig()
         {
             // Primary Key
-            HasKey(t => t.CounselorId);
+            HasKey(t => t.Id);
 
             // Properties
             ToTable("TrajectBegeleiders");
             Property(t => t.Email).HasMaxLength(255).IsRequired();
 
             // Relationships
-            HasOptional(t => t.Opleiding)
-                .WithOptionalDependent(t => t.TrajectBegeleider);
+            HasOptional(t => t.Education)
+                .WithOptionalDependent(t => t.Counselor);
 
         }
     }
