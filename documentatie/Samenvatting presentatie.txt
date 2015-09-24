@@ -1,0 +1,29 @@
+BASIS
+
+EVK-Aanvraagformulier:
+	Tablad bewijsstukken: 	opleidingsnummer komt overeen met de ngevulde opleidin(en)
+	Tablad:Aanvraag: 		Een opleidingsonderdeel kan een partim OF eenmodule zijn (beide), in het formulier waar "opleidingsonderdeel staat moet de naam "module"gebruikt worden
+							Voor de naam "partim" ook de naam "vak vermelden"
+							
+							Beslissing en motivatie kan niet worden ingevuld door de student enkel door de coordinator
+							"Actualisatie" betekent uitstelling van beslissing-- (is niet handig op papieren versie, "pending" is nutteloos op een formulier
+							Motivaties kunnen vermeld worden bij zowel goedgekeurd of afgekeurd, deze motivaties zijn vaslgelegd en hoeven door ons NIET aangepast worden, sommige motivaties kunnen slechts bij afgekeurd 
+							of goedgekeurd worden
+							
+							
+							Database met partims enzo hiervoormogen we niet gebruik maken van ibamaflex alleen (caching, copying, ...) (werken met lokale database en syncen om de zoveel tijd)
+					-->>	Trajectbegeleiding is een idee voor de toekomst of als we snel zijn
+							
+	General flow:			Formulier komt toe bij de trajectbegeleider (Olivier Sourie bij ons), 
+							de aanvraag wordt dan doorgestuurd naar de collega die les geeft ver het betreffende vak
+							(Studieomvang en vrijstelling inhoud MOETEN minimaal 80% overeenkomen om goedgekeurd te worden.)
+							Rapport wordt ingevuld
+							Student komt op afspraak en ondertekent het formulier
+							
+							Met Active directorie kunnen we via services de authenticatie doen (Kerberos) (via HTTPS)
+							
+							
+TECHNISCH					We mogen PHP/ASP/Javascrip gebruiken (alles mag)					
+							Een view voor de student, voor de coordinator en voor de betreffende leerkrachten
+							
+ADMINISTRATIEF				Jonas Maes in CC zetten voor belangrijke mails ivm het project

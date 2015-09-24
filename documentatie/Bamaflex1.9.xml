@@ -1,0 +1,2443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://services.howest.be/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://services.howest.be/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">De service levert data uit de Bamaflex databank.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://services.howest.be/">
+      <s:element name="GetCampussen">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetCampussenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCampussenResult" type="tns:ArrayOfCampus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCampus">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Campus" nillable="true" type="tns:Campus" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Campus">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="AcademieJaar" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Naam" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Straat" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nr" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Bus" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HoofdPostNr" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HoofdGemeente" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeelPostNr" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeelGemeente" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Telefoon" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Fax" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Website" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetCampussenByAcademieJaar">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="academieJaar" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCampussenByAcademieJaarResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCampussenByAcademieJaarResult" type="tns:ArrayOfCampus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAlleCampussen">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAlleCampussenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAlleCampussenResult" type="tns:ArrayOfCampus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepartementen">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetDepartementenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDepartementenResult" type="tns:ArrayOfDepartement" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDepartement">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Departement" nillable="true" type="tns:Departement" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Departement">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Naam" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AcademieJaar" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Opleidingen" type="tns:ArrayOfOpleiding" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfOpleiding">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Opleiding" nillable="true" type="tns:Opleiding" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Opleiding">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Item">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="OpleidingsOnderdelen" type="tns:ArrayOfOpleidingsOnderdeel" />
+              <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="DepartementsNaam" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="DepartementsCode" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Item">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Naam" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="OpleidingsOnderdeel">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Item">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="p_rapond" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfOpleidingsOnderdeel">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="OpleidingsOnderdeel" nillable="true" type="tns:OpleidingsOnderdeel" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetDepartementenByAcademieJaar">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="academieJaar" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepartementenByAcademieJaarResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDepartementenByAcademieJaarResult" type="tns:ArrayOfDepartement" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAlleDepartementen">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAlleDepartementenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAlleDepartementenResult" type="tns:ArrayOfDepartement" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepartement">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepartementResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDepartementResult" type="tns:Departement" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingen">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetOpleidingenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpleidingenResult" type="tns:ArrayOfOpleiding" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingenByAcademicYear">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="fromDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingenByAcademicYearResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpleidingenByAcademicYearResult" type="tns:ArrayOfOpleiding" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingenByAcademicYearString">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fromDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingenByAcademicYearStringResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpleidingenByAcademicYearStringResult" type="tns:ArrayOfOpleiding" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingenByDepartement">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="departement" type="tns:Departement" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingenByDepartementResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpleidingenByDepartementResult" type="tns:ArrayOfOpleiding" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleiding">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpleidingResult" type="tns:Opleiding" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingenByStudent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="student" type="tns:Student" />
+            <s:element minOccurs="0" maxOccurs="1" name="departement" type="tns:Departement" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Student">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Naam" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Voornaam" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Stamnummer" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Departementen" type="tns:ArrayOfDepartement" />
+          <s:element minOccurs="0" maxOccurs="1" name="Rijksregisternummer" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Straat" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nr" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Postcode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Gemeente" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Telefoonnummer" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Gsm" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetOpleidingenByStudentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpleidingenByStudentResult" type="tns:ArrayOfOpleiding" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingenByCampus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="campus" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingenByCampusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpleidingenByCampusResult" type="tns:ArrayOfOpleiding" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingenByDepartementCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="departementCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingenByDepartementCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpleidingenByDepartementCodeResult" type="tns:ArrayOfOpleiding" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAfstudeerrichtingen">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="opleiding" type="tns:Opleiding" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAfstudeerrichtingenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAfstudeerrichtingenResult" type="tns:ArrayOfItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="tns:Item" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetKlasgroep">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="student" type="tns:Student" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetKlasgroepResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetKlasgroepResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingsOnderdelen">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetOpleidingsOnderdelenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpleidingsOnderdelenResult" type="tns:ArrayOfOpleidingsOnderdeel" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingsOnderdelenByOpleiding">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="opleiding" type="tns:Opleiding" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingsOnderdelenByOpleidingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpleidingsOnderdelenByOpleidingResult" type="tns:ArrayOfOpleidingsOnderdeel" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingsOnderdeel">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingsOnderdeelResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpleidingsOnderdeelResult" type="tns:OpleidingsOnderdeel" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetModuleNaam">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="moduleCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetModuleNaamResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetModuleNaamResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStudentResult" type="tns:Student" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentStudietraject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentStudietrajectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStudentStudietrajectResult" type="tns:Student" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentBySourceId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="sourceIdValue" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentBySourceIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStudentBySourceIdResult" type="tns:Student" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentenByOpleidingsonderdeel">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="opleidingsonderdeel" type="tns:OpleidingsOnderdeel" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentenByOpleidingsonderdeelResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStudentenByOpleidingsonderdeelResult" type="tns:ArrayOfStudent" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfStudent">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Student" nillable="true" type="tns:Student" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetStudentenByOpleidingsonderdeelAndVrijstelling">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="opleidingsonderdeel" type="tns:OpleidingsOnderdeel" />
+            <s:element minOccurs="1" maxOccurs="1" name="includeVrijgestelden" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentenByOpleidingsonderdeelAndVrijstellingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStudentenByOpleidingsonderdeelAndVrijstellingResult" type="tns:ArrayOfStudent" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentInschrijvingsNummer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="student" type="tns:Student" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentInschrijvingsNummerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStudentInschrijvingsNummerResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentByStamnummer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="stamNummer" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentByStamnummerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStudentByStamnummerResult" type="tns:Student" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentByBarcodenummer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="barcodenummer" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentByBarcodenummerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStudentByBarcodenummerResult" type="tns:Student" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTrajectschijf">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="schooljaar" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="examenPeriodeAfkorting" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="stamNummer" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTrajectschijfResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTrajectschijfResult" type="tns:ArrayOfTrajectschijfData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfTrajectschijfData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TrajectschijfData" nillable="true" type="tns:TrajectschijfData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TrajectschijfData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Trajectschijf" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="RapondIdParent" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="RapondId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="RapondTypeId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="OpleidingsCode" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetTrajectschijfByOpleiding">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="opleidingsCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTrajectschijfByOpleidingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTrajectschijfByOpleidingResult" type="tns:ArrayOfTrajectschijfData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentTraject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="academieJaar" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentTrajectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStudentTrajectResult" type="tns:StudentTraject" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="StudentTraject">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Student" type="tns:Student" />
+          <s:element minOccurs="0" maxOccurs="1" name="Partims" type="tns:ArrayOfPartimInformatie" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPartimInformatie">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PartimInformatie" nillable="true" type="tns:PartimInformatie" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PartimInformatie">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Opleiding" type="tns:Item" />
+          <s:element minOccurs="0" maxOccurs="1" name="Module" type="tns:Item" />
+          <s:element minOccurs="0" maxOccurs="1" name="Partim" type="tns:Item" />
+          <s:element minOccurs="0" maxOccurs="1" name="Afstudeerrichting" type="tns:Item" />
+          <s:element minOccurs="0" maxOccurs="1" name="Supercode" type="tns:Supercode" />
+          <s:element minOccurs="0" maxOccurs="1" name="Semester" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Supercode">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Supercode" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetStudentStudieProgramma">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="academieJaar" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentStudieProgrammaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStudentStudieProgrammaResult" type="tns:StudieProgramma" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="StudieProgramma">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Student" type="tns:Student" />
+          <s:element minOccurs="0" maxOccurs="1" name="Modules" type="tns:ArrayOfOpleidingsProgrammaOnderdeel" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfOpleidingsProgrammaOnderdeel">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="OpleidingsProgrammaOnderdeel" nillable="true" type="tns:OpleidingsProgrammaOnderdeel" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="OpleidingsProgrammaOnderdeel">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Naam" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="OnderdeelType" type="tns:OpleidingsProgrammaOnderdeelType" />
+          <s:element minOccurs="1" maxOccurs="1" name="Studiepunten" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Semester" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Partims" type="tns:ArrayOfOpleidingsProgrammaOnderdeel" />
+          <s:element minOccurs="0" maxOccurs="1" name="Departement" type="tns:Departement" />
+          <s:element minOccurs="0" maxOccurs="1" name="Opleiding" type="tns:Opleiding" />
+          <s:element minOccurs="1" maxOccurs="1" name="StudieTijd" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Talen" type="tns:ArrayOfItem" />
+          <s:element minOccurs="0" maxOccurs="1" name="AcademieJaar" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Doelstellingen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Eindcompetenties" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Toelatingsvoorwaarden" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Begincompetenties" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ModuleTeam" type="tns:ArrayOfPersoon" />
+          <s:element minOccurs="0" maxOccurs="1" name="Inhoudsopgave" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Deelcompetenties" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Werkvormen" type="tns:ArrayOfItem" />
+          <s:element minOccurs="0" maxOccurs="1" name="Studiemateriaal" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AanbevolenLiteratuur" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Evaluatiekansen" type="tns:ArrayOfEvaluatieKans" />
+          <s:element minOccurs="0" maxOccurs="1" name="Niveau" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TweedeExamenkansMogelijk" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Afstudeerrichting" type="tns:Item" />
+          <s:element minOccurs="0" maxOccurs="1" name="Keuzetraject" type="tns:Item" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsGoedgekeurd" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Supercode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Opdracht" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="OpleidingsProgrammaOnderdeelType">
+        <s:restriction base="s:string">
+          <s:enumeration value="eOLOD" />
+          <s:enumeration value="sOlOD" />
+          <s:enumeration value="dOLOD" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfPersoon">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Persoon" nillable="true" type="tns:Persoon" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Persoon">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Naam" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Voornaam" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsCoordinator" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfEvaluatieKans">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="EvaluatieKans" nillable="true" type="tns:EvaluatieKans" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EvaluatieKans">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Examenkans" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="EvaluatieMoment" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EvaluatieVorm" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="EvaluatieProcent" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="EvaluatieOpmerking" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetStudentenByOpleidingId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="opleidingId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentenByOpleidingIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStudentenByOpleidingIdResult" type="tns:ArrayOfUser" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfUser">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="User" nillable="true" type="tns:User" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="User">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserTypeSources" type="tns:ArrayOfUserTypeSource" />
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Firstname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Lastname" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DateOfBirth" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExtraInfo1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExtraInfo2" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfUserTypeSource">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UserTypeSource" nillable="true" type="tns:UserTypeSource" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UserTypeSource">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="UserType" type="tns:UserType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Source" type="tns:Source" />
+          <s:element minOccurs="0" maxOccurs="1" name="SourceIdValue" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UserType">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Source">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileLocation" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Connectionstring" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SqlStatement" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetNieuweStudentenByAfstudeerrichting">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="afstudeerrichtingCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNieuweStudentenByAfstudeerrichtingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetNieuweStudentenByAfstudeerrichtingResult" type="tns:ArrayOfStudent" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAfstudeerCodeForStudent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="student" type="tns:Student" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAfstudeerCodeForStudentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAfstudeerCodeForStudentResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAfstudeerrichtingKeuzeoptie">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="student" type="tns:Student" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAfstudeerrichtingKeuzeoptieResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAfstudeerrichtingKeuzeoptieResult" type="tns:Item" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocentLesOpdrachten">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="academicYear" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocentLesOpdrachtenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDocentLesOpdrachtenResult" type="tns:ArrayOfDocentLesOpdracht" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDocentLesOpdracht">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DocentLesOpdracht" nillable="true" type="tns:DocentLesOpdracht" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DocentLesOpdracht">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Lesgever" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Opleiding" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Module" type="tns:Item" />
+          <s:element minOccurs="0" maxOccurs="1" name="Partim" type="tns:Item" />
+          <s:element minOccurs="0" maxOccurs="1" name="Afstudeerrichting" type="tns:Item" />
+          <s:element minOccurs="0" maxOccurs="1" name="Semester" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetDocentenByOpleidingsOnderdeel">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="supercode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDocentenByOpleidingsOnderdeelResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDocentenByOpleidingsOnderdeelResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetStudentenByPartim">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="supercode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStudentenByPartimResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStudentenByPartimResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPartimInformatie">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="supercode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPartimInformatieResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPartimInformatieResult" type="tns:ArrayOfPartimInformatie" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTrajecten">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="opleidingId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="taalId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTrajectenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTrajectenResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProgrammaVanDeeltraject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="deeltrajectId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="taalId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProgrammaVanDeeltrajectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProgrammaVanDeeltrajectResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingsprogrammaByOpleidingscode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="opleidingscode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingsprogrammaByOpleidingscodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpleidingsprogrammaByOpleidingscodeResult" type="tns:OpleidingsProgramma" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="OpleidingsProgramma">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Naam" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Omschrijving" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Afstudeerrichtingen" type="tns:ArrayOfOpleidingsProgramma" />
+          <s:element minOccurs="0" maxOccurs="1" name="KeuzeTrajecten" type="tns:ArrayOfOpleidingsProgramma" />
+          <s:element minOccurs="0" maxOccurs="1" name="Modules" type="tns:ArrayOfOpleidingsProgrammaOnderdeel" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfOpleidingsProgramma">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="OpleidingsProgramma" nillable="true" type="tns:OpleidingsProgramma" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetSimpleOpleidingsprogrammaByOpleidingscode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="opleidingscode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSimpleOpleidingsprogrammaByOpleidingscodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSimpleOpleidingsprogrammaByOpleidingscodeResult" type="tns:OpleidingsProgramma" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSimpleOpleidingsprogrammaByOpleidingscodeAndAcademicYearString">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="opleidingscode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fromDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSimpleOpleidingsprogrammaByOpleidingscodeAndAcademicYearStringResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSimpleOpleidingsprogrammaByOpleidingscodeAndAcademicYearStringResult" type="tns:OpleidingsProgramma" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingsProgrammaByAfstudeerrichting">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="opleidingsCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="afstudeerrichtingCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingsProgrammaByAfstudeerrichtingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpleidingsProgrammaByAfstudeerrichtingResult" type="tns:OpleidingsProgramma" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingsProgrammaOnderdeel">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpleidingsProgrammaOnderdeelResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpleidingsProgrammaOnderdeelResult" type="tns:OpleidingsProgrammaOnderdeel" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetContext">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="supercode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetContextResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetContextResult" type="tns:Context" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Context">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Departement" type="tns:Departement" />
+          <s:element minOccurs="0" maxOccurs="1" name="Opleiding" type="tns:Opleiding" />
+          <s:element minOccurs="0" maxOccurs="1" name="OpleidingsProgrammaOnderdeel" type="tns:OpleidingsProgrammaOnderdeel" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetCampussenSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCampussen" />
+  </wsdl:message>
+  <wsdl:message name="GetCampussenSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCampussenResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCampussenByAcademieJaarSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCampussenByAcademieJaar" />
+  </wsdl:message>
+  <wsdl:message name="GetCampussenByAcademieJaarSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCampussenByAcademieJaarResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAlleCampussenSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAlleCampussen" />
+  </wsdl:message>
+  <wsdl:message name="GetAlleCampussenSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAlleCampussenResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartementenSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDepartementen" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartementenSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDepartementenResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartementenByAcademieJaarSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDepartementenByAcademieJaar" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartementenByAcademieJaarSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDepartementenByAcademieJaarResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAlleDepartementenSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAlleDepartementen" />
+  </wsdl:message>
+  <wsdl:message name="GetAlleDepartementenSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAlleDepartementenResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartementSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDepartement" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartementSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDepartementResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingenSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpleidingen" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingenSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpleidingenResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingenByAcademicYearSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpleidingenByAcademicYear" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingenByAcademicYearSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpleidingenByAcademicYearResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingenByAcademicYearStringSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpleidingenByAcademicYearString" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingenByAcademicYearStringSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpleidingenByAcademicYearStringResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingenByDepartementSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpleidingenByDepartement" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingenByDepartementSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpleidingenByDepartementResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpleiding" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpleidingResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingenByStudentSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpleidingenByStudent" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingenByStudentSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpleidingenByStudentResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingenByCampusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpleidingenByCampus" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingenByCampusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpleidingenByCampusResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingenByDepartementCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpleidingenByDepartementCode" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingenByDepartementCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpleidingenByDepartementCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAfstudeerrichtingenSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAfstudeerrichtingen" />
+  </wsdl:message>
+  <wsdl:message name="GetAfstudeerrichtingenSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAfstudeerrichtingenResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetKlasgroepSoapIn">
+    <wsdl:part name="parameters" element="tns:GetKlasgroep" />
+  </wsdl:message>
+  <wsdl:message name="GetKlasgroepSoapOut">
+    <wsdl:part name="parameters" element="tns:GetKlasgroepResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingsOnderdelenSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpleidingsOnderdelen" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingsOnderdelenSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpleidingsOnderdelenResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingsOnderdelenByOpleidingSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpleidingsOnderdelenByOpleiding" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingsOnderdelenByOpleidingSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpleidingsOnderdelenByOpleidingResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingsOnderdeelSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpleidingsOnderdeel" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingsOnderdeelSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpleidingsOnderdeelResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetModuleNaamSoapIn">
+    <wsdl:part name="parameters" element="tns:GetModuleNaam" />
+  </wsdl:message>
+  <wsdl:message name="GetModuleNaamSoapOut">
+    <wsdl:part name="parameters" element="tns:GetModuleNaamResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStudent" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStudentResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentStudietrajectSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStudentStudietraject" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentStudietrajectSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStudentStudietrajectResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentBySourceIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStudentBySourceId" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentBySourceIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStudentBySourceIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentenByOpleidingsonderdeelSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStudentenByOpleidingsonderdeel" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentenByOpleidingsonderdeelSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStudentenByOpleidingsonderdeelResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentenByOpleidingsonderdeelAndVrijstellingSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStudentenByOpleidingsonderdeelAndVrijstelling" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentenByOpleidingsonderdeelAndVrijstellingSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStudentenByOpleidingsonderdeelAndVrijstellingResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentInschrijvingsNummerSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStudentInschrijvingsNummer" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentInschrijvingsNummerSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStudentInschrijvingsNummerResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentByStamnummerSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStudentByStamnummer" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentByStamnummerSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStudentByStamnummerResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentByBarcodenummerSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStudentByBarcodenummer" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentByBarcodenummerSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStudentByBarcodenummerResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTrajectschijfSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTrajectschijf" />
+  </wsdl:message>
+  <wsdl:message name="GetTrajectschijfSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTrajectschijfResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTrajectschijfByOpleidingSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTrajectschijfByOpleiding" />
+  </wsdl:message>
+  <wsdl:message name="GetTrajectschijfByOpleidingSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTrajectschijfByOpleidingResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentTrajectSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStudentTraject" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentTrajectSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStudentTrajectResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentStudieProgrammaSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStudentStudieProgramma" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentStudieProgrammaSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStudentStudieProgrammaResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentenByOpleidingIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStudentenByOpleidingId" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentenByOpleidingIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStudentenByOpleidingIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNieuweStudentenByAfstudeerrichtingSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNieuweStudentenByAfstudeerrichting" />
+  </wsdl:message>
+  <wsdl:message name="GetNieuweStudentenByAfstudeerrichtingSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNieuweStudentenByAfstudeerrichtingResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAfstudeerCodeForStudentSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAfstudeerCodeForStudent" />
+  </wsdl:message>
+  <wsdl:message name="GetAfstudeerCodeForStudentSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAfstudeerCodeForStudentResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAfstudeerrichtingKeuzeoptieSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAfstudeerrichtingKeuzeoptie" />
+  </wsdl:message>
+  <wsdl:message name="GetAfstudeerrichtingKeuzeoptieSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAfstudeerrichtingKeuzeoptieResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDocentLesOpdrachtenSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDocentLesOpdrachten" />
+  </wsdl:message>
+  <wsdl:message name="GetDocentLesOpdrachtenSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDocentLesOpdrachtenResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDocentenByOpleidingsOnderdeelSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDocentenByOpleidingsOnderdeel" />
+  </wsdl:message>
+  <wsdl:message name="GetDocentenByOpleidingsOnderdeelSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDocentenByOpleidingsOnderdeelResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentenByPartimSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStudentenByPartim" />
+  </wsdl:message>
+  <wsdl:message name="GetStudentenByPartimSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStudentenByPartimResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPartimInformatieSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPartimInformatie" />
+  </wsdl:message>
+  <wsdl:message name="GetPartimInformatieSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPartimInformatieResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTrajectenSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTrajecten" />
+  </wsdl:message>
+  <wsdl:message name="GetTrajectenSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTrajectenResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProgrammaVanDeeltrajectSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProgrammaVanDeeltraject" />
+  </wsdl:message>
+  <wsdl:message name="GetProgrammaVanDeeltrajectSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProgrammaVanDeeltrajectResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingsprogrammaByOpleidingscodeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpleidingsprogrammaByOpleidingscode" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingsprogrammaByOpleidingscodeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpleidingsprogrammaByOpleidingscodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSimpleOpleidingsprogrammaByOpleidingscodeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSimpleOpleidingsprogrammaByOpleidingscode" />
+  </wsdl:message>
+  <wsdl:message name="GetSimpleOpleidingsprogrammaByOpleidingscodeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSimpleOpleidingsprogrammaByOpleidingscodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSimpleOpleidingsprogrammaByOpleidingscodeAndAcademicYearStringSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSimpleOpleidingsprogrammaByOpleidingscodeAndAcademicYearString" />
+  </wsdl:message>
+  <wsdl:message name="GetSimpleOpleidingsprogrammaByOpleidingscodeAndAcademicYearStringSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSimpleOpleidingsprogrammaByOpleidingscodeAndAcademicYearStringResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingsProgrammaByAfstudeerrichtingSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpleidingsProgrammaByAfstudeerrichting" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingsProgrammaByAfstudeerrichtingSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpleidingsProgrammaByAfstudeerrichtingResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingsProgrammaOnderdeelSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpleidingsProgrammaOnderdeel" />
+  </wsdl:message>
+  <wsdl:message name="GetOpleidingsProgrammaOnderdeelSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpleidingsProgrammaOnderdeelResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetContextSoapIn">
+    <wsdl:part name="parameters" element="tns:GetContext" />
+  </wsdl:message>
+  <wsdl:message name="GetContextSoapOut">
+    <wsdl:part name="parameters" element="tns:GetContextResponse" />
+  </wsdl:message>
+  <wsdl:portType name="FacadeSoap">
+    <wsdl:operation name="GetCampussen">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle campussen van het huidige academiejaar.</wsdl:documentation>
+      <wsdl:input message="tns:GetCampussenSoapIn" />
+      <wsdl:output message="tns:GetCampussenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCampussenByAcademieJaar">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle campussen van een opgegeven academiejaar.</wsdl:documentation>
+      <wsdl:input message="tns:GetCampussenByAcademieJaarSoapIn" />
+      <wsdl:output message="tns:GetCampussenByAcademieJaarSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAlleCampussen">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle campussen (van alle academiejaren).</wsdl:documentation>
+      <wsdl:input message="tns:GetAlleCampussenSoapIn" />
+      <wsdl:output message="tns:GetAlleCampussenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartementen">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle departementen van het huidige academiejaar.</wsdl:documentation>
+      <wsdl:input message="tns:GetDepartementenSoapIn" />
+      <wsdl:output message="tns:GetDepartementenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartementenByAcademieJaar">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle departementen van een opgegeven academiejaar.</wsdl:documentation>
+      <wsdl:input message="tns:GetDepartementenByAcademieJaarSoapIn" />
+      <wsdl:output message="tns:GetDepartementenByAcademieJaarSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAlleDepartementen">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle departementen (van alle academiejaren).</wsdl:documentation>
+      <wsdl:input message="tns:GetAlleDepartementenSoapIn" />
+      <wsdl:output message="tns:GetAlleDepartementenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartement">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Departement met een bepaalde Id waarde.</wsdl:documentation>
+      <wsdl:input message="tns:GetDepartementSoapIn" />
+      <wsdl:output message="tns:GetDepartementSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingen">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle opleidingen van het huidige academiejaar.</wsdl:documentation>
+      <wsdl:input message="tns:GetOpleidingenSoapIn" />
+      <wsdl:output message="tns:GetOpleidingenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByAcademicYear">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle opleidingen van een bepaald academiejaar.</wsdl:documentation>
+      <wsdl:input message="tns:GetOpleidingenByAcademicYearSoapIn" />
+      <wsdl:output message="tns:GetOpleidingenByAcademicYearSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByAcademicYearString">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle opleidingen van een bepaald academiejaar.</wsdl:documentation>
+      <wsdl:input message="tns:GetOpleidingenByAcademicYearStringSoapIn" />
+      <wsdl:output message="tns:GetOpleidingenByAcademicYearStringSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByDepartement">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle opleidingen van een bepaald departement.</wsdl:documentation>
+      <wsdl:input message="tns:GetOpleidingenByDepartementSoapIn" />
+      <wsdl:output message="tns:GetOpleidingenByDepartementSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleiding">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Opleiding met een bepaalde Id waarde.</wsdl:documentation>
+      <wsdl:input message="tns:GetOpleidingSoapIn" />
+      <wsdl:output message="tns:GetOpleidingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByStudent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Opleidingen voor een bepaalde student binnen een bepaald departement.</wsdl:documentation>
+      <wsdl:input message="tns:GetOpleidingenByStudentSoapIn" />
+      <wsdl:output message="tns:GetOpleidingenByStudentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByCampus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle opleidingen van een bepaalde campus.</wsdl:documentation>
+      <wsdl:input message="tns:GetOpleidingenByCampusSoapIn" />
+      <wsdl:output message="tns:GetOpleidingenByCampusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByDepartementCode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle opleidingen van een bepaald departement.</wsdl:documentation>
+      <wsdl:input message="tns:GetOpleidingenByDepartementCodeSoapIn" />
+      <wsdl:output message="tns:GetOpleidingenByDepartementCodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAfstudeerrichtingen">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle afstudeerrichtingen van een bepaalde opleiding.</wsdl:documentation>
+      <wsdl:input message="tns:GetAfstudeerrichtingenSoapIn" />
+      <wsdl:output message="tns:GetAfstudeerrichtingenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetKlasgroep">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Klasgroep van een student ophalen.</wsdl:documentation>
+      <wsdl:input message="tns:GetKlasgroepSoapIn" />
+      <wsdl:output message="tns:GetKlasgroepSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsOnderdelen">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle opleidingsonderdelen.</wsdl:documentation>
+      <wsdl:input message="tns:GetOpleidingsOnderdelenSoapIn" />
+      <wsdl:output message="tns:GetOpleidingsOnderdelenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsOnderdelenByOpleiding">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle opleidingsonderdelen van een bepaalde opleiding.</wsdl:documentation>
+      <wsdl:input message="tns:GetOpleidingsOnderdelenByOpleidingSoapIn" />
+      <wsdl:output message="tns:GetOpleidingsOnderdelenByOpleidingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsOnderdeel">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Opleidingsonderdeel met een bepaalde Id.</wsdl:documentation>
+      <wsdl:input message="tns:GetOpleidingsOnderdeelSoapIn" />
+      <wsdl:output message="tns:GetOpleidingsOnderdeelSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetModuleNaam">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Modulenaam met een bepaalde code.</wsdl:documentation>
+      <wsdl:input message="tns:GetModuleNaamSoapIn" />
+      <wsdl:output message="tns:GetModuleNaamSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStudent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Student met een bepaalde Id (uit Identity Management).</wsdl:documentation>
+      <wsdl:input message="tns:GetStudentSoapIn" />
+      <wsdl:output message="tns:GetStudentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentStudietraject">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Student-traject met een bepaalde Id (uit Identity Management).</wsdl:documentation>
+      <wsdl:input message="tns:GetStudentStudietrajectSoapIn" />
+      <wsdl:output message="tns:GetStudentStudietrajectSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentBySourceId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Student met een bepaalde Id (uit Bamaflex).</wsdl:documentation>
+      <wsdl:input message="tns:GetStudentBySourceIdSoapIn" />
+      <wsdl:output message="tns:GetStudentBySourceIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentenByOpleidingsonderdeel">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle studenten van een bepaald opleidingsonderdeel.</wsdl:documentation>
+      <wsdl:input message="tns:GetStudentenByOpleidingsonderdeelSoapIn" />
+      <wsdl:output message="tns:GetStudentenByOpleidingsonderdeelSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentenByOpleidingsonderdeelAndVrijstelling">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle studenten van een bepaald opleidingsonderdeel (met of zonder vrijgestelden).</wsdl:documentation>
+      <wsdl:input message="tns:GetStudentenByOpleidingsonderdeelAndVrijstellingSoapIn" />
+      <wsdl:output message="tns:GetStudentenByOpleidingsonderdeelAndVrijstellingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentInschrijvingsNummer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Inschrijvingnummer van een student.</wsdl:documentation>
+      <wsdl:input message="tns:GetStudentInschrijvingsNummerSoapIn" />
+      <wsdl:output message="tns:GetStudentInschrijvingsNummerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentByStamnummer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Student met een bepaald stamnummer.</wsdl:documentation>
+      <wsdl:input message="tns:GetStudentByStamnummerSoapIn" />
+      <wsdl:output message="tns:GetStudentByStamnummerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentByBarcodenummer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Student met een bepaalde barcodenummer.</wsdl:documentation>
+      <wsdl:input message="tns:GetStudentByBarcodenummerSoapIn" />
+      <wsdl:output message="tns:GetStudentByBarcodenummerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTrajectschijf">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Custom application method.</wsdl:documentation>
+      <wsdl:input message="tns:GetTrajectschijfSoapIn" />
+      <wsdl:output message="tns:GetTrajectschijfSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTrajectschijfByOpleiding">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Custom application method.</wsdl:documentation>
+      <wsdl:input message="tns:GetTrajectschijfByOpleidingSoapIn" />
+      <wsdl:output message="tns:GetTrajectschijfByOpleidingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentTraject">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Custom application method.</wsdl:documentation>
+      <wsdl:input message="tns:GetStudentTrajectSoapIn" />
+      <wsdl:output message="tns:GetStudentTrajectSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentStudieProgramma">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Custom application method.</wsdl:documentation>
+      <wsdl:input message="tns:GetStudentStudieProgrammaSoapIn" />
+      <wsdl:output message="tns:GetStudentStudieProgrammaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentenByOpleidingId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lijst met alle studenten van een bepaald opleidingsonderdeel.</wsdl:documentation>
+      <wsdl:input message="tns:GetStudentenByOpleidingIdSoapIn" />
+      <wsdl:output message="tns:GetStudentenByOpleidingIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNieuweStudentenByAfstudeerrichting">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft een lijst van alle nieuw ingeschreven studenten van een bepaalde afstudeerrichting (mct, dae, devine).</wsdl:documentation>
+      <wsdl:input message="tns:GetNieuweStudentenByAfstudeerrichtingSoapIn" />
+      <wsdl:output message="tns:GetNieuweStudentenByAfstudeerrichtingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAfstudeerCodeForStudent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft je de afstudeercode voor een student.</wsdl:documentation>
+      <wsdl:input message="tns:GetAfstudeerCodeForStudentSoapIn" />
+      <wsdl:output message="tns:GetAfstudeerCodeForStudentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAfstudeerrichtingKeuzeoptie">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft je de afstudeerrichtingkeuzeoptie voor een student.</wsdl:documentation>
+      <wsdl:input message="tns:GetAfstudeerrichtingKeuzeoptieSoapIn" />
+      <wsdl:output message="tns:GetAfstudeerrichtingKeuzeoptieSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocentLesOpdrachten">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Custom application method.</wsdl:documentation>
+      <wsdl:input message="tns:GetDocentLesOpdrachtenSoapIn" />
+      <wsdl:output message="tns:GetDocentLesOpdrachtenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocentenByOpleidingsOnderdeel">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Custom application method.</wsdl:documentation>
+      <wsdl:input message="tns:GetDocentenByOpleidingsOnderdeelSoapIn" />
+      <wsdl:output message="tns:GetDocentenByOpleidingsOnderdeelSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentenByPartim">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Custom application method.</wsdl:documentation>
+      <wsdl:input message="tns:GetStudentenByPartimSoapIn" />
+      <wsdl:output message="tns:GetStudentenByPartimSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPartimInformatie">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Custom application method.</wsdl:documentation>
+      <wsdl:input message="tns:GetPartimInformatieSoapIn" />
+      <wsdl:output message="tns:GetPartimInformatieSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTrajecten">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Trajecten voor een opleiding ophalen.</wsdl:documentation>
+      <wsdl:input message="tns:GetTrajectenSoapIn" />
+      <wsdl:output message="tns:GetTrajectenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProgrammaVanDeeltraject">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deeltrajecten voor een opleiding ophalen.</wsdl:documentation>
+      <wsdl:input message="tns:GetProgrammaVanDeeltrajectSoapIn" />
+      <wsdl:output message="tns:GetProgrammaVanDeeltrajectSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsprogrammaByOpleidingscode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Ophalen van een opleidingsprogramma.</wsdl:documentation>
+      <wsdl:input message="tns:GetOpleidingsprogrammaByOpleidingscodeSoapIn" />
+      <wsdl:output message="tns:GetOpleidingsprogrammaByOpleidingscodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSimpleOpleidingsprogrammaByOpleidingscode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Ophalen van een opleidingsprogramma onder extra informatie.</wsdl:documentation>
+      <wsdl:input message="tns:GetSimpleOpleidingsprogrammaByOpleidingscodeSoapIn" />
+      <wsdl:output message="tns:GetSimpleOpleidingsprogrammaByOpleidingscodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSimpleOpleidingsprogrammaByOpleidingscodeAndAcademicYearString">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Ophalen van een opleidingsprogramma onder extra informatie.</wsdl:documentation>
+      <wsdl:input message="tns:GetSimpleOpleidingsprogrammaByOpleidingscodeAndAcademicYearStringSoapIn" />
+      <wsdl:output message="tns:GetSimpleOpleidingsprogrammaByOpleidingscodeAndAcademicYearStringSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsProgrammaByAfstudeerrichting">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Ophalen van een opleidingsprogramma.</wsdl:documentation>
+      <wsdl:input message="tns:GetOpleidingsProgrammaByAfstudeerrichtingSoapIn" />
+      <wsdl:output message="tns:GetOpleidingsProgrammaByAfstudeerrichtingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsProgrammaOnderdeel">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Ophalen van een opleidingsprogrammaonderdeel (module of partim).</wsdl:documentation>
+      <wsdl:input message="tns:GetOpleidingsProgrammaOnderdeelSoapIn" />
+      <wsdl:output message="tns:GetOpleidingsProgrammaOnderdeelSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContext">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Ophalen context informatie adhv een supercode.</wsdl:documentation>
+      <wsdl:input message="tns:GetContextSoapIn" />
+      <wsdl:output message="tns:GetContextSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="FacadeSoap" type="tns:FacadeSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetCampussen">
+      <soap:operation soapAction="http://services.howest.be/GetCampussen" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCampussenByAcademieJaar">
+      <soap:operation soapAction="http://services.howest.be/GetCampussenByAcademieJaar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAlleCampussen">
+      <soap:operation soapAction="http://services.howest.be/GetAlleCampussen" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartementen">
+      <soap:operation soapAction="http://services.howest.be/GetDepartementen" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartementenByAcademieJaar">
+      <soap:operation soapAction="http://services.howest.be/GetDepartementenByAcademieJaar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAlleDepartementen">
+      <soap:operation soapAction="http://services.howest.be/GetAlleDepartementen" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartement">
+      <soap:operation soapAction="http://services.howest.be/GetDepartement" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingen">
+      <soap:operation soapAction="http://services.howest.be/GetOpleidingen" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByAcademicYear">
+      <soap:operation soapAction="http://services.howest.be/GetOpleidingenByAcademicYear" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByAcademicYearString">
+      <soap:operation soapAction="http://services.howest.be/GetOpleidingenByAcademicYearString" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByDepartement">
+      <soap:operation soapAction="http://services.howest.be/GetOpleidingenByDepartement" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleiding">
+      <soap:operation soapAction="http://services.howest.be/GetOpleiding" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByStudent">
+      <soap:operation soapAction="http://services.howest.be/GetOpleidingenByStudent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByCampus">
+      <soap:operation soapAction="http://services.howest.be/GetOpleidingenByCampus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByDepartementCode">
+      <soap:operation soapAction="http://services.howest.be/GetOpleidingenByDepartementCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAfstudeerrichtingen">
+      <soap:operation soapAction="http://services.howest.be/GetAfstudeerrichtingen" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetKlasgroep">
+      <soap:operation soapAction="http://services.howest.be/GetKlasgroep" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsOnderdelen">
+      <soap:operation soapAction="http://services.howest.be/GetOpleidingsOnderdelen" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsOnderdelenByOpleiding">
+      <soap:operation soapAction="http://services.howest.be/GetOpleidingsOnderdelenByOpleiding" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsOnderdeel">
+      <soap:operation soapAction="http://services.howest.be/GetOpleidingsOnderdeel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetModuleNaam">
+      <soap:operation soapAction="http://services.howest.be/GetModuleNaam" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudent">
+      <soap:operation soapAction="http://services.howest.be/GetStudent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentStudietraject">
+      <soap:operation soapAction="http://services.howest.be/GetStudentStudietraject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentBySourceId">
+      <soap:operation soapAction="http://services.howest.be/GetStudentBySourceId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentenByOpleidingsonderdeel">
+      <soap:operation soapAction="http://services.howest.be/GetStudentenByOpleidingsonderdeel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentenByOpleidingsonderdeelAndVrijstelling">
+      <soap:operation soapAction="http://services.howest.be/GetStudentenByOpleidingsonderdeelAndVrijstelling" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentInschrijvingsNummer">
+      <soap:operation soapAction="http://services.howest.be/GetStudentInschrijvingsNummer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentByStamnummer">
+      <soap:operation soapAction="http://services.howest.be/GetStudentByStamnummer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentByBarcodenummer">
+      <soap:operation soapAction="http://services.howest.be/GetStudentByBarcodenummer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrajectschijf">
+      <soap:operation soapAction="http://services.howest.be/GetTrajectschijf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrajectschijfByOpleiding">
+      <soap:operation soapAction="http://services.howest.be/GetTrajectschijfByOpleiding" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentTraject">
+      <soap:operation soapAction="http://services.howest.be/GetStudentTraject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentStudieProgramma">
+      <soap:operation soapAction="http://services.howest.be/GetStudentStudieProgramma" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentenByOpleidingId">
+      <soap:operation soapAction="http://services.howest.be/GetStudentenByOpleidingId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNieuweStudentenByAfstudeerrichting">
+      <soap:operation soapAction="http://services.howest.be/GetNieuweStudentenByAfstudeerrichting" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAfstudeerCodeForStudent">
+      <soap:operation soapAction="http://services.howest.be/GetAfstudeerCodeForStudent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAfstudeerrichtingKeuzeoptie">
+      <soap:operation soapAction="http://services.howest.be/GetAfstudeerrichtingKeuzeoptie" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocentLesOpdrachten">
+      <soap:operation soapAction="http://services.howest.be/GetDocentLesOpdrachten" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocentenByOpleidingsOnderdeel">
+      <soap:operation soapAction="http://services.howest.be/GetDocentenByOpleidingsOnderdeel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentenByPartim">
+      <soap:operation soapAction="http://services.howest.be/GetStudentenByPartim" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPartimInformatie">
+      <soap:operation soapAction="http://services.howest.be/GetPartimInformatie" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrajecten">
+      <soap:operation soapAction="http://services.howest.be/GetTrajecten" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProgrammaVanDeeltraject">
+      <soap:operation soapAction="http://services.howest.be/GetProgrammaVanDeeltraject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsprogrammaByOpleidingscode">
+      <soap:operation soapAction="http://services.howest.be/GetOpleidingsprogrammaByOpleidingscode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSimpleOpleidingsprogrammaByOpleidingscode">
+      <soap:operation soapAction="http://services.howest.be/GetSimpleOpleidingsprogrammaByOpleidingscode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSimpleOpleidingsprogrammaByOpleidingscodeAndAcademicYearString">
+      <soap:operation soapAction="http://services.howest.be/GetSimpleOpleidingsprogrammaByOpleidingscodeAndAcademicYearString" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsProgrammaByAfstudeerrichting">
+      <soap:operation soapAction="http://services.howest.be/GetOpleidingsProgrammaByAfstudeerrichting" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsProgrammaOnderdeel">
+      <soap:operation soapAction="http://services.howest.be/GetOpleidingsProgrammaOnderdeel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContext">
+      <soap:operation soapAction="http://services.howest.be/GetContext" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="FacadeSoap12" type="tns:FacadeSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetCampussen">
+      <soap12:operation soapAction="http://services.howest.be/GetCampussen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCampussenByAcademieJaar">
+      <soap12:operation soapAction="http://services.howest.be/GetCampussenByAcademieJaar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAlleCampussen">
+      <soap12:operation soapAction="http://services.howest.be/GetAlleCampussen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartementen">
+      <soap12:operation soapAction="http://services.howest.be/GetDepartementen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartementenByAcademieJaar">
+      <soap12:operation soapAction="http://services.howest.be/GetDepartementenByAcademieJaar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAlleDepartementen">
+      <soap12:operation soapAction="http://services.howest.be/GetAlleDepartementen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartement">
+      <soap12:operation soapAction="http://services.howest.be/GetDepartement" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingen">
+      <soap12:operation soapAction="http://services.howest.be/GetOpleidingen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByAcademicYear">
+      <soap12:operation soapAction="http://services.howest.be/GetOpleidingenByAcademicYear" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByAcademicYearString">
+      <soap12:operation soapAction="http://services.howest.be/GetOpleidingenByAcademicYearString" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByDepartement">
+      <soap12:operation soapAction="http://services.howest.be/GetOpleidingenByDepartement" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleiding">
+      <soap12:operation soapAction="http://services.howest.be/GetOpleiding" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByStudent">
+      <soap12:operation soapAction="http://services.howest.be/GetOpleidingenByStudent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByCampus">
+      <soap12:operation soapAction="http://services.howest.be/GetOpleidingenByCampus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingenByDepartementCode">
+      <soap12:operation soapAction="http://services.howest.be/GetOpleidingenByDepartementCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAfstudeerrichtingen">
+      <soap12:operation soapAction="http://services.howest.be/GetAfstudeerrichtingen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetKlasgroep">
+      <soap12:operation soapAction="http://services.howest.be/GetKlasgroep" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsOnderdelen">
+      <soap12:operation soapAction="http://services.howest.be/GetOpleidingsOnderdelen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsOnderdelenByOpleiding">
+      <soap12:operation soapAction="http://services.howest.be/GetOpleidingsOnderdelenByOpleiding" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsOnderdeel">
+      <soap12:operation soapAction="http://services.howest.be/GetOpleidingsOnderdeel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetModuleNaam">
+      <soap12:operation soapAction="http://services.howest.be/GetModuleNaam" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudent">
+      <soap12:operation soapAction="http://services.howest.be/GetStudent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentStudietraject">
+      <soap12:operation soapAction="http://services.howest.be/GetStudentStudietraject" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentBySourceId">
+      <soap12:operation soapAction="http://services.howest.be/GetStudentBySourceId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentenByOpleidingsonderdeel">
+      <soap12:operation soapAction="http://services.howest.be/GetStudentenByOpleidingsonderdeel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentenByOpleidingsonderdeelAndVrijstelling">
+      <soap12:operation soapAction="http://services.howest.be/GetStudentenByOpleidingsonderdeelAndVrijstelling" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentInschrijvingsNummer">
+      <soap12:operation soapAction="http://services.howest.be/GetStudentInschrijvingsNummer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentByStamnummer">
+      <soap12:operation soapAction="http://services.howest.be/GetStudentByStamnummer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentByBarcodenummer">
+      <soap12:operation soapAction="http://services.howest.be/GetStudentByBarcodenummer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrajectschijf">
+      <soap12:operation soapAction="http://services.howest.be/GetTrajectschijf" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrajectschijfByOpleiding">
+      <soap12:operation soapAction="http://services.howest.be/GetTrajectschijfByOpleiding" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentTraject">
+      <soap12:operation soapAction="http://services.howest.be/GetStudentTraject" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentStudieProgramma">
+      <soap12:operation soapAction="http://services.howest.be/GetStudentStudieProgramma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentenByOpleidingId">
+      <soap12:operation soapAction="http://services.howest.be/GetStudentenByOpleidingId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNieuweStudentenByAfstudeerrichting">
+      <soap12:operation soapAction="http://services.howest.be/GetNieuweStudentenByAfstudeerrichting" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAfstudeerCodeForStudent">
+      <soap12:operation soapAction="http://services.howest.be/GetAfstudeerCodeForStudent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAfstudeerrichtingKeuzeoptie">
+      <soap12:operation soapAction="http://services.howest.be/GetAfstudeerrichtingKeuzeoptie" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocentLesOpdrachten">
+      <soap12:operation soapAction="http://services.howest.be/GetDocentLesOpdrachten" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocentenByOpleidingsOnderdeel">
+      <soap12:operation soapAction="http://services.howest.be/GetDocentenByOpleidingsOnderdeel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentenByPartim">
+      <soap12:operation soapAction="http://services.howest.be/GetStudentenByPartim" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPartimInformatie">
+      <soap12:operation soapAction="http://services.howest.be/GetPartimInformatie" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrajecten">
+      <soap12:operation soapAction="http://services.howest.be/GetTrajecten" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProgrammaVanDeeltraject">
+      <soap12:operation soapAction="http://services.howest.be/GetProgrammaVanDeeltraject" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsprogrammaByOpleidingscode">
+      <soap12:operation soapAction="http://services.howest.be/GetOpleidingsprogrammaByOpleidingscode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSimpleOpleidingsprogrammaByOpleidingscode">
+      <soap12:operation soapAction="http://services.howest.be/GetSimpleOpleidingsprogrammaByOpleidingscode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSimpleOpleidingsprogrammaByOpleidingscodeAndAcademicYearString">
+      <soap12:operation soapAction="http://services.howest.be/GetSimpleOpleidingsprogrammaByOpleidingscodeAndAcademicYearString" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsProgrammaByAfstudeerrichting">
+      <soap12:operation soapAction="http://services.howest.be/GetOpleidingsProgrammaByAfstudeerrichting" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpleidingsProgrammaOnderdeel">
+      <soap12:operation soapAction="http://services.howest.be/GetOpleidingsProgrammaOnderdeel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContext">
+      <soap12:operation soapAction="http://services.howest.be/GetContext" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Facade">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">De service levert data uit de Bamaflex databank.</wsdl:documentation>
+    <wsdl:port name="FacadeSoap" binding="tns:FacadeSoap">
+      <soap:address location="https://services.howest.be/Howest.Services.Bamaflex/v1.9/data.asmx" />
+    </wsdl:port>
+    <wsdl:port name="FacadeSoap12" binding="tns:FacadeSoap12">
+      <soap12:address location="https://services.howest.be/Howest.Services.Bamaflex/v1.9/data.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

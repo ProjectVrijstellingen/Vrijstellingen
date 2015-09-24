@@ -1,0 +1,44 @@
+﻿@model VTP2015.ViewModels.Authentication.LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<div id="login" class="container center" ng-controller="loginCtrl">
+    <h1>@ViewBag.Title</h1>
+    @using (Html.BeginForm("Login", "Authentication", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Gebruik je Howest email om in te loggen.</h4>
+        <hr/>
+
+        <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon1">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            </span>
+            @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
+        </div>
+        <br/>
+        <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon1">
+                <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+            </span>
+            @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
+        </div>
+        <br/>
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe)
+            </label>
+        </div>
+        <br/>
+
+        <div class="input-group">
+            <div>
+                <button type="submit" class="btn btn-success">Log in</button>
+            </div>
+        </div>
+    }
+</div>

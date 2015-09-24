@@ -1,0 +1,22 @@
+﻿@using VTP2015.Helpers
+@model VTP2015.ViewModels.Student.DossierListViewModel[]
+
+    @using (Html.BeginPanel("Mijn dossiers"))
+    {
+        <ul class="list-group">
+            @foreach (var dossier in Model)
+            {
+                <li class="list-group-item">
+                    @if (dossier.Editable)
+                    {
+                        @Html.RouteLink(dossier.Omschrijving, new { controller = "Student", action = "Dossier", dossierId = dossier.DossierId })
+                    }
+                    else
+                    {
+                        @dossier.Omschrijving
+                    }
+                </li>
+            }
+        </ul>
+        @Html.ActionLink("Nieuw dossier aanmaken", "NieuwDossier", "Student", new { @class = "btn btn-success" })
+    }

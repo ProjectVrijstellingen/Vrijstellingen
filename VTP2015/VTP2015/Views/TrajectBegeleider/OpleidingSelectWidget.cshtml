@@ -1,0 +1,16 @@
+﻿@model VTP2015.ViewModels.TrajectBegeleider.OpleidingSelectViewModel
+<form class="form-group col-md-6">
+    <select id="select-opleiding" class="form-control pull-right">
+        @foreach (var opleiding in Model.Opleidingen)
+        {
+            if (opleiding.Naam == Model.SelectedOpleiding)
+            {
+                <option selected>@opleiding.Naam</option>
+            }
+            else
+            {
+                 <option >@opleiding.Naam</option>
+             }
+        }
+    </select>
+</form>

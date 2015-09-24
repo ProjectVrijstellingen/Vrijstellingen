@@ -1,0 +1,26 @@
+﻿@using VTP2015.Helpers
+@{
+    ViewBag.Title = "Student - home";
+}
+<div class="container-fix">
+  <br />
+</div>
+
+<div class="container-fix">
+    <div class="col-md-6">
+        @Html.Action("DossierWidget")
+        @Html.Action("AddFeedbackWidget", "Feedback")
+    </div>
+    <div id="bewijzenColumn" class="col-md-6">
+        @using (Html.BeginPanel("Bewijzen"))
+        {
+            @Html.Action("BewijsListWidget")
+            @Html.Action("BewijsToevoegenWidget")
+        }
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="@Url.Content("/scripts/student/studentIndex.js")"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}

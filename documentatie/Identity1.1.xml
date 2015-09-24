@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://services.howest.be/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://services.howest.be/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deze webservice levert data uit het HOWEST Identity Management.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://services.howest.be/">
+      <s:element name="GetUserByUsername">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserByUsernameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserByUsernameResult" type="tns:User" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="User">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserTypeSources" type="tns:ArrayOfUserTypeSource" />
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Firstname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Lastname" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DateOfBirth" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExtraInfo1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExtraInfo2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserDomains" type="tns:ArrayOfUserDomain" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfUserTypeSource">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UserTypeSource" nillable="true" type="tns:UserTypeSource" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UserTypeSource">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="UserType" type="tns:UserType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Source" type="tns:Source" />
+          <s:element minOccurs="0" maxOccurs="1" name="SourceIdValue" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UserType">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Source">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileLocation" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Connectionstring" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SqlStatement" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfUserDomain">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UserDomain" nillable="true" type="tns:UserDomain" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UserDomain">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Domain" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Source" type="tns:Source" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetUserById">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserByIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserByIdResult" type="tns:User" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserByNameAndDate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="lastname" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="firstname" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dateOfBirth" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserByNameAndDateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserByNameAndDateResult" type="tns:User" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserByEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserByEmailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserByEmailResult" type="tns:User" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticateUserByEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticateUserByEmailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AuthenticateUserByEmailResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticateActiveDirectoryByEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticateActiveDirectoryByEmailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AuthenticateActiveDirectoryByEmailResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticateUserByUsername">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticateUserByUsernameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AuthenticateUserByUsernameResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserTypes">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetUserTypesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserTypesResult" type="tns:ArrayOfUserType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfUserType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UserType" nillable="true" type="tns:UserType" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetUsers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userTypeId" type="tns:UserTypeId" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="UserTypeId">
+        <s:restriction base="s:string">
+          <s:enumeration value="Alumni" />
+          <s:enumeration value="Studenten" />
+          <s:enumeration value="Personeel" />
+          <s:enumeration value="Bestuursleden" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetUsersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUsersResult" type="tns:ArrayOfUser" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfUser">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="User" nillable="true" type="tns:User" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetUsersWhosBirthdayIsToday">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetUsersWhosBirthdayIsTodayResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUsersWhosBirthdayIsTodayResult" type="tns:ArrayOfUser" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUsersWhosBirthdayIsOn">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="month" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="day" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUsersWhosBirthdayIsOnResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUsersWhosBirthdayIsOnResult" type="tns:ArrayOfUser" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserBySourceAndSourceIdValue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="sourceId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="sourceIdValue" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserBySourceAndSourceIdValueResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserBySourceAndSourceIdValueResult" type="tns:User" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUsersBySearchString">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="searchstring" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUsersBySearchStringResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUsersBySearchStringResult" type="tns:ArrayOfUser" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepartementenByUserId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDepartementenByUserIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDepartementenByUserIdResult" type="tns:ArrayOfDepartement" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfDepartement">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Departement" nillable="true" type="tns:Departement" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Departement">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetUserByUsernameSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserByUsername" />
+  </wsdl:message>
+  <wsdl:message name="GetUserByUsernameSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserByUsernameResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserByIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserById" />
+  </wsdl:message>
+  <wsdl:message name="GetUserByIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserByNameAndDateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserByNameAndDate" />
+  </wsdl:message>
+  <wsdl:message name="GetUserByNameAndDateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserByNameAndDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserByEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserByEmail" />
+  </wsdl:message>
+  <wsdl:message name="GetUserByEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserByEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateUserByEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:AuthenticateUserByEmail" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateUserByEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:AuthenticateUserByEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateActiveDirectoryByEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:AuthenticateActiveDirectoryByEmail" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateActiveDirectoryByEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:AuthenticateActiveDirectoryByEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateUserByUsernameSoapIn">
+    <wsdl:part name="parameters" element="tns:AuthenticateUserByUsername" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateUserByUsernameSoapOut">
+    <wsdl:part name="parameters" element="tns:AuthenticateUserByUsernameResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserTypesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserTypes" />
+  </wsdl:message>
+  <wsdl:message name="GetUserTypesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUsers" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersWhosBirthdayIsTodaySoapIn">
+    <wsdl:part name="parameters" element="tns:GetUsersWhosBirthdayIsToday" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersWhosBirthdayIsTodaySoapOut">
+    <wsdl:part name="parameters" element="tns:GetUsersWhosBirthdayIsTodayResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersWhosBirthdayIsOnSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUsersWhosBirthdayIsOn" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersWhosBirthdayIsOnSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUsersWhosBirthdayIsOnResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserBySourceAndSourceIdValueSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserBySourceAndSourceIdValue" />
+  </wsdl:message>
+  <wsdl:message name="GetUserBySourceAndSourceIdValueSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserBySourceAndSourceIdValueResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersBySearchStringSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUsersBySearchString" />
+  </wsdl:message>
+  <wsdl:message name="GetUsersBySearchStringSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUsersBySearchStringResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartementenByUserIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDepartementenByUserId" />
+  </wsdl:message>
+  <wsdl:message name="GetDepartementenByUserIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDepartementenByUserIdResponse" />
+  </wsdl:message>
+  <wsdl:portType name="Identity_x0020_Management_x0020_WebserviceSoap">
+    <wsdl:operation name="GetUserByUsername">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft een gebruiker met een opgegeven gebruikersnaam.</wsdl:documentation>
+      <wsdl:input message="tns:GetUserByUsernameSoapIn" />
+      <wsdl:output message="tns:GetUserByUsernameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserById">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft een gebruiker met een opgegeven id.</wsdl:documentation>
+      <wsdl:input message="tns:GetUserByIdSoapIn" />
+      <wsdl:output message="tns:GetUserByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByNameAndDate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft een gebruiker met een opgegeven naam,voornaam en geboortedatum.</wsdl:documentation>
+      <wsdl:input message="tns:GetUserByNameAndDateSoapIn" />
+      <wsdl:output message="tns:GetUserByNameAndDateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByEmail">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft een gebruiker met een opgegeven e-mailadres.</wsdl:documentation>
+      <wsdl:input message="tns:GetUserByEmailSoapIn" />
+      <wsdl:output message="tns:GetUserByEmailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateUserByEmail">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Authenticate user via het emailadres en wachtwoord.</wsdl:documentation>
+      <wsdl:input message="tns:AuthenticateUserByEmailSoapIn" />
+      <wsdl:output message="tns:AuthenticateUserByEmailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateActiveDirectoryByEmail">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Authenticate user via het emailadres en wachtwoord ten opzichte van Active Directory.</wsdl:documentation>
+      <wsdl:input message="tns:AuthenticateActiveDirectoryByEmailSoapIn" />
+      <wsdl:output message="tns:AuthenticateActiveDirectoryByEmailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateUserByUsername">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Authenticate user via de username en wachtwoord.</wsdl:documentation>
+      <wsdl:input message="tns:AuthenticateUserByUsernameSoapIn" />
+      <wsdl:output message="tns:AuthenticateUserByUsernameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserTypes">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft een lijst van userTypes (personeel, studenten, ...).</wsdl:documentation>
+      <wsdl:input message="tns:GetUserTypesSoapIn" />
+      <wsdl:output message="tns:GetUserTypesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsers">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft een lijst van gebruikers van een bepaald type.</wsdl:documentation>
+      <wsdl:input message="tns:GetUsersSoapIn" />
+      <wsdl:output message="tns:GetUsersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersWhosBirthdayIsToday">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft een lijst van gebruikers die vandaag jarig zijn.</wsdl:documentation>
+      <wsdl:input message="tns:GetUsersWhosBirthdayIsTodaySoapIn" />
+      <wsdl:output message="tns:GetUsersWhosBirthdayIsTodaySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersWhosBirthdayIsOn">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft een lijst van gebruikers die jarig zijn op een bepaalde dag in het jaar.</wsdl:documentation>
+      <wsdl:input message="tns:GetUsersWhosBirthdayIsOnSoapIn" />
+      <wsdl:output message="tns:GetUsersWhosBirthdayIsOnSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserBySourceAndSourceIdValue">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft een gebruiker via zijn sourceIdValue.</wsdl:documentation>
+      <wsdl:input message="tns:GetUserBySourceAndSourceIdValueSoapIn" />
+      <wsdl:output message="tns:GetUserBySourceAndSourceIdValueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersBySearchString">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft een lijst van gebruikers die voldoen aan het zoekcriterium (zoeken op naam en voornaam).</wsdl:documentation>
+      <wsdl:input message="tns:GetUsersBySearchStringSoapIn" />
+      <wsdl:output message="tns:GetUsersBySearchStringSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartementenByUserId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft een lijst van departementen voor deze gebruiker.</wsdl:documentation>
+      <wsdl:input message="tns:GetDepartementenByUserIdSoapIn" />
+      <wsdl:output message="tns:GetDepartementenByUserIdSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Identity_x0020_Management_x0020_WebserviceSoap" type="tns:Identity_x0020_Management_x0020_WebserviceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetUserByUsername">
+      <soap:operation soapAction="http://services.howest.be/GetUserByUsername" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserById">
+      <soap:operation soapAction="http://services.howest.be/GetUserById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByNameAndDate">
+      <soap:operation soapAction="http://services.howest.be/GetUserByNameAndDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByEmail">
+      <soap:operation soapAction="http://services.howest.be/GetUserByEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateUserByEmail">
+      <soap:operation soapAction="http://services.howest.be/AuthenticateUserByEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateActiveDirectoryByEmail">
+      <soap:operation soapAction="http://services.howest.be/AuthenticateActiveDirectoryByEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateUserByUsername">
+      <soap:operation soapAction="http://services.howest.be/AuthenticateUserByUsername" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserTypes">
+      <soap:operation soapAction="http://services.howest.be/GetUserTypes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsers">
+      <soap:operation soapAction="http://services.howest.be/GetUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersWhosBirthdayIsToday">
+      <soap:operation soapAction="http://services.howest.be/GetUsersWhosBirthdayIsToday" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersWhosBirthdayIsOn">
+      <soap:operation soapAction="http://services.howest.be/GetUsersWhosBirthdayIsOn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserBySourceAndSourceIdValue">
+      <soap:operation soapAction="http://services.howest.be/GetUserBySourceAndSourceIdValue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersBySearchString">
+      <soap:operation soapAction="http://services.howest.be/GetUsersBySearchString" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartementenByUserId">
+      <soap:operation soapAction="http://services.howest.be/GetDepartementenByUserId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="Identity_x0020_Management_x0020_WebserviceSoap12" type="tns:Identity_x0020_Management_x0020_WebserviceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetUserByUsername">
+      <soap12:operation soapAction="http://services.howest.be/GetUserByUsername" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserById">
+      <soap12:operation soapAction="http://services.howest.be/GetUserById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByNameAndDate">
+      <soap12:operation soapAction="http://services.howest.be/GetUserByNameAndDate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserByEmail">
+      <soap12:operation soapAction="http://services.howest.be/GetUserByEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateUserByEmail">
+      <soap12:operation soapAction="http://services.howest.be/AuthenticateUserByEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateActiveDirectoryByEmail">
+      <soap12:operation soapAction="http://services.howest.be/AuthenticateActiveDirectoryByEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateUserByUsername">
+      <soap12:operation soapAction="http://services.howest.be/AuthenticateUserByUsername" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserTypes">
+      <soap12:operation soapAction="http://services.howest.be/GetUserTypes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsers">
+      <soap12:operation soapAction="http://services.howest.be/GetUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersWhosBirthdayIsToday">
+      <soap12:operation soapAction="http://services.howest.be/GetUsersWhosBirthdayIsToday" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersWhosBirthdayIsOn">
+      <soap12:operation soapAction="http://services.howest.be/GetUsersWhosBirthdayIsOn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserBySourceAndSourceIdValue">
+      <soap12:operation soapAction="http://services.howest.be/GetUserBySourceAndSourceIdValue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersBySearchString">
+      <soap12:operation soapAction="http://services.howest.be/GetUsersBySearchString" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDepartementenByUserId">
+      <soap12:operation soapAction="http://services.howest.be/GetDepartementenByUserId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Identity_x0020_Management_x0020_Webservice">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deze webservice levert data uit het HOWEST Identity Management.</wsdl:documentation>
+    <wsdl:port name="Identity_x0020_Management_x0020_WebserviceSoap" binding="tns:Identity_x0020_Management_x0020_WebserviceSoap">
+      <soap:address location="https://services.howest.be/Howest.Identity.Web.Service/v1.1/facade.asmx" />
+    </wsdl:port>
+    <wsdl:port name="Identity_x0020_Management_x0020_WebserviceSoap12" binding="tns:Identity_x0020_Management_x0020_WebserviceSoap12">
+      <soap12:address location="https://services.howest.be/Howest.Identity.Web.Service/v1.1/facade.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

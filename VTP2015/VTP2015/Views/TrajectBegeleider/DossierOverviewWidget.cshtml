@@ -1,0 +1,47 @@
+﻿@model IEnumerable<VTP2015.ViewModels.TrajectBegeleider.DossierOverviewViewModel>
+
+<div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <input type="text" class="form-control" id="searchQuery" placeholder="Zoek op naam">
+        </div>
+        @Html.Action("OpleidingSelectWidget")
+    </div>
+    <div class="container-fix">
+        <div class="row">
+                @foreach (var dossier in Model)
+                {
+                    <div class="col-md-2 dossier" data-name="@dossier.StudentNaam" data-prename="@dossier.StudentVoornaam">
+                        @{
+                            var percentage = dossier.PercentageVoltooid;
+
+                            var kleur = "oranje";
+                            if (percentage >= 50)
+                            {
+                                kleur = "blauw";
+                            }
+                        }
+                        <div class="panel panel-text panel-@kleur panel-default clearfix panel-body">
+                            <p class="naam">@dossier.StudentVoornaam @dossier.StudentNaam</p>
+                            <div id="kader">
+                                <a href="#" id="links">
+                                    <span class="glyphicon glyphicon-list-alt white dossierpointer" data-dossierid="@dossier.DossierId" aria-hidden="true"></span>
+                                </a>
+                                <span class="white percentage" id="rechts">@dossier.PercentageVoltooid%</span>
+                                <a href="#" id="midden">
+                                    <span class="glyphicon glyphicon-print white" aria-hidden="true"></span>
+                                </a>
+                                <span class="hide academiejaar">@dossier.AcademieJaar</span>
+                                <span class="hide afstudeerrichting">@dossier.AfstudeerRichting</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+        </div>
+    </div>
+</div>
+
+
+
+
+

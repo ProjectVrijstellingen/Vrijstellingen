@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="VTP2015.DataAccess.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="VTP2015_DataAccess_Bamaflex_Facade" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://services.howest.be/Howest.Services.Bamaflex/v1.9/data.asmx</Value>
+    </Setting>
+    <Setting Name="VTP2015_DataAccess_Identity_Identity_x0020_Management_x0020_Webservice" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://services.howest.be/Howest.Identity.Web.Service/v1.1/facade.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,31 @@
+advice:
+
+
+Student:
+mix nederlands en engels
+bezijzen toevoegen => bewijs verwijderen uit de lijst
+nadenken over save not saved tonen bij aanvraag toevoegen
+meerdere partims per aanvraag met knop, dan toevoegen met zelfde bewijs
+bewijzen en aangevraagde modules switchen bij aanvraag detail
+al dan niet drag en drop bij
+enkel versturen als heel het dossier klaar is
+als er argumentatie of bewijs is, vragen of een user zeker is voor hij een partim verwijderd
+verkorting van partimnamen
+bewijzen toevoegen op een volledig dossier
+en docent kan beoordelen voor alles boven het niveau van de partim
+geen afstudeerrichting gebruiken maar keuzetraject
+alle partims in je volledig traject
+vorige opleidingen etc opvragen voor automatische approves
+
+trajectbegeleider:
+provide a listview aswell misschien
+er voor zorgen dat docenten kunnen zeggen dat er niet genoeg bewijs is
+kleur of bar bij percentage
+
+
+docent:
+moet kunnen een aanvraag herbekijken nadat het approved is
+lijst verbergen als hij dat wil en approve en deny boven zetten
+textarea over denken
+bewijzen in attachments zetten in mails en deny en approve
+rememberin decisions somehow

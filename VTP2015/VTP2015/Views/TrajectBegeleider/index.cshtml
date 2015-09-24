@@ -1,0 +1,22 @@
+﻿@using VTP2015.ViewModels.TrajectBegeleider
+@model IEnumerable<DossierOverviewViewModel>
+<br />
+
+<div class="container">
+        <div class="row" id="overview">
+            @Html.Action("DossierOverviewWidget")
+        </div>
+        <div class="row hide" id="details">
+            <div class="col-md-3">
+                @Html.Partial("DossierDetailsPartial")
+            </div>
+            <div class="col-md-9">
+                @Html.Action("AanvraagDetailsWidget")
+            </div>
+        </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="@Url.Content("/scripts/trajectbegeleider/script.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/scripts/trajectbegeleider/BegeleiderBewijsViewScript.js")"></script>
+}   

@@ -1,0 +1,39 @@
+﻿@using VTP2015.Helpers
+@model VTP2015.ViewModels.Student.DossierViewModel
+
+@{
+    ViewBag.Title = "Student - Dossier";
+}
+
+
+<div class="container-fix">
+    <br/>
+</div>
+
+<div class="container-fix">
+    <form role="form">
+        <div class="container-fix">
+            <div class="row">
+                @Html.Action("BewijsSelecterenWidget")
+
+                @Html.Action("BeschikbarePartimsWidget")
+
+                @Html.Action("AanvraagDetailWidget")
+
+                @Html.Action("AangevraagdePartimsWidget")
+
+            </div>
+        </div>
+    </form>
+</div>
+@section scripts {
+    <script type="text/javascript" src="@Url.Content("/scripts/student/dossier.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/scripts/toDictionary.js")"></script>
+}
+@section css{
+    <style>
+        #draggablePanelList li {
+        cursor: move;
+    }
+    </style>
+}

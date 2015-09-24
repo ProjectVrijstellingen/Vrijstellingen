@@ -1,0 +1,73 @@
+﻿body {
+}
+
+.center {
+    width: 450px;
+}
+
+.checkbox label {
+    padding-left: 0;
+}
+
+.checkbox {
+    margin-left: 20px;
+}
+
+.container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.white {
+    color: #ffffff;
+}
+
+.panel-text {
+    color: white;
+}
+
+.panel-groen {
+    background-color: #149c82;
+}
+
+.panel-blauw {
+    background-color: #3498db;
+}
+
+.panel-oranje {
+    background-color: #f39c12;
+}
+
+.panel-rood {
+    background-color: #e74c3c;
+}
+
+.panel-fix {
+    padding: 0;
+}
+
+#kader {
+    width:100%;
+    text-align: center;
+}
+
+#links {
+    float:left;
+    margin-left: 10px;
+}
+
+#rechts {
+    float:right;
+    margin-right: 10px;
+    font-size: 13px;
+}
+
+#midden {
+    margin:0 auto;
+    margin-left: 5px;
+}
+
+li {
+    cursor: pointer;
+}
+
