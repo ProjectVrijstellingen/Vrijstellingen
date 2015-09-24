@@ -10,26 +10,26 @@ namespace VTP2015.Repositories.Implementations
     public class DocentRepository:IDocentRepository
     {
         private readonly IDataAccessFacade _db;
-        private readonly GenericRepository<Docent> _genericRepository;
+        private readonly GenericRepository<Lecturer> _genericRepository;
         private readonly IBamaflexRepository _bamaflexRepository;
 
         public DocentRepository(IDataAccessFacade db, IBamaflexRepository bamaflexRepository)
         {
             _bamaflexRepository = bamaflexRepository;
             _db = db;
-            _genericRepository = new GenericRepository<Docent>(db.Context);
+            _genericRepository = new GenericRepository<Lecturer>(db.Context);
         }
 
-        public Docent GetByEmail(string email)
+        public Lecturer GetByEmail(string email)
         {
             return !EmailExists(email) ? null : _genericRepository.AsQueryable(d => d.Email == email).First();
         }
 
-        public Docent AddDocent(string supercode)
+        public Lecturer AddDocent(string supercode)
         {
             var email = _bamaflexRepository.GetDocentFromPartim(supercode);
             if(EmailExists(email)) return _genericRepository.AsQueryable(x => x.Email == email).First();
-            return _genericRepository.Insert(new Docent
+            return _genericRepository.Insert(new Lecturer
             {
                 Email = email,
                 InfoMail = DateTime.Now,

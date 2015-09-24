@@ -15,7 +15,7 @@ namespace VTP2015.Repositories.Implementations
             _db = db;
         }
 
-        public IEnumerable<TrajectBegeleider> TrajectBegeleiders
+        public IEnumerable<Counselor> TrajectBegeleiders
         {
             get { return _db.Context.TrajectBegeleiders; }
         }
@@ -33,7 +33,7 @@ namespace VTP2015.Repositories.Implementations
 
         public void AddBegeleider(string email)
         {
-            _db.Context.TrajectBegeleiders.Add(new TrajectBegeleider{Email = email});
+            _db.Context.TrajectBegeleiders.Add(new Counselor{Email = email});
             _db.Context.SaveChanges();
         }
 
@@ -43,9 +43,9 @@ namespace VTP2015.Repositories.Implementations
             return _db.Context.TrajectBegeleiders.First(x => x.Email == email).Opleiding == null ? "" : _db.Context.TrajectBegeleiders.First(x => x.Email == email).Opleiding.Naam;
         }
 
-        public void ChangeOpleiding(string email, Opleiding opleiding)
+        public void ChangeOpleiding(string email, Education education)
         {
-            _db.Context.TrajectBegeleiders.First(x => x.Email == email).Opleiding = opleiding;
+            _db.Context.TrajectBegeleiders.First(x => x.Email == email).Opleiding = education;
             _db.Context.SaveChanges();
         }
     }

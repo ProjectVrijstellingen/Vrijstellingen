@@ -71,6 +71,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="UnitOfWork\Repository.cs" />
+    <Compile Include="UnitOfWork\UnitOfWork.cs" />
     <Compile Include="Web References\Bamaflex\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

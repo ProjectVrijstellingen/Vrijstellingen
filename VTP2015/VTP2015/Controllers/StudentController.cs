@@ -6,9 +6,9 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.Web.Mvc;
 using VTP2015.Config;
 using VTP2015.Entities;
-using VTP2015.Helpers;
-using VTP2015.Repositories.Interfaces;
+using VTP2015.ServiceLayer;
 using VTP2015.ViewModels.Student;
+using File = VTP2015.Entities.File;
 
 namespace VTP2015.Controllers
 {
@@ -16,31 +16,11 @@ namespace VTP2015.Controllers
     [RoutePrefix("Student")]
     public class StudentController : Controller
     {
-        private readonly IAanvraagRepository _aanvraagRepository;
-        private readonly IBewijsRepository _bewijsRepository;
-        private readonly IDossierRepository _dossierRepository;
-        private readonly IPartimInformatieRepository _partimInformatieRepository;
-        private readonly IStudentRepository _studentRepository;
-        private readonly IOpleidingRepository _opleidingRepository;
-        private readonly IDocentRepository _docentRepository;
-        private readonly MailHelper _mailHelper;
-        private readonly ConfigFile _configFile;
+        private readonly IStudentFacade _studentFacade;
 
-
-
-        public StudentController(IAanvraagRepository aanvraagRepository, IBewijsRepository bewijsRepository, IDossierRepository dossierRepository,
-            IStudentRepository studentRepository, IPartimInformatieRepository partimInformatieRepository,IOpleidingRepository opleidingRepository,
-            IDocentRepository docentRepository)
+        public StudentController(IStudentFacade studentFacade)
         {
-            _aanvraagRepository = aanvraagRepository;
-            _bewijsRepository = bewijsRepository;
-            _dossierRepository = dossierRepository;
-            _studentRepository = studentRepository;
-            _partimInformatieRepository = partimInformatieRepository;
-            _opleidingRepository = opleidingRepository;
-            _docentRepository = docentRepository;
-            _configFile = new ConfigFile();
-            _mailHelper = new MailHelper();
+            _studentFacade = studentFacade;
         }
 
         #region index
@@ -53,7 +33,7 @@ namespace VTP2015.Controllers
 
         [Route("")]
         [HttpPost]
-        public ActionResult AddBewijs(IndexViewModel viewModel)
+        public ActionResult AddFile(IndexViewModel viewModel)
         {
 
             ModelState.Clear();
@@ -73,29 +53,29 @@ namespace VTP2015.Controllers
             }
             viewModel.File.SaveAs(path);
 
-            var studentId = _studentRepository.GetStudentIdByEmail(User.Identity.Name);
+            var studentId = _studentFacade.GetStudentCodeByEmail(User.Identity.Name);
 
-            var dbBewijs = new Bewijs
+            var dbBewijs = new Evidence
             {
                 StudentId = studentId,
                 Path = pic,
-                Omschrijving = viewModel.Omschrijving
+                Description = viewModel.Omschrijving
             };
 
-            _bewijsRepository.Insert(dbBewijs);
+            _studentFacade.InsertEvidence(dbBewijs);
             errors.Add("Finish");
             return Json(errors.ToArray());
         }
 
-        [Route("DeleteBewijs")]
+        [Route("DeleteEvidence")]
         [HttpPost]
-        public ActionResult DeleteBewijs(int bewijsId)
+        public ActionResult DeleteEvidence(int bewijsId)
         {
-            if (!_bewijsRepository.IsBewijsFromStudent(User.Identity.Name))
+            if (!_studentFacade.IsEvidenceFromStudent(User.Identity.Name))
                 return Content("bewijs bestaat niet voor gebruiker!");
 
             var name = User.Identity.Name.Split('@')[0];
-            var path = Path.Combine(Request.MapPath("/bewijzen/" + name), _bewijsRepository.Delete(bewijsId));
+            var path = Path.Combine(Request.MapPath("/bewijzen/" + name), _studentFacade.DeleteEvidence(bewijsId));
 
             if (!System.IO.File.Exists(path)) return Content("gegeven bestand kon niet verwijdert worden!");
 
@@ -107,7 +87,7 @@ namespace VTP2015.Controllers
         [HttpGet]
         public PartialViewResult DossierWidget()
         {
-            var models = _dossierRepository.GetByStudent(User.Identity.Name)
+            var models = _studentFacade.GetFilesByStudentEmail(User.Identity.Name)
                 .Project().To<DossierListViewModel>();
 
             return PartialView(models.ToArray());
@@ -117,7 +97,7 @@ namespace VTP2015.Controllers
         [HttpGet]
         public PartialViewResult BewijsListWidget()
         {
-            var models = _bewijsRepository.GetByStudent(User.Identity.Name)
+            var models = _studentFacade.GetEvidenceByStudentEmail(User.Identity.Name)
                 .Project().To<BewijsListViewModel>();
 
             return PartialView(models.ToArray());
@@ -133,11 +113,11 @@ namespace VTP2015.Controllers
         #endregion
 
         #region dossier
-        [Route("Dossier/{dossierId}")]
+        [Route("File/{dossierId}")]
         [HttpGet]
         public ActionResult Dossier(int dossierId)
         {
-            if (!_dossierRepository.IsDossierFromStudent(User.Identity.Name, dossierId)) return RedirectToAction("Index");
+            if (!_studentFacade.IsFileFromStudent(User.Identity.Name, dossierId)) return RedirectToAction("Index");
             return View();
         }
 
@@ -145,8 +125,8 @@ namespace VTP2015.Controllers
         [HttpGet]
         public ActionResult AangevraagdePartimsWidget(int dossierId)
         {
-            if (!_dossierRepository.IsDossierFromStudent(User.Identity.Name, dossierId)) return RedirectToAction("Index");
-            var models = _partimInformatieRepository.GetAangevraagdePartims(User.Identity.Name, dossierId)
+            if (!_studentFacade.IsFileFromStudent(User.Identity.Name, dossierId)) return RedirectToAction("Index");
+            var models = _studentFacade.GetRequestedPartims(User.Identity.Name, dossierId)
                 .Project().To<PartimViewModel>();
 
             return PartialView(models.ToArray());
@@ -156,8 +136,8 @@ namespace VTP2015.Controllers
         [HttpGet]
         public ActionResult BeschikbarePartimsWidget(int dossierId)
         {
-            if (!_dossierRepository.IsDossierFromStudent(User.Identity.Name, dossierId)) return RedirectToAction("Index");
-            var models = _partimInformatieRepository.GetBeschikbarePartims(User.Identity.Name, dossierId)
+            if (!_studentFacade.IsFileFromStudent(User.Identity.Name, dossierId)) return RedirectToAction("Index");
+            var models = _studentFacade.GetAvailablePartims(User.Identity.Name, dossierId)
                 .Project().To<PartimViewModel>();
 
             return PartialView(models.ToArray());
@@ -167,7 +147,7 @@ namespace VTP2015.Controllers
         [HttpGet]
         public PartialViewResult BewijsSelecterenWidget()
         {
-            var models = _bewijsRepository.GetByStudent(User.Identity.Name)
+            var models = _studentFacade.GetEvidenceByStudentEmail(User.Identity.Name)
                 .Project().To<BewijsListViewModel>();
 
             return PartialView(models.ToArray());
@@ -177,7 +157,7 @@ namespace VTP2015.Controllers
         [HttpGet]
         public PartialViewResult AanvraagDetailWidget(int dossierId)
         {
-            var models = _aanvraagRepository.GetByDossierId(dossierId)
+            var models = _studentFacade.GetRequestsByFileId(dossierId)
                 .Project().To<AanvraagDetailViewModel>();
 
             return PartialView(models.ToArray());
@@ -189,20 +169,20 @@ namespace VTP2015.Controllers
         {
             var configFile = new ConfigFile();
             var academieJaar = configFile.AcademieJaar();
-            if(!_partimInformatieRepository.SyncStudentPartims(User.Identity.Name,academieJaar)) return RedirectToAction("Index");
-            var studentId = _studentRepository.GetStudentIdByEmail(User.Identity.Name);
-            var dossier = new Dossier
+            if(!_studentFacade.SyncStudentPartims(User.Identity.Name,academieJaar)) return RedirectToAction("Index");
+            var studentId = _studentFacade.GetStudentCodeByEmail(User.Identity.Name);
+            var dossier = new File
             {
                 StudentId = studentId,
-                AanmaakDatum = DateTime.Now,
-                AfstudeerRichting = "",
+                DateCreated = DateTime.Now,
+                Specialization = "",
                 Editable = true,
-                AcademieJaar = academieJaar
+                AcademicYear = academieJaar
             };
 
-            _dossierRepository.Insert(dossier);
+            _studentFacade.InsertFile(dossier);
 
-            return this.RedirectToAction(c => c.Dossier(dossier.DossierId));
+            return this.RedirectToAction(c => c.Dossier(dossier.Id));
         }
 
         [Route("SaveAanvraag")]
@@ -212,33 +192,33 @@ namespace VTP2015.Controllers
             if(viewModel.Bewijzen == null) return Content("Geen bewijzen!");
             viewModel.Bewijzen = viewModel.Bewijzen.Distinct().ToArray();
 
-            var bewijzen = viewModel.Bewijzen.Select(bewijs => _bewijsRepository.GetById(bewijs)).ToList();
+            var bewijzen = viewModel.Bewijzen.Select(bewijsId => _studentFacade.GetEvidenceById(bewijsId)).ToList();
 
-            var aanvraag = new Aanvraag
+            var aanvraag = new Request
             {
-                DossierId = viewModel.DossierId,
-                PartimInformatie = _partimInformatieRepository.GetBySuperCode(viewModel.SuperCode),
-                Argumentatie = viewModel.Argumentatie,
+                FileId = viewModel.DossierId,
+                PartimInformation = _studentFacade.GetPartimInformationBySuperCode(viewModel.SuperCode),
+                Argumentation = viewModel.Argumentatie,
                 LastChanged = DateTime.Now,
-                Bewijzen = bewijzen
+                Evidence = bewijzen
             };
 
-            return Content(!_aanvraagRepository.SyncAanvraagInDossier(aanvraag) ? "Don't cheat!" : "Saved!");
+            return Content(!_studentFacade.SyncRequestInFile(aanvraag) ? "Don't cheat!" : "Saved!");
 
-            //if (!_mailRepository.EmailExists(aanvraag.PartimInformatie.Docent.Email))
+            //if (!_mailRepository.EmailExists(aanvraag.PartimInformation.Lecturer.Email))
             //{
-            //    _mailRepository.AddDocent(aanvraag.PartimInformatie.Docent.Email);
+            //    _mailRepository.AddDocent(aanvraag.PartimInformation.Lecturer.Email);
             //}
-            //System.TimeSpan passedTimeSinceLastEmail = System.DateTime.Now.Subtract(_mailRepository.GetByEmail(aanvraag.PartimInformatie.Docent.Email).WarningMail);
+            //System.TimeSpan passedTimeSinceLastEmail = System.DateTime.Now.Subtract(_mailRepository.GetByEmail(aanvraag.PartimInformation.Lecturer.Email).WarningMail);
             //if (_configFile.WarningMailTimeIsAllowed(passedTimeSinceLastEmail))
             //{
             //    string bodyText = "Geachte \r \r Een nieuwe aanvraag betreffende " +
-            //        aanvraag.PartimInformatie.Docent.Email + " vereist uw goedkeuring. Verder heeft u nog steeds " +
-            //        _aanvraagRepository.GetOnbehandeldeAanvragen(aanvraag.PartimInformatie.Docent.Email).Count() + " openstaande aanvragen." +
+            //        aanvraag.PartimInformation.Lecturer.Email + " vereist uw goedkeuring. Verder heeft u nog steeds " +
+            //        _studentFacade.GetUntreadedRequests(aanvraag.PartimInformation.Lecturer.Email).Count() + " openstaande aanvragen." +
             //        " U kunt deze aanvragen keuren op het online webplatform" +
             //        "\r \r (Deze mail werd verstuurd vanop het webplatform op vraag van de betreffende trajectbegeleider, antwoorden op dit emailadres worden niet gelezen.)";
 
-            //    _mailHelper.sendEmail(User.Identity.Name, aanvraag.PartimInformatie.Docent.Email, bodyText);
+            //    _mailHelper.sendEmail(User.Identity.Name, aanvraag.PartimInformation.Lecturer.Email, bodyText);
             //}
         }
 
@@ -246,7 +226,11 @@ namespace VTP2015.Controllers
         [HttpPost]
         public ActionResult DeleteAanvraag(int dossierId, string supercode)
         {
-            return !_studentRepository.IsAanvraagFromStudent(dossierId,supercode, User.Identity.Name) ? Content("Don't cheat!") : Content(!_aanvraagRepository.Delete(dossierId, supercode) ? "Aanvraag bestaat niet!" : "Voltooid!");
+            return _studentFacade.IsRequestFromStudent(dossierId, supercode, User.Identity.Name)
+                ? Content("Don't cheat!")
+                : Content(!_studentFacade.DeleteRequest(dossierId, supercode)
+                    ? "Request bestaat niet!"
+                    : "Voltooid!");
         }
 
         #endregion

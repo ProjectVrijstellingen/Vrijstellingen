@@ -27,9 +27,9 @@ namespace VTP2015.Migrations
             bool success = false;
             success = im.CreateRole("Student");
             if (!success) return success;
-            success = im.CreateRole("Docent");
+            success = im.CreateRole("Lecturer");
             if (!success) return success;
-            success = im.CreateRole("TrajectBegeleider");
+            success = im.CreateRole("Counselor");
             if (!success) return success;
             success = im.CreateRole("Admin");
             if (!success) return success;
@@ -43,9 +43,9 @@ namespace VTP2015.Migrations
             if (!success) return success;
             success = im.AddUserToRole(newUser.Id, "Admin");
             if (!success) return success;
-            success = im.AddUserToRole(newUser.Id, "TrajectBegeleider");
+            success = im.AddUserToRole(newUser.Id, "Counselor");
             if (!success) return success;
-            success = im.AddUserToRole(newUser.Id, "Docent");
+            success = im.AddUserToRole(newUser.Id, "Lecturer");
             if (!success) return success;
 
             newUser = new ApplicationUser()
@@ -55,7 +55,7 @@ namespace VTP2015.Migrations
             };
             success = im.CreateUser(newUser, "docent");
             if (!success) return success;
-            success = im.AddUserToRole(newUser.Id, "Docent");
+            success = im.AddUserToRole(newUser.Id, "Lecturer");
             if (!success) return success;
 
             newUser = new ApplicationUser()

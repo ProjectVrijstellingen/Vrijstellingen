@@ -12,7 +12,7 @@ namespace VTP2015.DataAccess.Config
 
             // Properties
             ToTable("Partims");
-            Property(t => t.Naam).HasMaxLength(255).IsRequired();
+            Property(t => t.Name).HasMaxLength(255).IsRequired();
 
             // Relationships
         }

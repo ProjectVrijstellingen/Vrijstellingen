@@ -8,6 +8,6 @@ namespace VTP2015.Entities
 {
     public enum Status
     {
-        Onbehandeld, Afgekeurd, Goedgekeurd
+        Untreated, Rejected, Approved
     }
 }

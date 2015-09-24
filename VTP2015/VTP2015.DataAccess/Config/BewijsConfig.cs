@@ -3,20 +3,20 @@ using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.Config
 {
-    class BewijsConfig : EntityTypeConfiguration<Bewijs>
+    class BewijsConfig : EntityTypeConfiguration<Evidence>
     {
         public BewijsConfig()
         {
             // Primary Key
-            HasKey(t => t.BewijsId);
+            HasKey(t => t.EvidenceId);
 
             // Properties
-            ToTable("Bewijzen");
+            ToTable("Evidence");
             Property(t => t.Path).IsRequired();
 
             // Relationships
             HasRequired(t => t.Student)
-                .WithMany(t => t.Bewijzen)
+                .WithMany(t => t.Evidence)
                 .HasForeignKey(d => d.StudentId)
                 .WillCascadeOnDelete(false);
 

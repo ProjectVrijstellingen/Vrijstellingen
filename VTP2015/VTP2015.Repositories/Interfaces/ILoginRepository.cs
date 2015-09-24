@@ -5,7 +5,7 @@ namespace VTP2015.Repositories.Interfaces
 {
     public interface ILoginRepository
     {
-        IEnumerable<TrajectBegeleider> TrajectBegeleiders { get; }
+        IEnumerable<Counselor> TrajectBegeleiders { get; }
         bool IsBegeleider(string email);
         void RemoveBegeleider(string email);
         void AddBegeleider(string email);

@@ -25,7 +25,7 @@ namespace VTP2015.Repositories.Implementations
         {
             return _db.Context.Studenten
                 .Where(s => s.Email == email)
-                .Select(s => s.Opleiding).First();
+                .Select(s => s.Education).First();
         }
 
         public IQueryable<Opleiding> GetOpleidingen()

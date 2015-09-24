@@ -12,7 +12,7 @@
         @Html.Action("AddFeedbackWidget", "Feedback")
     </div>
     <div id="bewijzenColumn" class="col-md-6">
-        @using (Html.BeginPanel("Bewijzen"))
+        @using (Html.BeginPanel("Evidence"))
         {
             @Html.Action("BewijsListWidget")
             @Html.Action("BewijsToevoegenWidget")

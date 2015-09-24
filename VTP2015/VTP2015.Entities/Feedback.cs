@@ -1,8 +1,7 @@
 ﻿namespace VTP2015.Entities
 {
-    public class Feedback
+    public class Feedback : BaseEntity
     {
-        public int FeedbackId { get; set; }
         public string StudentId { get; set; }
         public string Text { get; set; }
 

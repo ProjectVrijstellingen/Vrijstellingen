@@ -57,7 +57,7 @@ $(document).ready(function () {
     $(".approveButton").click(function (event) {
         var aanvraagId = $(huidigeAanvragen[huidigeAanvraag]).data("aanvraagid");
         $.ajax({
-            url: "Docent/ApproveAanvraag",
+            url: "Lecturer/ApproveAanvraag",
             data: { aanvraagID: aanvraagId },
             type: "POST",
             success: function (data) {
@@ -70,7 +70,7 @@ $(document).ready(function () {
     $(".dissapproveButton").click(function (event) {
         var aanvraagId = $(huidigeAanvragen[huidigeAanvraag]).data("aanvraagid");
         $.ajax({
-            url: "Docent/DissapproveAanvraag",
+            url: "Lecturer/DissapproveAanvraag",
             data: { aanvraagID: aanvraagId },
             type: "POST",
             success: function (data) {

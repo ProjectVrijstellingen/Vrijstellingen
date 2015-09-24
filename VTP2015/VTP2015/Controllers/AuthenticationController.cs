@@ -6,7 +6,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using System.IO;
 using VTP2015.Identity;
-using VTP2015.Repositories;
 using VTP2015.Repositories.Interfaces;
 using VTP2015.Repositories.Remote_Services;
 using VTP2015.ViewModels.Authentication;
@@ -81,9 +80,9 @@ namespace VTP2015.Controllers
                 }
 
                 UserManager.AddToRole(user.Id, GetRole(model.Email));
-                if (GetRole(model.Email).Equals("TrajectBegeleider"))
+                if (GetRole(model.Email).Equals("Counselor"))
                 {
-                    UserManager.AddToRole(user.Id, "Docent");
+                    UserManager.AddToRole(user.Id, "Lecturer");
                 }
             }
             await SignInAsync(user, model.RememberMe);
@@ -144,7 +143,7 @@ namespace VTP2015.Controllers
         private string GetRole(string email){
             if (email.Contains("@howest.be"))
             {
-                return _loginRepository.IsBegeleider(email) ? "TrajectBegeleider" : "Docent";
+                return _loginRepository.IsBegeleider(email) ? "Counselor" : "Lecturer";
             }
             return email.Contains("@student.howest.be") ? "Student" : "Authentication";
         }

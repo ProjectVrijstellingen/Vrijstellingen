@@ -9,7 +9,7 @@ namespace VTP2015.Repositories.Implementations
     public class PartimInformatieRepository : IPartimInformatieRepository
     {
         private readonly IDataAccessFacade _db;
-        private readonly GenericRepository<PartimInformatie> _genericRepository;
+        private readonly GenericRepository<PartimInformation> _genericRepository;
         private readonly IBamaflexRepository _bamaflexRepository;
         private readonly IDocentRepository _docentRepository;
 
@@ -18,32 +18,32 @@ namespace VTP2015.Repositories.Implementations
             _docentRepository = docentRepository;
             _bamaflexRepository = bamaflexRepository;
             _db = db;
-            _genericRepository = new GenericRepository<PartimInformatie>(db.Context);
+            _genericRepository = new GenericRepository<PartimInformation>(db.Context);
         }
 
-        public IQueryable<PartimInformatie> GetAangevraagdePartims(string email,int dossierId)
+        public IQueryable<PartimInformation> GetAangevraagdePartims(string email,int dossierId)
         {
             return _db.Context.Aanvragen
-                .Where(a => a.DossierId == dossierId && a.Dossier.Student.Email == email)
-                .Select(a => a.PartimInformatie);
+                .Where(a => a.FileId == dossierId && a.File.Student.Email == email)
+                .Select(a => a.PartimInformation);
         }
 
-        public IQueryable<PartimInformatie> GetBeschikbarePartims(string email, int dossierId)
+        public IQueryable<PartimInformation> GetBeschikbarePartims(string email, int dossierId)
         {
             return _db.Context.Studenten
                 .Where(s => s.Email == email)
-                .SelectMany(s => s.PartimInformatie)
+                .SelectMany(s => s.PartimInformation)
                 .Except(GetAangevraagdePartims(email, dossierId));
         }
 
-        public PartimInformatie GetBySuperCode(string superCode)
+        public PartimInformation GetBySuperCode(string superCode)
         {
             return _genericRepository.AsQueryable(p => p.SuperCode == superCode).First();
         }
 
         public bool SyncStudentPartims(string email, string academieJaar)
         {
-            if (_db.Context.Studenten.Where(s => s.Email == email).SelectMany(s => s.Dossiers).Any(d => d.AcademieJaar == academieJaar)) return false;
+            if (_db.Context.Studenten.Where(s => s.Email == email).SelectMany(s => s.Files).Any(d => d.AcademicYear == academieJaar)) return false;
             var student = _db.Context.Studenten.First(x => x.Email == email);
             var bamaflexInformatie = _bamaflexRepository.GetPartimInformatieList(student.StudentId, academieJaar);
 
@@ -52,19 +52,19 @@ namespace VTP2015.Repositories.Implementations
                 if (IsPartimCached(partimInformatie, student))
                 {
                     var informatie = partimInformatie;
-                    student.PartimInformatie.Add(_genericRepository.AsQueryable(p => p.SuperCode == informatie.Supercode.Supercode1).First());
+                    student.PartimInformation.Add(_genericRepository.AsQueryable(p => p.SuperCode == informatie.Supercode.Supercode1).First());
                     continue;
                 }
                 
-                var partim = new PartimInformatie
+                var partim = new PartimInformation
                 {
                     SuperCode = partimInformatie.Supercode.Supercode1,
-                    Docent = _db.Context.Docenten.First(d => d.Email == "docent@howest.be")
+                    Lecturer = _db.Context.Docenten.First(d => d.Email == "docent@howest.be")
                 };
 
-                if (student.PartimInformatie.Any(m => m.Partim.PartimId == partimInformatie.Partim.Id))
+                if (student.PartimInformation.Any(m => m.Partim.PartimId == partimInformatie.Partim.Id))
                 {
-                    partim.Partim = student.PartimInformatie
+                    partim.Partim = student.PartimInformation
                         .Select(p => p.Partim)
                         .First(m => m.PartimId == partimInformatie.Partim.Id);
                 }
@@ -74,13 +74,13 @@ namespace VTP2015.Repositories.Implementations
                 }
                 else
                 {
-                    partim.Partim = new Partim { PartimId = partimInformatie.Partim.Id, Naam = partimInformatie.Partim.Naam };
+                    partim.Partim = new Partim { PartimId = partimInformatie.Partim.Id, Name = partimInformatie.Partim.Naam };
 
                 }
 
-                if (student.PartimInformatie.Any(m => m.Module.ModuleId == partimInformatie.Module.Id))
+                if (student.PartimInformation.Any(m => m.Module.ModuleId == partimInformatie.Module.Id))
                 {
-                    partim.Module = student.PartimInformatie
+                    partim.Module = student.PartimInformation
                         .Select(p => p.Module)
                         .First(m => m.ModuleId == partimInformatie.Module.Id);
                 }
@@ -90,11 +90,11 @@ namespace VTP2015.Repositories.Implementations
                 }
                 else
                 {
-                    partim.Module = new Module { ModuleId = partimInformatie.Module.Id, Naam = partimInformatie.Module.Naam };
+                    partim.Module = new Module { ModuleId = partimInformatie.Module.Id, Name = partimInformatie.Module.Naam };
 
                 }
 
-                student.PartimInformatie.Add(partim);
+                student.PartimInformation.Add(partim);
             }
 
             _db.Context.SaveChanges();
@@ -104,16 +104,16 @@ namespace VTP2015.Repositories.Implementations
         private bool IsPartimCached(DataAccess.Bamaflex.PartimInformatie partim, Student student)
         {
             return _genericRepository.AsQueryable(p => p.SuperCode == partim.Supercode.Supercode1).Any() ||
-                student.PartimInformatie.Any(p => p.SuperCode == partim.Supercode.Supercode1);
+                student.PartimInformation.Any(p => p.SuperCode == partim.Supercode.Supercode1);
         }
 
         private bool IsStudentLinkedToPartim(DataAccess.Bamaflex.PartimInformatie partim, Student student)
         {
             return _db.Context.Studenten
                 .Where(s => s.StudentId == student.StudentId)
-                .SelectMany(s => s.PartimInformatie)
+                .SelectMany(s => s.PartimInformation)
                 .Any(p => p.SuperCode == partim.Supercode.Supercode1) ||
-                student.PartimInformatie
+                student.PartimInformation
                 .Any(p => p.SuperCode == partim.Supercode.Supercode1);
         }
     }

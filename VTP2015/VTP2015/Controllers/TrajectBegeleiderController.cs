@@ -1,40 +1,31 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
 using RazorPDF;
 using VTP2015.Config;
 using VTP2015.Helpers;
-using VTP2015.Repositories.Interfaces;
+using VTP2015.ServiceLayer;
 using VTP2015.ViewModels.TrajectBegeleider;
 
 namespace VTP2015.Controllers
 {
-    [Authorize(Roles = "TrajectBegeleider")]
-    [RoutePrefix("TrajectBegeleider")]
+    [Authorize(Roles = "Counselor")]
+    [RoutePrefix("Counselor")]
     public class TrajectBegeleiderController : Controller
     {
-        private readonly IDossierRepository _dossierRepository;
-        private readonly IAanvraagRepository _aanvraagRepository;
-        private readonly ILoginRepository _loginRepository;
-        private readonly IOpleidingRepository _opleidingRepository;
-        private readonly IDocentRepository _docentRepository;
+        private readonly ICounselorFacade _counselorFacade;
         private readonly ConfigFile _configFile;
         private readonly MailHelper _mailHelper;
 
-        public TrajectBegeleiderController(IDossierRepository dossierRepository, IAanvraagRepository aanvraagRepository, ILoginRepository loginRepository, IDocentRepository docentRepository, IOpleidingRepository opleidingRepository)
+        public TrajectBegeleiderController(ICounselorFacade counselorFacade)
         {
-            _dossierRepository = dossierRepository;
-            _aanvraagRepository = aanvraagRepository;
-            _loginRepository = loginRepository;
-            _docentRepository = docentRepository;
-            _opleidingRepository = opleidingRepository;
+            _counselorFacade = counselorFacade;
             _configFile = new ConfigFile();
             _mailHelper = new MailHelper();
         }
 
         //
-        // GET: /TrajectBegeleider/
+        // GET: /Counselor/
         [Route("")]
         [HttpGet]
         public ViewResult Index()
@@ -48,8 +39,9 @@ namespace VTP2015.Controllers
         {
             var viewModel = new OpleidingSelectViewModel
             {
-                SelectedOpleiding = _loginRepository.GetOpleiding(User.Identity.Name),
-                Opleidingen = _opleidingRepository.GetOpleidingen().Project().To<OpleidingViewModel>().ToList()
+                SelectedOpleiding = _counselorFacade.GetEducationNameByStudentEmail(User.Identity.Name),
+                Opleidingen = _counselorFacade.GetEducations()
+                    .Project().To<OpleidingViewModel>().ToList()
             };
 
             return PartialView(viewModel);
@@ -60,7 +52,7 @@ namespace VTP2015.Controllers
         public ActionResult ChangeOpleiding(string opleiding)
         {
             //TODO: 1 repository call
-            _loginRepository.ChangeOpleiding(User.Identity.Name, _opleidingRepository.GetOpleidingen().First(x => x.Naam == opleiding));
+            _counselorFacade.ChangeEducation(User.Identity.Name, opleiding);
             return Json("Changed!");
         }
 
@@ -68,7 +60,7 @@ namespace VTP2015.Controllers
         [HttpGet]
         public PartialViewResult DossierOverviewWidget()
         {
-            var models = _dossierRepository.GetFromBegeleider(User.Identity.Name, _configFile.AcademieJaar()) 
+            var models = _counselorFacade.GetFileByCounselorEmail(User.Identity.Name, _configFile.AcademieJaar())
                 .Project().To<DossierOverviewViewModel>();
 
             return PartialView(models);
@@ -79,7 +71,7 @@ namespace VTP2015.Controllers
         [HttpGet]
         public PartialViewResult AanvraagDetailsWidget()
         {
-            var models = _aanvraagRepository.GetAll()
+            var models = _counselorFacade.GetRequests()
                 .Project().To<AanvraagDetailsViewModel>();
 
             return PartialView(models);
@@ -89,28 +81,30 @@ namespace VTP2015.Controllers
         [HttpPost]
         public ActionResult SendReminder(int aanvraagId)
         {
-            string email = _aanvraagRepository.GetEmailByAanvraagId(aanvraagId);
-            TimeSpan passedTimeSinceLastEmail = DateTime.Now.Subtract(_docentRepository.GetByEmail(email).WarningMail);
-            if (_configFile.WarningMailTimeIsAllowed(passedTimeSinceLastEmail))
-            {
-                string bodyText = "Geachte \r \r ";
-                string begeleider = User.Identity.Name;
-                int aantalAanvragenWachtend = _aanvraagRepository.GetOnbehandeldeAanvragen(email).Count();
-                string dringendeAanvraagPartimNaam = _aanvraagRepository.GetAanvraagById(aanvraagId).PartimInformatie.Partim.Naam;
-                string dringendeAanvraagAanvragerNaam = _aanvraagRepository.GetAanvraagById(aanvraagId).Dossier.Student.Email;
+            _counselorFacade.SendReminder(aanvraagId);
+            return Content("");
+            //string email = _aanvraagRepository.GetEmailByAanvraagId(aanvraagId);
+            //TimeSpan passedTimeSinceLastEmail = DateTime.Now.Subtract(_docentRepository.GetByEmail(email).WarningMail);
+            //if (_configFile.WarningMailTimeIsAllowed(passedTimeSinceLastEmail))
+            //{
+            //    string bodyText = "Geachte \r \r ";
+            //    string begeleider = User.Identity.Name;
+            //    int aantalAanvragenWachtend = _aanvraagRepository.GetOnbehandeldeAanvragen(email).Count();
+            //    string dringendeAanvraagPartimNaam = _aanvraagRepository.GetAanvraagById(aanvraagId).PartimInformation.Partim.Name;
+            //    string dringendeAanvraagAanvragerNaam = _aanvraagRepository.GetAanvraagById(aanvraagId).File.Student.Email;
 
-                bodyText += begeleider + " Wenst u er van op de hoogte te brengen dat de aanvraag betreffende " +
-                                dringendeAanvraagPartimNaam + " aangevraagd door " +
-                                dringendeAanvraagAanvragerNaam + " op dringende keuring wacht! Verder wachten er nog " +
-                                aantalAanvragenWachtend + " aanvragen op uw keuring. U kunt deze aanvragen bekijken en keuren op het vrijstellingen web platform."
-                                + "\r \r (Deze mail werd verstuurd vanop het webplatform op vraag van de betreffende trajectbegeleider, antwoorden op dit emailadres worden niet gelezen.)";
-                _mailHelper.sendEmail(begeleider, email, bodyText);
-                _docentRepository.ChangeWarningTime(email, DateTime.Now);
+            //    bodyText += begeleider + " Wenst u er van op de hoogte te brengen dat de aanvraag betreffende " +
+            //                    dringendeAanvraagPartimNaam + " aangevraagd door " +
+            //                    dringendeAanvraagAanvragerNaam + " op dringende keuring wacht! Verder wachten er nog " +
+            //                    aantalAanvragenWachtend + " aanvragen op uw keuring. U kunt deze aanvragen bekijken en keuren op het vrijstellingen web platform."
+            //                    + "\r \r (Deze mail werd verstuurd vanop het webplatform op vraag van de betreffende trajectbegeleider, antwoorden op dit emailadres worden niet gelezen.)";
+            //    _mailHelper.sendEmail(begeleider, email, bodyText);
+            //    _docentRepository.ChangeWarningTime(email, DateTime.Now);
 
-                return Content(email + " ontvangt een email met een herinnering.");
-            }
-            return Content(email + " heeft reeds minder dan " + _configFile.GetConfig().WarningMailFrequency + " (Dagen/Uren/Minuten) geleden een herinnering ontvangen. " + 
-                "De administrator van dit platform verhindert dat u momenteel een email kunt sturen om spam tegen te gaan");
+            //    return Content(email + " ontvangt een email met een herinnering.");
+            //}
+            //return Content(email + " heeft reeds minder dan " + _configFile.GetConfig().WarningMailFrequency + " (Dagen/Uren/Minuten) geleden een herinnering ontvangen. " + 
+            //    "De administrator van dit platform verhindert dat u momenteel een email kunt sturen om spam tegen te gaan");
         }
 
         [Route("PrintDossier")]

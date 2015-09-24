@@ -6,9 +6,9 @@ namespace VTP2015.Repositories.Interfaces
     public interface IBewijsRepository
     {
         bool IsBewijsFromStudent(string email);
-        Bewijs GetById(int bewijsId);
-        IQueryable<Bewijs> GetByStudent(string email);
-        Bewijs Insert(Bewijs entity);
+        Evidence GetById(int bewijsId);
+        IQueryable<Evidence> GetByStudent(string email);
+        Evidence Insert(Evidence entity);
         string Delete(object id);
     }
 }

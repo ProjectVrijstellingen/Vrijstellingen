@@ -11,20 +11,20 @@ namespace VTP2015.DataAccess.Config
             HasKey(t => t.StudentId);
 
             // Properties
-            ToTable("Studenten");
-            Property(t => t.Naam).HasMaxLength(30).IsRequired();
-            Property(t => t.VoorNaam).HasMaxLength(30).IsRequired();
+            ToTable("Students");
+            Property(t => t.Name).HasMaxLength(30).IsRequired();
+            Property(t => t.FirstName).HasMaxLength(30).IsRequired();
             Property(t => t.Email).HasMaxLength(255).IsRequired();
             Property(t => t.PhoneNumber).IsRequired();
 
             // Relationships
 
-            HasRequired(t => t.Opleiding)
+            HasRequired(t => t.Education)
                 .WithMany(t => t.Studenten)
-                .HasForeignKey(d => d.OpleidingId);
+                .HasForeignKey(d => d.EducationId);
 
-            HasMany(t => t.PartimInformatie)
-                .WithMany(t => t.Studenten)
+            HasMany(t => t.PartimInformation)
+                .WithMany(t => t.Students)
                 .Map(m =>
                 {
                     m.ToTable("StudentPartimInformatie");

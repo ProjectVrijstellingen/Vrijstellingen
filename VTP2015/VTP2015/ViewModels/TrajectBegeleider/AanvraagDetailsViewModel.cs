@@ -10,7 +10,7 @@ namespace VTP2015.ViewModels.TrajectBegeleider
         public string DossierId { get; set; }
         public Status Status { get; set; }
         public string Argumentatie { get; set; }
-        public PartimInformatie PartimInformatie { get; set; }
+        public PartimInformation PartimInformation { get; set; }
         public IEnumerable<BewijsViewModel> Bewijzen { get; set; }
     }
 }

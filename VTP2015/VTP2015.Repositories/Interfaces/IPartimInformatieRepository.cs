@@ -5,9 +5,9 @@ namespace VTP2015.Repositories.Interfaces
 {
     public interface IPartimInformatieRepository
     {
-        IQueryable<PartimInformatie> GetAangevraagdePartims(string email, int dossierId);
-        IQueryable<PartimInformatie> GetBeschikbarePartims(string email, int dossierId);
-        PartimInformatie GetBySuperCode(string superCode);
+        IQueryable<PartimInformation> GetAangevraagdePartims(string email, int dossierId);
+        IQueryable<PartimInformation> GetBeschikbarePartims(string email, int dossierId);
+        PartimInformation GetBySuperCode(string superCode);
         bool SyncStudentPartims(string email, string academieJaar);
 
     }

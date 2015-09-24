@@ -35,11 +35,11 @@
                         }
                     </li>
                     <li>
-                        @if (im.HasRole(User.Identity.Name, "Docent"))
-                        {@Html.RouteLink("Docent panel", new { controller = "Docent", action = "Index" })}
+                        @if (im.HasRole(User.Identity.Name, "Lecturer"))
+                        {@Html.RouteLink("Lecturer panel", new { controller = "Docent", action = "Index" })}
                     </li>
                     <li>
-                        @if (im.HasRole(User.Identity.Name, "TrajectBegeleider"))
+                        @if (im.HasRole(User.Identity.Name, "Counselor"))
                         {@Html.RouteLink("Traject begeleider panel", new { controller = "TrajectBegeleider", action = "Index" })}
                     </li>
                     <li>                        

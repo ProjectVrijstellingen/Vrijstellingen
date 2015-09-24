@@ -3,12 +3,12 @@ using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.Config
 {
-    public class TrajectBegeleiderConfig : EntityTypeConfiguration<TrajectBegeleider>
+    public class TrajectBegeleiderConfig : EntityTypeConfiguration<Counselor>
     {
         public TrajectBegeleiderConfig()
         {
             // Primary Key
-            HasKey(t => t.TrajectBegeleiderId);
+            HasKey(t => t.CounselorId);
 
             // Properties
             ToTable("TrajectBegeleiders");

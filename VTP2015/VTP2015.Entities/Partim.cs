@@ -2,11 +2,11 @@
 
 namespace VTP2015.Entities
 {
-    public class Partim
+    public class Partim : BaseEntity
     {
         public string PartimId { get; set; }
-        public string Naam { get; set; }
+        public string Name { get; set; }
 
-        public ICollection<PartimInformatie> PartimInformatie { get; set; }
+        public ICollection<PartimInformation> PartimInformation { get; set; }
     }
 }

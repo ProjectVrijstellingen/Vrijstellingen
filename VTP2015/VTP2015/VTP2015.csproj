@@ -23,6 +23,7 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -390,6 +391,10 @@
     <ProjectReference Include="..\VTP2015.Repositories\VTP2015.Repositories.csproj">
       <Project>{5c9557c0-1283-479e-a1a8-346a1bfc4936}</Project>
       <Name>VTP2015.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VTP2015.ServiceLayer\VTP2015.ServiceLayer.csproj">
+      <Project>{fce6cc8c-02f0-4636-8920-5569b3a33ce0}</Project>
+      <Name>VTP2015.ServiceLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 
 namespace VTP2015.Entities
 {
-    public class Docent
+    public class Lecturer : BaseEntity
     {
-        public int DocentId { get; set; }
         public string Email { get; set; }
         public DateTime InfoMail { get; set; }
         public DateTime WarningMail { get; set; }
 
-        public virtual ICollection<PartimInformatie> PartimInformatie { get; set; }
+        public virtual ICollection<PartimInformation> PartimInformation { get; set; }
     }
 }

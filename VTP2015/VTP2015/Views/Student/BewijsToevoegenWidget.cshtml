@@ -1,8 +1,8 @@
 ﻿@model VTP2015.ViewModels.Student.IndexViewModel
 
-@*@using (Ajax.BeginForm("AddBewijs", "Student", new AjaxOptions{HttpMethod = "Post", OnSuccess = "BewijsSuccess"} ,new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
+@*@using (Ajax.BeginForm("AddFile", "Student", new AjaxOptions{HttpMethod = "Post", OnSuccess = "BewijsSuccess"} ,new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
 {*@
-<form id="addBewijs-form" class="form-horizontal" data-url="@Url.Action("AddBewijs","Student")">
+<form id="addBewijs-form" class="form-horizontal" data-url="@Url.Action("AddFile","Student")">
     <div class="input-group">
         @Html.LabelFor(m => m.File, new { @class = "form-label" })
         @*@Html.TextBoxFor(m => m.File, new {type = "file"})*@

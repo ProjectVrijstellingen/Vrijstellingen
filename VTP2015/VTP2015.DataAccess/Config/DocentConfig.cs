@@ -9,12 +9,12 @@ using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.Config
 {
-    class DocentConfig : EntityTypeConfiguration<Docent>
+    class DocentConfig : EntityTypeConfiguration<Lecturer>
     {
         public DocentConfig()
         {
             // Primary Key
-            HasKey(t => t.DocentId);
+            HasKey(t => t.LecturerId);
 
             // Properties
             ToTable("Docenten");
@@ -23,8 +23,8 @@ namespace VTP2015.DataAccess.Config
             Property(x => x.WarningMail).IsRequired();
 
             // Relationships
-            HasMany(t => t.PartimInformatie)
-                .WithRequired(d => d.Docent);
+            HasMany(t => t.PartimInformation)
+                .WithRequired(d => d.Lecturer);
         }
     }
 }

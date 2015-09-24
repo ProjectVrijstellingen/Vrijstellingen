@@ -1,32 +1,29 @@
 ﻿using System.Linq;
-using System.Linq.Dynamic;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
-using Microsoft.Ajax.Utilities;
-using Ninject.Infrastructure.Language;
-using VTP2015.Repositories;
-using VTP2015.Repositories.Interfaces;
+using VTP2015.ServiceLayer;
 using VTP2015.ViewModels.Docent;
 
 namespace VTP2015.Controllers
 {
-    [Authorize(Roles = "Docent")]
-    [RoutePrefix("Docent")]
+    [Authorize(Roles = "Lecturer")]
+    [RoutePrefix("Lecturer")]
     public class DocentController : Controller
     {
-        private readonly IAanvraagRepository _aanvraagRepository;
-        public DocentController(IAanvraagRepository aanvraagRepository)
+        private readonly ILecturerFacade _lecturerFacade;
+
+        public DocentController(ILecturerFacade lecturerFacade)
         {
-            _aanvraagRepository = aanvraagRepository;
+            _lecturerFacade = lecturerFacade;
         }
 
         //
-        // GET: /Docent/
+        // GET: /Lecturer/
         [HttpGet]
         [Route("")]
         public ViewResult Index()
         {
-            ViewBag.DocentHeeftAanvragen = _aanvraagRepository.GetOnbehandeldeAanvragen(User.Identity.Name).Any();
+            ViewBag.DocentHeeftAanvragen = _lecturerFacade.GetUntreadedRequests(User.Identity.Name).Any();
             return View();
         }
 
@@ -34,7 +31,7 @@ namespace VTP2015.Controllers
         [Route("StudentListWidget")]
         public PartialViewResult StudentListWidget()
         {
-            var viewModel = _aanvraagRepository.GetOnbehandeldeAanvragenDistinct(User.Identity.Name)
+            var viewModel = _lecturerFacade.GetUntreadedRequestsDistinct(User.Identity.Name)
                 .Project().To<StudentListViewModel>();
 
             return PartialView(viewModel);
@@ -44,7 +41,7 @@ namespace VTP2015.Controllers
         [Route("AanvraagListWidget")]
         public PartialViewResult AanvraagListWidget()
         {
-            var viewModel = _aanvraagRepository.GetOnbehandeldeAanvragen(User.Identity.Name)
+            var viewModel = _lecturerFacade.GetUntreadedRequests(User.Identity.Name)
                 .Project().To<AanvraagListViewModel>();
 
             return PartialView(viewModel);
@@ -54,7 +51,7 @@ namespace VTP2015.Controllers
         [HttpPost]
         public ActionResult ApproveAanvraag(int aanvraagId)
         {
-            return Content(_aanvraagRepository.Beoordeel(aanvraagId, true, User.Identity.Name) 
+            return Content(_lecturerFacade.Approve(aanvraagId, true, User.Identity.Name) 
                 ? "Voltooid!" 
                 : "De aanvraag mag niet beoordeeld worden door u!");
         }
@@ -63,7 +60,7 @@ namespace VTP2015.Controllers
         [HttpPost]
         public ActionResult DissapproveAanvraag(int aanvraagId)
         {
-            return Content(_aanvraagRepository.Beoordeel(aanvraagId, false, User.Identity.Name) 
+            return Content(_lecturerFacade.Approve(aanvraagId, false, User.Identity.Name) 
                 ? "Voltooid!" 
                 : "De aanvraag mag niet beoordeeld worden door u!");
         }

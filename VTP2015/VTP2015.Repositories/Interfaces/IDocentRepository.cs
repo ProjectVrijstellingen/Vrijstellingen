@@ -5,8 +5,8 @@ namespace VTP2015.Repositories.Interfaces
 {
     public interface IDocentRepository
     {
-        Docent GetByEmail(string email);
-        Docent AddDocent(string supercode);
+        Lecturer GetByEmail(string email);
+        Lecturer AddDocent(string supercode);
         void ChangeInfoTime(string email, DateTime infoTime);
         void ChangeWarningTime(string email, DateTime warningTime);
         bool EmailExists(string email);

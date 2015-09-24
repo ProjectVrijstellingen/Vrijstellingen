@@ -5,14 +5,14 @@ namespace VTP2015.Repositories.Interfaces
 {
     public interface IAanvraagRepository
     {
-        IQueryable<Aanvraag> GetAll();
-        IQueryable<Aanvraag> GetByDossierId(int dossierId);
-        IQueryable<Aanvraag> GetOnbehandeldeAanvragen(string email);
-        IQueryable<Aanvraag> GetOnbehandeldeAanvragenDistinct(string email);
+        IQueryable<Request> GetAll();
+        IQueryable<Request> GetByDossierId(int dossierId);
+        IQueryable<Request> GetOnbehandeldeAanvragen(string email);
+        IQueryable<Request> GetOnbehandeldeAanvragenDistinct(string email);
         bool Beoordeel(int aanvraagId, bool isGoedgekeurd, string email);
-        bool SyncAanvraagInDossier(Aanvraag aanvraag);
+        bool SyncAanvraagInDossier(Request request);
         bool Delete(int dossierId, string supercode);
         string GetEmailByAanvraagId(int aanvraagId);
-        Aanvraag GetAanvraagById(int aanvraagId);
+        Request GetAanvraagById(int aanvraagId);
     }
 }

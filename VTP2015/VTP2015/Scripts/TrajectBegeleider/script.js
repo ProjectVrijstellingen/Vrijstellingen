@@ -8,7 +8,7 @@ $(document).ready(function() {
     $(".herinnering").click(function (sender) {
         console.log($(sender.target).parent().data("aanvraagid"));
         $.ajax({
-            url: "TrajectBegeleider/SendReminder",
+            url: "Counselor/SendReminder",
             data:{aanvraagId : $(sender.target).parent().data("aanvraagid")},
             type: "POST",
             success: function (data) {
@@ -46,10 +46,10 @@ var searchQueryContains = function(string) {
     return string.toLowerCase().indexOf($("#searchQuery").val().toLowerCase()) >= 0;
 };
 
-$("#select-opleiding").on("change", function () {
+$("#select-education").on("change", function () {
     $.ajax({
-        url: "TrajectBegeleider/ChangeOpleiding",
-        data: { opleiding: $("#select-opleiding option:selected").text() },
+        url: "Counselor/ChangeOpleiding",
+        data: { opleiding: $("#select-education option:selected").text() },
         type: "POST",
         success: function(data) {
             location.reload();

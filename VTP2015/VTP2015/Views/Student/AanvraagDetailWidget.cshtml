@@ -1,13 +1,13 @@
 ﻿@using VTP2015.Helpers
 @model VTP2015.ViewModels.Student.AanvraagDetailViewModel[]
 <div id="aanvraagDetail" data-url="@Url.Action("SaveAanvraag", "Student")" ondrop="drop(event)" ondragover="allowDrop(event)" class="col-md-4 hide">
-    @using (Html.BeginPanel("Aanvraag details"))
+    @using (Html.BeginPanel("Request details"))
     {
         <section>
             <article id="dummy" class="hide">
                 <h3>ModuleNaam</h3>
                 <h4>PartimName</h4>
-                <label class="control-label" for="argumentatie">Argumentatie:</label>
+                <label class="control-label" for="argumentatie">Argumentation:</label>
                 <textarea class="form-control" id="argumentatie"></textarea>
                 <label class="control-label">bewijzen:</label>
                 <ul class="list-group"></ul>

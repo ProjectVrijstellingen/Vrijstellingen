@@ -14,44 +14,44 @@ namespace VTP2015
         public void Execute()
         {
             //Student
-            Mapper.CreateMap<Dossier, Student.DossierViewModel>();
-            Mapper.CreateMap<Dossier, Student.DossierListViewModel>();
-            Mapper.CreateMap<Bewijs, Student.BewijsListViewModel>();
-            Mapper.CreateMap<PartimInformatie, Student.PartimViewModel>()
+            Mapper.CreateMap<File, Student.DossierViewModel>();
+            Mapper.CreateMap<File, Student.DossierListViewModel>();
+            Mapper.CreateMap<Evidence, Student.BewijsListViewModel>();
+            Mapper.CreateMap<PartimInformation, Student.PartimViewModel>()
                 .ForMember(m => m.ModuleId,
                     opt => opt.MapFrom(i => i.Module.ModuleId))
                 .ForMember(m => m.ModuleNaam,
-                    opt => opt.MapFrom(i => i.Module.Naam))
+                    opt => opt.MapFrom(i => i.Module.Name))
                 .ForMember(m => m.PartimNaam,
-                    opt => opt.MapFrom(i => i.Partim.Naam));
-            Mapper.CreateMap<Aanvraag, Student.AanvraagDetailViewModel>();
+                    opt => opt.MapFrom(i => i.Partim.Name));
+            Mapper.CreateMap<Request, Student.AanvraagDetailViewModel>();
 
-            //TrajectBegeleider
-            Mapper.CreateMap<Dossier, TrajectBegeleider.DossierOverviewViewModel>()
+            //Counselor
+            Mapper.CreateMap<File, TrajectBegeleider.DossierOverviewViewModel>()
                 .ForMember(m => m.PercentageVoltooid,
-                    opt => opt.MapFrom(i => i.Aanvragen.Count != 0 ? (int)((i.Aanvragen.Count(a => a.Status != 0) / (i.Aanvragen.Count * 1.0)) * 100) : 0));
-            Mapper.CreateMap<Aanvraag, TrajectBegeleider.AanvraagDetailsViewModel>();
+                    opt => opt.MapFrom(i => i.Requests.Count != 0 ? (int)((i.Requests.Count(a => a.Status != 0) / (i.Requests.Count * 1.0)) * 100) : 0));
+            Mapper.CreateMap<Request, TrajectBegeleider.AanvraagDetailsViewModel>();
             Mapper.CreateMap<Opleiding, TrajectBegeleider.OpleidingViewModel>();
 
 
-            //Docent
-            Mapper.CreateMap<Aanvraag, Docent.StudentListViewModel>()
+            //Lecturer
+            Mapper.CreateMap<Request, Docent.StudentListViewModel>()
                 .ForMember(m => m.StudentId,
-                    opt => opt.MapFrom(i => i.Dossier.StudentId))
+                    opt => opt.MapFrom(i => i.File.StudentId))
                 .ForMember(m => m.Naam,
-                    opt => opt.MapFrom(i => i.Dossier.Student.Naam))
+                    opt => opt.MapFrom(i => i.File.Student.Name))
                 .ForMember(m => m.Voornaam,
-                    opt => opt.MapFrom(i => i.Dossier.Student.VoorNaam));
+                    opt => opt.MapFrom(i => i.File.Student.FirstName));
 
-            Mapper.CreateMap<Aanvraag, Docent.AanvraagListViewModel>()
+            Mapper.CreateMap<Request, Docent.AanvraagListViewModel>()
                 .ForMember(m => m.StudentId,
-                    opt => opt.MapFrom(i => i.Dossier.StudentId))
+                    opt => opt.MapFrom(i => i.File.StudentId))
                 .ForMember(m => m.PartimName,
-                    opt => opt.MapFrom(i => i.PartimInformatie.Partim.Naam))
+                    opt => opt.MapFrom(i => i.PartimInformation.Partim.Name))
                 .ForMember(m => m.ModuleName,
-                    opt => opt.MapFrom(i => i.PartimInformatie.Module.Naam));
+                    opt => opt.MapFrom(i => i.PartimInformation.Module.Name));
 
-            Mapper.CreateMap<Bewijs, Docent.BewijsViewModel>()
+            Mapper.CreateMap<Evidence, Docent.BewijsViewModel>()
                 .ForMember(m => m.StudentEmail,
                     opt => opt.MapFrom(i => i.Student.Email));
 

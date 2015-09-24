@@ -35,22 +35,22 @@ namespace VTP2015.Repositories.Implementations
             if (_db.Context.Studenten.Any(x => x.StudentId == user.Id))
             {
                 student = _db.Context.Studenten.First(x => x.StudentId == user.Id);
-                student.Naam = user.Lastname;
-                student.VoorNaam = user.Firstname;
+                student.Name = user.Lastname;
+                student.FirstName = user.Firstname;
                 student.Email = user.Email;
                 student.PhoneNumber = user.ExtraInfo1;
-                student.Opleiding = _opleidingRepository.GetOpleidingen().First(x => x.Naam == opleidingNaam);
+                student.Education = _opleidingRepository.GetOpleidingen().First(x => x.Naam == opleidingNaam);
             }
             else
             {
                 student = new Student
                 {
                     StudentId = user.Id,
-                    Naam = user.Lastname,
-                    VoorNaam = user.Firstname,
+                    Name = user.Lastname,
+                    FirstName = user.Firstname,
                     Email = user.Email,
                     PhoneNumber = user.ExtraInfo1,
-                    Opleiding = _opleidingRepository.GetOpleidingen().First(x => x.Naam == opleidingNaam)
+                    Education = _opleidingRepository.GetOpleidingen().First(x => x.Naam == opleidingNaam)
                 };
                 _db.Context.Studenten.Add(student);
             }
@@ -65,7 +65,7 @@ namespace VTP2015.Repositories.Implementations
 
         public bool IsAanvraagFromStudent(int dossierId, string supercode, string email)
         {
-            return _genericRepository.AsQueryable(s => s.Email == email).SelectMany(s => s.PartimInformatie).Any(p => p.SuperCode == supercode) && _genericRepository.AsQueryable(s => s.Email == email).SelectMany(s => s.Dossiers).Any(d => d.DossierId == dossierId);
+            return _genericRepository.AsQueryable(s => s.Email == email).SelectMany(s => s.PartimInformation).Any(p => p.SuperCode == supercode) && _genericRepository.AsQueryable(s => s.Email == email).SelectMany(s => s.Files).Any(d => d.FileId == dossierId);
         }
     }
 }

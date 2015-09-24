@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 using VTP2015.Entities;
-using VTP2015.Repositories.Interfaces;
+using VTP2015.ServiceLayer;
 using VTP2015.ViewModels.Feedback;
 
 namespace VTP2015.Controllers
@@ -9,14 +9,13 @@ namespace VTP2015.Controllers
     public class FeedbackController : Controller
     {
 
-        private readonly IFeedbackRepository _feedbackRepository;
-        private readonly IStudentRepository _studentRepository;
+        private readonly IFeedbackFacade _feedbackFacade;
 
-        public FeedbackController(IFeedbackRepository feedbackRepository, IStudentRepository studentRepository)
+        public FeedbackController(IFeedbackFacade feedbackFacade)
         {
-            _feedbackRepository = feedbackRepository;
-            _studentRepository = studentRepository;
+            _feedbackFacade = feedbackFacade;
         }
+
 
         //
         // GET: /Feedback/Create
@@ -35,11 +34,11 @@ namespace VTP2015.Controllers
 
             var feedback = new Feedback
             {
-                Student = _studentRepository.GetByEmail(User.Identity.Name),
+                Student = _feedbackFacade.GetStudentByEmail(User.Identity.Name),
                 Text = viewModel.Text
             };
 
-            _feedbackRepository.AddFeedback(feedback);
+            _feedbackFacade.InsertFeedback(feedback);
 
             return Content("Uw feedback werd goed ontvangen");
         }
