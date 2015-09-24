@@ -2,24 +2,65 @@
 
 <div>
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-3">
             <input type="text" class="form-control" id="searchQuery" placeholder="Zoek op naam">
+        </div>
+        <div class="form-group col-md-3">
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-default active">
+                    <input type="radio" id="rBlok" value="Blok"/> <span class="glyphicon glyphicon-th"></span>
+                </label>
+                <label class="btn btn-default">
+                    <input type="radio" id="rLijst" value="Lijst" /> <span class="glyphicon glyphicon-list"></span>
+                </label>
+            </div>
         </div>
         @Html.Action("OpleidingSelectWidget")
     </div>
-    <div class="container-fix">
+    <div class="container">
         <div class="row">
+            <div id="lijst" class="hidden">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Voornaam</th>
+                            <th>Familienaam</th>
+                            <th>Status</th>
+                            <th>Acties</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var dossier in Model)
+                        {
+                            <tr>
+                                <td>@dossier.StudentVoornaam</td>
+                                <td>@dossier.StudentNaam</td>
+                                <td>@dossier.PercentageVoltooid%</td>
+                                <td>
+                                    <a href="#" id="links-list">
+                                        <span class="glyphicon glyphicon-list-alt dossierpointer" data-dossierid="@dossier.DossierId" aria-hidden="true"></span>
+                                    </a>
+                                    <a href="#" id="midden-list">
+                                        <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div id="blok">
                 @foreach (var dossier in Model)
                 {
                     <div class="col-md-2 dossier" data-name="@dossier.StudentNaam" data-prename="@dossier.StudentVoornaam">
                         @{
-                            var percentage = dossier.PercentageVoltooid;
+                    var percentage = dossier.PercentageVoltooid;
 
-                            var kleur = "oranje";
-                            if (percentage >= 50)
-                            {
-                                kleur = "blauw";
-                            }
+                    var kleur = "oranje";
+                    if (percentage >= 50)
+                    {
+                        kleur = "blauw";
+                    }
                         }
                         <div class="panel panel-text panel-@kleur panel-default clearfix panel-body">
                             <p class="naam">@dossier.StudentVoornaam @dossier.StudentNaam</p>
@@ -37,11 +78,16 @@
                         </div>
                     </div>
                 }
+            </div>
         </div>
     </div>
 </div>
 
-
+<script type="text/javascript">
+    document.getElementById('rBlok').onclick = function() {
+        alert("button was clicked");
+    }​;
+</script>
 
 
 
