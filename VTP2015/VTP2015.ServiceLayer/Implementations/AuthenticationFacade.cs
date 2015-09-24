@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using VTP2015.DataAccess.Identity;
+using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
 using VTP2015.ServiceLayer.Interfaces;
 
@@ -7,6 +9,15 @@ namespace VTP2015.ServiceLayer.Implementations
 {
     public class AuthenticationFacade : IAuthenticationFacade
     {
+
+        private readonly Repository<Counselor> _counselorRepository;
+
+        public AuthenticationFacade(Repository<Counselor> counselorRepository)
+        {
+            _counselorRepository = counselorRepository;
+            
+        }
+
         public IEnumerable<Counselor> Counselors { get; }
         public bool IsBegeleider(string email)
         {
@@ -20,12 +31,14 @@ namespace VTP2015.ServiceLayer.Implementations
 
         public void AddBegeleider(string email)
         {
-            throw new System.NotImplementedException();
+            Counselor c = new Counselor();
+            c.Email = email;
+            _counselorRepository.Insert(c);
         }
 
         public string GetOpleiding(string email)
         {
-            throw new System.NotImplementedException();
+            return _counselorRepository.Table.First(s => s.Email == email).Education.ToString();
         }
 
         public void ChangeOpleiding(string email, Education opleiding)

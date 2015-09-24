@@ -7,7 +7,7 @@ namespace VTP2015.ViewModels.Student
     public class IndexViewModel : IViewModel
     {
         [FileValidation]
-        [Display(Name = "Upload Image")]
+        [Display(Name = "Upload bewijs")]
         public HttpPostedFileBase File { get; set; }
 
         [Display(Name = "Description")]

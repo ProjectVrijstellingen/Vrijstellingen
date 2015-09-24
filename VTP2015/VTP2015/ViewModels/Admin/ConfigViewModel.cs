@@ -6,14 +6,14 @@ namespace VTP2015.ViewModels.Admin
 {
     public class ConfigViewModel:IDefaultConfig
     {   
-        [Display(Name="Info email frequency (dd:hh:mm)")]
+        [Display(Name="Info email frequentie (dd:uu:mm)")]
         [Required]
-        [RegularExpression(@"[0-9]{2}:([0-1][0-9]|2[0-4]):[0-5][0-9]", ErrorMessage = "Info email frequency moet in het formaat dd:hh:mm staan!")]
+        [RegularExpression(@"[0-9]{2}:([0-1][0-9]|2[0-4]):[0-5][0-9]", ErrorMessage = "Info email frequentie moet in het formaat dd:uu:mm staan!")]
         public string InfoMailFrequency { get; set; }
 
-        [Display(Name = "Warning email frequency (dd:hh:mm)")]
+        [Display(Name = "Waarschuwing email frequentie (dd:uu:mm)")]
         [Required]
-        [RegularExpression(@"[0-9]{2}:([0-1][0-9]|2[0-4]):[0-5][0-9]", ErrorMessage = "warning email frequency moet in het formaat dd:hh:mm staan!")]
+        [RegularExpression(@"[0-9]{2}:([0-1][0-9]|2[0-4]):[0-5][0-9]", ErrorMessage = "waarschuwing email frequentie moet in het formaat dd:uu:mm staan!")]
         public string WarningMailFrequency { get; set; }
 
         [Display(Name = "Start vrijstellingen")]
