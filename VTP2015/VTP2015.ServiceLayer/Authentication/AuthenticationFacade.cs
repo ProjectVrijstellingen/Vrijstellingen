@@ -3,9 +3,8 @@ using System.Linq;
 using VTP2015.DataAccess.Identity;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
-using VTP2015.ServiceLayer.Interfaces;
 
-namespace VTP2015.ServiceLayer.Implementations
+namespace VTP2015.ServiceLayer.Authentication
 {
     public class AuthenticationFacade : IAuthenticationFacade
     {
@@ -31,8 +30,7 @@ namespace VTP2015.ServiceLayer.Implementations
 
         public void AddBegeleider(string email)
         {
-            Counselor c = new Counselor();
-            c.Email = email;
+            var c = new Counselor {Email = email};
             _counselorRepository.Insert(c);
         }
 

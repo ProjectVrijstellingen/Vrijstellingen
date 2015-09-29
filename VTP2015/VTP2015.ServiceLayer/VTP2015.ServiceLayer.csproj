@@ -51,16 +51,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementations\AuthenticationFacade.cs" />
-    <Compile Include="Implementations\CounselorFacade.cs" />
-    <Compile Include="Implementations\FeedbackFacade.cs" />
-    <Compile Include="Implementations\LecturerFacade.cs" />
-    <Compile Include="Implementations\StudentFacade.cs" />
-    <Compile Include="Interfaces\IAuthenticationFacade.cs" />
-    <Compile Include="Interfaces\ICounselorFacade.cs" />
-    <Compile Include="Interfaces\IFeedbackFacade.cs" />
-    <Compile Include="Interfaces\ILecturerFacade.cs" />
-    <Compile Include="Interfaces\IStudentFacade.cs" />
+    <Compile Include="Admin\AdminFacade.cs" />
+    <Compile Include="Admin\Models\User.cs" />
+    <Compile Include="Authentication\AuthenticationFacade.cs" />
+    <Compile Include="Counselor\CounselorFacade.cs" />
+    <Compile Include="Feedback\FeedbackFacade.cs" />
+    <Compile Include="Lecturer\LecturerFacade.cs" />
+    <Compile Include="Student\StudentFacade.cs" />
+    <Compile Include="Admin\IAdminFacade.cs" />
+    <Compile Include="Authentication\IAuthenticationFacade.cs" />
+    <Compile Include="Counselor\ICounselorFacade.cs" />
+    <Compile Include="Feedback\IFeedbackFacade.cs" />
+    <Compile Include="Lecturer\ILecturerFacade.cs" />
+    <Compile Include="Student\IStudentFacade.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VTP2015.DataAccess\VTP2015.DataAccess.csproj">

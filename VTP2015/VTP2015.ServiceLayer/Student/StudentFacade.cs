@@ -2,20 +2,19 @@ using System.IO;
 using System.Linq;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
-using VTP2015.ServiceLayer.Interfaces;
 using File = VTP2015.Entities.File;
 
-namespace VTP2015.ServiceLayer.Implementations
+namespace VTP2015.ServiceLayer.Student
 {
     public class StudentFacade : IStudentFacade
     {
-        private readonly Repository<Student> _studentRepository;
+        private readonly Repository<Entities.Student> _studentRepository;
         private readonly Repository<Evidence> _evidenceRepository;
         private readonly Repository<File> _fileRepository;
         private readonly Repository<Request> _requestRepository; 
         private readonly Repository<PartimInformation> _partimInformationRepository;
 
-        public StudentFacade(Repository<Student> studentRepository, Repository<Evidence> evidenceRepository,
+        public StudentFacade(Repository<Entities.Student> studentRepository, Repository<Evidence> evidenceRepository,
             Repository<File> fileRepository, Repository<PartimInformation> partimInformationRepository,
             Repository<Request> requestRepository)
         {

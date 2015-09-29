@@ -4,8 +4,11 @@ using System.Linq;
 using System.Web;
 using StructureMap.Configuration.DSL;
 using VTP2015.ServiceLayer;
-using VTP2015.ServiceLayer.Implementations;
-using VTP2015.ServiceLayer.Interfaces;
+using VTP2015.ServiceLayer.Authentication;
+using VTP2015.ServiceLayer.Counselor;
+using VTP2015.ServiceLayer.Feedback;
+using VTP2015.ServiceLayer.Lecturer;
+using VTP2015.ServiceLayer.Student;
 
 namespace VTP2015.Infrastructure.Registries
 {

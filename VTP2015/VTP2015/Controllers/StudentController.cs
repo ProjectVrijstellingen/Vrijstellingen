@@ -7,7 +7,7 @@ using Microsoft.Web.Mvc;
 using VTP2015.Config;
 using VTP2015.Entities;
 using VTP2015.ServiceLayer;
-using VTP2015.ServiceLayer.Interfaces;
+using VTP2015.ServiceLayer.Student;
 using VTP2015.ViewModels.Student;
 using File = VTP2015.Entities.File;
 

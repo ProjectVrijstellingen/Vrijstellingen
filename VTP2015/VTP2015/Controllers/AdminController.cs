@@ -1,8 +1,10 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using AutoMapper.QueryableExtensions;
 using VTP2015.Config;
 using VTP2015.Identity;
 using VTP2015.Repositories.Interfaces;
+using VTP2015.ServiceLayer.Admin;
 using VTP2015.ViewModels.Admin;
 
 namespace VTP2015.Controllers
@@ -11,13 +13,14 @@ namespace VTP2015.Controllers
     [RoutePrefix("Admin")]
     public class AdminController : Controller
     {
-        private readonly ILoginRepository _loginRepository;
+        private readonly IAdminFacade _adminFacade;
+
         private readonly IdentityManager _im = new IdentityManager();
         private readonly ConfigFile _configFile;
 
-        public AdminController(ILoginRepository loginRepository)
+        public AdminController(IAdminFacade adminFacade)
         {
-            _loginRepository = loginRepository;
+            _adminFacade = adminFacade;
             _configFile = new ConfigFile();
         }
 
@@ -32,15 +35,17 @@ namespace VTP2015.Controllers
         [Route("UserTableWidget")]
         public ActionResult UserTableWidget()
         {
+
             var viewModel = (from user in _im.GetUsers().ToList()
-                where user.Email.EndsWith("@howest.be")
-                select
-                    new UserViewModel
-                    {
-                        Email = user.Email,
-                        IsAdmin = _im.HasRole(user.UserName, "Admin"),
-                        IsBegeleider = _im.HasRole(user.UserName, "Counselor")
-                    }).ToList();
+                             where user.Email.EndsWith("@howest.be")
+                             select
+                                 new UserViewModel
+                                 {
+                                     Email = user.Email,
+                                     IsAdmin = _im.HasRole(user.UserName, "Admin"),
+                                     IsBegeleider = _im.HasRole(user.UserName, "Counselor")
+                                 }).ToList();
+
             return PartialView(viewModel);
         }
 
@@ -49,7 +54,7 @@ namespace VTP2015.Controllers
         public ActionResult AddUserToRole(string email, string role)
         {
             if(email == User.Identity.Name) return Json("False");
-            if(role=="Counselor") _loginRepository.AddBegeleider(email);
+            if(role=="Counselor") _adminFacade.InsertCounselor(email);
             return Json(_im.AddUserToRole(_im.GetUsers().Where(x => x.Email.EndsWith("@howest.be")).First(x => x.Email == email).Id, role));
         }
 
@@ -58,7 +63,7 @@ namespace VTP2015.Controllers
         public ActionResult RemoveUserFromRole(string email, string role)
         {
             if (email == User.Identity.Name) return Json("False");
-            if (role == "Counselor") _loginRepository.RemoveBegeleider(email);
+            if (role == "Counselor") _adminFacade.RemoveCounselor(email);
             return Json(_im.DeleteUserFromRole(_im.GetUsers().Where(x => x.Email.EndsWith("@howest.be")).First(x => x.Email == email).Id, role));
         }
 

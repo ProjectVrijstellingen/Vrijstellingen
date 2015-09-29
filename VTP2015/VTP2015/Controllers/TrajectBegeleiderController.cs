@@ -5,7 +5,7 @@ using RazorPDF;
 using VTP2015.Config;
 using VTP2015.Helpers;
 using VTP2015.ServiceLayer;
-using VTP2015.ServiceLayer.Interfaces;
+using VTP2015.ServiceLayer.Counselor;
 using VTP2015.ViewModels.TrajectBegeleider;
 
 namespace VTP2015.Controllers

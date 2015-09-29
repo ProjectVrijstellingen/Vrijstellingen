@@ -1,20 +1,19 @@
 ﻿using System.Linq;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
-using VTP2015.ServiceLayer.Interfaces;
 
-namespace VTP2015.ServiceLayer.Implementations
+namespace VTP2015.ServiceLayer.Counselor
 {
     public class CounselorFacade : ICounselorFacade
     {
         private readonly Repository<Request> _requestRepository;
         private readonly Repository<Student> _studentRepository;
         private readonly Repository<Education> _educationRepository;
-        private readonly Repository<Counselor> _counseloRepository;
+        private readonly Repository<Entities.Counselor> _counseloRepository;
         private readonly Repository<File> _fileRepository;
 
         public CounselorFacade(Repository<Request> requestRepository, Repository<Student> studentRepository,
-            Repository<Education> educationRepository, Repository<Counselor> counseloRepository,
+            Repository<Education> educationRepository, Repository<Entities.Counselor> counseloRepository,
             Repository<File> fileRepository)
         {
             _requestRepository = requestRepository;
