@@ -5,7 +5,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System.IO;
 using VTP2015.Identity;
-using VTP2015.ServiceLayer;
 using VTP2015.ServiceLayer.Authentication;
 using VTP2015.ViewModels.Authentication;
 
@@ -15,11 +14,15 @@ namespace VTP2015.Controllers
     public class AuthenticationController : Controller
     {
         private readonly IAuthenticationFacade _authenticationFacade;
+        
+        public AuthenticationController(IAuthenticationFacade authenticationFacade)
+        {
+            _authenticationFacade = authenticationFacade;
+        }
 
-        public AuthenticationController(UserManager<ApplicationUser> userManager, IAuthenticationFacade authenticationFacade)
+        public AuthenticationController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
-            _authenticationFacade = authenticationFacade;
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }

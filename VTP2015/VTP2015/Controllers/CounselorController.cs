@@ -12,17 +12,15 @@ namespace VTP2015.Controllers
 {
     [Authorize(Roles = "Counselor")]
     [RoutePrefix("Counselor")]
-    public class TrajectBegeleiderController : Controller
+    public class CounselorController : Controller
     {
         private readonly ICounselorFacade _counselorFacade;
         private readonly ConfigFile _configFile;
-        private readonly MailHelper _mailHelper;
 
-        public TrajectBegeleiderController(ICounselorFacade counselorFacade)
+        public CounselorController(ICounselorFacade counselorFacade)
         {
             _counselorFacade = counselorFacade;
             _configFile = new ConfigFile();
-            _mailHelper = new MailHelper();
         }
 
         //
@@ -34,9 +32,9 @@ namespace VTP2015.Controllers
             return View();
         }
 
-        [Route("OpleidingSelectWidget")]
+        [Route("EducationSelectWidget")]
         [HttpGet]
-        public PartialViewResult OpleidingSelectWidget()
+        public PartialViewResult EducationSelectWidget()
         {
             var viewModel = new OpleidingSelectViewModel
             {
@@ -57,9 +55,9 @@ namespace VTP2015.Controllers
             return Json("Changed!");
         }
 
-        [Route("DossierOverviewWidget")]
+        [Route("FileOverviewWidget")]
         [HttpGet]
-        public PartialViewResult DossierOverviewWidget()
+        public PartialViewResult FileOverviewWidget()
         {
             var models = _counselorFacade.GetFileByCounselorEmail(User.Identity.Name, _configFile.AcademieJaar())
                 .Project().To<DossierOverviewViewModel>();
@@ -68,9 +66,9 @@ namespace VTP2015.Controllers
 
         }
 
-        [Route("AanvraagDetailsWidget")]
+        [Route("RequestDetailWidget")]
         [HttpGet]
-        public PartialViewResult AanvraagDetailsWidget()
+        public PartialViewResult RequestDetailWidget()
         {
             var models = _counselorFacade.GetRequests()
                 .Project().To<AanvraagDetailsViewModel>();

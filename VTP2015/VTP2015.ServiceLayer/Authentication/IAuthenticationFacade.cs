@@ -6,7 +6,7 @@ namespace VTP2015.ServiceLayer.Authentication
 {
     public interface IAuthenticationFacade
     {
-        IEnumerable<Counselor> Counselors { get; }
+        IEnumerable<Entities.Counselor> Counselors { get; }
         bool IsBegeleider(string email);
         void RemoveBegeleider(string email);
         void AddBegeleider(string email);

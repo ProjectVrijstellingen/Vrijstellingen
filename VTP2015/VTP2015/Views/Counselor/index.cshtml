@@ -4,14 +4,14 @@
 
 <div class="container">
         <div class="row" id="overview">
-            @Html.Action("DossierOverviewWidget")
+            @Html.Action("FileOverviewWidget")
         </div>
         <div class="row hide" id="details">
             <div class="col-md-3">
-                @Html.Partial("DossierDetailsPartial")
+                @Html.Partial("FileDetailsPartial")
             </div>
             <div class="col-md-9">
-                @Html.Action("AanvraagDetailsWidget")
+                @Html.Action("RequestDetailWidget")
             </div>
         </div>
 </div>

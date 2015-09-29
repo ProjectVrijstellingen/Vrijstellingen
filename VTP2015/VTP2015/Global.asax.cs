@@ -33,7 +33,7 @@ namespace VTP2015
             {
                 cfg.AddRegistry(new StandardRegistry());
                 cfg.AddRegistry(new ControllerRegistry());
-                cfg.AddRegistry(new RepostitoryRegistry());
+                cfg.AddRegistry(new ServiceLayerRegistry());
                 cfg.AddRegistry(new TaskRegistry());
             });
 

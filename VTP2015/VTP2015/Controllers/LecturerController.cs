@@ -9,11 +9,11 @@ namespace VTP2015.Controllers
 {
     [Authorize(Roles = "Lecturer")]
     [RoutePrefix("Lecturer")]
-    public class DocentController : Controller
+    public class LecturerController : Controller
     {
         private readonly ILecturerFacade _lecturerFacade;
 
-        public DocentController(ILecturerFacade lecturerFacade)
+        public LecturerController(ILecturerFacade lecturerFacade)
         {
             _lecturerFacade = lecturerFacade;
         }
@@ -39,8 +39,8 @@ namespace VTP2015.Controllers
         }
 
         [HttpGet]
-        [Route("AanvraagListWidget")]
-        public PartialViewResult AanvraagListWidget()
+        [Route("RequestListWidget")]
+        public PartialViewResult RequestListWidget()
         {
             var viewModel = _lecturerFacade.GetUntreadedRequests(User.Identity.Name)
                 .Project().To<AanvraagListViewModel>();

@@ -8,14 +8,14 @@
 
 <div class="container-fix">
     <div class="col-md-6">
-        @Html.Action("DossierWidget")
+        @Html.Action("FileWidget")
         @Html.Action("AddFeedbackWidget", "Feedback")
     </div>
     <div id="bewijzenColumn" class="col-md-6">
         @using (Html.BeginPanel("Evidence"))
         {
-            @Html.Action("BewijsListWidget")
-            @Html.Action("BewijsToevoegenWidget")
+            @Html.Action("EvidenceListWidget")
+            @Html.Action("AddFileWidget")
         }
     </div>
 </div>

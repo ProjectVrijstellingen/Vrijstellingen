@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
-using AutoMapper.QueryableExtensions;
 using VTP2015.Config;
 using VTP2015.Identity;
-using VTP2015.Repositories.Interfaces;
 using VTP2015.ServiceLayer.Admin;
 using VTP2015.ViewModels.Admin;
 

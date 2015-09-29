@@ -9,15 +9,16 @@ namespace VTP2015.ServiceLayer.Authentication
     public class AuthenticationFacade : IAuthenticationFacade
     {
 
-        private readonly Repository<Counselor> _counselorRepository;
+        private readonly Repository<Entities.Counselor> _counselorRepository;
 
-        public AuthenticationFacade(Repository<Counselor> counselorRepository)
+        public AuthenticationFacade(Repository<Entities.Counselor> counselorRepository)
         {
             _counselorRepository = counselorRepository;
             
         }
 
-        public IEnumerable<Counselor> Counselors { get; }
+        public IEnumerable<Entities.Counselor> Counselors { get; }
+
         public bool IsBegeleider(string email)
         {
             throw new System.NotImplementedException();
@@ -30,7 +31,7 @@ namespace VTP2015.ServiceLayer.Authentication
 
         public void AddBegeleider(string email)
         {
-            var c = new Counselor {Email = email};
+            var c = new Entities.Counselor {Email = email};
             _counselorRepository.Insert(c);
         }
 

@@ -6,7 +6,6 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.Web.Mvc;
 using VTP2015.Config;
 using VTP2015.Entities;
-using VTP2015.ServiceLayer;
 using VTP2015.ServiceLayer.Student;
 using VTP2015.ViewModels.Student;
 using File = VTP2015.Entities.File;
@@ -82,9 +81,9 @@ namespace VTP2015.Controllers
                 : "Voltooid!");
         }
 
-        [Route("DossierWidget")]
+        [Route("FileWidget")]
         [HttpGet]
-        public PartialViewResult DossierWidget()
+        public PartialViewResult FileWidget()
         {
             var models = _studentFacade.GetFilesByStudentEmail(User.Identity.Name)
                 .Project().To<DossierListViewModel>();
@@ -92,9 +91,9 @@ namespace VTP2015.Controllers
             return PartialView(models.ToArray());
         }
 
-        [Route("BewijsListWidget")]
+        [Route("EvidenceListWidget")]
         [HttpGet]
-        public PartialViewResult BewijsListWidget()
+        public PartialViewResult EvidenceListWidget()
         {
             var models = _studentFacade.GetEvidenceByStudentEmail(User.Identity.Name)
                 .Project().To<BewijsListViewModel>();
@@ -102,9 +101,9 @@ namespace VTP2015.Controllers
             return PartialView(models.ToArray());
         }
 
-        [Route("BewijsToevoegenWidget")]
+        [Route("AddFileWidget")]
         [HttpGet]
-        public PartialViewResult BewijsToevoegenWidget()
+        public PartialViewResult AddFileWidget()
         {
             return PartialView();
         }
@@ -114,15 +113,15 @@ namespace VTP2015.Controllers
         #region dossier
         [Route("File/{dossierId}")]
         [HttpGet]
-        public ActionResult Dossier(int dossierId)
+        public ActionResult File(int dossierId)
         {
             if (!_studentFacade.IsFileFromStudent(User.Identity.Name, dossierId)) return RedirectToAction("Index");
             return View();
         }
 
-        [Route("AangevraagdePartimsWidget")]
+        [Route("RequestedPartimsWidget")]
         [HttpGet]
-        public ActionResult AangevraagdePartimsWidget(int dossierId)
+        public ActionResult RequestedPartimsWidget(int dossierId)
         {
             if (!_studentFacade.IsFileFromStudent(User.Identity.Name, dossierId)) return RedirectToAction("Index");
             var models = _studentFacade.GetRequestedPartims(User.Identity.Name, dossierId)
@@ -131,9 +130,9 @@ namespace VTP2015.Controllers
             return PartialView(models.ToArray());
         }
 
-        [Route("BeschikbarePartimsWidget")]
+        [Route("AvailablePartimsWidget")]
         [HttpGet]
-        public ActionResult BeschikbarePartimsWidget(int dossierId)
+        public ActionResult AvailablePartimsWidget(int dossierId)
         {
             if (!_studentFacade.IsFileFromStudent(User.Identity.Name, dossierId)) return RedirectToAction("Index");
             var models = _studentFacade.GetAvailablePartims(User.Identity.Name, dossierId)
@@ -142,9 +141,9 @@ namespace VTP2015.Controllers
             return PartialView(models.ToArray());
         }
 
-        [Route("BewijsSelecterenWidget")]
+        [Route("FileSelectWidget")]
         [HttpGet]
-        public PartialViewResult BewijsSelecterenWidget()
+        public PartialViewResult FileSelectWidget()
         {
             var models = _studentFacade.GetEvidenceByStudentEmail(User.Identity.Name)
                 .Project().To<BewijsListViewModel>();
@@ -152,9 +151,9 @@ namespace VTP2015.Controllers
             return PartialView(models.ToArray());
         }
 
-        [Route("AanvraagDetailWidget")]
+        [Route("RequestDetailWidget")]
         [HttpGet]
-        public PartialViewResult AanvraagDetailWidget(int dossierId)
+        public PartialViewResult RequestDetailWidget(int dossierId)
         {
             var models = _studentFacade.GetRequestsByFileId(dossierId)
                 .Project().To<AanvraagDetailViewModel>();
@@ -181,7 +180,7 @@ namespace VTP2015.Controllers
 
             _studentFacade.InsertFile(dossier);
 
-            return this.RedirectToAction(c => c.Dossier(dossier.Id));
+            return this.RedirectToAction(c => c.File(dossier.Id));
         }
 
         [Route("SaveAanvraag")]

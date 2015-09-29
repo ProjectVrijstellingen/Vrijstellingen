@@ -59,37 +59,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementations\AanvraagRepository.cs" />
-    <Compile Include="Implementations\BewijsRepository.cs" />
-    <Compile Include="Implementations\DocentRepository.cs" />
-    <Compile Include="Implementations\DossierRepository.cs" />
-    <Compile Include="Implementations\FeedbackRepository.cs" />
-    <Compile Include="Implementations\GenericRepository.cs" />
-    <Compile Include="Implementations\LoginRepository.cs" />
-    <Compile Include="Implementations\OpleidingRepository.cs" />
-    <Compile Include="Implementations\PartimInformatieRepository.cs" />
-    <Compile Include="Implementations\StudentRepository.cs" />
-    <Compile Include="Interfaces\IAanvraagRepository.cs" />
-    <Compile Include="Interfaces\IBewijsRepository.cs" />
-    <Compile Include="Interfaces\IDocentRepository.cs" />
-    <Compile Include="Interfaces\IDossierRepository.cs" />
-    <Compile Include="Interfaces\IFeedbackRepository.cs" />
-    <Compile Include="Interfaces\IGenericRepository.cs" />
-    <Compile Include="Interfaces\ILoginRepository.cs" />
-    <Compile Include="Interfaces\IOpleidingRepository.cs" />
-    <Compile Include="Interfaces\IPartimInformatieRepository.cs" />
-    <Compile Include="Interfaces\IStudentRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Remote Services\BamaflexRepository.cs" />
-    <Compile Include="Remote Services\IBamaflexRepository.cs" />
-    <Compile Include="Remote Services\IdentityRepository.cs" />
-    <Compile Include="Remote Services\IIdentityRepository.cs" />
-    <Compile Include="Remote Services\TestBamaflexRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

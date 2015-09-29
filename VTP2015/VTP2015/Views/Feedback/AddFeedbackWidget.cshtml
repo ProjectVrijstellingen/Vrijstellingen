@@ -1,5 +1,4 @@
-﻿@using Microsoft.Web.Mvc.Html
-@model VTP2015.ViewModels.Feedback.AddFeedbackViewModel
+﻿@model VTP2015.ViewModels.Feedback.AddFeedbackViewModel
 
 <div class="panel panel-success clearfix inheritWidth" id="feedback">
     <div class="panel-heading ">
@@ -14,7 +13,6 @@
             UpdateTargetId = "response",
         }))
         {
-            <p>Als u feedback heeft over de werking van deze pagina, en hoe wij deze pagina beter kunnen maken kunt u dit achterlaten in onderstaande textarea. Ook als je iets niet snapt, mag je dit laten weten. (Er zit hier geen spam protect op, maar weet dat dit gehost wordt op school, dus aub... :p pentesting kan wel interresant zijn)</p>
             @Html.TextAreaFor(m => m.Text, new { @class = "form-control"} );
             <br />
             <input type="submit" value="verstuur" class="btn btn-success"/>
