@@ -22,14 +22,16 @@ namespace VTP2015
 
         protected void Application_Start()
         {
+            Container = ContainerFactory.Container;
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            DependencyResolver.SetResolver(
-                new StructureMapDependencyResolver(() => Container ?? ObjectFactory.Container));
 
-            ObjectFactory.Configure(cfg =>
+            DependencyResolver.SetResolver(new StructureMapDependencyResolver(() => Container));
+
+            Container.Configure(cfg =>
             {
                 cfg.AddRegistry(new StandardRegistry());
                 cfg.AddRegistry(new ControllerRegistry());
@@ -37,16 +39,13 @@ namespace VTP2015
                 cfg.AddRegistry(new TaskRegistry());
             });
 
-            using (var container = ObjectFactory.Container.GetNestedContainer())
+            foreach (var task in Container.GetAllInstances<IRunAtInit>())
             {
-                foreach (var task in container.GetAllInstances<IRunAtInit>())
-                {
-                    task.Execute();
-                }
-                foreach (var task in container.GetAllInstances<IRunAtStartup>())
-                {
-                    task.Execute();
-                }
+                task.Execute();
+            }
+            foreach (var task in Container.GetAllInstances<IRunAtStartup>())
+            {
+                task.Execute();
             }
 
             Database.SetInitializer<Context>(null);
@@ -55,7 +54,8 @@ namespace VTP2015
 
         public void Application_BeginRequest()
         {
-            Container = ObjectFactory.Container.GetNestedContainer();
+            Container = ContainerFactory.Container;
+
             foreach (var task in Container.GetAllInstances<IRunOnEachRequest>())
             {
                 task.Execute();
