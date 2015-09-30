@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System.IO;
+using Microsoft.AspNet.Identity.EntityFramework;
 using VTP2015.Identity;
 using VTP2015.ServiceLayer.Authentication;
 using VTP2015.ViewModels.Authentication;
@@ -14,18 +15,13 @@ namespace VTP2015.Controllers
     public class AuthenticationController : Controller
     {
         private readonly IAuthenticationFacade _authenticationFacade;
-        
+        private UserManager<ApplicationUser> _userManager;
+
         public AuthenticationController(IAuthenticationFacade authenticationFacade)
         {
             _authenticationFacade = authenticationFacade;
+            _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
         }
-
-        public AuthenticationController(UserManager<ApplicationUser> userManager)
-        {
-            UserManager = userManager;
-        }
-
-        public UserManager<ApplicationUser> UserManager { get; private set; }
 
         //
         // GET: /
@@ -49,8 +45,8 @@ namespace VTP2015.Controllers
         [Route("Login")]
         public async Task<ActionResult> Login(LoginViewModel model)
         {
-            if (!ModelState.IsValid) return View(model);
-            var user = await UserManager.FindAsync(model.Email, model.Password);
+            if (!ModelState.IsValid) return View(model);        
+            var user = await _userManager.FindAsync(model.Email, model.Password);
             if (user == null)
             {
                 if (!_authenticationFacade.AuthenticateUserByEmail(model.Email, model.Password))
@@ -59,23 +55,23 @@ namespace VTP2015.Controllers
                     return View(model);
                 }
                 user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var result = await _userManager.CreateAsync(user, model.Password);
                 if (!result.Succeeded){
                     AddErrors(result);
                     return View(model);
                 }
                 if (GetRole(model.Email) == "Student")
                 {
-                    _authenticationFacade.SyncStudentByUser(_authenticationFacade.GetUserByUsername(model.Email));
+                    _authenticationFacade.SyncStudentByUser(model.Email);
                     var name = model.Email.Split('@')[0];
                     var path = Server.MapPath("/bewijzen/" + name);
                     Directory.CreateDirectory(path);
                 }
 
-                UserManager.AddToRole(user.Id, GetRole(model.Email));
+                _userManager.AddToRole(user.Id, GetRole(model.Email));
                 if (GetRole(model.Email).Equals("Counselor"))
                 {
-                    UserManager.AddToRole(user.Id, "Lecturer");
+                    _userManager.AddToRole(user.Id, "Lecturer");
                 }
             }
             await SignInAsync(user, model.RememberMe);
@@ -104,10 +100,10 @@ namespace VTP2015.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && UserManager != null)
+            if (disposing && _userManager != null)
             {
-                UserManager.Dispose();
-                UserManager = null;
+                _userManager.Dispose();
+                _userManager = null;
             }
             base.Dispose(disposing);
         }
@@ -119,7 +115,7 @@ namespace VTP2015.Controllers
         private async Task SignInAsync(ApplicationUser user, bool isPersistent)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, await user.GenerateUserIdentityAsync(UserManager));
+            AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, await user.GenerateUserIdentityAsync(_userManager));
         }
 
         private void AddErrors(IdentityResult result)
@@ -133,7 +129,7 @@ namespace VTP2015.Controllers
         private string GetRole(string email){
             if (email.Contains("@howest.be"))
             {
-                return _authenticationFacade.IsBegeleider(email) ? "Counselor" : "Lecturer";
+                return _authenticationFacade.IsCounselor(email) ? "Counselor" : "Lecturer";
             }
             return email.Contains("@student.howest.be") ? "Student" : "Authentication";
         }

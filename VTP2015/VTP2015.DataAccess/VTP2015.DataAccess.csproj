@@ -61,8 +61,6 @@
     <Compile Include="Config\StudentConfig.cs" />
     <Compile Include="Config\TrajectBegeleiderConfig.cs" />
     <Compile Include="Context.cs" />
-    <Compile Include="DataAccessFacade.cs" />
-    <Compile Include="IDataAccessFacade.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -70,6 +68,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ServiceRepositories\BamaflexRepository.cs" />
+    <Compile Include="ServiceRepositories\IBamaflexRepository.cs" />
+    <Compile Include="ServiceRepositories\IdentityRepository.cs" />
+    <Compile Include="ServiceRepositories\IIDentityRepository.cs" />
     <Compile Include="UnitOfWork\Repository.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
     <Compile Include="Web References\Bamaflex\Reference.cs">

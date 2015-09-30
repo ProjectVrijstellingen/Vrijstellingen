@@ -31,14 +31,6 @@ namespace VTP2015
 
             DependencyResolver.SetResolver(new StructureMapDependencyResolver(() => Container));
 
-            Container.Configure(cfg =>
-            {
-                cfg.AddRegistry(new StandardRegistry());
-                cfg.AddRegistry(new ControllerRegistry());
-                cfg.AddRegistry(new ServiceLayerRegistry());
-                cfg.AddRegistry(new TaskRegistry());
-            });
-
             foreach (var task in Container.GetAllInstances<IRunAtInit>())
             {
                 task.Execute();
@@ -54,7 +46,7 @@ namespace VTP2015
 
         public void Application_BeginRequest()
         {
-            Container = ContainerFactory.Container;
+            Container = ContainerFactory.Container.GetNestedContainer();
 
             foreach (var task in Container.GetAllInstances<IRunOnEachRequest>())
             {

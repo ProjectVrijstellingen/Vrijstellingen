@@ -46,7 +46,7 @@ namespace VTP2015.Controllers
             return PartialView(viewModel);
         }
 
-        [Route("ChangeOpleiding")]
+        [Route("ChangeEducation")]
         [HttpPost]
         public ActionResult ChangeOpleiding(string opleiding)
         {

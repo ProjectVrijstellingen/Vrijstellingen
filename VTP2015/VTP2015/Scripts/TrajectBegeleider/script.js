@@ -48,7 +48,7 @@ var searchQueryContains = function(string) {
 
 $("#select-education").on("change", function () {
     $.ajax({
-        url: "Counselor/ChangeOpleiding",
+        url: "Counselor/ChangeEducation",
         data: { opleiding: $("#select-education option:selected").text() },
         type: "POST",
         success: function(data) {

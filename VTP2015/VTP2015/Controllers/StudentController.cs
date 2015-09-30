@@ -167,7 +167,9 @@ namespace VTP2015.Controllers
         {
             var configFile = new ConfigFile();
             var academieJaar = configFile.AcademieJaar();
+
             if(!_studentFacade.SyncStudentPartims(User.Identity.Name,academieJaar)) return RedirectToAction("Index");
+
             var studentId = _studentFacade.GetStudentCodeByEmail(User.Identity.Name);
             var dossier = new File
             {

@@ -4,22 +4,24 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using StructureMap;
+using VTP2015.Infrastructure.Registries;
 
 namespace VTP2015.Infrastructure
 {
     public static class ContainerFactory
     {
-        private static readonly Lazy<Container> ContainerBuilder =
-            new Lazy<Container>(DefaultContainer, LazyThreadSafetyMode.ExecutionAndPublication);
-
-        public static IContainer Container => ContainerBuilder.Value;
-
-        private static Container DefaultContainer()
+        static ContainerFactory()
         {
-            return new Container(x =>
+            Container = new Container(cfg =>
             {
-                // default config
+                cfg.AddRegistry(new StandardRegistry());
+                cfg.AddRegistry(new ControllerRegistry());
+                cfg.AddRegistry(new ServiceLayerRegistry());
+                cfg.AddRegistry(new TaskRegistry());
+                cfg.AddRegistry(new RepostitoryRegistry());
             });
         }
+
+        public static IContainer Container{ get; set; }
     }
 }
