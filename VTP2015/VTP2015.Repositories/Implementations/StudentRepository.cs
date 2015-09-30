@@ -39,7 +39,7 @@ namespace VTP2015.Repositories.Implementations
                 student.FirstName = user.Firstname;
                 student.Email = user.Email;
                 student.PhoneNumber = user.ExtraInfo1;
-                student.Education = _opleidingRepository.GetOpleidingen().First(x => x.Naam == opleidingNaam);
+                student.Opleiding = _opleidingRepository.GetOpleidingen().First(x => x.Naam == opleidingNaam);
             }
             else
             {
@@ -50,7 +50,7 @@ namespace VTP2015.Repositories.Implementations
                     FirstName = user.Firstname,
                     Email = user.Email,
                     PhoneNumber = user.ExtraInfo1,
-                    Education = _opleidingRepository.GetOpleidingen().First(x => x.Naam == opleidingNaam)
+                    Opleiding = _opleidingRepository.GetOpleidingen().First(x => x.Name == opleidingNaam)
                 };
                 _db.Context.Studenten.Add(student);
             }
@@ -65,7 +65,7 @@ namespace VTP2015.Repositories.Implementations
 
         public bool IsAanvraagFromStudent(int dossierId, string supercode, string email)
         {
-            return _genericRepository.AsQueryable(s => s.Email == email).SelectMany(s => s.PartimInformation).Any(p => p.SuperCode == supercode) && _genericRepository.AsQueryable(s => s.Email == email).SelectMany(s => s.Files).Any(d => d.FileId == dossierId);
+            return _genericRepository.AsQueryable(s => s.Email == email).Select(s => s.Opleiding).SelectMany(x => x.KeuzeTrajecten)/*needs fix keuzetraject added from student*/.SelectMany(x => x.PartimInformatie).Any(p => p.SuperCode == supercode) && _genericRepository.AsQueryable(s => s.Email == email).SelectMany(s => s.Dossiers).Any(d => d.DossierId == dossierId);
         }
     }
 }

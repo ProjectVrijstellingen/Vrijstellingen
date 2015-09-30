@@ -40,7 +40,7 @@ namespace VTP2015.Repositories.Implementations
 
         public string GetOpleiding(string email)
         {
-            return _db.Context.TrajectBegeleiders.First(x => x.Email == email).Opleiding == null ? "" : _db.Context.TrajectBegeleiders.First(x => x.Email == email).Opleiding.Naam;
+            return _db.Context.TrajectBegeleiders.First(x => x.Email == email).Opleiding == null ? "" : _db.Context.TrajectBegeleiders.First(x => x.Email == email).Opleiding.Name;
         }
 
         public void ChangeOpleiding(string email, Education education)

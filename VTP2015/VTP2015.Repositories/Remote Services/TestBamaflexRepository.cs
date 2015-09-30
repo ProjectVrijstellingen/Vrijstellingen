@@ -1,4 +1,5 @@
-﻿﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using VTP2015.DataAccess.Bamaflex;
 
@@ -149,6 +150,31 @@ namespace VTP2015.Repositories.Remote_Services
         public string GetDocentFromPartim(string superCode)
         {
             return "docent@howest.be";
+        }
+
+        public IEnumerable<DataAccess.Bamaflex.PartimInformatie> GetPartimInformatieList(Entities.Opleiding opleiding)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<Entities.Opleiding> IBamaflexRepository.GetOpleidingen()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICollection<Entities.KeuzeTraject> GetKeuzeTrajecten(Entities.Opleiding opleiding)
+        {
+            throw new NotImplementedException();
+        }
+
+        ICollection<OpleidingsProgramma> IBamaflexRepository.GetKeuzeTrajecten(Entities.Opleiding opleiding)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DataAccess.Bamaflex.PartimInformatie GetPartimInformationBySupercode(string supercode)
+        {
+            throw new NotImplementedException();
         }
     }
 }

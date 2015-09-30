@@ -47,6 +47,11 @@
     <Compile Include="Evidence.cs" />
     <Compile Include="Lecturer.cs" />
     <Compile Include="File.cs" />
+    <Compile Include="KeuzeTraject.cs" />
+    <Compile Include="TrajectBegeleider.cs" />
+    <Compile Include="Bewijs.cs" />
+    <Compile Include="Docent.cs" />
+    <Compile Include="Dossier.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Education.cs" />
     <Compile Include="Partim.cs" />

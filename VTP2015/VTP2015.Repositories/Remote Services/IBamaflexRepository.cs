@@ -9,11 +9,12 @@ namespace VTP2015.Repositories.Remote_Services
 
         string GetPartimNameBySuperCode(string supercode);
         string GetModuduleNameBySuperCode(string supercode);
-        IEnumerable<PartimInformatie> GetPartimInformatieList(string studentId, string academieJaar);
         string GetOpleidingByStudentId(string id);
         string GetAfstudeerRichtingByStudentId(string id, string academieJaar);
         bool IsSuperCodeFromStudent(string superCode, string studentId, string academieJaar);
-        IEnumerable<Opleiding> GetOpleidingen();
+        IEnumerable<Entities.Opleiding> GetOpleidingen();
         string GetDocentFromPartim(string superCode);
+        ICollection<OpleidingsProgramma> GetKeuzeTrajecten(Entities.Opleiding opleiding);
+        PartimInformatie GetPartimInformationBySupercode(string supercode);
     }
 }
