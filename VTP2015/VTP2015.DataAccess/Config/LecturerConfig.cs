@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity.ModelConfiguration;
 using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.Config
 {
-    class DocentConfig : EntityTypeConfiguration<Lecturer>
+    class LecturerConfig : EntityTypeConfiguration<Lecturer>
     {
-        public DocentConfig()
+        public LecturerConfig()
         {
             // Primary Key
             HasKey(t => t.Id);
 
             // Properties
-            ToTable("Lecturers");
             Property(t => t.Email).HasMaxLength(255).IsRequired();
             Property(x => x.InfoMail).IsRequired();
             Property(x => x.WarningMail).IsRequired();

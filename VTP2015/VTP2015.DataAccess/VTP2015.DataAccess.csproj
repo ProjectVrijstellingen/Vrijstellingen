@@ -49,18 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\AanvraagConfig.cs" />
-    <Compile Include="Config\BewijsConfig.cs" />
-    <Compile Include="Config\DocentConfig.cs" />
+    <Compile Include="Config\RequestConfig.cs" />
+    <Compile Include="Config\EvidenceConfig.cs" />
+    <Compile Include="Config\LecturerConfig.cs" />
     <Compile Include="Config\DossierConfig.cs" />
     <Compile Include="Config\FeedbackConfig.cs" />
     <Compile Include="Config\RouteConfig.cs" />
     <Compile Include="Config\ModuleConfig.cs" />
-    <Compile Include="Config\OpleidingConfig.cs" />
+    <Compile Include="Config\EducationConfig.cs" />
     <Compile Include="Config\PartimConfig.cs" />
     <Compile Include="Config\PartimInformatieConfig.cs" />
     <Compile Include="Config\StudentConfig.cs" />
-    <Compile Include="Config\TrajectBegeleiderConfig.cs" />
+    <Compile Include="Config\CounselorConfig.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

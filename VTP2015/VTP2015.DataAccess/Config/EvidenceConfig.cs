@@ -3,9 +3,9 @@ using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.Config
 {
-    class BewijsConfig : EntityTypeConfiguration<Evidence>
+    class EvidenceConfig : EntityTypeConfiguration<Evidence>
     {
-        public BewijsConfig()
+        public EvidenceConfig()
         {
             // Primary Key
             HasKey(t => t.Id);

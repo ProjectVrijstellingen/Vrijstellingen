@@ -28,13 +28,13 @@ namespace VTP2015.DataAccess
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new AanvraagConfig());
-            modelBuilder.Configurations.Add(new TrajectBegeleiderConfig());
-            modelBuilder.Configurations.Add(new BewijsConfig());
+            modelBuilder.Configurations.Add(new RequestConfig());
+            modelBuilder.Configurations.Add(new CounselorConfig());
+            modelBuilder.Configurations.Add(new EvidenceConfig());
             modelBuilder.Configurations.Add(new DossierConfig());
             modelBuilder.Configurations.Add(new StudentConfig());
-            modelBuilder.Configurations.Add(new DocentConfig());
-            modelBuilder.Configurations.Add(new OpleidingConfig());
+            modelBuilder.Configurations.Add(new LecturerConfig());
+            modelBuilder.Configurations.Add(new EducationConfig());
             modelBuilder.Configurations.Add(new PartimConfig());
             modelBuilder.Configurations.Add(new ModuleConfig());
             modelBuilder.Configurations.Add(new PartimInformatieConfig());

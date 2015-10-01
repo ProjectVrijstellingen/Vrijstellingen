@@ -31,9 +31,15 @@ namespace VTP2015.ServiceLayer.Student
                 .First(user => user.Email == email).Code;
         }
 
-        public void InsertEvidence(Evidence evidence)
+        public void InsertEvidence(Models.Evidence evidence)
         {
-            _evidenceRepository.Insert(evidence);
+            var entity = new Evidence
+            {
+                Description = evidence.Description,
+                Path = evidence.Path,
+                Student = _studentRepository.Table.First(s => s.Email == evidence.StudentMail)
+            };
+            _evidenceRepository.Insert(entity);
         }
 
         public bool IsEvidenceFromStudent(string email)
@@ -121,12 +127,22 @@ namespace VTP2015.ServiceLayer.Student
             return _partimInformationRepository.Table.First(p => p.SuperCode == superCode);
         }
 
-        public void InsertFile(File file)
+        public int InsertFile(Models.File file)
         {
-            _fileRepository.Insert(file);           
+            var entity = new File
+            { 
+                AcademicYear = file.AcademicYear,
+                DateCreated = file.DateCreated,
+                Editable = file.Editable,
+                Specialization = file.Specialization,
+                Student = _studentRepository.Table.First(s => s.Code == file.StudentMail)
+            };
+
+            _fileRepository.Insert(entity);
+            return entity.Id;
         }
 
-        public bool SyncRequestInFile(Request request)
+        public bool SyncRequestInFile(Models.Request request)
         {
             //Todo:hermaken
             //if (

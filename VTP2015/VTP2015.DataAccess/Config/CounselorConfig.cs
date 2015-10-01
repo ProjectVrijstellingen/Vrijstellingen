@@ -3,15 +3,14 @@ using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.Config
 {
-    public class TrajectBegeleiderConfig : EntityTypeConfiguration<Counselor>
+    public class CounselorConfig : EntityTypeConfiguration<Counselor>
     {
-        public TrajectBegeleiderConfig()
+        public CounselorConfig()
         {
             // Primary Key
             HasKey(t => t.Id);
 
             // Properties
-            ToTable("Counselors");
             Property(t => t.Email).HasMaxLength(255).IsRequired();
 
             // Relationships

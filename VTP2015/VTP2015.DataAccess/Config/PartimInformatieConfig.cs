@@ -23,6 +23,9 @@ namespace VTP2015.DataAccess.Config
             HasRequired(t => t.Lecturer)
                 .WithMany(t => t.PartimInformation)
                 .HasForeignKey(d => d.LecturerId);
+            HasOptional(t => t.Route)
+                .WithMany(t => t.PartimInformatie)
+                .HasForeignKey(d => d.RouteId);
 
 
 

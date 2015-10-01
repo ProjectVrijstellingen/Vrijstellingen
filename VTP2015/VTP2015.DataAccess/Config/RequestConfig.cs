@@ -3,9 +3,9 @@ using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.Config
 {
-    class AanvraagConfig : EntityTypeConfiguration<Request>
+    class RequestConfig : EntityTypeConfiguration<Request>
     {
-        public AanvraagConfig()
+        public RequestConfig()
         {
             // Primary Key
             HasKey(t => t.Id);
@@ -20,11 +20,11 @@ namespace VTP2015.DataAccess.Config
             // Relationships
             HasRequired(t => t.File)
                 .WithMany(t => t.Requests)
-                .HasForeignKey(d => d.Id);
+                .HasForeignKey(d => d.FileId);
 
             HasRequired(t => t.PartimInformation)
                 .WithMany(t => t.Requests)
-                .HasForeignKey(d => d.Id);
+                .HasForeignKey(d => d.PartimInformationId);
 
             HasMany(t => t.Evidence)
                 .WithMany(t => t.Requests)

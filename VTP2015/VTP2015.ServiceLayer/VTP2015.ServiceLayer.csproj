@@ -58,6 +58,10 @@
     <Compile Include="Counselor\CounselorFacade.cs" />
     <Compile Include="Feedback\FeedbackFacade.cs" />
     <Compile Include="Lecturer\LecturerFacade.cs" />
+    <Compile Include="Student\Models\Evidence.cs" />
+    <Compile Include="Student\Models\File.cs" />
+    <Compile Include="Student\Models\Request.cs" />
+    <Compile Include="Student\Models\Status.cs" />
     <Compile Include="Student\StudentFacade.cs" />
     <Compile Include="Admin\IAdminFacade.cs" />
     <Compile Include="Authentication\IAuthenticationFacade.cs" />

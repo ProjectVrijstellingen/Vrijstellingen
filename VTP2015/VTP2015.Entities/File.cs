@@ -5,7 +5,7 @@ namespace VTP2015.Entities
 {
     public class File : BaseEntity
     {
-        public string StudentId { get; set; }
+        public int StudentId { get; set; }
         public string Specialization { get; set; }
         public string AcademicYear { get; set; }
         public DateTime DateCreated { get; set; }

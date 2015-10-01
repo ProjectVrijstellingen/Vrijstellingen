@@ -21,16 +21,11 @@ namespace VTP2015.DataAccess.Config
 
             HasRequired(t => t.Education)
                 .WithMany(t => t.Students)
-                .HasForeignKey(d => d.Id);
+                .HasForeignKey(d => d.EducationId);
 
-            HasMany(t => t.PartimInformation)
+            HasOptional(t => t.Route)
                 .WithMany(t => t.Students)
-                .Map(m =>
-                {
-                    m.ToTable("StudentPartimInformation");
-                    m.MapLeftKey("StudentId");
-                    m.MapRightKey("SuperCode");
-                });
+                .HasForeignKey(d => d.RouteId);
         }
     }
 }

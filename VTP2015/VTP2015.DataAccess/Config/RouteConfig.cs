@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity.ModelConfiguration;
 using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.Config
@@ -14,6 +9,11 @@ namespace VTP2015.DataAccess.Config
         {
             ToTable("Route");
             Property(t => t.Name).HasMaxLength(255).IsRequired();
+
+            // Relationships
+            HasRequired(t => t.Education)
+                .WithMany(t => t.Routes)
+                .HasForeignKey(t => t.EducationId);
         }
     }
 }

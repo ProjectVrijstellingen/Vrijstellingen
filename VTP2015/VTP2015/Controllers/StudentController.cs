@@ -5,10 +5,11 @@ using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
 using Microsoft.Web.Mvc;
 using VTP2015.Config;
-using VTP2015.Entities;
 using VTP2015.ServiceLayer.Student;
 using VTP2015.ViewModels.Student;
-using File = VTP2015.Entities.File;
+using VTP2015.ServiceLayer.Student.Models;
+using VTP2015.ViewModels.Docent;
+using File = VTP2015.ServiceLayer.Student.Models.File;
 
 namespace VTP2015.Controllers
 {
@@ -53,11 +54,9 @@ namespace VTP2015.Controllers
             }
             viewModel.File.SaveAs(path);
 
-            var studentId = _studentFacade.GetStudentCodeByEmail(User.Identity.Name);
-
             var dbBewijs = new Evidence
             {
-                StudentId = studentId,
+                StudentMail = User.Identity.Name,
                 Path = pic,
                 Description = viewModel.Omschrijving
             };
@@ -171,19 +170,18 @@ namespace VTP2015.Controllers
             if(!_studentFacade.SyncStudentPartims(User.Identity.Name,academieJaar))
                 return RedirectToAction("Index");
 
-            var studentId = _studentFacade.GetStudentCodeByEmail(User.Identity.Name);
             var dossier = new File
             {
-                StudentId = studentId,
+                StudentMail = User.Identity.Name,
                 DateCreated = DateTime.Now,
                 Specialization = "",
                 Editable = true,
                 AcademicYear = academieJaar
             };
 
-            _studentFacade.InsertFile(dossier);
+            var newId = _studentFacade.InsertFile(dossier);
 
-            return this.RedirectToAction(c => c.File(dossier.Id));
+            return this.RedirectToAction(c => c.File(newId));
         }
 
         [Route("SaveAanvraag")]
@@ -191,20 +189,19 @@ namespace VTP2015.Controllers
         public ActionResult SaveAanvraag(AanvraagViewModel viewModel)
         {
             if(viewModel.Bewijzen == null) return Content("Geen bewijzen!");
-            viewModel.Bewijzen = viewModel.Bewijzen.Distinct().ToArray();
+            //viewModel.Bewijzen = viewModel.Bewijzen.Distinct().ToArray();
+            //viewModel.Bewijzen.Select(bewijsId => _studentFacade.GetEvidenceById(bewijsId)).ToList();
 
-            var bewijzen = viewModel.Bewijzen.Select(bewijsId => _studentFacade.GetEvidenceById(bewijsId)).ToList();
-
-            var aanvraag = new Request
+            var request = new Request
             {
-                Id = viewModel.DossierId,
-                PartimInformation = _studentFacade.GetPartimInformationBySuperCode(viewModel.SuperCode),
+                DossierId = viewModel.DossierId,
+                PartimInformationSuperCode = viewModel.SuperCode,
                 Argumentation = viewModel.Argumentatie,
                 LastChanged = DateTime.Now,
-                Evidence = bewijzen
+                Bewijzen = viewModel.Bewijzen
             };
 
-            return Content(!_studentFacade.SyncRequestInFile(aanvraag) ? "Don't cheat!" : "Saved!");
+            return Content(!_studentFacade.SyncRequestInFile(request) ? "Don't cheat!" : "Saved!");
 
             //if (!_mailRepository.EmailExists(aanvraag.PartimInformation.Lecturer.Email))
             //{

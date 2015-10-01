@@ -3,16 +3,17 @@ using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.Config
 {
-    class OpleidingConfig : EntityTypeConfiguration<Education>
+    class EducationConfig : EntityTypeConfiguration<Education>
     {
-        public OpleidingConfig()
+        public EducationConfig()
         {
             // Primary Key
             HasKey(t => t.Id);
 
             // Properties
-            ToTable("Educations");
             Property(t => t.Name).HasMaxLength(255).IsRequired();
+            Property(t => t.AcademicYear).HasMaxLength(255).IsRequired();
+            Property(t => t.Code).HasMaxLength(255).IsRequired();
 
             // Relationships
 
