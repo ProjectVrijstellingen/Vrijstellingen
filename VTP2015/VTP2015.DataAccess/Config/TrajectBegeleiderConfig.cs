@@ -11,7 +11,7 @@ namespace VTP2015.DataAccess.Config
             HasKey(t => t.Id);
 
             // Properties
-            ToTable("TrajectBegeleiders");
+            ToTable("Counselors");
             Property(t => t.Email).HasMaxLength(255).IsRequired();
 
             // Relationships

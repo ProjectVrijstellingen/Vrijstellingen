@@ -17,7 +17,7 @@ namespace VTP2015.DataAccess.Config
             HasKey(t => t.Id);
 
             // Properties
-            ToTable("Docenten");
+            ToTable("Lecturers");
             Property(t => t.Email).HasMaxLength(255).IsRequired();
             Property(x => x.InfoMail).IsRequired();
             Property(x => x.WarningMail).IsRequired();

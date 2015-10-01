@@ -128,7 +128,7 @@ namespace VTP2015.ServiceLayer.Student
 
         public bool SyncRequestInFile(Request request)
         {
-            //Todo: hermaken
+            //Todo:hermaken
             //if (
             //    _requestRepository.Table.Any(
             //        x => x.FileId == request.FileId && x.SuperCode == request.PartimInformation.SuperCode))
@@ -148,7 +148,7 @@ namespace VTP2015.ServiceLayer.Student
             //    {
             //        if (_db.Context.Entry(b).State == EntityState.Detached)
             //        {
-            //            _db.Context.Bewijzen.Attach(b);
+            //            _db.Context.Evidence.Attach(b);
             //        }
             //        bestaandeAanvraag.Evidence.Add(b);
             //    }

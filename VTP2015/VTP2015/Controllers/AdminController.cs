@@ -23,7 +23,7 @@ namespace VTP2015.Controllers
         }
 
         [HttpGet]
-        [Route("")]
+        [Route("")] 
         public ViewResult Index()
         {
             return View();

@@ -11,7 +11,7 @@ namespace VTP2015.DataAccess.Config
             HasKey(t => t.Id);
 
             // Properties
-            ToTable("Opleidingen");
+            ToTable("Educations");
             Property(t => t.Name).HasMaxLength(255).IsRequired();
 
             // Relationships

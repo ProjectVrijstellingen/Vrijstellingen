@@ -13,18 +13,18 @@ namespace VTP2015.DataAccess
             
         }
 
-        public DbSet<Request> Aanvragen { get; set; }
-        public DbSet<Evidence> Bewijzen { get; set; }
+        public DbSet<Request> Request { get; set; }
+        public DbSet<Evidence> Evidence { get; set; }
         public DbSet<Feedback> Feedback { get; set; }
-        public DbSet<File> Dossiers { get; set; }
-        public DbSet<Student> Studenten { get; set; }
-        public DbSet<Counselor> TrajectBegeleiders { get; set; }
-        public DbSet<Education> Opleidingen { get; set; }
+        public DbSet<File> Files { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Counselor> Counselors { get; set; }
+        public DbSet<Education> Educations { get; set; }
         public DbSet<Partim> Partims { get; set; }
         public DbSet<Module> Modules { get; set; }
-        public DbSet<Lecturer> Docenten { get; set; }
-        public DbSet<PartimInformation> PartimInformatie { get; set; }
-        public DbSet<Route> KeuzeTraject { get; set; }
+        public DbSet<Lecturer> Lecturers { get; set; }
+        public DbSet<PartimInformation> PartimInformation { get; set; }
+        public DbSet<Route> Routes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

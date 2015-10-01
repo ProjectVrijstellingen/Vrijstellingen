@@ -551,19 +551,19 @@
       <s:complexType name="StudentTrajectConfig">
         <s:sequence>
           <s:element minOccurs="0" maxOccurs="1" name="Student" type="tns:Student" />
-          <s:element minOccurs="0" maxOccurs="1" name="Partims" type="tns:ArrayOfPartimInformation" />
+          <s:element minOccurs="0" maxOccurs="1" name="Partims" type="tns:ArrayOfPartimsInformation" />
         </s:sequence>
       </s:complexType>
-      <s:complexType name="ArrayOfPartimInformation">
+      <s:complexType name="ArrayOfPartimsInformation">
         <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="PartimInformation" nillable="true" type="tns:PartimInformation" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PartimsInformation" nillable="true" type="tns:PartimsInformation" />
         </s:sequence>
       </s:complexType>
-      <s:complexType name="PartimInformation">
+      <s:complexType name="PartimsInformation">
         <s:sequence>
           <s:element minOccurs="0" maxOccurs="1" name="Educationen" type="tns:Item" />
           <s:element minOccurs="0" maxOccurs="1" name="ModuleConfig" type="tns:Item" />
-          <s:element minOccurs="0" maxOccurs="1" name="Partim" type="tns:Item" />
+          <s:element minOccurs="0" maxOccurs="1" name="Partims" type="tns:Item" />
           <s:element minOccurs="0" maxOccurs="1" name="Afstudeerrichting" type="tns:Item" />
           <s:element minOccurs="0" maxOccurs="1" name="Supercode" type="tns:Supercode" />
           <s:element minOccurs="0" maxOccurs="1" name="Semester" type="s:string" />
@@ -795,7 +795,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="Lesgever" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Educationen" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="ModuleConfig" type="tns:Item" />
-          <s:element minOccurs="0" maxOccurs="1" name="Partim" type="tns:Item" />
+          <s:element minOccurs="0" maxOccurs="1" name="Partims" type="tns:Item" />
           <s:element minOccurs="0" maxOccurs="1" name="Afstudeerrichting" type="tns:Item" />
           <s:element minOccurs="0" maxOccurs="1" name="Semester" type="s:string" />
         </s:sequence>
@@ -819,31 +819,31 @@
           <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
         </s:sequence>
       </s:complexType>
-      <s:element name="GetStudentsByPartim">
+      <s:element name="GetStudentsByPartims">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="supercode" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="GetStudentsByPartimResponse">
+      <s:element name="GetStudentsByPartimsResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetStudentsByPartimResult" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetStudentsByPartimsResult" type="tns:ArrayOfString" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="GetPartimInformation">
+      <s:element name="GetPartimsInformation">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="supercode" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="GetPartimInformationResponse">
+      <s:element name="GetPartimsInformationResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetPartimInformationResult" type="tns:ArrayOfPartimInformation" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetPartimsInformationResult" type="tns:ArrayOfPartimsInformation" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -1236,17 +1236,17 @@
   <wsdl:message name="GetDocentenByEducationensOnderdeelSoapOut">
     <wsdl:part name="parameters" element="tns:GetDocentenByEducationensOnderdeelResponse" />
   </wsdl:message>
-  <wsdl:message name="GetStudentsByPartimSoapIn">
-    <wsdl:part name="parameters" element="tns:GetStudentsByPartim" />
+  <wsdl:message name="GetStudentsByPartimsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStudentsByPartims" />
   </wsdl:message>
-  <wsdl:message name="GetStudentsByPartimSoapOut">
-    <wsdl:part name="parameters" element="tns:GetStudentsByPartimResponse" />
+  <wsdl:message name="GetStudentsByPartimsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStudentsByPartimsResponse" />
   </wsdl:message>
-  <wsdl:message name="GetPartimInformationSoapIn">
-    <wsdl:part name="parameters" element="tns:GetPartimInformation" />
+  <wsdl:message name="GetPartimsInformationSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPartimsInformation" />
   </wsdl:message>
-  <wsdl:message name="GetPartimInformationSoapOut">
-    <wsdl:part name="parameters" element="tns:GetPartimInformationResponse" />
+  <wsdl:message name="GetPartimsInformationSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPartimsInformationResponse" />
   </wsdl:message>
   <wsdl:message name="GetTrajectConfigenSoapIn">
     <wsdl:part name="parameters" element="tns:GetTrajectConfigen" />
@@ -1492,15 +1492,15 @@
       <wsdl:input message="tns:GetDocentenByEducationensOnderdeelSoapIn" />
       <wsdl:output message="tns:GetDocentenByEducationensOnderdeelSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="GetStudentsByPartim">
+    <wsdl:operation name="GetStudentsByPartims">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Custom application method.</wsdl:documentation>
-      <wsdl:input message="tns:GetStudentsByPartimSoapIn" />
-      <wsdl:output message="tns:GetStudentsByPartimSoapOut" />
+      <wsdl:input message="tns:GetStudentsByPartimsSoapIn" />
+      <wsdl:output message="tns:GetStudentsByPartimsSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="GetPartimInformation">
+    <wsdl:operation name="GetPartimsInformation">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Custom application method.</wsdl:documentation>
-      <wsdl:input message="tns:GetPartimInformationSoapIn" />
-      <wsdl:output message="tns:GetPartimInformationSoapOut" />
+      <wsdl:input message="tns:GetPartimsInformationSoapIn" />
+      <wsdl:output message="tns:GetPartimsInformationSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="GetTrajectConfigen">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">TrajectConfigen voor een opleiding ophalen.</wsdl:documentation>
@@ -1896,8 +1896,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetStudentsByPartim">
-      <soap:operation soapAction="http://services.howest.be/GetStudentsByPartim" style="document" />
+    <wsdl:operation name="GetStudentsByPartims">
+      <soap:operation soapAction="http://services.howest.be/GetStudentsByPartims" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1905,8 +1905,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetPartimInformation">
-      <soap:operation soapAction="http://services.howest.be/GetPartimInformation" style="document" />
+    <wsdl:operation name="GetPartimsInformation">
+      <soap:operation soapAction="http://services.howest.be/GetPartimsInformation" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -2340,8 +2340,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetStudentsByPartim">
-      <soap12:operation soapAction="http://services.howest.be/GetStudentsByPartim" style="document" />
+    <wsdl:operation name="GetStudentsByPartims">
+      <soap12:operation soapAction="http://services.howest.be/GetStudentsByPartims" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -2349,8 +2349,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetPartimInformation">
-      <soap12:operation soapAction="http://services.howest.be/GetPartimInformation" style="document" />
+    <wsdl:operation name="GetPartimsInformation">
+      <soap12:operation soapAction="http://services.howest.be/GetPartimsInformation" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
