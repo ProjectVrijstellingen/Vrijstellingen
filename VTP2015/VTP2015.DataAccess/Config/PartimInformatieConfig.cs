@@ -8,7 +8,7 @@ namespace VTP2015.DataAccess.Config
         public PartimInformatieConfig()
         {
             // Primary Key
-            HasKey(t => t.SuperCode);
+            HasKey(t => t.Id);
 
             // Properties
             ToTable("PartimInformation");
@@ -24,7 +24,7 @@ namespace VTP2015.DataAccess.Config
                 .WithMany(t => t.PartimInformation)
                 .HasForeignKey(d => d.LecturerId);
             HasOptional(t => t.Route)
-                .WithMany(t => t.PartimInformatie)
+                .WithMany(t => t.PartimInformation)
                 .HasForeignKey(d => d.RouteId);
 
 

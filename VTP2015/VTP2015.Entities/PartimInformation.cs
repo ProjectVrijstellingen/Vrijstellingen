@@ -8,7 +8,7 @@ namespace VTP2015.Entities
         public int PartimId { get; set; }
         public int ModuleId { get; set; }
         public int LecturerId { get; set; }
-        public int RouteId { get; set; }
+        public int? RouteId { get; set; }
 
         public virtual Partim Partim { get; set; }
         public virtual Module Module { get; set; }

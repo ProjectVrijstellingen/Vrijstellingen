@@ -4,7 +4,7 @@ namespace VTP2015.Entities
 {
     public class Evidence : BaseEntity
     {
-        public string StudentId { get; set; }
+        public int StudentId { get; set; }
         public string Description { get; set; }
         public string Path { get; set; }
 
