@@ -36,7 +36,7 @@ namespace VTP2015.Controllers
         {
             var viewModel = new OpleidingSelectViewModel
             {
-                SelectedOpleiding = _counselorFacade.GetEducationNameByStudentEmail(User.Identity.Name),
+                SelectedOpleiding = _counselorFacade.GetEducationNameByCounselorEmail(User.Identity.Name),
                 Opleidingen = _counselorFacade.GetEducations()
                     .Project().To<OpleidingViewModel>().ToList()
             };
@@ -48,7 +48,6 @@ namespace VTP2015.Controllers
         [HttpPost]
         public ActionResult ChangeOpleiding(string opleiding)
         {
-            //TODO: 1 repository call
             _counselorFacade.ChangeEducation(User.Identity.Name, opleiding);
             return Json("Changed!");
         }

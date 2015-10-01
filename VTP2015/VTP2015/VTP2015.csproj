@@ -344,7 +344,7 @@
     <Content Include="Views\Lecturer\RequestListWidget.cshtml" />
     <Content Include="Views\Counselor\RequestDetailWidget.cshtml" />
     <Content Include="Views\Counselor\FileOverviewWidget.cshtml" />
-    <None Include="Views\Counselor\FileDetailWidget.cshtml" />
+    <None Include="Views\Counselor\FileDetailsPartial.cshtml" />
     <Content Include="Views\Admin\index.cshtml" />
     <Content Include="Views\Admin\SettingsWidget.cshtml" />
     <Content Include="Views\Admin\UserTableWidget.cshtml" />
@@ -388,7 +388,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>64391</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
