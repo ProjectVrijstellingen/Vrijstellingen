@@ -41,7 +41,7 @@ namespace VTP2015.Controllers
                                  {
                                      Email = user.Email,
                                      IsAdmin = _im.HasRole(user.UserName, "Admin"),
-                                     IsBegeleider = _im.HasRole(user.UserName, "Counselor")
+                                     IsCounselor = _im.HasRole(user.UserName, "Counselor")
                                  }).ToList();
 
             return PartialView(viewModel);

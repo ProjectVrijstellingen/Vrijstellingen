@@ -12,7 +12,7 @@ namespace VTP2015.Config
 
         public ConfigFile()
         {
-            _file = Path.Combine(HttpContext.Current.Server.MapPath("/"), "Evidence/Config.json");
+            _file = Path.Combine(HttpContext.Current.Server.MapPath("/"), "bewijzen/Config.json");
         }
 
         public bool InfoMailTimeIsAllowed(TimeSpan time)
