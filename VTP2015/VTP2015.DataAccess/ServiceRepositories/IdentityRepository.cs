@@ -10,5 +10,10 @@ namespace VTP2015.DataAccess.ServiceRepositories
         {
             return _identityService.GetUserByEmail(email);
         }
+
+        public bool AuthenticateUserByEmail(string email, string password)
+        {
+            return _identityService.AuthenticateUserByEmail(email, password);
+        }
     }
 }

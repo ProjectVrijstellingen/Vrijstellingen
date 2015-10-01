@@ -30,8 +30,7 @@ namespace VTP2015.ServiceLayer.Authentication
 
         public bool AuthenticateUserByEmail(string email, string password)
         {
-            return true;
-            //return _identityRepository.AuthenticateUserByEmail(email, password);
+            return _identityRepository.AuthenticateUserByEmail(email, password);
         }
 
         public void SyncStudentByUser(string email)

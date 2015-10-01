@@ -1,6 +1,5 @@
 using System.IO;
 using System.Linq;
-using VTP2015.DataAccess.Bamaflex;
 using VTP2015.DataAccess.ServiceRepositories;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
@@ -132,59 +131,58 @@ namespace VTP2015.ServiceLayer.Student
         {
             if (_studentRepository.Table.Where(s => s.Email == email).SelectMany(s => s.Files).Any(d => d.AcademicYear == academicYear)) return false;
             var student = _studentRepository.Table.First(x => x.Email == email);
-            if (_educationRepository.GetById(student.Education.Id).AcademicYear != academicYear)
+            if (_educationRepository.GetById(student.Education.Id).AcademicYear == academicYear) return true;
+
+            var routes = _bamaflexRepository.GetRoutes(student.Education);
+            foreach (var route in routes)
             {
-                var routes = _bamaflexRepository.GetRoutes(student.Education);
-                foreach (var route in routes)
+                var localRoute = new Route
                 {
-                    var localRoute = new Route
+                    Name = route.Naam
+                };
+                _routeRepository.Insert(localRoute);
+                _educationRepository.GetById(student.Education.Id).Routes.Add(localRoute);
+                foreach (var supercode in route.Modules.SelectMany(x => x.Partims).Select(x => x.Supercode))
+                {
+                    if (_partimInformationRepository.Table.Any(x => x.SuperCode == supercode)) continue;
+                    var partimInformation = _bamaflexRepository.GetPartimInformationBySupercode(supercode);
+                    var partimInfo = new PartimInformation
                     {
-                        Name = route.Naam
+                        SuperCode = partimInformation.Supercode.Supercode1,
+                        Lecturer = _lectureRepository.Table.First(d => d.Email == "docent@howest.be")//Needs real input!!!
                     };
-                    _routeRepository.Insert(localRoute);
-                    _educationRepository.GetById(student.Education.Id).Routes.Add(localRoute);
-                    foreach (var supercode in route.Modules.SelectMany(x => x.Partims).Select(x => x.Supercode))
+
+                    if (_partimRepository.Table.Any(p => p.Code == partimInformation.Partim.Id))
                     {
-                        if (_partimInformationRepository.Table.Any(x => x.SuperCode == supercode)) continue;
-                        var partimInformation = _bamaflexRepository.GetPartimInformationBySupercode(supercode);
-                        var partimInfo = new PartimInformation
+                        partimInfo.Partim =
+                            _partimRepository.Table.First(m => m.Code == partimInformation.Partim.Id);
+                    }
+                    else
+                    {
+                        partimInfo.Partim = new Partim
                         {
-                            SuperCode = partimInformation.Supercode.Supercode1,
-                            Lecturer = _lectureRepository.Table.First(d => d.Email == "docent@howest.be")//Needs real input!!!
+                            Code = partimInformation.Partim.Id,
+                            Name = partimInformation.Partim.Naam
                         };
 
-                        if (_partimRepository.Table.Any(p => p.Code == partimInformation.Partim.Id))
-                        {
-                            partimInfo.Partim =
-                                _partimRepository.Table.First(m => m.Code == partimInformation.Partim.Id);
-                        }
-                        else
-                        {
-                            partimInfo.Partim = new Partim
-                            {
-                                Code = partimInformation.Partim.Id,
-                                Name = partimInformation.Partim.Naam
-                            };
-
-                        }
-
-                        if (_moduleRepository.Table.Any(m => m.Code == partimInformation.Module.Id))
-                        {
-                            partimInfo.Module =
-                                _moduleRepository.Table.First(m => m.Code == partimInformation.Module.Id);
-                        }
-                        else
-                        {
-                            partimInfo.Module = new Module
-                            {
-                                Code = partimInformation.Module.Id,
-                                Name = partimInformation.Module.Naam
-                            };
-
-                        }
-                        localRoute.PartimInformation.Add(partimInfo);
-                        _partimInformationRepository.Insert(partimInfo);
                     }
+
+                    if (_moduleRepository.Table.Any(m => m.Code == partimInformation.Module.Id))
+                    {
+                        partimInfo.Module =
+                            _moduleRepository.Table.First(m => m.Code == partimInformation.Module.Id);
+                    }
+                    else
+                    {
+                        partimInfo.Module = new Module
+                        {
+                            Code = partimInformation.Module.Id,
+                            Name = partimInformation.Module.Naam
+                        };
+
+                    }
+                    localRoute.PartimInformation.Add(partimInfo);
+                    _partimInformationRepository.Insert(partimInfo);
                 }
             }
             return true;
