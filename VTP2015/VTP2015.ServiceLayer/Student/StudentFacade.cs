@@ -96,13 +96,13 @@ namespace VTP2015.ServiceLayer.Student
         public IQueryable<PartimInformation> GetRequestedPartims(string email, int fileId)
         {
             return _requestRepository.Table
-                .Where(a => a.FileId == fileId && a.File.Student.Email == email)
+                .Where(a => a.Id == fileId && a.File.Student.Email == email)
                 .Select(a => a.PartimInformation);
         }
 
         public IQueryable<Request> GetRequestsByFileId(int fileId)
         {
-            return _requestRepository.Table.Where(r => r.FileId == fileId);
+            return _requestRepository.Table.Where(r => r.Id == fileId);
         }
 
         public bool SyncStudentPartims(string email, string academicYear)
@@ -163,10 +163,10 @@ namespace VTP2015.ServiceLayer.Student
 
         public bool DeleteRequest(int fileId, string supercode)
         {
-            if (!_requestRepository.Table.Any(d => d.FileId == fileId && d.SuperCode == supercode))
+            if (!_requestRepository.Table.Any(d => d.Id == fileId && d.PartimInformation.SuperCode == supercode))
                 return false;
 
-            var request = _requestRepository.Table.First(d => d.FileId == fileId && d.SuperCode == supercode);
+            var request = _requestRepository.Table.First(d => d.Id == fileId && d.PartimInformation.SuperCode == supercode);
             _requestRepository.Delete(request);
 
             return true;

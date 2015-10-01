@@ -8,11 +8,11 @@ using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.Config
 {
-    public class KeuzeTrajectConfig:EntityTypeConfiguration<KeuzeTraject>
+    public class RouteConfig:EntityTypeConfiguration<Route>
     {
-        public KeuzeTrajectConfig()
+        public RouteConfig()
         {
-            ToTable("KeuzeTraject");
+            ToTable("Route");
             Property(t => t.Name).HasMaxLength(255).IsRequired();
         }
     }

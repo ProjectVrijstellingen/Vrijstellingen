@@ -8,7 +8,7 @@ namespace VTP2015.DataAccess.Config
         public PartimConfig()
         {
             // Primary Key
-            HasKey(t => t.PartimId);
+            HasKey(t => t.Id);
 
             // Properties
             ToTable("Partims");

@@ -9,7 +9,6 @@ namespace VTP2015.Entities
         public string FirstName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public int? EducationId { get; set; }
 
         public virtual Education Education { get; set; }
         public virtual ICollection<Feedback> Feedback { get; set; }

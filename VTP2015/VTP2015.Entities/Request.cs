@@ -11,8 +11,6 @@ namespace VTP2015.Entities
             Status = 0;
         }
 
-        public int FileId { get; set; }
-        public string SuperCode { get; set; }
         public string Argumentation { get; set; }
         public DateTime LastChanged { get; set; }
         public Status Status { get; set; }

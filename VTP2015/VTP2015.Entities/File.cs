@@ -11,8 +11,8 @@ namespace VTP2015.Entities
         public DateTime DateCreated { get; set; }
         public bool Editable { get; set; }
 
-        public virtual Opleiding Opleiding { get; set; }
-        public virtual KeuzeTraject KeuzeTraject { get; set; }
+        public virtual Education Opleiding { get; set; }
+        public virtual Route Route { get; set; }
         public virtual Student Student { get; set; }
         public virtual ICollection<Request> Requests { get; set; }
 

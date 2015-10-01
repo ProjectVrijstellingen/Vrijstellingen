@@ -22,9 +22,9 @@ namespace VTP2015.DataAccess
         public DbSet<Education> Opleidingen { get; set; }
         public DbSet<Partim> Partims { get; set; }
         public DbSet<Module> Modules { get; set; }
-        public DbSet<Docent> Docenten { get; set; }
-        public DbSet<PartimInformatie> PartimInformatie { get; set; }
-        public DbSet<KeuzeTraject> KeuzeTraject { get; set; }
+        public DbSet<Lecturer> Docenten { get; set; }
+        public DbSet<PartimInformation> PartimInformatie { get; set; }
+        public DbSet<Route> KeuzeTraject { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -39,7 +39,7 @@ namespace VTP2015.DataAccess
             modelBuilder.Configurations.Add(new ModuleConfig());
             modelBuilder.Configurations.Add(new PartimInformatieConfig());
             modelBuilder.Configurations.Add(new FeedbackConfig());
-            modelBuilder.Configurations.Add(new KeuzeTrajectConfig());
+            modelBuilder.Configurations.Add(new RouteConfig());
         }
     }
 }

@@ -12,7 +12,6 @@ namespace VTP2015.DataAccess.Config
 
             // Properties
             ToTable("Requests");
-            Property(t => t.SuperCode).HasMaxLength(255).IsRequired();
             Property(t => t.LastChanged).IsRequired();
             Property(t => t.Status).IsRequired();
             Property(t => t.Argumentation).IsRequired();
@@ -21,11 +20,11 @@ namespace VTP2015.DataAccess.Config
             // Relationships
             HasRequired(t => t.File)
                 .WithMany(t => t.Requests)
-                .HasForeignKey(d => d.FileId);
+                .HasForeignKey(d => d.Id);
 
             HasRequired(t => t.PartimInformation)
                 .WithMany(t => t.Requests)
-                .HasForeignKey(d => d.SuperCode);
+                .HasForeignKey(d => d.Id);
 
             HasMany(t => t.Evidence)
                 .WithMany(t => t.Requests)

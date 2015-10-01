@@ -54,7 +54,7 @@
     <Compile Include="Config\DocentConfig.cs" />
     <Compile Include="Config\DossierConfig.cs" />
     <Compile Include="Config\FeedbackConfig.cs" />
-    <Compile Include="Config\KeuzeTrajectConfig.cs" />
+    <Compile Include="Config\RouteConfig.cs" />
     <Compile Include="Config\ModuleConfig.cs" />
     <Compile Include="Config\OpleidingConfig.cs" />
     <Compile Include="Config\PartimConfig.cs" />

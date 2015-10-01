@@ -161,14 +161,15 @@ namespace VTP2015.Controllers
             return PartialView(models.ToArray());
         }
 
-        [Route("NieuwDossier")]
+        [Route("NewFile")]
         [HttpGet]
-        public ActionResult NieuwDossier()
+        public ActionResult NewFile()
         {
             var configFile = new ConfigFile();
             var academieJaar = configFile.AcademieJaar();
 
-            if(!_studentFacade.SyncStudentPartims(User.Identity.Name,academieJaar)) return RedirectToAction("Index");
+            if(!_studentFacade.SyncStudentPartims(User.Identity.Name,academieJaar))
+                return RedirectToAction("Index");
 
             var studentId = _studentFacade.GetStudentCodeByEmail(User.Identity.Name);
             var dossier = new File
@@ -196,7 +197,7 @@ namespace VTP2015.Controllers
 
             var aanvraag = new Request
             {
-                FileId = viewModel.DossierId,
+                Id = viewModel.DossierId,
                 PartimInformation = _studentFacade.GetPartimInformationBySuperCode(viewModel.SuperCode),
                 Argumentation = viewModel.Argumentatie,
                 LastChanged = DateTime.Now,

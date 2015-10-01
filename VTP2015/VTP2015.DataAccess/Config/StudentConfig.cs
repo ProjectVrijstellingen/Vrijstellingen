@@ -21,7 +21,7 @@ namespace VTP2015.DataAccess.Config
 
             HasRequired(t => t.Education)
                 .WithMany(t => t.Students)
-                .HasForeignKey(d => d.EducationId);
+                .HasForeignKey(d => d.Id);
 
             HasMany(t => t.PartimInformation)
                 .WithMany(t => t.Students)

@@ -52,7 +52,7 @@ namespace VTP2015.ServiceLayer.Counselor
         {
             var educationId = _counseloRepository.Table.First(t => t.Email == email).Education.Id;
             return _fileRepository.Table.Where(
-                d => d.Requests.Count > 0 && d.AcademicYear == academicYear && d.Student.EducationId == educationId);
+                d => d.Requests.Count > 0 && d.AcademicYear == academicYear && d.Student.Education.Id == educationId);
         }
 
         public void SendReminder(int aanvraagId)
