@@ -11,8 +11,8 @@ namespace VTP2015.Entities
         public string PhoneNumber { get; set; }
 
         public virtual Education Education { get; set; }
+        public virtual Route Route { get; set; }
         public virtual ICollection<Feedback> Feedback { get; set; }
-        public virtual ICollection<PartimInformation> PartimInformation { get; set; }
         public virtual ICollection<File> Files { get; set; }
         public virtual ICollection<Evidence> Evidence { get; set; }
     }
