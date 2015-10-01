@@ -3,7 +3,7 @@
     public class UserViewModel:IViewModel
     {
         public string Email { get; set; }
-        public bool IsBegeleider { get; set; }
+        public bool IsCounselor { get; set; }
         public bool IsAdmin { get; set; }
     }
 }

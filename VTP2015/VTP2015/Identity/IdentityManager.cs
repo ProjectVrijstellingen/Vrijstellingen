@@ -64,8 +64,7 @@ namespace VTP2015.Identity
 
         public bool HasRole(string userName, string roleName)
         {
-            return true;
-                //TODO: Change Role names _um.FindByName(userName).Roles.Any(userRole => userRole.RoleId == _rm.FindByName(roleName).Id);
+            return _um.FindByName(userName).Roles.Any(userRole => userRole.RoleId == _rm.FindByName(roleName).Id);
         }
     }
 }
