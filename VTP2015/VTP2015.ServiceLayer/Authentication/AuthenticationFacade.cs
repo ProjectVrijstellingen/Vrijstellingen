@@ -38,11 +38,11 @@ namespace VTP2015.ServiceLayer.Authentication
             var user = _identityRepository.GetUserByEmail(email);
             var opleiding = _bamaflexRepository.GetEducationByStudentCode(user.Id);
                 
-            var student = _studentRepository.Table.First(s => s.Email == email)
+            var student = _studentRepository.Table.FirstOrDefault(s => s.Email == email)
                           ?? new Entities.Student {Code = user.Id};
 
-            var education = _educationRepository.Table.First(e => e.Code == opleiding.Code)
-                            ?? new Education {Code = opleiding.Code};
+            var education = _educationRepository.Table.FirstOrDefault(e => e.Code == opleiding.Code)
+                            ?? SyncEducations(opleiding.Code);
 
             student.Name = user.Lastname;
             student.FirstName = user.Firstname;
@@ -54,6 +54,13 @@ namespace VTP2015.ServiceLayer.Authentication
                 _studentRepository.Update(student);
             else
                 _studentRepository.Insert(student);
+        }
+
+        private Education SyncEducations(string educationCode)
+        {
+            var educations = _bamaflexRepository.GetEducations();
+
+
         }
     }
 }
