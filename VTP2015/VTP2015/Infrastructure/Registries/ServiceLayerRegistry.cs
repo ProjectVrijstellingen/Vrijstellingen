@@ -1,5 +1,6 @@
 ﻿using StructureMap.Configuration.DSL;
 using VTP2015.DataAccess.UnitOfWork;
+using VTP2015.ServiceLayer.Admin;
 using VTP2015.ServiceLayer.Authentication;
 using VTP2015.ServiceLayer.Counselor;
 using VTP2015.ServiceLayer.Feedback;
@@ -15,6 +16,7 @@ namespace VTP2015.Infrastructure.Registries
             Scan(scan =>
             {
                 For<IUnitOfWork>().Use<UnitOfWork>();
+                For<IAdminFacade>().Use<AdminFacade>();
                 For<IAuthenticationFacade>().Use<AuthenticationFacade>();
                 For<ICounselorFacade>().Use<CounselorFacade>();
                 For<IFeedbackFacade>().Use<FeedbackFacade>();

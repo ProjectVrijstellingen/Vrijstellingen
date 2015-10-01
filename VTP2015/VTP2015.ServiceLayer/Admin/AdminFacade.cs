@@ -4,7 +4,7 @@ using VTP2015.DataAccess.UnitOfWork;
 
 namespace VTP2015.ServiceLayer.Admin
 {
-    class AdminFacade : IAdminFacade
+    public class AdminFacade : IAdminFacade
     {
         private readonly Repository<Entities.Counselor> _counselorRepository;
 

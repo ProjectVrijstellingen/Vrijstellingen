@@ -73,6 +73,7 @@
     <Compile Include="ServiceRepositories\IBamaflexRepository.cs" />
     <Compile Include="ServiceRepositories\IdentityRepository.cs" />
     <Compile Include="ServiceRepositories\IIDentityRepository.cs" />
+    <Compile Include="ServiceRepositories\MockIbamaflexRepository.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\Repository.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
