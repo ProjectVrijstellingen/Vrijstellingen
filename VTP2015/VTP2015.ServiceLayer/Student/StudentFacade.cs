@@ -1,5 +1,7 @@
 using System.IO;
 using System.Linq;
+using VTP2015.DataAccess.Bamaflex;
+using VTP2015.DataAccess.ServiceRepositories;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
 using File = VTP2015.Entities.File;
@@ -8,21 +10,35 @@ namespace VTP2015.ServiceLayer.Student
 {
     public class StudentFacade : IStudentFacade
     {
+        private readonly IBamaflexRepository _bamaflexRepository;
         private readonly Repository<Entities.Student> _studentRepository;
         private readonly Repository<Evidence> _evidenceRepository;
         private readonly Repository<File> _fileRepository;
         private readonly Repository<Request> _requestRepository; 
         private readonly Repository<PartimInformation> _partimInformationRepository;
+        private readonly Repository<Education> _educationRepository;
+        private readonly Repository<Route> _routeRepository;
+        private readonly Repository<Entities.Lecturer> _lectureRepository;
+        private readonly Repository<Partim> _partimRepository;
+        private readonly Repository<Module> _moduleRepository; 
 
         public StudentFacade(Repository<Entities.Student> studentRepository, Repository<Evidence> evidenceRepository,
             Repository<File> fileRepository, Repository<PartimInformation> partimInformationRepository,
-            Repository<Request> requestRepository)
+            Repository<Request> requestRepository, Repository<Education> educationRepository, IBamaflexRepository bamaflexRepository,
+            Repository<Route> routeRepository, Repository<Entities.Lecturer> lectureRepository, Repository<Partim> partimRepository,
+            Repository<Module> moduleRepository)
         {
             _studentRepository = studentRepository;
             _evidenceRepository = evidenceRepository;
             _fileRepository = fileRepository;
             _partimInformationRepository = partimInformationRepository;
             _requestRepository = requestRepository;
+            _educationRepository = educationRepository;
+            _bamaflexRepository = bamaflexRepository;
+            _routeRepository = routeRepository;
+            _lectureRepository = lectureRepository;
+            _partimRepository = partimRepository;
+            _moduleRepository = moduleRepository;
         }
 
         public string GetStudentCodeByEmail(string email)
@@ -45,7 +61,9 @@ namespace VTP2015.ServiceLayer.Student
         {
             return
                 _studentRepository.Table.Where(s => s.Email == email)
-                    .SelectMany(s => s.PartimInformation)
+                    .Select(s => s.Education)
+                    .SelectMany(e => e.Routes)
+                    .SelectMany(r => r.PartimInformation)
                     .Any(p => p.SuperCode == supercode) &&
                 _studentRepository.Table.Where(s => s.Email == email)
                     .SelectMany(s => s.Files)
@@ -89,7 +107,9 @@ namespace VTP2015.ServiceLayer.Student
         {
             return _studentRepository.Table
                 .Where(s => s.Email == email)
-                .SelectMany(s => s.PartimInformation)
+                .Select(s => s.Education)
+                .SelectMany(e => e.Routes)
+                .SelectMany(r => r.PartimInformation)
                 .Except(GetRequestedPartims(email, fileId));
         }
 
@@ -107,8 +127,64 @@ namespace VTP2015.ServiceLayer.Student
 
         public bool SyncStudentPartims(string email, string academicYear)
         {
-            //TODO: hermaken
-            throw new System.NotImplementedException();
+            if (_studentRepository.Table.Where(s => s.Email == email).SelectMany(s => s.Files).Any(d => d.AcademicYear == academicYear)) return false;
+            var student = _studentRepository.Table.First(x => x.Email == email);
+            if (_educationRepository.GetById(student.Education.Id).AcademicYear != academicYear)
+            {
+                var routes = _bamaflexRepository.GetRoutes(student.Education);
+                foreach (var route in routes)
+                {
+                    var localRoute = new Route
+                    {
+                        Name = route.Naam
+                    };
+                    _routeRepository.Insert(localRoute);
+                    _educationRepository.GetById(student.Education.Id).Routes.Add(localRoute);
+                    foreach (var supercode in route.Modules.SelectMany(x => x.Partims).Select(x => x.Supercode))
+                    {
+                        if (_partimInformationRepository.Table.Any(x => x.SuperCode == supercode)) continue;
+                        var partimInformation = _bamaflexRepository.GetPartimInformationBySupercode(supercode);
+                        var partimInfo = new PartimInformation
+                        {
+                            SuperCode = partimInformation.Supercode.Supercode1,
+                            Lecturer = _lectureRepository.Table.First(d => d.Email == "docent@howest.be")//Needs real input!!!
+                        };
+
+                        if (_partimRepository.Table.Any(p => p.Code == partimInformation.Partim.Id))
+                        {
+                            partimInfo.Partim =
+                                _partimRepository.Table.First(m => m.Code == partimInformation.Partim.Id);
+                        }
+                        else
+                        {
+                            partimInfo.Partim = new Partim
+                            {
+                                Code = partimInformation.Partim.Id,
+                                Name = partimInformation.Partim.Naam
+                            };
+
+                        }
+
+                        if (_moduleRepository.Table.Any(m => m.Code == partimInformation.Module.Id))
+                        {
+                            partimInfo.Module =
+                                _moduleRepository.Table.First(m => m.Code == partimInformation.Module.Id);
+                        }
+                        else
+                        {
+                            partimInfo.Module = new Module
+                            {
+                                Code = partimInformation.Module.Id,
+                                Name = partimInformation.Module.Naam
+                            };
+
+                        }
+                        localRoute.PartimInformation.Add(partimInfo);
+                        _partimInformationRepository.Insert(partimInfo);
+                    }
+                }
+            }
+            return true;
         }
 
         public Evidence GetEvidenceById(int evidenceId)
