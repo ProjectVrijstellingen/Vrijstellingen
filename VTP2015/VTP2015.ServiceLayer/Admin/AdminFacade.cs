@@ -6,16 +6,16 @@ namespace VTP2015.ServiceLayer.Admin
 {
     class AdminFacade : IAdminFacade
     {
-        private readonly Repository<Entities.Counselor> _counseloRepository;
+        private readonly Repository<Entities.Counselor> _counselorRepository;
 
-        public AdminFacade(Repository<Entities.Counselor> counseloRepository)
+        public AdminFacade(IUnitOfWork unitOfWork)
         {
-            _counseloRepository = counseloRepository;
+            _counselorRepository = unitOfWork.Repository<Entities.Counselor>();
         }
 
         public void InsertCounselor(string email)
         {
-            _counseloRepository.Insert(new Entities.Counselor
+            _counselorRepository.Insert(new Entities.Counselor
             {
                 Email = email
             });
@@ -23,8 +23,8 @@ namespace VTP2015.ServiceLayer.Admin
 
         public void RemoveCounselor(string email)
         {
-            var counselor = _counseloRepository.Table.First(c => c.Email == email);
-            _counseloRepository.Delete(counselor);
+            var counselor = _counselorRepository.Table.First(c => c.Email == email);
+            _counselorRepository.Delete(counselor);
         }
     }
 }

@@ -8,10 +8,10 @@ namespace VTP2015.ServiceLayer.Feedback
         private readonly Repository<Entities.Student> _studentRepository;
         private readonly Repository<Entities.Feedback> _feedbackRepository;
 
-        public FeedbackFacade(Repository<Entities.Feedback> feedbackRepository, Repository<Entities.Student> studentRepository)
+        public FeedbackFacade(IUnitOfWork unitOfWork)
         {
-            _feedbackRepository = feedbackRepository;
-            _studentRepository = studentRepository;
+            _feedbackRepository = unitOfWork.Repository<Entities.Feedback>();
+            _studentRepository = unitOfWork.Repository<Entities.Student>();
         }
 
         public Entities.Student GetStudentByEmail(string email)

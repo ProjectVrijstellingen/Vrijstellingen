@@ -4,7 +4,7 @@ using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.UnitOfWork
 {
-    class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly Context _context;
         private bool _disposed;

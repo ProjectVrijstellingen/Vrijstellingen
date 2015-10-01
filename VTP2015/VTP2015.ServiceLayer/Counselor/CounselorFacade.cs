@@ -12,15 +12,13 @@ namespace VTP2015.ServiceLayer.Counselor
         private readonly Repository<Entities.Counselor> _counseloRepository;
         private readonly Repository<File> _fileRepository;
 
-        public CounselorFacade(Repository<Request> requestRepository, Repository<Entities.Student> studentRepository,
-            Repository<Education> educationRepository, Repository<Entities.Counselor> counseloRepository,
-            Repository<File> fileRepository)
+        public CounselorFacade(IUnitOfWork unitOfWork)
         {
-            _requestRepository = requestRepository;
-            _studentRepository = studentRepository;
-            _educationRepository = educationRepository;
-            _counseloRepository = counseloRepository;
-            _fileRepository = fileRepository;
+            _requestRepository = unitOfWork.Repository<Request>();
+            _studentRepository = unitOfWork.Repository<Entities.Student>();
+            _educationRepository = unitOfWork.Repository<Education>();
+            _counseloRepository = unitOfWork.Repository<Entities.Counselor>();
+            _fileRepository = unitOfWork.Repository<File>();
         }
 
         public IQueryable<Request> GetRequests()

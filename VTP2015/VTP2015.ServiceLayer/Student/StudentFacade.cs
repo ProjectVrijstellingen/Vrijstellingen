@@ -22,23 +22,20 @@ namespace VTP2015.ServiceLayer.Student
         private readonly Repository<Partim> _partimRepository;
         private readonly Repository<Module> _moduleRepository; 
 
-        public StudentFacade(Repository<Entities.Student> studentRepository, Repository<Evidence> evidenceRepository,
-            Repository<File> fileRepository, Repository<PartimInformation> partimInformationRepository,
-            Repository<Request> requestRepository, Repository<Education> educationRepository, IBamaflexRepository bamaflexRepository,
-            Repository<Route> routeRepository, Repository<Entities.Lecturer> lectureRepository, Repository<Partim> partimRepository,
-            Repository<Module> moduleRepository)
+        public StudentFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository)
         {
-            _studentRepository = studentRepository;
-            _evidenceRepository = evidenceRepository;
-            _fileRepository = fileRepository;
-            _partimInformationRepository = partimInformationRepository;
-            _requestRepository = requestRepository;
-            _educationRepository = educationRepository;
             _bamaflexRepository = bamaflexRepository;
-            _routeRepository = routeRepository;
-            _lectureRepository = lectureRepository;
-            _partimRepository = partimRepository;
-            _moduleRepository = moduleRepository;
+
+            _studentRepository = unitOfWork.Repository<Entities.Student>();
+            _evidenceRepository = unitOfWork.Repository<Evidence>();
+            _fileRepository = unitOfWork.Repository<File>();
+            _partimInformationRepository = unitOfWork.Repository<PartimInformation>();
+            _requestRepository = unitOfWork.Repository<Request>();
+            _educationRepository = unitOfWork.Repository<Education>();
+            _routeRepository = unitOfWork.Repository<Route>();
+            _lectureRepository = unitOfWork.Repository<Entities.Lecturer>();
+            _partimRepository = unitOfWork.Repository<Partim>();
+            _moduleRepository = unitOfWork.Repository<Module>();
         }
 
         public string GetStudentCodeByEmail(string email)

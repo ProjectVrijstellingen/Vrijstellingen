@@ -13,13 +13,12 @@ namespace VTP2015.ServiceLayer.Authentication
         private readonly Repository<Entities.Student> _studentRepository;
         private readonly Repository<Education> _educationRepository;
 
-        public AuthenticationFacade(Repository<Entities.Counselor> counselorRepository,
-            Repository<Entities.Student> studentRepository, Repository<Education> educationRepository,
-            IBamaflexRepository bamaflexRepository, IIdentityRepository identityRepository)
+        public AuthenticationFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository,
+            IIdentityRepository identityRepository)
         {
-            _counselorRepository = counselorRepository;
-            _studentRepository = studentRepository;
-            _educationRepository = educationRepository;
+            _counselorRepository = unitOfWork.Repository<Entities.Counselor>();
+            _studentRepository = unitOfWork.Repository<Entities.Student>();
+            _educationRepository = unitOfWork.Repository<Education>();
             _bamaflexRepository = bamaflexRepository;
             _identityRepository = identityRepository;
         }

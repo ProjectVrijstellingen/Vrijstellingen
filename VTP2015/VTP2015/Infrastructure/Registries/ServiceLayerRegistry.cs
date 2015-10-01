@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using StructureMap.Configuration.DSL;
-using VTP2015.ServiceLayer;
+﻿using StructureMap.Configuration.DSL;
+using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.ServiceLayer.Authentication;
 using VTP2015.ServiceLayer.Counselor;
 using VTP2015.ServiceLayer.Feedback;
@@ -18,6 +14,7 @@ namespace VTP2015.Infrastructure.Registries
         {
             Scan(scan =>
             {
+                For<IUnitOfWork>().Use<UnitOfWork>();
                 For<IAuthenticationFacade>().Use<AuthenticationFacade>();
                 For<ICounselorFacade>().Use<CounselorFacade>();
                 For<IFeedbackFacade>().Use<FeedbackFacade>();

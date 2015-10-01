@@ -9,10 +9,10 @@ namespace VTP2015.ServiceLayer.Lecturer
         private readonly Repository<Request> _requestRepository;
         private readonly Repository<Entities.Lecturer> _lecturerRepository;
 
-        public LecturerFacade(Repository<Request> requestRepository, Repository<Entities.Lecturer> lecturerRepository)
+        public LecturerFacade(IUnitOfWork unitOfWork)
         {
-            _requestRepository = requestRepository;
-            _lecturerRepository = lecturerRepository;
+            _requestRepository = unitOfWork.Repository<Request>();
+            _lecturerRepository = unitOfWork.Repository<Entities.Lecturer>();
         }
 
         public IQueryable<Request> GetUntreadedRequests(string email)
