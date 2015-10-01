@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using VTP2015.DataAccess.ServiceRepositories;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
@@ -60,7 +61,21 @@ namespace VTP2015.ServiceLayer.Authentication
         {
             var educations = _bamaflexRepository.GetEducations();
 
+            Education returnValue = null;
 
+            foreach (var model in educations.Select(education => new Education
+            {
+                AcademicYear = "2015-16", //Todo: ConfigFile gebruiken
+                Code = education.Code,
+                Name = education.Naam,
+            }))
+            {
+                _educationRepository.Insert(model);
+                if (model.Code == educationCode)
+                    returnValue = model;
+            }
+
+            return returnValue;
         }
     }
 }
