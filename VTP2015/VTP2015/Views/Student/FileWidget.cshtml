@@ -1,19 +1,19 @@
 ﻿@using VTP2015.Helpers
-@model VTP2015.ViewModels.Student.DossierListViewModel[]
+@model VTP2015.ViewModels.Student.FileListViewModel[]
 
     @using (Html.BeginPanel("Mijn dossiers"))
     {
         <ul class="list-group">
-            @foreach (var dossier in Model)
+            @foreach (var file in Model)
             {
                 <li class="list-group-item">
-                    @if (dossier.Editable)
+                    @if (file.Editable)
                     {
-                        @Html.RouteLink(dossier.Omschrijving, new { controller = "Student", action = "File", dossierId = dossier.DossierId })
+                        @Html.RouteLink(file.Description, new { controller = "Student", action = "File", dossierId = file.FileId })
                     }
                     else
                     {
-                        @dossier.Omschrijving
+                        @file.Description
                     }
                 </li>
             }

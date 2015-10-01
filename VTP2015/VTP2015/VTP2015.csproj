@@ -214,7 +214,7 @@
     <Compile Include="ViewModels\Student\AangevraagDetailViewModel.cs" />
     <Compile Include="ViewModels\Student\AanvraagViewModel.cs" />
     <Compile Include="ViewModels\Student\BewijsListViewModel.cs" />
-    <Compile Include="ViewModels\Student\DossierListViewModel.cs" />
+    <Compile Include="ViewModels\Student\FileListViewModel.cs" />
     <Compile Include="ViewModels\Student\DossierViewModel.cs" />
     <Compile Include="ViewModels\Student\IndexViewModel.cs" />
     <Compile Include="ViewModels\Student\PartimViewModel.cs" />
@@ -351,6 +351,7 @@
     <Content Include="Views\Counselor\EducationSelectWidget.cshtml" />
     <Content Include="Views\Counselor\PrintFile.cshtml" />
     <Content Include="Views\Feedback\AddFeedbackWidget.cshtml" />
+    <Content Include="Views\Student\EvidenceListWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bewijzen\" />

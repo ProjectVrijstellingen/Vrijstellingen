@@ -85,7 +85,7 @@ namespace VTP2015.Controllers
         public PartialViewResult FileWidget()
         {
             var models = _studentFacade.GetFilesByStudentEmail(User.Identity.Name)
-                .Project().To<DossierListViewModel>();
+                .Project().To<FileListViewModel>();
 
             return PartialView(models.ToArray());
         }

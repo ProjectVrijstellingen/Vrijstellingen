@@ -4,7 +4,7 @@ using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.ServiceRepositories
 {
-    class MockIbamaflexRepository : IBamaflexRepository
+    public class MockBamaflexRepository : IBamaflexRepository
     {
         public Opleiding GetEducationByStudentCode(string code)
         {
@@ -49,7 +49,6 @@ namespace VTP2015.DataAccess.ServiceRepositories
             {
                 new Opleiding { Code = "", Naam = "" }
             };
-            throw new System.NotImplementedException();
         }
     }
 }

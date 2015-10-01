@@ -15,7 +15,7 @@ namespace VTP2015
         {
             //Student
             Mapper.CreateMap<File, Student.DossierViewModel>();
-            Mapper.CreateMap<File, Student.DossierListViewModel>();
+            Mapper.CreateMap<File, Student.FileListViewModel>();
             Mapper.CreateMap<Evidence, Student.BewijsListViewModel>();
             Mapper.CreateMap<PartimInformation, Student.PartimViewModel>()
                 .ForMember(m => m.ModuleId,
