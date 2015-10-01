@@ -23,5 +23,10 @@ namespace VTP2015.DataAccess.ServiceRepositories
         {
             return _bamaflexService.GetPartimInformatie(supercode)[0];
         }
+
+        public ICollection<Opleiding> GetEducations()
+        {
+            return _bamaflexService.GetOpleidingen();
+        }
     }
 }

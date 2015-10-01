@@ -9,5 +9,6 @@ namespace VTP2015.DataAccess.ServiceRepositories
         Opleiding GetEducationByStudentCode(string code);
         ICollection<OpleidingsProgramma> GetRoutes(Education education);
         PartimInformatie GetPartimInformationBySupercode(string supercode);
+        ICollection<Opleiding> GetEducations();
     }
 }
