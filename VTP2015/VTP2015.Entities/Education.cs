@@ -10,7 +10,7 @@ namespace VTP2015.Entities
 
         public virtual Counselor Counselor { get; set; }
         public virtual ICollection<Student> Students { get; set; }
-        public virtual ICollection<Route> KeuzeTrajecten { get; set; }
+        public virtual ICollection<Route> Routes { get; set; }
 
     }
 }
