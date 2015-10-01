@@ -11,41 +11,41 @@
                     <input type="radio" id="rBlok" value="Blok"/> <span class="glyphicon glyphicon-th"></span>
                 </label>
                 <label class="btn btn-default">
-                    <input type="radio" id="rLijst" value="Lijst" /> <span class="glyphicon glyphicon-list"></span>
+                    <input type="radio" id="rLijst" value="Lijst"/> <span class="glyphicon glyphicon-list"></span>
                 </label>
             </div>
         </div>
-        @Html.Action("OpleidingSelectWidget")
+        @Html.Action("EducationSelectWidget")
     </div>
     <div class="container">
         <div class="row">
             <div id="lijst" class="hidden">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th>Voornaam</th>
-                            <th>Familienaam</th>
-                            <th>Status</th>
-                            <th>Acties</th>
-                        </tr>
+                    <tr>
+                        <th>Voornaam</th>
+                        <th>Familienaam</th>
+                        <th>Status</th>
+                        <th>Acties</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach (var dossier in Model)
-                        {
-                            <tr>
-                                <td>@dossier.StudentVoornaam</td>
-                                <td>@dossier.StudentNaam</td>
-                                <td>@dossier.PercentageVoltooid%</td>
-                                <td>
-                                    <a href="#" id="links-list">
-                                        <span class="glyphicon glyphicon-list-alt dossierpointer" data-dossierid="@dossier.DossierId" aria-hidden="true"></span>
-                                    </a>
-                                    <a href="#" id="midden-list">
-                                        <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-                                    </a>
-                                </td>
-                            </tr>
-                        }
+                    @foreach (var dossier in Model)
+                    {
+                        <tr>
+                            <td>@dossier.StudentVoornaam</td>
+                            <td>@dossier.StudentNaam</td>
+                            <td>@dossier.PercentageVoltooid%</td>
+                            <td>
+                                <a href="#" id="links-list">
+                                    <span class="glyphicon glyphicon-list-alt dossierpointer" data-dossierid="@dossier.DossierId" aria-hidden="true"></span>
+                                </a>
+                                <a href="#" id="midden-list">
+                                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
                     </tbody>
                 </table>
             </div>
@@ -78,9 +78,9 @@
                         </div>
                     </div>
                 }
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <script type="text/javascript">
