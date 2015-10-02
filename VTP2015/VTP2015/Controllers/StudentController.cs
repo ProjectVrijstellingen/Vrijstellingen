@@ -8,7 +8,6 @@ using VTP2015.Config;
 using VTP2015.ServiceLayer.Student;
 using VTP2015.ViewModels.Student;
 using VTP2015.ServiceLayer.Student.Models;
-using VTP2015.ViewModels.Docent;
 using File = VTP2015.ServiceLayer.Student.Models.File;
 
 namespace VTP2015.Controllers
@@ -140,9 +139,9 @@ namespace VTP2015.Controllers
             return PartialView(models.ToArray());
         }
 
-        [Route("FileSelectWidget")]
+        [Route("SelectEvidenceWidget")]
         [HttpGet]
-        public PartialViewResult FileSelectWidget()
+        public PartialViewResult SelectEvidenceWidget()
         {
             var models = _studentFacade.GetEvidenceByStudentEmail(User.Identity.Name)
                 .Project().To<BewijsListViewModel>();

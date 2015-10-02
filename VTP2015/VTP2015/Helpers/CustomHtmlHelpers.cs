@@ -57,10 +57,10 @@ namespace VTP2015.Helpers
         {
             var itemTag = new TagBuilder("li");
             itemTag.AddCssClass("list-group-item");
-            itemTag.Attributes.Add("data-bewijsid", bewijs.BewijsId.ToString());
+            itemTag.Attributes.Add("data-bewijsid", bewijs.Id.ToString());
             if (draggable)
             {
-                itemTag.Attributes.Add("id", "bewijs-" + bewijs.BewijsId);
+                itemTag.Attributes.Add("id", "bewijs-" + bewijs.Id);
                 itemTag.Attributes.Add("draggable", "true");
                 itemTag.Attributes.Add("ondragstart", "drag(event)");
             }

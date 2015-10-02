@@ -2,7 +2,7 @@
 {
     public class BewijsListViewModel
     {
-        public int BewijsId { get; set; }
+        public int Id { get; set; }
         public string Path { get; set; }
         public string Omschrijving { get; set; }
 

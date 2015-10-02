@@ -10,9 +10,8 @@ namespace VTP2015.Infrastructure.Registries
             Scan(scan =>
             {
                 For<IBamaflexRepository>().Use<BamaflexRepository>();
-                For<IIdentityRepository>().Use<IdentityRepository>();
+                For<IIdentityRepository>().Use<MockIdentityRepository>();
             });
-
         }
 
     }

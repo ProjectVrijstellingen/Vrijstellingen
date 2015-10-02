@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
-using VTP2015.ServiceLayer;
 using VTP2015.ServiceLayer.Lecturer;
 using VTP2015.ViewModels.Docent;
 

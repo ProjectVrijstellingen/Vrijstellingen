@@ -30,7 +30,7 @@ namespace VTP2015.Controllers
         // POST: /Feedback/Create
         [Route("AddFeedback")]
         [HttpPost]
-        public ActionResult AddFeedback(AddFeedbackViewModel viewModel)
+        public ContentResult AddFeedback(AddFeedbackViewModel viewModel)
         {
 
             var feedback = new Feedback

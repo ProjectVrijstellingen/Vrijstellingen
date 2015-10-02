@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using System.Linq;
 using VTP2015.Entities;
 using VTP2015.Infrastructure.Tasks;

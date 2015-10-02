@@ -1,12 +1,13 @@
 ﻿using System.Linq;
-using VTP2015.Entities;
+using VTP2015.ServiceLayer.Student.Models;
+using File = VTP2015.ServiceLayer.Student.Models.File;
 
 namespace VTP2015.ServiceLayer.Student
 {
     public interface IStudentFacade
     {
         string GetStudentCodeByEmail(string email);
-        void InsertEvidence(Models.Evidence evidence);
+        void InsertEvidence(Evidence evidence);
         bool IsEvidenceFromStudent(string email);
         bool IsRequestFromStudent(int fileId, string supercode, string email);
         bool DeleteEvidence(int evidenceId, string mapPath);
@@ -19,8 +20,8 @@ namespace VTP2015.ServiceLayer.Student
         bool SyncStudentPartims(string email, string academicYear);
         Evidence GetEvidenceById(int evidenceId);
         PartimInformation GetPartimInformationBySuperCode(string superCode);
-        int InsertFile(Models.File file);
-        bool SyncRequestInFile(Models.Request request);
+        int InsertFile(File file);
+        bool SyncRequestInFile(Request request);
         bool DeleteRequest(int fileId, string supercode);
     }
 }

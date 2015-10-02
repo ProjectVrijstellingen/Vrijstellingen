@@ -1,8 +1,11 @@
 using System.IO;
 using System.Linq;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.ServiceRepositories;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
+using VTP2015.ServiceLayer.Student.Mappings;
 using File = VTP2015.Entities.File;
 
 namespace VTP2015.ServiceLayer.Student
@@ -35,6 +38,9 @@ namespace VTP2015.ServiceLayer.Student
             _lectureRepository = unitOfWork.Repository<Entities.Lecturer>();
             _partimRepository = unitOfWork.Repository<Partim>();
             _moduleRepository = unitOfWork.Repository<Module>();
+
+            var automapperConfig = new AutoMapperConfig();
+            automapperConfig.Execute();
         }
 
         public string GetStudentCodeByEmail(string email)
@@ -88,14 +94,18 @@ namespace VTP2015.ServiceLayer.Student
             return true;
         }
 
-        public IQueryable<File> GetFilesByStudentEmail(string email)
+        public IQueryable<Models.File> GetFilesByStudentEmail(string email)
         {
-            return _fileRepository.Table.Where(f => f.Student.Email == email);
+            return _fileRepository
+                .Table.Where(f => f.Student.Email == email)
+                .Project().To<Models.File>();
         }
 
-        public IQueryable<Evidence> GetEvidenceByStudentEmail(string email)
+        public IQueryable<Models.Evidence> GetEvidenceByStudentEmail(string email)
         {
-            return _evidenceRepository.Table.Where(e => e.Student.Email == email);
+            return _evidenceRepository.Table
+                .Where(e => e.Student.Email == email)
+                .Project().To<Models.Evidence>();
         }
 
         public bool IsFileFromStudent(string email, int fileId)
@@ -105,26 +115,30 @@ namespace VTP2015.ServiceLayer.Student
                 .Any(d => d.Student.Email == email);
         }
 
-        public IQueryable<PartimInformation> GetAvailablePartims(string email, int fileId)
+        public IQueryable<Models.PartimInformation> GetAvailablePartims(string email, int fileId)
         {
             return _studentRepository.Table
                 .Where(s => s.Email == email)
                 .Select(s => s.Education)
                 .SelectMany(e => e.Routes)
-                .SelectMany(r => r.PartimInformation)
-                .Except(GetRequestedPartims(email, fileId));
+                .SelectMany(r => r.PartimInformation).Except(GetRequestedPartims(email, fileId))
+                .Project().To<Models.PartimInformation>();
+            
         }
 
-        public IQueryable<PartimInformation> GetRequestedPartims(string email, int fileId)
+        public IQueryable<Models.PartimInformation> GetRequestedPartims(string email, int fileId)
         {
             return _requestRepository.Table
                 .Where(a => a.Id == fileId && a.File.Student.Email == email)
-                .Select(a => a.PartimInformation);
+                .Select(a => a.PartimInformation)
+                .Project().To<Models.PartimInformation>();
         }
 
-        public IQueryable<Request> GetRequestsByFileId(int fileId)
+        public IQueryable<Models.Request> GetRequestsByFileId(int fileId)
         {
-            return _requestRepository.Table.Where(r => r.Id == fileId);
+            return _requestRepository.Table
+                .Where(r => r.Id == fileId)
+                .Project().To<Models.Request>();
         }
 
         public bool SyncStudentPartims(string email, string academicYear)
@@ -188,14 +202,19 @@ namespace VTP2015.ServiceLayer.Student
             return true;
         }
 
-        public Evidence GetEvidenceById(int evidenceId)
+        public Models.Evidence GetEvidenceById(int evidenceId)
         {
-            return _evidenceRepository.Table.First(e => e.Id == evidenceId);
+            var entity = _evidenceRepository.Table
+                .First(e => e.Id == evidenceId);
+
+            return Mapper.Map<Models.Evidence>(entity);
         }
 
-        public PartimInformation GetPartimInformationBySuperCode(string superCode)
+        public Models.PartimInformation GetPartimInformationBySuperCode(string superCode)
         {
-            return _partimInformationRepository.Table.First(p => p.SuperCode == superCode);
+            var entity =  _partimInformationRepository.Table.First(p => p.SuperCode == superCode);
+
+            return Mapper.Map<Models.PartimInformation>(entity);
         }
 
         public int InsertFile(Models.File file)
@@ -206,7 +225,7 @@ namespace VTP2015.ServiceLayer.Student
                 DateCreated = file.DateCreated,
                 Editable = file.Editable,
                 Specialization = file.Specialization,
-                Student = _studentRepository.Table.First(s => s.Code == file.StudentMail)
+                Student = _studentRepository.Table.First(s => s.Email == file.StudentMail)
             };
 
             _fileRepository.Insert(entity);
