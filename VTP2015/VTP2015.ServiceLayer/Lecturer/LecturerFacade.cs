@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
 
@@ -15,18 +16,22 @@ namespace VTP2015.ServiceLayer.Lecturer
             _lecturerRepository = unitOfWork.Repository<Entities.Lecturer>();
         }
 
-        public IQueryable<Request> GetUntreadedRequests(string email)
+        private IQueryable<Request> GetUntreadedRequestEntities(string email)
         {
             return _lecturerRepository.Table.Where(b => b.Email == email)
                 .SelectMany(p => p.PartimInformation)
                 .SelectMany(p => p.Requests)
                 .Where(a => a.Status == Status.Untreated);
-
         }
 
-        public IQueryable<Request> GetUntreadedRequestsDistinct(string email)
+        public IQueryable<Models.Request> GetUntreadedRequests(string email)
         {
-            var requests = GetUntreadedRequests(email);
+            return GetUntreadedRequestEntities(email).Project().To<Models.Request>();
+        }
+
+        public IQueryable<Models.Request> GetUntreadedRequestsDistinct(string email)
+        {
+            var requests = GetUntreadedRequestEntities(email);
 
             var result = from request in requests
                          where request.Id > 0
@@ -34,7 +39,7 @@ namespace VTP2015.ServiceLayer.Lecturer
                             into groups
                             select groups.FirstOrDefault();
 
-            return result;
+            return result.Project().To<Models.Request>();
         }
 
         public bool Approve(int requestId, bool isApproved, string email)

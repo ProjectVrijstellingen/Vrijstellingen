@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
 
@@ -20,21 +21,23 @@ namespace VTP2015.ServiceLayer.Counselor
             _fileRepository = unitOfWork.Repository<File>();
         }
 
-        public IQueryable<Request> GetRequests()
+        public IQueryable<Models.Request> GetRequests()
         {
-            return _requestRepository.Table;
+            return _requestRepository.Table
+                .Project().To<Models.Request>();
         }
 
         public string GetEducationNameByCounselorEmail(string email)
         {
+
             if (!_counselorRepository.Table.Any(x => x.Email == email)) return "";
             return _counselorRepository.Table.First(s => s.Email == email)
                 .Education.Name;
         }
-
-        public IQueryable<Education> GetEducations()
+        public IQueryable<Models.Education> GetEducations()
         {
-            return _educationRepository.Table;
+            return _educationRepository.Table
+                .Project().To<Models.Education>();
         }
 
         public void ChangeEducation(string email, string educationName)
@@ -46,12 +49,13 @@ namespace VTP2015.ServiceLayer.Counselor
             _counselorRepository.Update(counselor);
         }
 
-        public IQueryable<File> GetFileByCounselorEmail(string email, string academicYear)
+        public IQueryable<Models.File> GetFileByCounselorEmail(string email, string academicYear)
         {
-            if (!_counselorRepository.Table.Any()) return new List<File>().AsQueryable();
+            if (!_counselorRepository.Table.Any()) return new List<Models.File>().AsQueryable();
             var educationId = _counselorRepository.Table.First(t => t.Email == email).Education.Id;
             return _fileRepository.Table.Where(
-                d => d.Requests.Count > 0 && d.AcademicYear == academicYear && d.Student.Education.Id == educationId);
+                d => d.Requests.Count > 0 && d.AcademicYear == academicYear && d.Student.Education.Id == educationId)
+                .Project().To<Models.File>();
         }
 
         public void SendReminder(int aanvraagId)
