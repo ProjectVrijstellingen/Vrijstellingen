@@ -1,0 +1,9 @@
+﻿@using VTP2015.Helpers
+@model VTP2015.Modules.Student.ViewModels.EvidenceListViewModel[]
+
+<div id="bewijzenColumn" class="col-md-4 hide">
+    @using (Html.BeginPanel("Evidence"))
+    {
+        @Html.ShowBewijzenList(Model, true)
+    }
+</div>

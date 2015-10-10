@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 using VTP2015.lib;
-using VTP2015.ViewModels.Student;
+using VTP2015.Modules.Student.ViewModels;
 
 namespace VTP2015.Helpers
 {
@@ -41,7 +41,7 @@ namespace VTP2015.Helpers
             return new MvcHtmlString(htmlString);
         }
 
-        public static MvcHtmlString ShowBewijzenList(this HtmlHelper html, BewijsListViewModel[] bewijzen, bool draggable)
+        public static MvcHtmlString ShowBewijzenList(this HtmlHelper html, EvidenceListViewModel[] bewijzen, bool draggable)
         {
             var tag = new TagBuilder("ul");
             tag.AddCssClass("list-group");
@@ -53,28 +53,28 @@ namespace VTP2015.Helpers
             return new MvcHtmlString(tag.ToString());
         }
 
-        public static MvcHtmlString ShowBewijsLi(this HtmlHelper html, BewijsListViewModel bewijs, bool draggable)
+        public static MvcHtmlString ShowBewijsLi(this HtmlHelper html, EvidenceListViewModel evidence, bool draggable)
         {
             var itemTag = new TagBuilder("li");
             itemTag.AddCssClass("list-group-item");
-            itemTag.Attributes.Add("data-bewijsid", bewijs.Id.ToString());
+            itemTag.Attributes.Add("data-bewijsid", evidence.Id.ToString());
             if (draggable)
             {
-                itemTag.Attributes.Add("id", "bewijs-" + bewijs.Id);
+                itemTag.Attributes.Add("id", "evidence-" + evidence.Id);
                 itemTag.Attributes.Add("draggable", "true");
                 itemTag.Attributes.Add("ondragstart", "drag(event)");
             }
             itemTag.InnerHtml += ShowGlyphicon(html, "file");
             var descriptionTag = new TagBuilder("span");
             descriptionTag.AddCssClass("glyphicon-class");
-            descriptionTag.SetInnerText(TextLimiter(bewijs.Path,20) + " - " + bewijs.Omschrijving);
+            descriptionTag.SetInnerText(TextLimiter(evidence.Path,20) + " - " + evidence.Omschrijving);
             itemTag.InnerHtml += descriptionTag;
             itemTag.InnerHtml += ShowGlyphicon(html, "minus","btn badge" + (draggable? " hide":""));
             if (draggable) itemTag.InnerHtml += ShowGlyphicon(html, "plus","btn badge");
             return new MvcHtmlString(itemTag.ToString());
         }
 
-        public static MvcHtmlString ShowAanvraagDetails(this HtmlHelper html, AanvraagDetailViewModel[] aanvragen)
+        public static MvcHtmlString ShowAanvraagDetails(this HtmlHelper html, RequestDetailViewModel[] aanvragen)
         {
             var htmlString = "";
             foreach (var aanvraag in aanvragen)
@@ -83,10 +83,10 @@ namespace VTP2015.Helpers
                 articleTag.Attributes.Add("id",aanvraag.SuperCode);
                 articleTag.AddCssClass("hide");
                 var moduleTag = new TagBuilder("h3");
-                moduleTag.SetInnerText(aanvraag.ModuleNaam);
+                moduleTag.SetInnerText(aanvraag.ModuleName);
                 articleTag.InnerHtml += moduleTag;
                 var partimTag = new TagBuilder("h4");
-                partimTag.SetInnerText(aanvraag.PartimNaam);
+                partimTag.SetInnerText(aanvraag.PartimName);
                 articleTag.InnerHtml += partimTag;
                 var argumentatieLabelTag = new TagBuilder("label");
                 argumentatieLabelTag.Attributes.Add("for","argumentatie");
@@ -96,7 +96,7 @@ namespace VTP2015.Helpers
                 var argumentatieTag = new TagBuilder("textarea");
                 argumentatieTag.Attributes.Add("id","argumentatie");
                 argumentatieTag.AddCssClass("form-control");
-                argumentatieTag.SetInnerText(aanvraag.Argumentatie);
+                argumentatieTag.SetInnerText(aanvraag.Argumentation);
                 articleTag.InnerHtml += argumentatieTag;
                 var bewijzenLabelTag = new TagBuilder("label");
                 bewijzenLabelTag.AddCssClass("control-label");
@@ -104,7 +104,7 @@ namespace VTP2015.Helpers
                 articleTag.InnerHtml += bewijzenLabelTag;
                 var bewijzenTag = new TagBuilder("ul");
                 bewijzenTag.AddCssClass("list-group");
-                foreach (var bewijs in aanvraag.Bewijzen)
+                foreach (var bewijs in aanvraag.Evidence)
                 {
                     bewijzenTag.InnerHtml += ShowBewijsLi(html, bewijs, false);
                 }

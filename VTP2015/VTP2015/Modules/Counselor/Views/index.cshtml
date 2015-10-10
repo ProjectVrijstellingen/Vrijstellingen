@@ -1,0 +1,18 @@
+﻿@model IEnumerable<VTP2015.Modules.Counselor.ViewModels.DossierOverviewViewModel>
+<br />
+
+<div class="container">
+        <div class="row" id="overview">
+            @Html.Action("FileOverviewWidget")
+        </div>
+        <div class="row hide" id="details">
+            <div class="col-md-3">
+                @Html.Partial("FileDetailsPartial")
+            </div>
+            <div class="col-md-9">
+                @Html.Action("RequestDetailWidget")
+            </div>
+        </div>
+</div>
+
+@Scripts.Render("~/bundles/counselor")

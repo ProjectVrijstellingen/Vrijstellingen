@@ -7,8 +7,8 @@ using StructureMap;
 using VTP2015.DataAccess;
 using VTP2015.Identity;
 using VTP2015.Infrastructure;
-using VTP2015.Infrastructure.Registries;
 using VTP2015.Infrastructure.Tasks;
+using VTP2015.Infrastructure.ViewEngine;
 
 namespace VTP2015
 {
@@ -28,6 +28,8 @@ namespace VTP2015
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new CustomViewEngine());
 
             DependencyResolver.SetResolver(new StructureMapDependencyResolver(() => Container));
 

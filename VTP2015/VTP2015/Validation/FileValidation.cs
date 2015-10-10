@@ -52,7 +52,7 @@ namespace VTP2015.Validation
             }
             if (!IsFileTypeValid(_file))
             {
-                return "File type behoort niet tot: " + GetExtensions();
+                return "FileName type behoort niet tot: " + GetExtensions();
             }
             return !IsFilenameValid(_file) ? "Filename can not be longer then 255 char." : "ERROR!";
         }

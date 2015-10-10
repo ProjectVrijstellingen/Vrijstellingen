@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using VTP2015.ViewModels.Student;
+using VTP2015.Modules.Student.ViewModels;
 
 namespace VTP2015.lib
 {
@@ -25,8 +25,8 @@ namespace VTP2015.lib
 
         private void AddPartim(PartimViewModel viewModel)
         {
-            var module = new Module { ModuleId = Convert.ToInt32(viewModel.ModuleId), Naam = viewModel.ModuleNaam };
-            var partim = new Partim { Naam = viewModel.PartimNaam, SuperCode = viewModel.SuperCode};
+            var module = new Module { ModuleId = Convert.ToInt32(viewModel.ModuleId), Naam = viewModel.ModuleName };
+            var partim = new Partim { Naam = viewModel.PartimName, SuperCode = viewModel.SuperCode};
 
             if (Modules.All(m => m.ModuleId != module.ModuleId))
             {

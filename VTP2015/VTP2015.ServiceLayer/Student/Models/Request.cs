@@ -11,7 +11,6 @@ namespace VTP2015.ServiceLayer.Student.Models
         public Status Status { get; set; }
         public int PartimInformationId { get; set; }
         public int FileId { get; set; }
-        public int DossierId { get; set; }
         public string PartimInformationSuperCode { get; set; }
         public IEnumerable<int> Bewijzen { get; set; }
     }

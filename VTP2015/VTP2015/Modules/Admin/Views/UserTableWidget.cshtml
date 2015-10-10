@@ -1,0 +1,27 @@
+﻿@using VTP2015.Helpers;
+@model List<VTP2015.Modules.Admin.ViewModels.UserViewModel>
+<div class="col-md-6">
+    <div class="panel panel-success clearfix">
+        <div class="panel-body">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Counselor</th>
+                    <th>Admin</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Email</td>
+                        <td>@Html.ShowGlyphiconWithRole(user.IsCounselor ? "ok" : "remove", "Counselor")</td>
+                        <td>@Html.ShowGlyphiconWithRole(user.IsAdmin ? "ok" : "remove", "Admin")</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

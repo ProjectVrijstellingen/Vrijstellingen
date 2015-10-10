@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using AutoMapper;
@@ -115,30 +116,36 @@ namespace VTP2015.ServiceLayer.Student
                 .Any(d => d.Student.Email == email);
         }
 
-        public IQueryable<Models.PartimInformation> GetAvailablePartims(string email, int fileId)
+        public IQueryable<Models.PartimInformation> GetPartims(string email, int fileId, PartimMode partimMode)
         {
-            return _studentRepository.Table
-                .Where(s => s.Email == email)
-                .Select(s => s.Education)
-                .SelectMany(e => e.Routes)
-                .SelectMany(r => r.PartimInformation).Except(GetRequestedPartims(email, fileId))
-                .Project().To<Models.PartimInformation>();
-            
-        }
-
-        public IQueryable<Models.PartimInformation> GetRequestedPartims(string email, int fileId)
-        {
-            return _requestRepository.Table
+            var requestedPartims = _requestRepository.Table
                 .Where(a => a.Id == fileId && a.File.Student.Email == email)
-                .Select(a => a.PartimInformation)
-                .Project().To<Models.PartimInformation>();
+                .Select(a => a.PartimInformation);
+
+            switch (partimMode)
+            { 
+                case PartimMode.Requested:
+                    return requestedPartims.Project().To<Models.PartimInformation>();
+                case PartimMode.Available:
+                    return
+                        _studentRepository.Table.Where(s => s.Email == email)
+                            .Select(s => s.Education)
+                            .SelectMany(e => e.Routes)
+                            .SelectMany(r => r.PartimInformation)
+                            .Except(requestedPartims)
+                            .Project()
+                            .To<Models.PartimInformation>();
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(partimMode), partimMode, null);
+            }
         }
 
         public IQueryable<Models.Request> GetRequestsByFileId(int fileId)
         {
             return _requestRepository.Table
                 .Where(r => r.Id == fileId)
-                .Project().To<Models.Request>();
+                .Project()
+                .To<Models.Request>();
         }
 
         public bool SyncStudentPartims(string email, string academicYear)
@@ -162,38 +169,31 @@ namespace VTP2015.ServiceLayer.Student
                     var partimInformation = _bamaflexRepository.GetPartimInformationBySupercode(supercode);
                     var partimInfo = new PartimInformation
                     {
-                        SuperCode = partimInformation.Supercode.Supercode1,
-                        Lecturer = _lectureRepository.Table.First(d => d.Email == "docent@howest.be")//Needs real input!!!
+                        SuperCode = partimInformation.Supercode.Supercode1, Lecturer = _lectureRepository.Table.First(d => d.Email == "docent@howest.be") //Needs real input!!!
                     };
 
                     if (_partimRepository.Table.Any(p => p.Code == partimInformation.Partim.Id))
                     {
-                        partimInfo.Partim =
-                            _partimRepository.Table.First(m => m.Code == partimInformation.Partim.Id);
+                        partimInfo.Partim = _partimRepository.Table.First(m => m.Code == partimInformation.Partim.Id);
                     }
                     else
                     {
                         partimInfo.Partim = new Partim
                         {
-                            Code = partimInformation.Partim.Id,
-                            Name = partimInformation.Partim.Naam
+                            Code = partimInformation.Partim.Id, Name = partimInformation.Partim.Naam
                         };
-
                     }
 
                     if (_moduleRepository.Table.Any(m => m.Code == partimInformation.Module.Id))
                     {
-                        partimInfo.Module =
-                            _moduleRepository.Table.First(m => m.Code == partimInformation.Module.Id);
+                        partimInfo.Module = _moduleRepository.Table.First(m => m.Code == partimInformation.Module.Id);
                     }
                     else
                     {
                         partimInfo.Module = new Module
                         {
-                            Code = partimInformation.Module.Id,
-                            Name = partimInformation.Module.Naam
+                            Code = partimInformation.Module.Id, Name = partimInformation.Module.Naam
                         };
-
                     }
                     localRoute.PartimInformation.Add(partimInfo);
                     _partimInformationRepository.Insert(partimInfo);
@@ -204,15 +204,14 @@ namespace VTP2015.ServiceLayer.Student
 
         public Models.Evidence GetEvidenceById(int evidenceId)
         {
-            var entity = _evidenceRepository.Table
-                .First(e => e.Id == evidenceId);
+            var entity = _evidenceRepository.Table.First(e => e.Id == evidenceId);
 
             return Mapper.Map<Models.Evidence>(entity);
         }
 
         public Models.PartimInformation GetPartimInformationBySuperCode(string superCode)
         {
-            var entity =  _partimInformationRepository.Table.First(p => p.SuperCode == superCode);
+            var entity = _partimInformationRepository.Table.First(p => p.SuperCode == superCode);
 
             return Mapper.Map<Models.PartimInformation>(entity);
         }
@@ -220,12 +219,8 @@ namespace VTP2015.ServiceLayer.Student
         public int InsertFile(Models.File file)
         {
             var entity = new File
-            { 
-                AcademicYear = file.AcademicYear,
-                DateCreated = file.DateCreated,
-                Editable = file.Editable,
-                Specialization = file.Specialization,
-                Student = _studentRepository.Table.First(s => s.Email == file.StudentMail)
+            {
+                AcademicYear = file.AcademicYear, DateCreated = file.DateCreated, Editable = file.Editable, Specialization = file.Specialization, Student = _studentRepository.Table.First(s => s.Email == file.StudentMail)
             };
 
             _fileRepository.Insert(entity);
