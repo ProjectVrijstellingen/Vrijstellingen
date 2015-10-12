@@ -21,24 +21,24 @@ namespace VTP2015
             Mapper.CreateMap<Student.PartimInformation, PartimViewModel>();
             Mapper.CreateMap<Student.Request, RequestDetailViewModel>();
 
-            ////Counselor
-            //Mapper.CreateMap<Counselor.FileName, DossierOverviewViewModel>()
+            ////Counselors
+            //Mapper.CreateMap<Counselors.FileName, DossierOverviewViewModel>()
             //    .ForMember(m => m.PercentageVoltooid,
             //        opt => opt.MapFrom(i => i.Requests.Count != 0 ? (int)((i.Requests.Count(a => a.Status != 0) / (i.Requests.Count * 1.0)) * 100) : 0));
-            //Mapper.CreateMap<Counselor.Request, AanvraagDetailsViewModel>();
-            //Mapper.CreateMap<Counselor.Education, OpleidingViewModel>();
+            //Mapper.CreateMap<Counselors.Request, AanvraagDetailsViewModel>();
+            //Mapper.CreateMap<Counselors.Education, OpleidingViewModel>();
 
 
             ////Lecturer
             //Mapper.CreateMap<Lecturer.Request, StudentListViewModel>()
             //    .ForMember(m => m.StudentId,
             //        opt => opt.MapFrom(i => i.FileName.StudentId))
-            //    .ForMember(m => m.Naam,
+            //    .ForMember(m => m.Name,
             //        opt => opt.MapFrom(i => i.FileName.Student.Name))
-            //    .ForMember(m => m.Voornaam,
+            //    .ForMember(m => m.Prename,
             //        opt => opt.MapFrom(i => i.FileName.Student.FirstName));
 
-            //Mapper.CreateMap<Lecturer.Request, AanvraagListViewModel>()
+            //Mapper.CreateMap<Lecturer.Request, RequestListViewModel>()
             //    .ForMember(m => m.StudentId,
             //        opt => opt.MapFrom(i => i.FileName.StudentId))
             //    .ForMember(m => m.PartimName,
@@ -46,7 +46,7 @@ namespace VTP2015
             //    .ForMember(m => m.ModuleName,
             //        opt => opt.MapFrom(i => i.PartimInformation.Module.Name));
 
-            //Mapper.CreateMap<Lecturer.Evidence, BewijsViewModel>()
+            //Mapper.CreateMap<Lecturer.Evidence, EvidenceViewModel>()
             //    .ForMember(m => m.StudentEmail,
             //        opt => opt.MapFrom(i => i.Student.Email));
 

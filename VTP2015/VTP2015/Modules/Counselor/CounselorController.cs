@@ -8,8 +8,8 @@ using VTP2015.ServiceLayer.Counselor;
 
 namespace VTP2015.Modules.Counselor
 {
-    [Authorize(Roles = "Counselor")]
-    [RoutePrefix("Counselor")]
+    [Authorize(Roles = "Counselors")]
+    [RoutePrefix("Counselors")]
     public class CounselorController : Controller
     {
         private readonly ICounselorFacade _counselorFacade;
@@ -22,7 +22,7 @@ namespace VTP2015.Modules.Counselor
         }
 
         //
-        // GET: /Counselor/
+        // GET: /Counselors/
         [Route("")]
         [HttpGet]
         public ViewResult Index()

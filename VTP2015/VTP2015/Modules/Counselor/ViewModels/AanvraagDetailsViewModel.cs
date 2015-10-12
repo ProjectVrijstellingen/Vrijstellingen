@@ -11,6 +11,6 @@ namespace VTP2015.Modules.Counselor.ViewModels
         public Status Status { get; set; }
         public string Argumentatie { get; set; }
         public PartimInformation PartimInformation { get; set; }
-        public IEnumerable<BewijsViewModel> Bewijzen { get; set; }
+        public IEnumerable<EvidenceViewModel> Bewijzen { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
+using VTP2015.ServiceLayer.Lecturer.Mappings;
 
 namespace VTP2015.ServiceLayer.Lecturer
 {
@@ -14,6 +15,9 @@ namespace VTP2015.ServiceLayer.Lecturer
         {
             _requestRepository = unitOfWork.Repository<Request>();
             _lecturerRepository = unitOfWork.Repository<Entities.Lecturer>();
+
+            var autoMaperConfig = new AutoMapperConfig();
+            autoMaperConfig.Execute();
         }
 
         private IQueryable<Request> GetUntreadedRequestEntities(string email)

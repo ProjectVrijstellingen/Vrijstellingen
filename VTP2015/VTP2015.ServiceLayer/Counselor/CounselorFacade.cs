@@ -51,10 +51,15 @@ namespace VTP2015.ServiceLayer.Counselor
 
         public IQueryable<Models.File> GetFileByCounselorEmail(string email, string academicYear)
         {
-            if (!_counselorRepository.Table.Any()) return new List<Models.File>().AsQueryable();
-            var educationId = _counselorRepository.Table.First(t => t.Email == email).Education.Id;
+            if (!_counselorRepository.Table.Any())
+                return new List<Models.File>().AsQueryable();
+
+            var education = _counselorRepository
+                .Table.First(t => t.Email == email)
+                .Education;
+
             return _fileRepository.Table.Where(
-                d => d.Requests.Count > 0 && d.AcademicYear == academicYear && d.Student.Education.Id == educationId)
+                d => d.Requests.Count > 0 && d.AcademicYear == academicYear && d.Student.Education.Id == education.Id)
                 .Project().To<Models.File>();
         }
 

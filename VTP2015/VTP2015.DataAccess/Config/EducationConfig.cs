@@ -16,7 +16,7 @@ namespace VTP2015.DataAccess.Config
             Property(t => t.Code).HasMaxLength(255).IsRequired();
 
             // Relationships
-
+            
         }
 
     }

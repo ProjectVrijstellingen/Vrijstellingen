@@ -11,7 +11,7 @@ namespace VTP2015.Modules.Student.ViewModels
         [Display(Name = "Upload bewijs")]
         public HttpPostedFileBase File { get; set; }
 
-        [Display(Name = "Description")]
+        [Display(Name = "Argumentation")]
         [Required]
         [StringLength(30, MinimumLength = 5, ErrorMessage = "Geef een omschrijving van min. 5 en max 30 tekens!")]
         public string Description { get; set; }

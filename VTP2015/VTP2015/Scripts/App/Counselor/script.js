@@ -8,7 +8,7 @@ $(document).ready(function() {
     $(".herinnering").click(function (sender) {
         console.log($(sender.target).parent().data("aanvraagid"));
         $.ajax({
-            url: "Counselor/SendReminder",
+            url: "Counselors/SendReminder",
             data:{aanvraagId : $(sender.target).parent().data("aanvraagid")},
             type: "POST",
             success: function (data) {
@@ -48,7 +48,7 @@ var searchQueryContains = function(string) {
 
 $("#select-education").on("change", function () {
     $.ajax({
-        url: "Counselor/ChangeEducation",
+        url: "Counselors/ChangeEducation",
         data: { opleiding: $("#select-education option:selected").text() },
         type: "POST",
         success: function(data) {

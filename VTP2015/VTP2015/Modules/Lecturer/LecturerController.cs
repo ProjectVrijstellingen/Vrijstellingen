@@ -23,7 +23,9 @@ namespace VTP2015.Modules.Lecturer
         [Route("")]
         public ViewResult Index()
         {
-            ViewBag.DocentHeeftAanvragen = _lecturerFacade.GetUntreadedRequests(User.Identity.Name).Any();
+            ViewBag.DocentHeeftAanvragen = _lecturerFacade
+                .GetUntreadedRequests(User.Identity.Name).Any();
+
             return View();
         }
 
@@ -42,7 +44,7 @@ namespace VTP2015.Modules.Lecturer
         public PartialViewResult RequestListWidget()
         {
             var viewModel = _lecturerFacade.GetUntreadedRequests(User.Identity.Name)
-                .Project().To<AanvraagListViewModel>();
+                .Project().To<RequestListViewModel>();
 
             return PartialView(viewModel);
         }

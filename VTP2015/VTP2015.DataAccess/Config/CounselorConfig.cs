@@ -15,8 +15,8 @@ namespace VTP2015.DataAccess.Config
 
             // Relationships
             HasOptional(t => t.Education)
-                .WithOptionalDependent(t => t.Counselor);
-
+                .WithMany(t => t.Counselors)
+                .HasForeignKey(t => t.EducationId);
         }
     }
 }

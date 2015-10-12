@@ -3,7 +3,7 @@
     public class StudentListViewModel
     {
         public string StudentId { get; set; }
-        public string Naam { get; set; }
-        public string Voornaam { get; set; }
+        public string Name { get; set; }
+        public string Prename { get; set; }
     }
 }

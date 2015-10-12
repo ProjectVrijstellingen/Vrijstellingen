@@ -64,6 +64,11 @@
     <Compile Include="Counselor\Models\Request.cs" />
     <Compile Include="Feedback\FeedbackFacade.cs" />
     <Compile Include="Lecturer\LecturerFacade.cs" />
+    <Compile Include="Lecturer\Mappings\AutoMapperConfig.cs" />
+    <Compile Include="Lecturer\Models\Evidence.cs" />
+    <Compile Include="Lecturer\Models\File.cs" />
+    <Compile Include="Lecturer\Models\Module.cs" />
+    <Compile Include="Lecturer\Models\Partim.cs" />
     <Compile Include="Lecturer\Models\Request.cs" />
     <Compile Include="Student\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Student\Models\Evidence.cs" />
