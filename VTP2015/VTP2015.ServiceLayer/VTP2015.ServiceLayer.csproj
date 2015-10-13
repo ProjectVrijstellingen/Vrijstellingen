@@ -59,6 +59,7 @@
     <Compile Include="Admin\Models\User.cs" />
     <Compile Include="Authentication\AuthenticationFacade.cs" />
     <Compile Include="Counselor\CounselorFacade.cs" />
+    <Compile Include="Counselor\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Counselor\Models\Education.cs" />
     <Compile Include="Counselor\Models\File.cs" />
     <Compile Include="Counselor\Models\Request.cs" />

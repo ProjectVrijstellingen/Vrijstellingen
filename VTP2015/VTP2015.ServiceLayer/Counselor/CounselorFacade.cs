@@ -3,6 +3,7 @@ using System.Linq;
 using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
+using VTP2015.ServiceLayer.Counselor.Mappings;
 
 namespace VTP2015.ServiceLayer.Counselor
 {
@@ -19,6 +20,9 @@ namespace VTP2015.ServiceLayer.Counselor
             _educationRepository = unitOfWork.Repository<Education>();
             _counselorRepository = unitOfWork.Repository<Entities.Counselor>();
             _fileRepository = unitOfWork.Repository<File>();
+
+            var autoMapperConfig = new AutoMapperConfig();
+            autoMapperConfig.Execute();
         }
 
         public IQueryable<Models.Request> GetRequests()
