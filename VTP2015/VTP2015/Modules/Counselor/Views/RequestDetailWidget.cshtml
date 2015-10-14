@@ -1,0 +1,47 @@
+﻿@using VTP2015.Entities
+@model IEnumerable<VTP2015.Modules.Counselor.ViewModels.AanvraagDetailsViewModel>
+
+<div class="panel panel-success clearfix inheritWidth">
+    <div class="panel-heading ">
+        <h3 class="panel-title">Requests <span id="vorigeAanvraag"><<</span><span id="huidigeAanvraag">1</span>/<span id="aantalAanvragen"></span><span id="volgendeAanvraag">>></span></h3>
+    </div>
+    <div class="panel-body">
+        @{ var getoondeAanvraagId = 1; }
+        @foreach (var aanvraag in Model)
+        {
+            <div id="aanvraag-@getoondeAanvraagId" class="aanvraag hide" data-dossierid="@aanvraag.DossierId" data-Requestid="@aanvraag.AanvraagId">
+                <button class="btn btn-danger herinnering">Poke docent</button>
+                <p>@aanvraag.PartimInformation.Module.Name - @aanvraag.PartimInformation.Partim.Name</p>
+                <label for="argumentatie" class="control-label">Argumentation:</label>
+                <textarea id="argumentatie" class="form-control" readonly="">@aanvraag.Argumentatie</textarea>
+                <label for="status" class="control-label">Status:</label>
+                <textarea id="status" class="form-control" readonly="">@Enum.GetName(typeof(Status), @aanvraag.Status)</textarea>
+                <label class="control-label">Evidence: <a href="#" class="vorigBewijs"><<</a><span class="huidigBewijs">1</span>/@aanvraag.Bewijzen.Count()<a href="#" class="volgendBewijs">>></a></label>
+                @foreach (var bewijs in aanvraag.Bewijzen)
+                {
+                    <div data-evidenceid="@bewijs.EvidenceId" class="inheritWidth bewijs hide">
+                        <div class="inheritWidth bewijspointer" data-Requestid="Request_@aanvraag.RequestId">
+                            <textarea id="argumentatie" class="form-control" readonly="">@bewijs.Description</textarea>
+                            <a href="~/bewijzen/@bewijs.StudentEmail.Split(new Char[] {'@'}).First()/@bewijs.Path" download>
+                                Als onderstaande voorstelling niet werkt kunt u op deze link klikken om het evidence te downloaden
+                            </a>
+                            <div class="bewijsdiv">
+                                @if (@bewijs.Path.Split(new Char[] { '.' }).Last().Equals("pdf"))
+                                {
+                                    <embed src="~/bewijzen/@bewijs.StudentEmail.Split(new Char[] {'@'}).First()/@bewijs.Path" class="inheritWidth" />
+                                }
+                                else
+                                {
+                                    <img src="~/bewijzen/@bewijs.StudentEmail.Split(new Char[] {'@'}).First()/@bewijs.Path" class="inheritWidth" />
+                                }
+                            </div>
+
+                        </div>
+
+                    </div>
+                                { getoondeAanvraagId++; }
+                }
+            </div>
+        }
+    </div>
+</div>
