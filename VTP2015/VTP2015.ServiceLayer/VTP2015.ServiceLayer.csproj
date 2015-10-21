@@ -64,6 +64,7 @@
     <Compile Include="Counselor\Models\File.cs" />
     <Compile Include="Counselor\Models\Request.cs" />
     <Compile Include="Feedback\FeedbackFacade.cs" />
+    <Compile Include="Feedback\Models\Feedback.cs" />
     <Compile Include="Lecturer\LecturerFacade.cs" />
     <Compile Include="Lecturer\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Lecturer\Models\Evidence.cs" />
@@ -96,7 +97,9 @@
       <Name>VTP2015.Entities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Feedback\Mappings\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

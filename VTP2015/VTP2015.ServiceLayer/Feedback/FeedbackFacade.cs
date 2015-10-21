@@ -14,14 +14,15 @@ namespace VTP2015.ServiceLayer.Feedback
             _studentRepository = unitOfWork.Repository<Entities.Student>();
         }
 
-        public Entities.Student GetStudentByEmail(string email)
+        public void InsertFeedback(Models.Feedback feedback)
         {
-            return _studentRepository.Table.First(s => s.Email == email);
-        }
+            var entity = new Entities.Feedback()
+            {
+                Student = _studentRepository.Table.First(s => s.Email == feedback.StudentEmail),
+                Text = feedback.Text
+            };
 
-        public void InsertFeedback(Entities.Feedback feedback)
-        {
-            _feedbackRepository.Insert(feedback);
+            _feedbackRepository.Insert(entity);
         }
     }
 }

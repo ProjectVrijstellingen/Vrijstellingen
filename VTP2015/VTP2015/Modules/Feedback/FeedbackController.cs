@@ -30,10 +30,9 @@ namespace VTP2015.Modules.Feedback
         [HttpPost]
         public ContentResult AddFeedback(AddFeedbackViewModel viewModel)
         {
-
-            var feedback = new Entities.Feedback
+            var feedback = new ServiceLayer.Feedback.Models.Feedback
             {
-                Student = _feedbackFacade.GetStudentByEmail(User.Identity.Name),
+                StudentEmail = User.Identity.Name,
                 Text = viewModel.Text
             };
 

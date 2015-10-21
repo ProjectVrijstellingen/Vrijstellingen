@@ -2,7 +2,6 @@
 {
     public interface IFeedbackFacade
     {
-        Entities.Student GetStudentByEmail(string email);
-        void InsertFeedback(Entities.Feedback feedback);
+        void InsertFeedback(Models.Feedback feedback);
     }
 }
