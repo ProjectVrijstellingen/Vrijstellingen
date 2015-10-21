@@ -9,11 +9,11 @@ namespace VTP2015.Modules.Counselor.Mappings
     {
         public void Execute()
         {
-            Mapper.CreateMap<File, DossierOverviewViewModel>();
-            //.ForMember(m => m.PercentageVoltooid,
+            Mapper.CreateMap<File, FileOverviewViewModel>();
+            //.ForMember(m => m.PercentageCompleted,
             //    opt => opt.MapFrom(i => i.Requests.Count != 0 ? (int)((i.Requests.Count(a => a.Status != 0) / (i.Requests.Count * 1.0)) * 100) : 0));
             Mapper.CreateMap<Request, RequestDetailViewModel>();
-            Mapper.CreateMap<Education, OpleidingViewModel>();
+            Mapper.CreateMap<Education, EducationViewModel>();
             Mapper.CreateMap<Evidence, EvidenceViewModel>();
         }
     }

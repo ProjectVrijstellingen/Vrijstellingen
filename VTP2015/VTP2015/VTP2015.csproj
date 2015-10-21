@@ -228,9 +228,9 @@
     <Compile Include="Modules\Student\ViewModels\IndexViewModel.cs" />
     <Compile Include="Modules\Student\ViewModels\PartimViewModel.cs" />
     <Compile Include="Modules\Counselor\ViewModels\RequestDetailViewModel.cs" />
-    <Compile Include="Modules\Counselor\ViewModels\DossierOverviewViewModel.cs" />
-    <Compile Include="Modules\Counselor\ViewModels\OpleidingSelectViewModel.cs" />
-    <Compile Include="Modules\Counselor\ViewModels\OpleidingViewModel.cs" />
+    <Compile Include="Modules\Counselor\ViewModels\FileOverviewViewModel.cs" />
+    <Compile Include="Modules\Counselor\ViewModels\EducationSelectViewModel.cs" />
+    <Compile Include="Modules\Counselor\ViewModels\EducationViewModel.cs" />
     <Compile Include="Modules\Counselor\ViewModels\PdfViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

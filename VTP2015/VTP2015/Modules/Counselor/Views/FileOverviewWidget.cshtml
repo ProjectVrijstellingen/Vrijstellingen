@@ -1,4 +1,4 @@
-﻿@model IEnumerable<VTP2015.Modules.Counselor.ViewModels.DossierOverviewViewModel>
+﻿@model IEnumerable<VTP2015.Modules.Counselor.ViewModels.FileOverviewViewModel>
 
 <div>
     <div class="row">
@@ -33,12 +33,12 @@
                     @foreach (var dossier in Model)
                     {
                         <tr>
-                            <td>@dossier.StudentVoornaam</td>
-                            <td>@dossier.StudentNaam</td>
-                            <td>@dossier.PercentageVoltooid%</td>
+                            <td>@dossier.StudentFirstName</td>
+                            <td>@dossier.StudentName</td>
+                            <td>@dossier.PercentageCompleted%</td>
                             <td>
                                 <a href="#" id="links-list">
-                                    <span class="glyphicon glyphicon-list-alt dossierpointer" data-dossierid="@dossier.DossierId" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-list-alt dossierpointer" data-dossierid="@dossier.FileId" aria-hidden="true"></span>
                                 </a>
                                 <a href="#" id="midden-list">
                                     <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
@@ -52,9 +52,9 @@
             <div id="blok">
                 @foreach (var dossier in Model)
                 {
-                    <div class="col-md-2 dossier" data-name="@dossier.StudentNaam" data-prename="@dossier.StudentVoornaam">
+                    <div class="col-md-2 dossier" data-name="@dossier.StudentName" data-prename="@dossier.StudentFirstName">
                         @{
-                            var percentage = dossier.PercentageVoltooid;
+                            var percentage = dossier.PercentageCompleted;
 
                             var kleur = "oranje";
                             if (percentage >= 50)
@@ -63,17 +63,17 @@
                             }
                         }
                         <div class="panel panel-text panel-@kleur panel-default clearfix panel-body">
-                            <p class="naam">@dossier.StudentVoornaam @dossier.StudentNaam</p>
+                            <p class="naam">@dossier.StudentFirstName @dossier.StudentName</p>
                             <div id="kader">
                                 <a href="#" id="links">
-                                    <span class="glyphicon glyphicon-list-alt white dossierpointer" data-dossierid="@dossier.DossierId" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-list-alt white dossierpointer" data-dossierid="@dossier.FileId" aria-hidden="true"></span>
                                 </a>
-                                <span class="white percentage" id="rechts">@dossier.PercentageVoltooid%</span>
+                                <span class="white percentage" id="rechts">@dossier.PercentageCompleted%</span>
                                 <a href="#" id="midden">
                                     <span class="glyphicon glyphicon-print white" aria-hidden="true"></span>
                                 </a>
-                                <span class="hide academiejaar">@dossier.AcademieJaar</span>
-                                <span class="hide afstudeerrichting">@dossier.AfstudeerRichting</span>
+                                <span class="hide academiejaar">@dossier.AcademicYear</span>
+                                <span class="hide afstudeerrichting">@dossier.Route</span>
                             </div>
                         </div>
                     </div>

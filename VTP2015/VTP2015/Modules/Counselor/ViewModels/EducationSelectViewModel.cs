@@ -2,9 +2,9 @@
 
 namespace VTP2015.Modules.Counselor.ViewModels
 {
-    public class OpleidingSelectViewModel
+    public class EducationSelectViewModel
     {
         public string SelectedOpleiding { get; set; }
-        public List<OpleidingViewModel> Opleidingen { get; set; }
+        public IEnumerable<EducationViewModel> Opleidingen { get; set; }
     }
 }

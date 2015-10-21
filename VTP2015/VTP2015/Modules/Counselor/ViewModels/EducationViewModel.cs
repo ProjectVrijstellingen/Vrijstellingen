@@ -1,6 +1,6 @@
-﻿namespace VTP2015.ServiceLayer.Counselor.Models
+﻿namespace VTP2015.Modules.Counselor.ViewModels
 {
-    public class Education
+    public class EducationViewModel
     {
         public int EducationId { get; set; }
         public string Name { get; set; }
