@@ -1,5 +1,5 @@
 ﻿@using VTP2015.Entities
-@model IEnumerable<VTP2015.Modules.Counselor.ViewModels.AanvraagDetailsViewModel>
+@model IEnumerable<VTP2015.Modules.Counselor.ViewModels.RequestDetailViewModel>
 
 <div class="panel panel-success clearfix inheritWidth">
     <div class="panel-heading ">
@@ -9,20 +9,20 @@
         @{ var getoondeAanvraagId = 1; }
         @foreach (var aanvraag in Model)
         {
-            <div id="aanvraag-@getoondeAanvraagId" class="aanvraag hide" data-dossierid="@aanvraag.DossierId" data-Requestid="@aanvraag.AanvraagId">
+            <div id="aanvraag-@getoondeAanvraagId" class="aanvraag hide" data-dossierid="@aanvraag.FileId" data-Requestid="@aanvraag.RequestId">
                 <button class="btn btn-danger herinnering">Poke docent</button>
-                <p>@aanvraag.PartimInformation.Module.Name - @aanvraag.PartimInformation.Partim.Name</p>
+                <p>@aanvraag.PartimInformation.ModuleName - @aanvraag.PartimInformation.PartimName</p>
                 <label for="argumentatie" class="control-label">Argumentation:</label>
-                <textarea id="argumentatie" class="form-control" readonly="">@aanvraag.Argumentatie</textarea>
+                <textarea id="argumentatie" class="form-control" readonly="">@aanvraag.Argumentation</textarea>
                 <label for="status" class="control-label">Status:</label>
                 <textarea id="status" class="form-control" readonly="">@Enum.GetName(typeof(Status), @aanvraag.Status)</textarea>
-                <label class="control-label">Evidence: <a href="#" class="vorigBewijs"><<</a><span class="huidigBewijs">1</span>/@aanvraag.Bewijzen.Count()<a href="#" class="volgendBewijs">>></a></label>
-                @foreach (var bewijs in aanvraag.Bewijzen)
+                <label class="control-label">Evidence: <a href="#" class="vorigBewijs"><<</a><span class="huidigBewijs">1</span>/@aanvraag.Evidence.Count()<a href="#" class="volgendBewijs">>></a></label>
+                @foreach (var bewijs in aanvraag.Evidence)
                 {
                     <div data-evidenceid="@bewijs.EvidenceId" class="inheritWidth bewijs hide">
                         <div class="inheritWidth bewijspointer" data-Requestid="Request_@aanvraag.RequestId">
                             <textarea id="argumentatie" class="form-control" readonly="">@bewijs.Description</textarea>
-                            <a href="~/bewijzen/@bewijs.StudentEmail.Split(new Char[] {'@'}).First()/@bewijs.Path" download>
+                            <a href="~/bewijzen/@bewijs.StudentEmail.Split('@').First()/@bewijs.Path" download>
                                 Als onderstaande voorstelling niet werkt kunt u op deze link klikken om het evidence te downloaden
                             </a>
                             <div class="bewijsdiv">

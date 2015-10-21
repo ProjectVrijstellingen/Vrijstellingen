@@ -68,7 +68,7 @@ namespace VTP2015.Modules.Counselor
         public PartialViewResult RequestDetailWidget()
         {
             var models = _counselorFacade.GetRequests()
-                .Project().To<AanvraagDetailsViewModel>();
+                .Project().To<RequestDetailViewModel>();
 
             return PartialView(models);
         }

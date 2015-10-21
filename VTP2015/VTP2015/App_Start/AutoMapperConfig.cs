@@ -6,6 +6,7 @@ using VTP2015.Modules.Student.ViewModels;
 using Student =  VTP2015.ServiceLayer.Student.Models;
 using Counselor = VTP2015.ServiceLayer.Counselor.Models;
 using Lecturer = VTP2015.ServiceLayer.Lecturer.Models;
+using RequestDetailViewModel = VTP2015.Modules.Counselor.ViewModels.RequestDetailViewModel;
 
 
 namespace VTP2015
@@ -19,14 +20,14 @@ namespace VTP2015
             Mapper.CreateMap<Student.File, FileListViewModel>();
             Mapper.CreateMap<Student.Evidence, EvidenceListViewModel>();
             Mapper.CreateMap<Student.PartimInformation, PartimViewModel>();
-            Mapper.CreateMap<Student.Request, RequestDetailViewModel>();
+            Mapper.CreateMap<Student.Request, Modules.Student.ViewModels.RequestDetailViewModel>();
 
-            ////Counselors
-            //Mapper.CreateMap<Counselors.FileName, DossierOverviewViewModel>()
-            //    .ForMember(m => m.PercentageVoltooid,
-            //        opt => opt.MapFrom(i => i.Requests.Count != 0 ? (int)((i.Requests.Count(a => a.Status != 0) / (i.Requests.Count * 1.0)) * 100) : 0));
-            //Mapper.CreateMap<Counselors.Request, AanvraagDetailsViewModel>();
-            //Mapper.CreateMap<Counselors.Education, OpleidingViewModel>();
+            //Counselors
+            Mapper.CreateMap<Counselor.File, DossierOverviewViewModel>();
+                //.ForMember(m => m.PercentageVoltooid,
+                //    opt => opt.MapFrom(i => i.Requests.Count != 0 ? (int)((i.Requests.Count(a => a.Status != 0) / (i.Requests.Count * 1.0)) * 100) : 0));
+            Mapper.CreateMap<Counselor.Request, RequestDetailViewModel>();
+            Mapper.CreateMap<Counselor.Education, OpleidingViewModel>();
 
 
             ////Lecturer
