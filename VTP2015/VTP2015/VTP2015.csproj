@@ -157,7 +157,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -172,10 +171,13 @@
     <Compile Include="Modules\Admin\AdminController.cs" />
     <Compile Include="Modules\Authentication\AuthenticationController.cs" />
     <Compile Include="Modules\Counselor\CounselorController.cs" />
+    <Compile Include="Modules\Counselor\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Modules\Counselor\ViewModels\EvidenceViewModel.cs" />
     <Compile Include="Modules\Counselor\ViewModels\PartimInformationViewModel.cs" />
     <Compile Include="Modules\Feedback\FeedbackController.cs" />
     <Compile Include="Modules\Lecturer\LecturerController.cs" />
+    <Compile Include="Modules\Lecturer\Mappings\AutoMapperConfig.cs" />
+    <Compile Include="Modules\Student\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Modules\Student\StudentController.cs" />
     <Compile Include="Validation\DayMonthValidation.cs" />
     <Compile Include="Validation\FileValidation.cs" />

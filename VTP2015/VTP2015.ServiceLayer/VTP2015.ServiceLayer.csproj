@@ -61,7 +61,10 @@
     <Compile Include="Counselor\CounselorFacade.cs" />
     <Compile Include="Counselor\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Counselor\Models\Education.cs" />
+    <Compile Include="Counselor\Models\Evidence.cs" />
     <Compile Include="Counselor\Models\File.cs" />
+    <Compile Include="Counselor\Models\Module.cs" />
+    <Compile Include="Counselor\Models\Partim.cs" />
     <Compile Include="Counselor\Models\Request.cs" />
     <Compile Include="Feedback\FeedbackFacade.cs" />
     <Compile Include="Feedback\Models\Feedback.cs" />

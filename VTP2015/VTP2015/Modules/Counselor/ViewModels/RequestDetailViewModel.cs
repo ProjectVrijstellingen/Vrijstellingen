@@ -9,7 +9,8 @@ namespace VTP2015.Modules.Counselor.ViewModels
         public string FileId { get; set; }
         public Status Status { get; set; }
         public string Argumentation { get; set; }
-        public PartimInformationViewModel PartimInformation { get; set; }
+        public string PartimName { get; set; }
+        public string ModuleName { get; set; }
         public IEnumerable<EvidenceViewModel> Evidence { get; set; }
     }
 }
