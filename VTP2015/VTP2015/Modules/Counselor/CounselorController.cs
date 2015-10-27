@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
 using RazorPDF;
 using VTP2015.Config;
@@ -34,8 +33,12 @@ namespace VTP2015.Modules.Counselor
         [HttpGet]
         public PartialViewResult EducationSelectWidget()
         {
-            var viewModel = _counselorFacade.GetEducations()
-                .Project().To<EducationSelectViewModel>();
+            var viewModel = new EducationSelectViewModel
+            {
+                SelectedOpleiding = _counselorFacade.GetEducationNameByCounselorEmail(User.Identity.Name),
+                Opleidingen = _counselorFacade.GetEducations()
+                    .Project().To<EducationViewModel>()
+            };
 
             return PartialView(viewModel);
         }
@@ -74,7 +77,7 @@ namespace VTP2015.Modules.Counselor
         public ActionResult SendReminder(int aanvraagId)
         {
             _counselorFacade.SendReminder(aanvraagId);
-            return Content("");
+            return Content("email sent");
             //string email = _aanvraagRepository.GetEmailByAanvraagId(aanvraagId);
             //TimeSpan passedTimeSinceLastEmail = DateTime.Now.Subtract(_docentRepository.GetByEmail(email).WarningMail);
             //if (_configFile.WarningMailTimeIsAllowed(passedTimeSinceLastEmail))

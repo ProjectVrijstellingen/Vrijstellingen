@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using VTP2015.Entities;
+using System.Linq;
 
 namespace VTP2015.ServiceLayer.Student.Models
 {
@@ -12,6 +11,6 @@ namespace VTP2015.ServiceLayer.Student.Models
         public int PartimInformationId { get; set; }
         public int FileId { get; set; }
         public string PartimInformationSuperCode { get; set; }
-        public IEnumerable<int> Evidence { get; set; }
+        public IQueryable<Evidence> Evidence { get; set; }
     }
 }

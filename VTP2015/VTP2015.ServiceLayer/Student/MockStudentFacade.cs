@@ -98,7 +98,7 @@ namespace VTP2015.ServiceLayer.Student
                 {
                     Argumentation = "argumentation",
                     Status = Status.Untreated,
-                    Evidence = new List<int>(),
+                    Evidence = new List<Evidence>().AsQueryable(),
                     FileId = 1,
                     LastChanged = DateTime.Now,
                     PartimInformationId = 1,

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.Web.Mvc;
 using VTP2015.Config;
@@ -203,7 +204,10 @@ namespace VTP2015.Modules.Student
                 PartimInformationSuperCode = viewModel.SuperCode,
                 Argumentation = viewModel.Argumentation,
                 LastChanged = DateTime.Now,
-                Evidence = viewModel.Evidence
+                Evidence = viewModel.Evidence.Select(evidenceId => new Evidence
+                {
+                    Id = evidenceId
+                }).AsQueryable()
             };
 
             return Content(!_studentFacade.SyncRequestInFile(request) ? "Don't cheat!" : "Saved!");
