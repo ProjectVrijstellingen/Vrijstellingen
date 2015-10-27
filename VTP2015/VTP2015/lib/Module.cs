@@ -14,7 +14,7 @@ namespace VTP2015.lib
             set { _partims = value; }
         }
 
-        public string Naam { get; set; }
+        public string Name { get; set; }
 
     }
 }

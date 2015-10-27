@@ -2,7 +2,7 @@
 {
     public class Partim
     {
-        public string Naam { get; set; }
+        public string Name { get; set; }
         public string SuperCode { get; set; }
 
     }

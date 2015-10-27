@@ -34,12 +34,8 @@ namespace VTP2015.Modules.Counselor
         [HttpGet]
         public PartialViewResult EducationSelectWidget()
         {
-            var viewModel = new EducationSelectViewModel
-            {
-                SelectedOpleiding = _counselorFacade.GetEducationNameByCounselorEmail(User.Identity.Name),
-                Opleidingen = _counselorFacade.GetEducations()
-                    .Project().To<EducationViewModel>().ToList()
-            };
+            var viewModel = _counselorFacade.GetEducations()
+                .Project().To<EducationSelectViewModel>();
 
             return PartialView(viewModel);
         }

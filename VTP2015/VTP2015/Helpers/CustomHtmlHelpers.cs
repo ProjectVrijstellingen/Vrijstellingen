@@ -18,7 +18,7 @@ namespace VTP2015.Helpers
                 tag.Attributes.Add("data-moduleid",module.ModuleId.ToString());
 
                 var moduleNameTag = new TagBuilder("h4");
-                moduleNameTag.SetInnerText(module.Naam);
+                moduleNameTag.SetInnerText(module.Name);
                 tag.InnerHtml += moduleNameTag;
 
                 var moduleTag = new TagBuilder("ul");
@@ -30,7 +30,7 @@ namespace VTP2015.Helpers
                     partimTag.AddCssClass("list-group-item partim");
                     var partimNameTag = new TagBuilder("span");
                     partimNameTag.AddCssClass("name");
-                    partimNameTag.SetInnerText(TextLimiter(partim.Naam, 30));
+                    partimNameTag.SetInnerText(TextLimiter(partim.Name, 30));
                     partimTag.InnerHtml += partimNameTag;
                     partimTag.InnerHtml += ShowGlyphicon(html, "remove","btn badge" + (deletable ? "" : " hide"));
                     moduleTag.InnerHtml += partimTag;

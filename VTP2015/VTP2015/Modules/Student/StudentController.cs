@@ -203,7 +203,7 @@ namespace VTP2015.Modules.Student
                 PartimInformationSuperCode = viewModel.SuperCode,
                 Argumentation = viewModel.Argumentation,
                 LastChanged = DateTime.Now,
-                Bewijzen = viewModel.Evidence
+                Evidence = viewModel.Evidence
             };
 
             return Content(!_studentFacade.SyncRequestInFile(request) ? "Don't cheat!" : "Saved!");

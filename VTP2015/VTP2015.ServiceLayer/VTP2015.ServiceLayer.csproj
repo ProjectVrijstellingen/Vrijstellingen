@@ -56,10 +56,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\AdminFacade.cs" />
+    <Compile Include="Admin\MockAdminFacade.cs" />
     <Compile Include="Admin\Models\User.cs" />
     <Compile Include="Authentication\AuthenticationFacade.cs" />
+    <Compile Include="Authentication\MockAuthenticationFacade.cs" />
     <Compile Include="Counselor\CounselorFacade.cs" />
     <Compile Include="Counselor\Mappings\AutoMapperConfig.cs" />
+    <Compile Include="Counselor\MockCounselorFacade.cs" />
     <Compile Include="Counselor\Models\Education.cs" />
     <Compile Include="Counselor\Models\Evidence.cs" />
     <Compile Include="Counselor\Models\File.cs" />
@@ -67,15 +70,18 @@
     <Compile Include="Counselor\Models\Partim.cs" />
     <Compile Include="Counselor\Models\Request.cs" />
     <Compile Include="Feedback\FeedbackFacade.cs" />
+    <Compile Include="Feedback\MockFeedbackFacade.cs" />
     <Compile Include="Feedback\Models\Feedback.cs" />
     <Compile Include="Lecturer\LecturerFacade.cs" />
     <Compile Include="Lecturer\Mappings\AutoMapperConfig.cs" />
+    <Compile Include="Lecturer\MockLecturerFacade.cs" />
     <Compile Include="Lecturer\Models\Evidence.cs" />
     <Compile Include="Lecturer\Models\File.cs" />
     <Compile Include="Lecturer\Models\Module.cs" />
     <Compile Include="Lecturer\Models\Partim.cs" />
     <Compile Include="Lecturer\Models\Request.cs" />
     <Compile Include="Student\Mappings\AutoMapperConfig.cs" />
+    <Compile Include="Student\MockStudentFacade.cs" />
     <Compile Include="Student\Models\Evidence.cs" />
     <Compile Include="Student\Models\File.cs" />
     <Compile Include="Student\Models\PartimInformation.cs" />
