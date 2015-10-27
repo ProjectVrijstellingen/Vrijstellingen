@@ -26,10 +26,7 @@
         </div>
     </form>
 </div>
-@section scripts {
-    <script type="text/javascript" src="@Url.Content("/scripts/student/dossier.js")"></script>
-    <script type="text/javascript" src="@Url.Content("/scripts/toDictionary.js")"></script>
-}
+@Scripts.Render("~/bundles/student")
 @section css{
     <style>
         #draggablePanelList li {

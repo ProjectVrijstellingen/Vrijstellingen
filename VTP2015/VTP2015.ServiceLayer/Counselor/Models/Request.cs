@@ -6,7 +6,7 @@ namespace VTP2015.ServiceLayer.Counselor.Models
     public class Request
     {
         public int RequestId { get; set; }
-        public string FileId { get; set; }
+        public int FileId { get; set; }
         public Status Status { get; set; }
         public string Argumentation { get; set; }
         public string PartimName { get; set; }

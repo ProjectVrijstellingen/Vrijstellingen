@@ -37,9 +37,9 @@ namespace VTP2015
                 "~/Scripts/App/Student/toDictionary.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/counselor").Include(
-                "~/Scripts/App/Counselors/DocentBewijsViewScript.js",
-                "~/Scripts/App/Counselors/DossierScherm.js",
-                "~/Scripts/App/Counselors/script.js"));
+                "~/Scripts/App/Counselor/DocentBewijsViewScript.js",
+                "~/Scripts/App/Counselor/DossierScherm.js",
+                "~/Scripts/App/Counselor/script.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/lecturer").Include(
                 "~/Scripts/App/Lecturer/DocentBewijsViewScript.js"));

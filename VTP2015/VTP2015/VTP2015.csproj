@@ -175,6 +175,7 @@
     <Compile Include="Modules\Counselor\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Modules\Counselor\ViewModels\EvidenceViewModel.cs" />
     <Compile Include="Modules\Counselor\ViewModels\PartimInformationViewModel.cs" />
+    <Compile Include="Modules\Counselor\ViewModels\StatusViewModel.cs" />
     <Compile Include="Modules\Feedback\FeedbackController.cs" />
     <Compile Include="Modules\Lecturer\LecturerController.cs" />
     <Compile Include="Modules\Lecturer\Mappings\AutoMapperConfig.cs" />
