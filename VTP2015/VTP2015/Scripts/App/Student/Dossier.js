@@ -159,7 +159,7 @@ $(document).on("click", ".glyphicon-plus", function () {
 });
 
 $(document).on("click", ".glyphicon-remove", function (e) {
-    console.log("remove Request");
+    console.log("remove RequestPartimInformation");
     e.stopPropagation();
     var that = $(this).parent();
     var parentDiv = $(that).parent().parent()[0];

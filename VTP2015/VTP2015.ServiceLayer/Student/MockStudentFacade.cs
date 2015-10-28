@@ -27,7 +27,7 @@ namespace VTP2015.ServiceLayer.Student
             return true;
         }
 
-        public bool IsRequestFromStudent(int fileId, string supercode, string email)
+        public bool IsRequestFromStudent(int fileId, int requestId, string email)
         {
             return true;
         }
@@ -107,7 +107,6 @@ namespace VTP2015.ServiceLayer.Student
                     FileId = 1,
                     LastChanged = DateTime.Now,
                     PartimInformationId = 1,
-                    PartimInformationSuperCode = ""
                 }
             };
 
@@ -148,7 +147,7 @@ namespace VTP2015.ServiceLayer.Student
             return true;
         }
 
-        public bool DeleteRequest(int fileId, string supercode)
+        public bool DeleteRequest(int fileId, int requestId)
         {
             return true;
         }

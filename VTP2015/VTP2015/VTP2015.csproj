@@ -182,6 +182,7 @@
     <Compile Include="Modules\Lecturer\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Modules\Student\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Modules\Student\StudentController.cs" />
+    <Compile Include="Modules\Student\ViewModels\RequestPartimInformationViewModel.cs" />
     <Compile Include="Validation\DayMonthValidation.cs" />
     <Compile Include="Validation\FileValidation.cs" />
     <Compile Include="Global.asax.cs">

@@ -25,13 +25,13 @@ namespace VTP2015.Migrations
         {
             var im = new IdentityManager();
             bool success = false;
-            success = im.CreateRole("Students");
+            success = im.CreateRole("Student");
             if (!success) return success;
-            success = im.CreateRole("Lecturers");
+            success = im.CreateRole("Lecturer");
             if (!success) return success;
-            success = im.CreateRole("Counselors");
+            success = im.CreateRole("Counselor");
             if (!success) return success;
-            success = im.CreateRole("Admins");
+            success = im.CreateRole("Admin");
             if (!success) return success;
 
             var newUser = new ApplicationUser()
@@ -43,7 +43,7 @@ namespace VTP2015.Migrations
             if (!success) return success;
             success = im.AddUserToRole(newUser.Id, "Admin");
             if (!success) return success;
-            success = im.AddUserToRole(newUser.Id, "Counselors");
+            success = im.AddUserToRole(newUser.Id, "Counselor");
             if (!success) return success;
             success = im.AddUserToRole(newUser.Id, "Lecturer");
             if (!success) return success;

@@ -25,10 +25,10 @@ namespace VTP2015.ServiceLayer.Counselor
             autoMapperConfig.Execute();
         }
 
-        public IQueryable<Models.Request> GetRequests()
+        public IQueryable<Models.RequestPartimInformation> GetRequests()
         {
             return _requestRepository.Table
-                .Project().To<Models.Request>();
+                .Project().To<Models.RequestPartimInformation>();
         }
 
         public string GetEducationNameByCounselorEmail(string email)

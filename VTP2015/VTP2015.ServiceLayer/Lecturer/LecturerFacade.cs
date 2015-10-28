@@ -8,53 +8,53 @@ namespace VTP2015.ServiceLayer.Lecturer
 {
     public class LecturerFacade : ILecturerFacade
     {
-        private readonly Repository<Request> _requestRepository;
         private readonly Repository<Entities.Lecturer> _lecturerRepository;
+        private readonly Repository<Entities.RequestPartimInformation> _requestPartimInformationRepository; 
 
         public LecturerFacade(IUnitOfWork unitOfWork)
         {
-            _requestRepository = unitOfWork.Repository<Request>();
             _lecturerRepository = unitOfWork.Repository<Entities.Lecturer>();
+            _requestPartimInformationRepository = unitOfWork.Repository<Entities.RequestPartimInformation>();
 
             var autoMaperConfig = new AutoMapperConfig();
             autoMaperConfig.Execute();
         }
 
-        private IQueryable<Request> GetUntreadedRequestEntities(string email)
+        private IQueryable<Entities.RequestPartimInformation> GetUntreadedRequestEntities(string email)
         {
             return _lecturerRepository.Table.Where(b => b.Email == email)
                 .SelectMany(p => p.PartimInformation)
-                .SelectMany(p => p.Requests)
+                .SelectMany(p => p.RequestPartimInformations)
                 .Where(a => a.Status == Status.Untreated);
         }
 
-        public IQueryable<Models.Request> GetUntreadedRequests(string email)
+        public IQueryable<Models.RequestPartimInformation> GetUntreadedRequests(string email)
         {
-            return GetUntreadedRequestEntities(email).Project().To<Models.Request>();
+            return GetUntreadedRequestEntities(email).Project().To<Models.RequestPartimInformation>();
         }
 
-        public IQueryable<Models.Request> GetUntreadedRequestsDistinct(string email)
+        public IQueryable<Models.RequestPartimInformation> GetUntreadedRequestsDistinct(string email)
         {
-            var requests = GetUntreadedRequestEntities(email);
+            var requestPartimInformations = GetUntreadedRequestEntities(email);
 
-            var result = from request in requests
-                         where request.Id > 0
-                         group request by request.File.Student.Id
+            var result = from requestPartimInformation in requestPartimInformations
+                         where requestPartimInformation.Id > 0
+                         group requestPartimInformation by requestPartimInformation.Request.File.Student.Id
                             into groups
                             select groups.FirstOrDefault();
 
-            return result.Project().To<Models.Request>();
+            return result.Project().To<Models.RequestPartimInformation>();
         }
 
-        public bool Approve(int requestId, bool isApproved, string email)
+        public bool Approve(int requestPartimInformationId, bool isApproved, string email)
         {
-            var request = _requestRepository.GetById(requestId);
+            var requestPartimInformation = _requestPartimInformationRepository.GetById(requestPartimInformationId);
 
-            if (request.Status != Status.Untreated || request.PartimInformation.Lecturer.Email != email)
+            if (requestPartimInformation.Status != Status.Untreated || requestPartimInformation.PartimInformation.Lecturer.Email != email)
                 return false;
 
-            request.Status = isApproved ? Status.Approved : Status.Rejected;
-            _requestRepository.Update(request);
+            requestPartimInformation.Status = isApproved ? Status.Approved : Status.Rejected;
+            _requestPartimInformationRepository.Update(requestPartimInformation);
 
             return true;
         }

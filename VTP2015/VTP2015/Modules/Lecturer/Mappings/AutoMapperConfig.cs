@@ -9,7 +9,7 @@ namespace VTP2015.Modules.Lecturer.Mappings
     {
         public void Execute()
         {
-            //Mapper.CreateMap<Request, StudentListViewModel>()
+            //Mapper.CreateMap<RequestPartimInformation, StudentListViewModel>()
             //    .ForMember(m => m.StudentId,
             //        opt => opt.MapFrom(i => i.FileName.StudentId))
             //    .ForMember(m => m.Name,
@@ -17,7 +17,7 @@ namespace VTP2015.Modules.Lecturer.Mappings
             //    .ForMember(m => m.Prename,
             //        opt => opt.MapFrom(i => i.FileName.Student.FirstName));
 
-            //Mapper.CreateMap<Request, RequestListViewModel>()
+            //Mapper.CreateMap<RequestPartimInformation, RequestListViewModel>()
             //    .ForMember(m => m.StudentId,
             //        opt => opt.MapFrom(i => i.FileName.StudentId))
             //    .ForMember(m => m.PartimName,

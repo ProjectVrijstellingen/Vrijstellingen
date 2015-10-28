@@ -47,6 +47,7 @@
     <Compile Include="Evidence.cs" />
     <Compile Include="Lecturer.cs" />
     <Compile Include="File.cs" />
+    <Compile Include="RequestPartimInformation.cs" />
     <Compile Include="Route.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Education.cs" />

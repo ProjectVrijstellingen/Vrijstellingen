@@ -12,8 +12,8 @@ namespace VTP2015.DataAccess.Config
 
             // Properties
             ToTable("Requests");
+            Property(t => t.Name).IsRequired();
             Property(t => t.LastChanged).IsRequired();
-            Property(t => t.Status).IsRequired();
             Property(t => t.Argumentation).IsRequired();
 
 
@@ -21,10 +21,6 @@ namespace VTP2015.DataAccess.Config
             HasRequired(t => t.File)
                 .WithMany(t => t.Requests)
                 .HasForeignKey(d => d.FileId);
-
-            HasRequired(t => t.PartimInformation)
-                .WithMany(t => t.Requests)
-                .HasForeignKey(d => d.PartimInformationId);
 
             HasMany(t => t.Evidence)
                 .WithMany(t => t.Requests)

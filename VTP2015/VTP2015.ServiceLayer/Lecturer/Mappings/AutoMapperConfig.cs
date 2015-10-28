@@ -8,7 +8,7 @@ namespace VTP2015.ServiceLayer.Lecturer.Mappings
     {
         public void Execute()
         {
-            Mapper.CreateMap<Request, Models.Request>();
+            Mapper.CreateMap<Request, Models.RequestPartimInformation>();
             Mapper.CreateMap<Evidence, Models.Evidence>();
             Mapper.CreateMap<File, Models.File>();
             Mapper.CreateMap<Partim, Models.Partim>();

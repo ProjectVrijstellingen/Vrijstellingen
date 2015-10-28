@@ -11,7 +11,7 @@ namespace VTP2015.DataAccess.ServiceRepositories
         public Opleiding GetEducationByStudentCode(string code)
         {
             return _bamaflexService
-                .GetStudent((code.Split('|')[0]))
+                .GetStudent(code)
                 .Departementen[0]
                 .Opleidingen[0];
         }

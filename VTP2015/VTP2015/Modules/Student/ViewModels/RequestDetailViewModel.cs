@@ -4,10 +4,10 @@ namespace VTP2015.Modules.Student.ViewModels
 {
     public class RequestDetailViewModel
     {
-        public string SuperCode { get; set; }
-        public string ModuleName { get; set; }
-        public string PartimName { get; set; }
+        public int RequestId { get; set; }
+        public string Naam { get; set; }
         public string Argumentation { get; set; }
         public IEnumerable<EvidenceListViewModel> Evidence { get; set; }
+        public IEnumerable<RequestPartimInformationViewModel> RequestPartimInformation { get; set; } 
     }
 }

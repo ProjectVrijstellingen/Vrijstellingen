@@ -160,8 +160,8 @@ function vorigeAanvraag(event) {
 }
 
 function stopBewijzenVanHuidigeAanvraagInArrayEnToonDeEerste() {
-    huidigeBewijzen = $(huidigeAanvragen[huidigeAanvraag]).find(".evidence").toArray(); //Alle bewijzen van een bepaalde Request in een array stoppen
-    $(huidigeBewijzen[huidigBewijs]).removeClass("hide"); //Toont het eerste evidence van de geselecteerde Request
+    huidigeBewijzen = $(huidigeAanvragen[huidigeAanvraag]).find(".evidence").toArray(); //Alle bewijzen van een bepaalde RequestPartimInformation in een array stoppen
+    $(huidigeBewijzen[huidigBewijs]).removeClass("hide"); //Toont het eerste evidence van de geselecteerde RequestPartimInformation
 }
 
 function stopStudentenInArray() {
@@ -169,17 +169,17 @@ function stopStudentenInArray() {
 }
 
 function selectStudent(student) {
-    $(".Request").addClass("hide"); //hide alle aanvragen
+    $(".RequestPartimInformation").addClass("hide"); //hide alle aanvragen
     huidigeAanvraag = 0;
     huidigBewijs = 0;
     $(".huidigBewijs").text("1");
     $(student).addClass("active");
     studentId = $(student).data("studentid");
-    huidigeAanvragen = $(".Request[data-studentid='" + studentId + "']").toArray(); //Alle aanvragen van een bepaalde student in een array stoppen
+    huidigeAanvragen = $(".RequestPartimInformation[data-studentid='" + studentId + "']").toArray(); //Alle aanvragen van een bepaalde student in een array stoppen
     stopBewijzenVanHuidigeAanvraagInArrayEnToonDeEerste();
     $("#aantalAanvragen").text(huidigeAanvragen.length);
     $("#huidigeAanvraag").text(huidigeAanvraag + 1);
-    $(huidigeAanvragen[huidigeAanvraag]).removeClass("hide"); //Toont de eerste Request van de geselecteerde student
+    $(huidigeAanvragen[huidigeAanvraag]).removeClass("hide"); //Toont de eerste RequestPartimInformation van de geselecteerde student
     for (var i = 0; i < alleStudenten.length; i++) {
         if (alleStudenten[i] === student) {
             huidigeStudent = i;

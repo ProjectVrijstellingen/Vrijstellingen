@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\RequestPartimInformationConfig.cs" />
     <Compile Include="Config\RequestConfig.cs" />
     <Compile Include="Config\EvidenceConfig.cs" />
     <Compile Include="Config\LecturerConfig.cs" />
@@ -58,7 +59,7 @@
     <Compile Include="Config\ModuleConfig.cs" />
     <Compile Include="Config\EducationConfig.cs" />
     <Compile Include="Config\PartimConfig.cs" />
-    <Compile Include="Config\PartimInformatieConfig.cs" />
+    <Compile Include="Config\PartimInformationConfig.cs" />
     <Compile Include="Config\StudentConfig.cs" />
     <Compile Include="Config\CounselorConfig.cs" />
     <Compile Include="Context.cs" />

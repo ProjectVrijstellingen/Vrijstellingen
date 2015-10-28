@@ -66,17 +66,13 @@ namespace VTP2015.ServiceLayer.Student
             return _evidenceRepository.Table.Any(b => b.Student.Email == email);
         }
 
-        public bool IsRequestFromStudent(int fileId, string supercode, string email)
+        public bool IsRequestFromStudent(int fileId, int requestId, string email)
         {
-            return
-                _studentRepository.Table.Where(s => s.Email == email)
-                    .Select(s => s.Education)
-                    .SelectMany(e => e.Routes)
-                    .SelectMany(r => r.PartimInformation)
-                    .Any(p => p.SuperCode == supercode) &&
-                _studentRepository.Table.Where(s => s.Email == email)
+            return _studentRepository.Table.Where(s => s.Email == email)
                     .SelectMany(s => s.Files)
-                    .Any(d => d.Id == fileId);
+                    .Where(d => d.Id == fileId)
+                    .SelectMany(d => d.Requests)
+                    .Any(r => r.Id == requestId);
         }
 
         public bool DeleteEvidence(int evidenceId, string mapPath)
@@ -120,6 +116,7 @@ namespace VTP2015.ServiceLayer.Student
         {
             var requestedPartims = _requestRepository.Table
                 .Where(a => a.Id == fileId && a.File.Student.Email == email)
+                .SelectMany(a => a.RequestPartimInformations)
                 .Select(a => a.PartimInformation);
 
             switch (partimMode)
@@ -290,12 +287,12 @@ namespace VTP2015.ServiceLayer.Student
             return true;
         }
 
-        public bool DeleteRequest(int fileId, string supercode)
+        public bool DeleteRequest(int fileId, int requestId)
         {
-            if (!_requestRepository.Table.Any(d => d.Id == fileId && d.PartimInformation.SuperCode == supercode))
+            if (!_requestRepository.Table.Any(d => d.Id == fileId && d.Id == requestId))
                 return false;
 
-            var request = _requestRepository.Table.First(d => d.Id == fileId && d.PartimInformation.SuperCode == supercode);
+            var request = _requestRepository.Table.First(d => d.Id == fileId && d.Id == requestId);
             _requestRepository.Delete(request);
 
             return true;

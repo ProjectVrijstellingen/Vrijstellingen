@@ -23,7 +23,7 @@
             },
             error: function(data) {
                 errorList.empty();
-                errorList.append("<li>Request failed</li>");
+                errorList.append("<li>RequestPartimInformation failed</li>");
             }
         });
     });

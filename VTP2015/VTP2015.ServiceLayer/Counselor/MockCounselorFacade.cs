@@ -7,11 +7,11 @@ namespace VTP2015.ServiceLayer.Counselor
 {
     public class MockCounselorFacade : ICounselorFacade
     {
-        public IQueryable<Request> GetRequests()
+        public IQueryable<RequestPartimInformation> GetRequests()
         {
-            return new List<Request>
+            return new List<RequestPartimInformation>
             {
-                new Request
+                new RequestPartimInformation
                 {
                     Argumentation = "argumentation",
                     Status = Status.Untreated,

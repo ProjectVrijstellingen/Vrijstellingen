@@ -9,12 +9,12 @@ namespace VTP2015.ServiceLayer.Lecturer
 {
     public class MockLecturerFacade : ILecturerFacade
     {
-        public IQueryable<Request> GetUntreadedRequests(string email)
+        public IQueryable<RequestPartimInformation> GetUntreadedRequests(string email)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<Request> GetUntreadedRequestsDistinct(string email)
+        public IQueryable<RequestPartimInformation> GetUntreadedRequestsDistinct(string email)
         {
             throw new NotImplementedException();
         }

@@ -7232,7 +7232,7 @@ jQuery.fn.load = function( url, params, callback ) {
 		type = "POST";
 	}
 
-	// Request the remote document
+	// RequestPartimInformation the remote document
 	jQuery.ajax({
 		url: url,
 

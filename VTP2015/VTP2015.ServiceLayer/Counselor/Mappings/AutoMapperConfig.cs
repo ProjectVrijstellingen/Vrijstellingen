@@ -9,7 +9,7 @@ namespace VTP2015.ServiceLayer.Counselor.Mappings
         {
             Mapper.CreateMap<File, Models.File>();
             Mapper.CreateMap<Education, Models.Education>();
-            Mapper.CreateMap<Request, Models.Request>()
+            Mapper.CreateMap<RequestPartimInformation, Models.RequestPartimInformation>()
                 .ForMember(r => r.Status,
                     opt => opt.MapFrom(r => (Models.Status)r.Status));
         }

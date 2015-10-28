@@ -14,6 +14,6 @@ namespace VTP2015.Entities
         public virtual Module Module { get; set; }
         public virtual Lecturer Lecturer { get; set; }
         public virtual Route Route { get; set; }
-        public virtual ICollection<Request> Requests { get; set; }
+        public virtual ICollection<RequestPartimInformation> RequestPartimInformations { get; set; }
     }
 }

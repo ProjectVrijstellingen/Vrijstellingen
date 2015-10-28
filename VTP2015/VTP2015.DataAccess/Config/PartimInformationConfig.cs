@@ -3,9 +3,9 @@ using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.Config
 {
-    class PartimInformatieConfig : EntityTypeConfiguration<PartimInformation>
+    class PartimInformationConfig : EntityTypeConfiguration<PartimInformation>
     {
-        public PartimInformatieConfig()
+        public PartimInformationConfig()
         {
             // Primary Key
             HasKey(t => t.Id);

@@ -37,7 +37,7 @@ namespace VTP2015.DataAccess
             modelBuilder.Configurations.Add(new EducationConfig());
             modelBuilder.Configurations.Add(new PartimConfig());
             modelBuilder.Configurations.Add(new ModuleConfig());
-            modelBuilder.Configurations.Add(new PartimInformatieConfig());
+            modelBuilder.Configurations.Add(new PartimInformationConfig());
             modelBuilder.Configurations.Add(new FeedbackConfig());
             modelBuilder.Configurations.Add(new RouteConfig());
         }

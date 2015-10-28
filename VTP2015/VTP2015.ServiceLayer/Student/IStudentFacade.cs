@@ -12,7 +12,7 @@ namespace VTP2015.ServiceLayer.Student
         string GetStudentCodeByEmail(string email);
         void InsertEvidence(Evidence evidence);
         bool IsEvidenceFromStudent(string email);
-        bool IsRequestFromStudent(int fileId, string supercode, string email);
+        bool IsRequestFromStudent(int fileId, int requestId, string email);
         bool DeleteEvidence(int evidenceId, string mapPath);
         IQueryable<File> GetFilesByStudentEmail(string email);
         IQueryable<Evidence> GetEvidenceByStudentEmail(string email);
@@ -24,7 +24,7 @@ namespace VTP2015.ServiceLayer.Student
         PartimInformation GetPartimInformationBySuperCode(string superCode);
         int InsertFile(File file);
         bool SyncRequestInFile(Request request);
-        bool DeleteRequest(int fileId, string supercode);
+        bool DeleteRequest(int fileId, int requestId);
         Education GetEducation(string studentMail);
     }
 }

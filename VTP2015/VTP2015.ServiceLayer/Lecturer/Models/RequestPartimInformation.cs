@@ -1,6 +1,6 @@
 ﻿namespace VTP2015.ServiceLayer.Lecturer.Models
 {
-    public class Request
+    public class RequestPartimInformation
     {
         public int Id { get; set; }
         public Module Module { get; set; }

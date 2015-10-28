@@ -202,7 +202,6 @@ namespace VTP2015.Modules.Student
             var request = new Request
             {
                 FileId = viewModel.FileId,
-                PartimInformationSuperCode = viewModel.SuperCode,
                 Argumentation = viewModel.Argumentation,
                 LastChanged = DateTime.Now,
                 Evidence = viewModel.Evidence.Select(evidenceId => new Evidence
@@ -232,12 +231,12 @@ namespace VTP2015.Modules.Student
 
         [Route("Delete")]
         [HttpPost]
-        public ActionResult DeleteAanvraag(int dossierId, string supercode)
+        public ActionResult DeleteAanvraag(int dossierId, int aanvraagId)
         {
-            return _studentFacade.IsRequestFromStudent(dossierId, supercode, User.Identity.Name)
+            return _studentFacade.IsRequestFromStudent(dossierId, aanvraagId, User.Identity.Name)
                 ? Content("Don't cheat!")
-                : Content(!_studentFacade.DeleteRequest(dossierId, supercode)
-                    ? "Request bestaat niet!"
+                : Content(!_studentFacade.DeleteRequest(dossierId, aanvraagId)
+                    ? "RequestPartimInformation bestaat niet!"
                     : "Voltooid!");
         }
 
