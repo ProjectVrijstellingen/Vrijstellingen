@@ -176,11 +176,12 @@ namespace VTP2015.Modules.Student
             if(!_studentFacade.SyncStudentPartims(User.Identity.Name,academieJaar))
                 return RedirectToAction("Index");
 
+            var education = _studentFacade.GetEducation(User.Identity.Name);
             var dossier = new File
             {
                 StudentMail = User.Identity.Name,
                 DateCreated = DateTime.Now,
-                Specialization = "",
+                Education = education.Name,
                 Editable = true,
                 AcademicYear = academieJaar
             };

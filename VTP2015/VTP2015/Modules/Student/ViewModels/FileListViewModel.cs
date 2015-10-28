@@ -1,4 +1,5 @@
 ﻿using System;
+using VTP2015.lib;
 
 namespace VTP2015.Modules.Student.ViewModels
 {

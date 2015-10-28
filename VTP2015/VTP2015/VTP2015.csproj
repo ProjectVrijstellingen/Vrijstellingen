@@ -169,6 +169,7 @@
     <Compile Include="Infrastructure\Registries\MockServiceLayerRegistry.cs" />
     <Compile Include="Infrastructure\Registries\ServiceLayerRegistry.cs" />
     <Compile Include="Infrastructure\ViewEngine\CustomViewEngine.cs" />
+    <Compile Include="lib\Education.cs" />
     <Compile Include="Modules\Admin\AdminController.cs" />
     <Compile Include="Modules\Authentication\AuthenticationController.cs" />
     <Compile Include="Modules\Counselor\CounselorController.cs" />

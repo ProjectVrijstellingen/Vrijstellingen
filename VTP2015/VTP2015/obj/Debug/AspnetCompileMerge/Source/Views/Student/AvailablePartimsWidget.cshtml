@@ -1,9 +1,0 @@
-﻿@using VTP2015.Helpers
-@model VTP2015.ViewModels.Student.PartimViewModel[]
-
-<div id="beschikbarePartimsColumn" class="col-md-6">
-    @using (Html.BeginPanel("Beschikbare modules"))
-    {
-        @Html.ShowPartimList(Model, false)
-    }
-</div>

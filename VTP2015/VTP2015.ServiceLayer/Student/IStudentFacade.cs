@@ -1,6 +1,9 @@
 ﻿using System.Linq;
-using VTP2015.ServiceLayer.Student.Models;
+using VTP2015.Entities;
+using Evidence = VTP2015.ServiceLayer.Student.Models.Evidence;
 using File = VTP2015.ServiceLayer.Student.Models.File;
+using PartimInformation = VTP2015.ServiceLayer.Student.Models.PartimInformation;
+using Request = VTP2015.ServiceLayer.Student.Models.Request;
 
 namespace VTP2015.ServiceLayer.Student
 {
@@ -22,5 +25,6 @@ namespace VTP2015.ServiceLayer.Student
         int InsertFile(File file);
         bool SyncRequestInFile(Request request);
         bool DeleteRequest(int fileId, string supercode);
+        Education GetEducation(string studentMail);
     }
 }
