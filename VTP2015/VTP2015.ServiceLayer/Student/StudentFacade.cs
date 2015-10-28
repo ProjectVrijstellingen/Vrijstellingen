@@ -7,6 +7,7 @@ using VTP2015.DataAccess.ServiceRepositories;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
 using VTP2015.ServiceLayer.Student.Mappings;
+using VTP2015.ServiceLayer.Synchronisation;
 using File = VTP2015.Entities.File;
 
 namespace VTP2015.ServiceLayer.Student
@@ -17,13 +18,13 @@ namespace VTP2015.ServiceLayer.Student
         private readonly Repository<Entities.Student> _studentRepository;
         private readonly Repository<Evidence> _evidenceRepository;
         private readonly Repository<File> _fileRepository;
-        private readonly Repository<Request> _requestRepository; 
+        private readonly Repository<Request> _requestRepository;
         private readonly Repository<PartimInformation> _partimInformationRepository;
         private readonly Repository<Education> _educationRepository;
         private readonly Repository<Route> _routeRepository;
         private readonly Repository<Entities.Lecturer> _lectureRepository;
         private readonly Repository<Partim> _partimRepository;
-        private readonly Repository<Module> _moduleRepository; 
+        private readonly Repository<Module> _moduleRepository;
 
         public StudentFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository)
         {
@@ -123,7 +124,7 @@ namespace VTP2015.ServiceLayer.Student
                 .Select(a => a.PartimInformation);
 
             switch (partimMode)
-            { 
+            {
                 case PartimMode.Requested:
                     return requestedPartims.Project().To<Models.PartimInformation>();
                 case PartimMode.Available:
@@ -150,80 +151,10 @@ namespace VTP2015.ServiceLayer.Student
 
         public bool SyncStudentPartims(string email, string academicYear)
         {
-            var studentHasFilesInAcademicYear = _studentRepository
-                .Table
-                .Where(s => s.Email == email)
-                .SelectMany(s => s.Files)
-                .Any(d => d.AcademicYear == academicYear);
+            IBamaflexSynchroniser synchroniser = new BamaflexSynchroniser(_studentRepository, _educationRepository,
+                _bamaflexRepository, _partimInformationRepository, _partimRepository, _moduleRepository, _lectureRepository, _routeRepository);
 
-            if (studentHasFilesInAcademicYear)
-                return false;
-
-            var student = _studentRepository
-                .Table.First(x => x.Email == email);
-
-            var studentEducationIsFromCurrentAcademicYear = _educationRepository
-                .GetById(student.Education.Id)
-                .AcademicYear == academicYear;
-
-            if (studentEducationIsFromCurrentAcademicYear)
-                return true;
-
-            var routes = _bamaflexRepository
-                .GetRoutes(student.Education);
-
-            foreach (var route in routes)
-            {
-                var localRoute = new Route
-                {
-                    Name = route.Naam,
-                    Education = _educationRepository.GetById(student.Education.Id)
-                };
-
-                var supercodes = route
-                    .Modules
-                    .SelectMany(m => m.Partims)
-                    .Select(p => p.Supercode);
-
-                foreach (var supercode in supercodes)
-                {
-                    if (_partimInformationRepository.Table.Any(x => x.SuperCode == supercode))
-                        continue;
-
-                    var partimInformation = _bamaflexRepository
-                        .GetPartimInformationBySupercode(supercode);
-
-                    var partimInfo = new PartimInformation
-                    {
-                        SuperCode = partimInformation.Supercode.Supercode1,
-                        Lecturer = _lectureRepository.Table.First(d => d.Email == "docent@howest.be"),
-                        Partim = _partimRepository
-                            .Table
-                            .First(m => m.Code == partimInformation.Partim.Id)
-                            ?? new Partim
-                            {
-                                Code = partimInformation.Partim.Id,
-                                Name = partimInformation.Partim.Naam
-                            },
-                        Module = _moduleRepository
-                            .Table
-                            .First(m => m.Code == partimInformation.Module.Id)
-                            ?? new Module
-                            {
-                                Code = partimInformation.Module.Id,
-                                Name = partimInformation.Module.Naam
-                            }
-                    };
-
-                    localRoute.PartimInformation.Add(partimInfo);
-                }
-                    
-                _routeRepository.Insert(localRoute);
-            }
-
-           
-            return true;
-           
+            return synchroniser.SyncStudentPartims(email, academicYear);
         }
 
         public Models.Evidence GetEvidenceById(int evidenceId)
@@ -295,7 +226,8 @@ namespace VTP2015.ServiceLayer.Student
             if (!_requestRepository.Table.Any(d => d.Id == fileId && d.PartimInformation.SuperCode == supercode))
                 return false;
 
-            var request = _requestRepository.Table.First(d => d.Id == fileId && d.PartimInformation.SuperCode == supercode);
+            var request =
+                _requestRepository.Table.First(d => d.Id == fileId && d.PartimInformation.SuperCode == supercode);
             _requestRepository.Delete(request);
 
             return true;
