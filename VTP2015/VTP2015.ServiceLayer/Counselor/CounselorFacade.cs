@@ -63,7 +63,7 @@ namespace VTP2015.ServiceLayer.Counselor
                 .Education;
 
             return _fileRepository.Table.Where(
-                d => d.Requests.Count > 0 && d.AcademicYear == academicYear && d.Student.Education.Id == education.Id)
+                d => d.Requests.Count > 0 && d.AcademicYear == academicYear && d.Education.Id == education.Id)
                 .Project().To<Models.File>();
         }
 

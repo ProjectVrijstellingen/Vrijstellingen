@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using VTP2015.ServiceLayer.Student.Models;
+using VTP2015.Entities;
+using Evidence = VTP2015.ServiceLayer.Student.Models.Evidence;
+using File = VTP2015.ServiceLayer.Student.Models.File;
+using PartimInformation = VTP2015.ServiceLayer.Student.Models.PartimInformation;
+using Request = VTP2015.ServiceLayer.Student.Models.Request;
+using Status = VTP2015.ServiceLayer.Student.Models.Status;
 
 namespace VTP2015.ServiceLayer.Student
 {
@@ -42,7 +47,7 @@ namespace VTP2015.ServiceLayer.Student
                     DateCreated = DateTime.Now,
                     Editable = true,
                     Id = 1,
-                    Specialization = "SSD",
+                    Education = "Toegepaste Informatica",
                     StudentMail = "sam.de.creus@student.howest.be"
                 },
                 new File
@@ -51,7 +56,7 @@ namespace VTP2015.ServiceLayer.Student
                     DateCreated = DateTime.Now,
                     Editable = true,
                     Id = 1,
-                    Specialization = "SSD",
+                    Education = "Toegepaste Informatica",
                     StudentMail = "sam.de.creus@student.howest.be"
                 }
             };
@@ -146,6 +151,11 @@ namespace VTP2015.ServiceLayer.Student
         public bool DeleteRequest(int fileId, string supercode)
         {
             return true;
+        }
+
+        public Education GetEducation(string studentMail)
+        {
+            throw new NotImplementedException();
         }
     }
 }
