@@ -31,7 +31,7 @@ namespace VTP2015.DataAccess
             modelBuilder.Configurations.Add(new RequestConfig());
             modelBuilder.Configurations.Add(new CounselorConfig());
             modelBuilder.Configurations.Add(new EvidenceConfig());
-            modelBuilder.Configurations.Add(new DossierConfig());
+            modelBuilder.Configurations.Add(new FileConfig());
             modelBuilder.Configurations.Add(new StudentConfig());
             modelBuilder.Configurations.Add(new LecturerConfig());
             modelBuilder.Configurations.Add(new EducationConfig());

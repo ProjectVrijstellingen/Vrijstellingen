@@ -3,9 +3,9 @@ using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.Config
 {
-    class DossierConfig : EntityTypeConfiguration<File>
+    class FileConfig : EntityTypeConfiguration<File>
     {
-        public DossierConfig()
+        public FileConfig()
         {
             // Primary Key
             HasKey(t => t.Id);
@@ -19,9 +19,12 @@ namespace VTP2015.DataAccess.Config
             // Relationships
             HasRequired(t => t.Student)
                 .WithMany(t => t.Files)
-                .HasForeignKey(d => d.StudentId);
+                .HasForeignKey(d => d.StudentId)
+                .WillCascadeOnDelete(false);
 
-
+            HasRequired(t => t.Education)   
+                .WithMany(t => t.Files)
+                .HasForeignKey(d => d.EducationId);
         }
     }
 }

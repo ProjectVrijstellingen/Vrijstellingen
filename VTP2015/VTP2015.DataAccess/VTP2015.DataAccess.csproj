@@ -52,7 +52,7 @@
     <Compile Include="Config\RequestConfig.cs" />
     <Compile Include="Config\EvidenceConfig.cs" />
     <Compile Include="Config\LecturerConfig.cs" />
-    <Compile Include="Config\DossierConfig.cs" />
+    <Compile Include="Config\FileConfig.cs" />
     <Compile Include="Config\FeedbackConfig.cs" />
     <Compile Include="Config\RouteConfig.cs" />
     <Compile Include="Config\ModuleConfig.cs" />

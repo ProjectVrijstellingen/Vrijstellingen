@@ -37,7 +37,7 @@ namespace VTP2015.Modules.Student
         public ActionResult AddFile(IndexViewModel viewModel)
         {
 
-            ModelState.Clear();
+            ModelState.Clear();     
             var validation = TryValidateModel(viewModel);
             var errors = (from modelstate in ModelState.Values from error in modelstate.Errors select error.ErrorMessage).ToList();
 

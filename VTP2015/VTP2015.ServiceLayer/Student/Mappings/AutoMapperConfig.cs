@@ -9,7 +9,12 @@ namespace VTP2015.ServiceLayer.Student.Mappings
         public void Execute()
         {
             Mapper.CreateMap<Evidence, Models.Evidence>();
-            Mapper.CreateMap<File, Models.File>();
+            Mapper.CreateMap<File, Models.File>()
+                .ForMember(r => r.Education,
+                    opt => opt.MapFrom(r => r.Education.Name))
+                .ForMember(r => r.StudentMail,
+                    opt => opt.MapFrom(r => r.Student.Email));
+
             Mapper.CreateMap<PartimInformation, Models.PartimInformation>();
             Mapper.CreateMap<Request, Models.Request>()
                 .ForMember(r => r.PartimInformationSuperCode,

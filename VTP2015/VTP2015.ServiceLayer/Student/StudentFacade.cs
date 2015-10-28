@@ -244,7 +244,11 @@ namespace VTP2015.ServiceLayer.Student
         {
             var entity = new File
             {
-                AcademicYear = file.AcademicYear, DateCreated = file.DateCreated, Editable = file.Editable, Education = _educationRepository.Table.First(e => e.Name == file.Education), Student = _studentRepository.Table.First(s => s.Email == file.StudentMail)
+                AcademicYear = file.AcademicYear,
+                DateCreated = file.DateCreated,
+                Editable = file.Editable,
+                Education = _educationRepository.Table.First(education => education.Name == file.Education),
+                Student = _studentRepository.Table.First(student => student.Email == file.StudentMail)
             };
 
             _fileRepository.Insert(entity);
