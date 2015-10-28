@@ -2,7 +2,7 @@
 {
     public class File
     {
-        public int FileId { get; set; }
+        public int Id { get; set; }
         public string StudentFirstName { get; set; }
         public string StudentName { get; set; }
         public int PercentageCompleted { get; set; }

@@ -33,7 +33,7 @@ namespace VTP2015.ServiceLayer.Counselor
         {
             return new List<Education>
             {
-                new Education {EducationId = 1, Name = "Toegepaste Informatica"}
+                new Education {Id = 1, Name = "Toegepaste Informatica"}
             }.AsQueryable();
         }
 
@@ -48,7 +48,7 @@ namespace VTP2015.ServiceLayer.Counselor
                 new File
                 {
                     AcademicYear = "2015-16",
-                    FileId = 1,
+                    Id = 1,
                     PercentageCompleted = 100,
                     Route = "ssd",
                     StudentFirstName = "Sam",
