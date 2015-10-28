@@ -102,11 +102,11 @@ namespace VTP2015.ServiceLayer.Student
                 new Request
                 {
                     Argumentation = "argumentation",
-                    Status = Status.Untreated,
-                    Evidence = new List<Evidence>().AsQueryable(),
+                    //Status = Status.Untreated,
+                    //Evidence = new List<Evidence>().AsQueryable(),
                     FileId = 1,
                     LastChanged = DateTime.Now,
-                    PartimInformationId = 1,
+                    //PartimInformationId = 1,
                 }
             };
 

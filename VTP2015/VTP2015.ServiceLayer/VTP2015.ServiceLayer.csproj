@@ -96,6 +96,8 @@
     <Compile Include="Feedback\IFeedbackFacade.cs" />
     <Compile Include="Lecturer\ILecturerFacade.cs" />
     <Compile Include="Student\IStudentFacade.cs" />
+    <Compile Include="Synchronisation\BamaflexSynchroniser.cs" />
+    <Compile Include="Synchronisation\IBamaflexSynchroniser.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VTP2015.DataAccess\VTP2015.DataAccess.csproj">
