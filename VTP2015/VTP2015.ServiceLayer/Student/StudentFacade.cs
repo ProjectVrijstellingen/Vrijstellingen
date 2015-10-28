@@ -144,15 +144,30 @@ namespace VTP2015.ServiceLayer.Student
         public IQueryable<Models.Request> GetRequestsByFileId(int fileId)
         {
             return _requestRepository.Table
-                .Where(r => r.Id == fileId)
-                .Project()
-                .To<Models.Request>();
+                .Where(request => request.FileId == fileId)
+                .Select(request => new Models.Request
+                {
+                    Argumentation = request.Argumentation,
+                    FileId = request.FileId,
+                    LastChanged = request.LastChanged,
+                    PartimInformationId = request.PartimInformationId,
+                    PartimInformationSuperCode = request.PartimInformation.SuperCode,
+                    Status = (Models.Status)request.Status,
+                    Evidence = request.Evidence.Select(evidence => new Models.Evidence
+                    {
+                        Description = evidence.Description,
+                        Id = evidence.Id,
+                        Path = evidence.Path,
+                        StudentMail = evidence.Student.Email
+                    }).AsQueryable()
+                });
         }
 
         public bool SyncStudentPartims(string email, string academicYear)
         {
             IBamaflexSynchroniser synchroniser = new BamaflexSynchroniser(_studentRepository, _educationRepository,
-                _bamaflexRepository, _partimInformationRepository, _partimRepository, _moduleRepository, _lectureRepository, _routeRepository);
+                _bamaflexRepository, _partimInformationRepository, _partimRepository, _moduleRepository,
+                _lectureRepository, _routeRepository);
 
             return synchroniser.SyncStudentPartims(email, academicYear);
         }

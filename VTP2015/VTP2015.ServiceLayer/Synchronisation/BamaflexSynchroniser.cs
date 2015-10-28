@@ -34,23 +34,13 @@ namespace VTP2015.ServiceLayer.Synchronisation
 
         public bool SyncStudentPartims(string email, string academicYear)
         {
-            var studentHasFilesInAcademicYear = _studentRepository
-                .Table
-                .Where(s => s.Email == email)
-                .SelectMany(s => s.Files)
-                .Any(d => d.AcademicYear == academicYear);
-
-            if (studentHasFilesInAcademicYear)
+            if (StudentHasFilesInAcademicYear(email, academicYear))
                 return false;
 
             var student = _studentRepository
                 .Table.First(x => x.Email == email);
 
-            var studentEducationIsFromCurrentAcademicYear = _educationRepository
-                .GetById(student.Education.Id)
-                .AcademicYear == academicYear;
-
-            if (studentEducationIsFromCurrentAcademicYear)
+            if (IsStudentEducationFromCurrentAcademicYear(academicYear, student))
                 return true;
 
             var routes = _bamaflexRepository
@@ -108,6 +98,24 @@ namespace VTP2015.ServiceLayer.Synchronisation
 
             return true;
 
+        }
+
+        private bool IsStudentEducationFromCurrentAcademicYear(string academicYear, Entities.Student student)
+        {
+            var isStudentEducationFromCurrentAcademicYear = _educationRepository
+                .GetById(student.Education.Id)
+                .AcademicYear == academicYear;
+            return isStudentEducationFromCurrentAcademicYear;
+        }
+
+        private bool StudentHasFilesInAcademicYear(string email, string academicYear)
+        {
+            var studentHasFilesInAcademicYear = _studentRepository
+                .Table
+                .Where(s => s.Email == email)
+                .SelectMany(s => s.Files)
+                .Any(d => d.AcademicYear == academicYear);
+            return studentHasFilesInAcademicYear;
         }
     }
 }
