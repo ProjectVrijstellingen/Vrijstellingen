@@ -1,7 +1,9 @@
 ﻿@using VTP2015.DataAccess.Identity
+@using VTP2015.DataAccess.ServiceRepositories
 @model VTP2015.Modules.Feedback.ViewModels.IndexViewModel
 @{
     IdentityManagementWebservice _identityService = new IdentityManagementWebservice();
+    IdentityRepository _identity = new IdentityRepository();
 }
 <div class="panel panel-success clearfix inheritWidth" id="feedback">
     <div class="panel-heading ">
@@ -10,7 +12,7 @@
     <div class="panel-body">
         <p>@_identityService.GetUserByEmail("joachim.bockland@student.howest.be").Id</p>
         <p>@_identityService.AuthenticateUserByEmail("joachim.bockland@student.howest.be","123456789")</p>
-        <p>@Model.User</p>
+        <p>@_identity.GetUserByEmail("joachim.bockland@student.howest.be").Id</p>
         <p>@Model.User.Id</p>
         <p>@Model.User.Email</p>
         <p>@Model.User.Firstname</p>

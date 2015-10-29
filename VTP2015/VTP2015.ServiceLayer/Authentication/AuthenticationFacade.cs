@@ -38,7 +38,7 @@ namespace VTP2015.ServiceLayer.Authentication
         public void SyncStudentByUser(string email)
         {
             var user = _identityRepository.GetUserByEmail(email);
-            var opleiding = _bamaflexRepository.GetEducationByStudentCode(user.Id);
+            var opleiding = _bamaflexRepository.GetEducationByStudentCode("b66352b3-938e-4e8e-981b-2008a8c5171d");
                 
             var student = _studentRepository.Table.FirstOrDefault(s => s.Email == email)
                           ?? new Entities.Student {Code = user.Id};
