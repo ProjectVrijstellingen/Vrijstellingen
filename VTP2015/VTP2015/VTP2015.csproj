@@ -188,10 +188,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="fonts\Helpers\CustomHtmlHelpers.cs" />
-    <Compile Include="fonts\Helpers\MailHelper.cs" />
-    <Compile Include="fonts\Helpers\Panel.cs" />
-    <Compile Include="fonts\Helpers\PanelHelpers.cs" />
+    <Compile Include="Helpers\CustomHtmlHelpers.cs" />
+    <Compile Include="Helpers\MailHelper.cs" />
+    <Compile Include="Helpers\Panel.cs" />
+    <Compile Include="Helpers\PanelHelpers.cs" />
     <Compile Include="Identity\IdentityManager.cs" />
     <Compile Include="Identity\IdentityModels.cs" />
     <Compile Include="Infrastructure\ControllerConvention.cs" />
