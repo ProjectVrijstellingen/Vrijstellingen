@@ -178,6 +178,7 @@
     <Compile Include="Modules\Counselor\ViewModels\PartimInformationViewModel.cs" />
     <Compile Include="Modules\Counselor\ViewModels\StatusViewModel.cs" />
     <Compile Include="Modules\Feedback\FeedbackController.cs" />
+    <Compile Include="Modules\Feedback\ViewModels\IndexViewModel.cs" />
     <Compile Include="Modules\Lecturer\LecturerController.cs" />
     <Compile Include="Modules\Lecturer\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Modules\Student\Mappings\AutoMapperConfig.cs" />
@@ -298,6 +299,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="packages.config" />
+    <Content Include="Modules\Feedback\Views\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Foundation.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

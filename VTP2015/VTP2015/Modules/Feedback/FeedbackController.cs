@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using VTP2015.DataAccess.ServiceRepositories;
 using VTP2015.Modules.Feedback.ViewModels;
 using VTP2015.ServiceLayer.Feedback;
 
@@ -9,10 +10,22 @@ namespace VTP2015.Modules.Feedback
     {
 
         private readonly IFeedbackFacade _feedbackFacade;
+        private readonly IIdentityRepository _identityRepository;
 
-        public FeedbackController(IFeedbackFacade feedbackFacade)
+        public FeedbackController(IFeedbackFacade feedbackFacade, IIdentityRepository identityRepository)
         {
             _feedbackFacade = feedbackFacade;
+            _identityRepository = identityRepository;
+        }
+        // GET: /Feedback
+        [Route("")]
+        public PartialViewResult Index()
+        {
+            var model = new IndexViewModel
+            {
+                User = _identityRepository.GetUserByEmail("joachim.bockland")
+            };
+            return PartialView(model);
         }
 
 

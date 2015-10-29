@@ -73,7 +73,7 @@
     <Compile Include="ServiceRepositories\BamaflexRepository.cs" />
     <Compile Include="ServiceRepositories\IBamaflexRepository.cs" />
     <Compile Include="ServiceRepositories\IdentityRepository.cs" />
-    <Compile Include="ServiceRepositories\IIDentityRepository.cs" />
+    <Compile Include="ServiceRepositories\IIdentityRepository.cs" />
     <Compile Include="ServiceRepositories\MockBamaflexRepository.cs" />
     <Compile Include="ServiceRepositories\MockIdentityRepository.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
@@ -197,6 +197,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web References\Bamaflex\Bamaflex1.9.xml" />
+    <Content Include="Web References\Identity\Identity1.1.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
