@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://services.howest.be/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://services.howest.be/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deze webservice levert data uit het HOWEST Identity Management.</wsdl:documentation>
   <wsdl:types>
@@ -183,7 +183,7 @@
       <s:simpleType name="UserTypeId">
         <s:restriction base="s:string">
           <s:enumeration value="Alumni" />
-          <s:enumeration value="Students" />
+          <s:enumeration value="Studenten" />
           <s:enumeration value="Personeel" />
           <s:enumeration value="Bestuursleden" />
         </s:restriction>

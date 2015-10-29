@@ -8,7 +8,8 @@
         <h3 class="panel-title">Feedback</h3>
     </div>
     <div class="panel-body">
-        <p>@_identityService.GetUserByEmail("joachim.bockland@student.howest.be")</p>
+        <p>@_identityService.GetUserByEmail("joachim.bockland@student.howest.be").Id</p>
+        <p>@_identityService.AuthenticateUserByEmail("joachim.bockland@student.howest.be","123456789")</p>
         <p>@Model.User</p>
         <p>@Model.User.Id</p>
         <p>@Model.User.Email</p>

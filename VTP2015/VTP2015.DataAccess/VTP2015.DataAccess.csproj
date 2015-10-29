@@ -172,10 +172,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="C:\Users\Sam\Documents\school\Projecten\programmeerproject\VTP2015\documentatie\Bamaflex1.9.xml">
+    <WebReferenceUrl Include="D:\bestanden\VTP2015v2\documentatie\Bamaflex1.9.xml">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\Bamaflex\</RelPath>
-      <UpdateFromURL>C:\Users\Sam\Documents\school\Projecten\programmeerproject\VTP2015\documentatie\Bamaflex1.9.xml</UpdateFromURL>
+      <UpdateFromURL>D:\bestanden\VTP2015v2\documentatie\Bamaflex1.9.xml</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -183,10 +183,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>VTP2015_DataAccess_Bamaflex_Facade</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="C:\Users\Sam\Documents\school\Projecten\programmeerproject\VTP2015\documentatie\Identity1.1.xml">
+    <WebReferenceUrl Include="D:\bestanden\VTP2015\documentatie\Identity1.1.xml">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\Identity\</RelPath>
-      <UpdateFromURL>C:\Users\Sam\Documents\school\Projecten\programmeerproject\VTP2015\documentatie\Identity1.1.xml</UpdateFromURL>
+      <UpdateFromURL>D:\bestanden\VTP2015\documentatie\Identity1.1.xml</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -196,8 +196,7 @@
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web References\Bamaflex\Bamaflex1.9.xml" />
-    <Content Include="Web References\Identity\Identity1.1.xml" />
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
