@@ -126,17 +126,15 @@ $(document).on("click", ".partim", function () {
         $(this).detach();
         $(newParent).parent().removeClass("hide");
         $(this).appendTo($(newParent));
-        $(this).addClass("active");
         $(this).find(".btn").removeClass("hide");
 
         if ($(parentDiv).find("ul").children().length === 0) $(parentDiv).remove();
 
         var clon = $("#dummy").clone();
         clon.find("h3").text(moduleNaam);
-        clon.find("h4").text($(this).text());
+        clon.find("h4").text("");
+        clon.find("h4").append($(this).children("span:first").clone());
         clon.attr("id", supercode);
-        clon.removeClass("hide");
-        clon.addClass("nothidden");
         clon.appendTo("section");
     } else {
         if ($(this).hasClass("active")) {
@@ -149,8 +147,43 @@ $(document).on("click", ".partim", function () {
             show.removeClass("hide");
             show.addClass("nothidden");
         }
+        if (!$(beschikbarePartims).hasClass("hide")) toSecondView();
     }
-    if (!$(beschikbarePartims).hasClass("hide")) toSecondView();
+});
+
+$(document).on("click", ".module", function () {
+    console.log("module clicked");
+    var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
+    var aanvraagDetail = document.getElementById("aanvraagDetail");
+    var parentDiv = $(this).parent().parent()[0];
+    var moduleId = $(parentDiv).data("moduleid");
+    var moduleNaam = parentDiv.getElementsByTagName("h4")[0].innerHTML;
+
+    if ($.contains(beschikbarePartims, this)) {
+        $(parentDiv).find("ul").addClass("hide");
+
+        $(parentDiv).detach();
+        $("#aangevraagdePartimsColumn").find(".panel-body").append($(this));
+        $(this).find(".btn").removeClass("hide");
+
+        var clon = $("#dummy").clone();
+        clon.find("h3").text(moduleNaam);
+        clon.find("h4").text("");
+        clon.attr("id", moduleId);
+        clon.appendTo("section");
+    } else {
+        if ($(this).hasClass("active")) {
+            Return();
+            return;
+        } else {
+            hideShown();
+            var show = $(aanvraagDetail).find("#" + moduleId);
+            $(this).addClass("active");
+            show.removeClass("hide");
+            show.addClass("nothidden");
+        }
+        if (!$(beschikbarePartims).hasClass("hide")) toSecondView();
+    }
 });
 
 $(document).on("click", ".glyphicon-plus", function () {
@@ -164,7 +197,7 @@ $(document).on("click", ".glyphicon-remove", function (e) {
     var that = $(this).parent();
     var parentDiv = $(that).parent().parent()[0];
     var moduleId = $(parentDiv).data("moduleid");
-    var moduleNaam = parentDiv.getElementsByTagName("h4")[0].innerHTML;
+    var moduleNaam = parentDiv.find("h4").text();
     if ($("#beschikbarePartimsColumn div[data-moduleId=" + moduleId + "]").length === 0) $("#beschikbarePartimsColumn .panel-body").html($("#beschikbarePartimsColumn .panel-body").html() + "<div data-moduleid=\"" + moduleId + "\"><h4>" + moduleNaam + "</h4><ul class=\"list-group\"></ul></div>");
     var newParent = $("#beschikbarePartimsColumn").find("div[data-moduleId=" + moduleId + "] ul");
     var aanvraag = $("#aanvraagDetail").find("#" + $(that).data("supercode"));
@@ -199,6 +232,6 @@ $(document).ready(function () {
     $("bewijzenColumn").addClass("hide");
 });
 
-$(document).ready(function () {
-    $('[data-toggle="tooltip"]').tooltip();
+$(document).on("ready", '[data-toggle="tooltip"]', function () {
+    $(this).tooltip();
 });
