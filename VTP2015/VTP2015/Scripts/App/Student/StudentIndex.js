@@ -3,7 +3,7 @@
     $("#addBewijs-form").find("button").click(function () {
         var model = new FormData();
         model.append("File", document.getElementById("File").files[0]);
-        model.append("Argumentation", $("#Argumentation").val());
+        model.append("Argumentation", $("#Description").val());
         $.ajax({
             url: $("#addBewijs-form").data("url"),
             data: model,
