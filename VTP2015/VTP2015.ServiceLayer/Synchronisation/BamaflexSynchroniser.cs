@@ -63,27 +63,34 @@ namespace VTP2015.ServiceLayer.Synchronisation
                     Name = "ModelRoute",
                     Education = _educationRepository.GetById(student.Education.Id)
                 });
-            List<OpleidingsProgrammaOnderdeel> modules = new List<OpleidingsProgrammaOnderdeel>();
-            foreach (var module in education.Modules) modules.Add(module);
-            foreach (var route in education.KeuzeTrajecten) foreach (var module in route.Modules) modules.Add(module);
+            storePartimInfo(education.Modules.ToList(), student.EducationId, "ModelRoute");
+            foreach (var route in education.KeuzeTrajecten) storePartimInfo(route.Modules.ToList(), student.EducationId, route.Naam);
+            
+            return true;
 
+        }
+
+        private void storePartimInfo(List<OpleidingsProgrammaOnderdeel> modules, int eductationId, string RouteName)
+        {
             foreach (var module in modules)
             {
-                if (!_moduleRepository.Table.Any(x => x.Code == module.Code)) _moduleRepository.Insert(new Module
-                {
-                    Code = module.Code,
-                    Name = module.Naam
-                });
+                if (!_moduleRepository.Table.Any(x => x.Code == module.Code))
+                    _moduleRepository.Insert(new Module
+                    {
+                        Code = module.Code,
+                        Name = module.Naam
+                    });
                 var moduleClass = _moduleRepository
                         .Table
                         .First(m => m.Code == module.Code);
                 foreach (var partim in module.Partims)
                 {
-                    if (!_partimRepository.Table.Any(x => x.Code == partim.Code)) _partimRepository.Insert(new Partim
-                    {
-                        Code = partim.Code,
-                        Name = partim.Naam
-                    });
+                    if (!_partimRepository.Table.Any(x => x.Code == partim.Code))
+                        _partimRepository.Insert(new Partim
+                        {
+                            Code = partim.Code,
+                            Name = partim.Naam
+                        });
                     var partimClass = _partimRepository
                         .Table
                         .First(m => m.Code == partim.Code);
@@ -96,27 +103,18 @@ namespace VTP2015.ServiceLayer.Synchronisation
                             Lecturer = _lectureRepository.Table.First(d => d.Email == "docent@howest.be"),
                             Partim = partimClass,
                             Module = moduleClass,
-                            Route = partim.Keuzetraject != null ? _routeRepository.Table.First(x => x.Name == partim.Keuzetraject.Naam) : _routeRepository.Table.Where(x => x.EducationId == student.EducationId).First(x => x.Name == "ModelRoute")
+                            Route = _routeRepository.Table.Where(x => x.EducationId == eductationId).First(x => x.Name == RouteName)
                         };
                         _partimInformationRepository.Insert(partimInfo);
                     }
                 }
             }
-            return true;
-
         }
 
         private bool StudentPartimsSynced(string academicYear, Entities.Student student)
         {
-            var boolean = _educationRepository.GetById(student.Education.Id)
-                .AcademicYear == academicYear;
-            if (!boolean) return boolean;
-            boolean = _educationRepository
-                .GetById(student.Education.Id)
-                .Routes
-                .SelectMany(x => x.PartimInformation)
-                .Any();
-            return boolean;
+            return _educationRepository.GetById(student.Education.Id)
+                .AcademicYear == academicYear; ;
         }
 
         private bool StudentHasFilesInAcademicYear(string email, string academicYear)
