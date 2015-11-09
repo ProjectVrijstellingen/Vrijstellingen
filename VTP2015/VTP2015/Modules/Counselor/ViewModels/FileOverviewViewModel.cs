@@ -5,6 +5,7 @@
         public string Id { get; set; }
         public string StudentFirstName { get; set; }
         public string StudentName { get; set; }
+        public int AmountOfRequestsOpen { get; set; }
         public int PercentageCompleted { get; set; }
         public string Route { get; set; }
         public string AcademicYear { get; set; }

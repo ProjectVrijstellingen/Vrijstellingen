@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using VTP2015.Entities;
 
 namespace VTP2015.ServiceLayer.Counselor.Mappings
@@ -7,7 +8,9 @@ namespace VTP2015.ServiceLayer.Counselor.Mappings
     {
         public void Execute()
         {
-            Mapper.CreateMap<File, Models.File>();
+            Mapper.CreateMap<File, Models.File>()
+                .ForMember(r => r.AmountOfRequestsOpen,
+                    opt => opt.MapFrom(r => r.Requests));
             Mapper.CreateMap<Education, Models.Education>();
             Mapper.CreateMap<RequestPartimInformation, Models.RequestPartimInformation>()
                 .ForMember(r => r.Status,
