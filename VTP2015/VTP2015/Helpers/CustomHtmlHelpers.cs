@@ -29,6 +29,12 @@ namespace VTP2015.Helpers
                     partimTag.Attributes.Add("data-SuperCode", partim.SuperCode);
                     partimTag.AddCssClass("list-group-item partim");
                     var partimNameTag = new TagBuilder("span");
+                    if (TextLimiter(partim.Name, 30).EndsWith("..."))
+                    {
+                        partimNameTag.MergeAttribute("data-toggle", "tooltip");
+                        partimNameTag.MergeAttribute("title", partim.Name);
+
+                    }
                     partimNameTag.AddCssClass("name");
                     partimNameTag.SetInnerText(TextLimiter(partim.Name, 30));
                     partimTag.InnerHtml += partimNameTag;
@@ -67,6 +73,11 @@ namespace VTP2015.Helpers
             itemTag.InnerHtml += ShowGlyphicon(html, "file");
             var descriptionTag = new TagBuilder("span");
             descriptionTag.AddCssClass("glyphicon-class");
+            if (TextLimiter(evidence.Path, 20).EndsWith("..."))
+            {
+                descriptionTag.MergeAttribute("data-toggle", "tooltip");
+                descriptionTag.MergeAttribute("title", evidence.Path);
+            }
             descriptionTag.SetInnerText(TextLimiter(evidence.Path,20) + " - " + evidence.Omschrijving);
             itemTag.InnerHtml += descriptionTag;
             itemTag.InnerHtml += ShowGlyphicon(html, "minus","btn badge" + (draggable? " hide":""));

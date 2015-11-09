@@ -29,3 +29,7 @@ var appendFilesToArray = function () {
 var searchQueryContains = function (string) {
     return string.toLowerCase().indexOf($("#searchQuery").val().toLowerCase()) >= 0;
 };
+
+$(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});

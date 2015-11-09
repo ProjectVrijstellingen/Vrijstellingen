@@ -198,3 +198,7 @@ $(document).on("click", ".glyphicon-remove", function (e) {
 $(document).ready(function () {
     $("bewijzenColumn").addClass("hide");
 });
+
+$(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
