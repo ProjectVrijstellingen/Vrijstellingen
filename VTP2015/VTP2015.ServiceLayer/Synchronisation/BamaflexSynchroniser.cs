@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using VTP2015.DataAccess.ServiceRepositories;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
@@ -40,7 +41,7 @@ namespace VTP2015.ServiceLayer.Synchronisation
             var student = _studentRepository
                 .Table.First(x => x.Email == email);
 
-            if (IsStudentEducationFromCurrentAcademicYear(academicYear, student))
+            if (StudentPartimsSynced(academicYear, student))
                 return true;
 
             var routes = _bamaflexRepository
@@ -54,58 +55,70 @@ namespace VTP2015.ServiceLayer.Synchronisation
                     Education = _educationRepository.GetById(student.Education.Id)
                 };
 
-                var supercodes = route
-                    .Modules
-                    .SelectMany(m => m.Partims)
-                    .Select(p => p.Supercode);
-
-                foreach (var supercode in supercodes)
+                foreach (var module in route.Modules)
                 {
-                    if (_partimInformationRepository.Table.Any(x => x.SuperCode == supercode))
-                        continue;
-
-                    var partimInformation = _bamaflexRepository
-                        .GetPartimInformationBySupercode(supercode);
-
-                    var partimInfo = new PartimInformation
+                    if (!_moduleRepository.Table.Any(x => x.Code == module.Code)) _moduleRepository.Insert(new Module
                     {
-                        SuperCode = partimInformation.Supercode.Supercode1,
-                        Lecturer = _lectureRepository.Table.First(d => d.Email == "docent@howest.be"),
-                        Partim = _partimRepository
+                        Code = module.Code,
+                        Name = module.Naam
+                    });
+                    var moduleClass = _moduleRepository
                             .Table
-                            .First(m => m.Code == partimInformation.Partim.Id)
-                                 ?? new Partim
-                                 {
-                                     Code = partimInformation.Partim.Id,
-                                     Name = partimInformation.Partim.Naam
-                                 },
-                        Module = _moduleRepository
+                            .First(m => m.Code == module.Code);
+                    foreach (var partim in module.Partims)
+                    {
+                        if (!_partimRepository.Table.Any(x => x.Code == partim.Code)) _partimRepository.Insert(new Partim
+                        {
+                            Code = partim.Code,
+                            Name = partim.Naam
+                        });
+                        var partimClass = _partimRepository
                             .Table
-                            .First(m => m.Code == partimInformation.Module.Id)
-                                 ?? new Module
-                                 {
-                                     Code = partimInformation.Module.Id,
-                                     Name = partimInformation.Module.Naam
-                                 }
-                    };
+                            .First(m => m.Code == partim.Code);
 
-                    localRoute.PartimInformation.Add(partimInfo);
+                        var partimInfo = new PartimInformation
+                        {
+                            /*SuperCode = partim.Supercode,
+                            Lecturer = _lectureRepository.Table.First(d => d.Email == "docent@howest.be"),
+                            Partim = partimClass,
+                            Module = moduleClass*/
+                            SuperCode = "abcd",
+                            Lecturer = new Entities.Lecturer {
+                                Email = "docent@howest.be",
+                                InfoMail = DateTime.Now,
+                                WarningMail = DateTime.Now
+                            },
+                            Partim = new Partim
+                            {
+                                Code = "partim",
+                                Name = "partim"
+                            },
+                            Module = new Module
+                            {
+                                Code = "module",
+                                Name = "module"
+                            }
+                        };
+                        localRoute.PartimInformation.Add(partimInfo);
+                    }
                 }
-
                 _routeRepository.Insert(localRoute);
             }
-
-
             return true;
 
         }
 
-        private bool IsStudentEducationFromCurrentAcademicYear(string academicYear, Entities.Student student)
+        private bool StudentPartimsSynced(string academicYear, Entities.Student student)
         {
-            var isStudentEducationFromCurrentAcademicYear = _educationRepository
-                .GetById(student.Education.Id)
+            var boolean = _educationRepository.GetById(student.Education.Id)
                 .AcademicYear == academicYear;
-            return isStudentEducationFromCurrentAcademicYear;
+            if (!boolean) return boolean;
+            boolean = _educationRepository
+                .GetById(student.Education.Id)
+                .Routes
+                .SelectMany(x => x.PartimInformation)
+                .Any();
+            return boolean;
         }
 
         private bool StudentHasFilesInAcademicYear(string email, string academicYear)

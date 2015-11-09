@@ -95,7 +95,7 @@ namespace VTP2015.ServiceLayer.Student
             return partimInformation.AsQueryable();
         }
 
-        public IQueryable<Request> GetRequestsByFileId(int fileId)
+        public IQueryable<Request> GetRequestByFileId(int fileId)
         {
             var requests = new List<Request>
             {

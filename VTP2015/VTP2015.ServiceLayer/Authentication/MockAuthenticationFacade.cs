@@ -22,5 +22,10 @@ namespace VTP2015.ServiceLayer.Authentication
         {
             
         }
+
+        public void SyncLecturer(string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

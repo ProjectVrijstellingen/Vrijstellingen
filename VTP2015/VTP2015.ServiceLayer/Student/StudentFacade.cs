@@ -138,12 +138,13 @@ namespace VTP2015.ServiceLayer.Student
             }
         }
 
-        public IQueryable<Models.Request> GetRequestsByFileId(int fileId)
+        public IQueryable<Models.Request> GetRequestByFileId(int fileId)
         {
             return _requestRepository.Table
                 .Where(request => request.FileId == fileId)
                 .Select(request => new Models.Request
                 {
+                    RequestId = request.Id,
                     Argumentation = request.Argumentation,
                     FileId = request.FileId,
                     LastChanged = request.LastChanged,

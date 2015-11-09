@@ -18,7 +18,7 @@ namespace VTP2015.ServiceLayer.Student
         IQueryable<Evidence> GetEvidenceByStudentEmail(string email);
         bool IsFileFromStudent(string email, int fileId);
         IQueryable<PartimInformation> GetPartims(string email, int fileId, PartimMode partimMode);
-        IQueryable<Request> GetRequestsByFileId(int fileId);
+        IQueryable<Request> GetRequestByFileId(int fileId);
         bool SyncStudentPartims(string email, string academicYear);
         Evidence GetEvidenceById(int evidenceId);
         PartimInformation GetPartimInformationBySuperCode(string superCode);

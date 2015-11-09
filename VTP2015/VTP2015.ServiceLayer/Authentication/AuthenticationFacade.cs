@@ -14,6 +14,7 @@ namespace VTP2015.ServiceLayer.Authentication
         private readonly Repository<Entities.Counselor> _counselorRepository;
         private readonly Repository<Entities.Student> _studentRepository;
         private readonly Repository<Education> _educationRepository;
+        private readonly Repository<Entities.Lecturer> _lecturerRepository;
 
         public AuthenticationFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository,
             IIdentityRepository identityRepository)
@@ -23,6 +24,7 @@ namespace VTP2015.ServiceLayer.Authentication
             _educationRepository = unitOfWork.Repository<Education>();
             _bamaflexRepository = bamaflexRepository;
             _identityRepository = identityRepository;
+            _lecturerRepository = unitOfWork.Repository<Entities.Lecturer>();
         }
 
         public bool IsCounselor(string email)
@@ -38,7 +40,7 @@ namespace VTP2015.ServiceLayer.Authentication
         public void SyncStudentByUser(string email)
         {
             var user = _identityRepository.GetUserByEmail(email);
-            var opleiding = _bamaflexRepository.GetEducationByStudentCode("b66352b3-938e-4e8e-981b-2008a8c5171d");
+            var opleiding = _bamaflexRepository.GetEducationByStudentCode(user.Id);
                 
             var student = _studentRepository.Table.FirstOrDefault(s => s.Email == email)
                           ?? new Entities.Student {Code = user.Id};
@@ -77,6 +79,18 @@ namespace VTP2015.ServiceLayer.Authentication
             }
 
             return returnValue;
+        }
+
+        public void SyncLecturer(string email)
+        {
+            if (_lecturerRepository.Table.Any(x => x.Email == email)) return;
+            var lecturer = new Entities.Lecturer
+            {
+                Email = email,
+                InfoMail = DateTime.Now,
+                WarningMail = DateTime.Now
+            };
+            _lecturerRepository.Insert(lecturer);
         }
     }
 }
