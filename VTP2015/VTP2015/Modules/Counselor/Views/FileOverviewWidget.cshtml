@@ -7,10 +7,10 @@
         </div>
         <div class="form-group col-md-3">
             <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-default active">
+                <label id="rbBlok" class="btn btn-default active" onclick="onBlok()">
                     <input type="radio" id="rBlok" value="Blok"/> <span class="glyphicon glyphicon-th"></span>
                 </label>
-                <label class="btn btn-default">
+                <label id="rbList" class="btn btn-default" onclick="onList()">
                     <input type="radio" id="rLijst" value="Lijst"/> <span class="glyphicon glyphicon-list"></span>
                 </label>
             </div>
@@ -23,9 +23,9 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Prename</th>
+                        <th>Voornaam</th>
                         <th>Familienaam</th>
-                        <th>StatusViewModel</th>
+                        <th>Open requests</th>
                         <th>Acties</th>
                     </tr>
                     </thead>
@@ -35,7 +35,7 @@
                         <tr>
                             <td>@dossier.StudentFirstName</td>
                             <td>@dossier.StudentName</td>
-                            <td>@dossier.AmountOfRequestsOpen%</td>
+                            <td>@dossier.AmountOfRequestsOpen</td>
                             <td>
                                 <a href="#" id="links-list">
                                     <span class="glyphicon glyphicon-list-alt dossierpointer" data-dossierid="@dossier.Id" aria-hidden="true"></span>

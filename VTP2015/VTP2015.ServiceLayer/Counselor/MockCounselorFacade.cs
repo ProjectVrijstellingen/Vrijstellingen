@@ -49,11 +49,51 @@ namespace VTP2015.ServiceLayer.Counselor
                 {
                     AcademicYear = "2015-16",
                     Id = 1,
-                    AmountOfRequestsOpen = 100,
+                    AmountOfRequestsOpen = 3,
                     PercentageOfRequestsOpen = 50,
                     Route = "ssd",
                     StudentFirstName = "Sam",
                     StudentName = "De Creus"
+                },
+                new File
+                {
+                    AcademicYear = "2015-16",
+                    Id = 2,
+                    AmountOfRequestsOpen = 3,
+                    PercentageOfRequestsOpen = 75,
+                    Route = "cccp",
+                    StudentFirstName = "Toon",
+                    StudentName = "Swyzen"
+                },
+                new File
+                {
+                    AcademicYear = "2015-16",
+                    Id = 3,
+                    AmountOfRequestsOpen = 8,
+                    PercentageOfRequestsOpen = 100,
+                    Route = "cccp",
+                    StudentFirstName = "Joachim",
+                    StudentName = "Bockland"
+                },
+                new File
+                {
+                    AcademicYear = "2015-16",
+                    Id = 4,
+                    AmountOfRequestsOpen = 9,
+                    PercentageOfRequestsOpen = 90,
+                    Route = "ssd",
+                    StudentFirstName = "Olivier",
+                    StudentName = "Souri"
+                },
+                new File
+                {
+                    AcademicYear = "2015-16",
+                    Id = 5,
+                    AmountOfRequestsOpen = 3,
+                    PercentageOfRequestsOpen = 50,
+                    Route = "ssd",
+                    StudentFirstName = "Joske",
+                    StudentName = "Vermeulen"
                 },
 
             }.AsQueryable();
