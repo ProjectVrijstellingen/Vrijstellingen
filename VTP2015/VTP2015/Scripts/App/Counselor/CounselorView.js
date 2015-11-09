@@ -1,13 +1,11 @@
-﻿var type = '';
+﻿var type = document.cookie.split('=')[1];
 
 $(document).ready(function () {
     if (document.cookie.indexOf("type") < 0) {
-        alert(document.cookie.indexOf("type"));
         createCookie("type", "blok");
     }
 
     type === "blok" ? showBlok() : showList();
-
 });
 
 function createCookie(name, value) {

@@ -89,8 +89,8 @@ namespace VTP2015.ServiceLayer.Counselor
                 {
                     AcademicYear = "2015-16",
                     Id = 5,
-                    AmountOfRequestsOpen = 3,
-                    PercentageOfRequestsOpen = 50,
+                    AmountOfRequestsOpen = 0,
+                    PercentageOfRequestsOpen = 0,
                     Route = "ssd",
                     StudentFirstName = "Joske",
                     StudentName = "Vermeulen"
