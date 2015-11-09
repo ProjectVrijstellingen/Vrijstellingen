@@ -55,7 +55,7 @@ namespace VTP2015.ServiceLayer.Lecturer
 
             requestPartimInformation.Status = isApproved ? Status.Approved : Status.Rejected;
             _requestPartimInformationRepository.Update(requestPartimInformation);
-
+            
             return true;
         }
     }
