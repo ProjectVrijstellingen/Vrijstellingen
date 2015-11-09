@@ -17,9 +17,11 @@ namespace VTP2015.Helpers
                 var tag = new TagBuilder("div");
                 tag.Attributes.Add("data-moduleid",module.ModuleId.ToString());
 
-                var moduleNameTag = new TagBuilder("h4");
+                var moduleNameTag = new TagBuilder("span");
+                moduleNameTag.AddCssClass("name h4 module");
                 moduleNameTag.SetInnerText(module.Name);
                 tag.InnerHtml += moduleNameTag;
+                tag.InnerHtml += ShowGlyphicon(html, "remove", "btn badge" + (deletable ? "" : " hide"));
 
                 var moduleTag = new TagBuilder("ul");
                 moduleTag.AddCssClass("list-group");

@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using VTP2015.DataAccess.Bamaflex;
 using VTP2015.DataAccess.ServiceRepositories;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
@@ -40,72 +43,78 @@ namespace VTP2015.ServiceLayer.Synchronisation
             var student = _studentRepository
                 .Table.First(x => x.Email == email);
 
-            if (IsStudentEducationFromCurrentAcademicYear(academicYear, student))
+            if (StudentPartimsSynced(academicYear, student))
                 return true;
 
-            var routes = _bamaflexRepository
-                .GetRoutes(student.Education);
+            var education = _bamaflexRepository
+                .GetEducation(student.Education);
 
-            foreach (var route in routes)
+            foreach (var route in education.KeuzeTrajecten)
             {
-                var localRoute = new Route
+                if (!_routeRepository.Table.Any(x => x.Name == route.Naam)) _routeRepository.Insert(new Route
                 {
                     Name = route.Naam,
                     Education = _educationRepository.GetById(student.Education.Id)
-                };
-
-                var supercodes = route
-                    .Modules
-                    .SelectMany(m => m.Partims)
-                    .Select(p => p.Supercode);
-
-                foreach (var supercode in supercodes)
-                {
-                    if (_partimInformationRepository.Table.Any(x => x.SuperCode == supercode))
-                        continue;
-
-                    var partimInformation = _bamaflexRepository
-                        .GetPartimInformationBySupercode(supercode);
-
-                    var partimInfo = new PartimInformation
-                    {
-                        SuperCode = partimInformation.Supercode.Supercode1,
-                        Lecturer = _lectureRepository.Table.First(d => d.Email == "docent@howest.be"),
-                        Partim = _partimRepository
-                            .Table
-                            .First(m => m.Code == partimInformation.Partim.Id)
-                                 ?? new Partim
-                                 {
-                                     Code = partimInformation.Partim.Id,
-                                     Name = partimInformation.Partim.Naam
-                                 },
-                        Module = _moduleRepository
-                            .Table
-                            .First(m => m.Code == partimInformation.Module.Id)
-                                 ?? new Module
-                                 {
-                                     Code = partimInformation.Module.Id,
-                                     Name = partimInformation.Module.Naam
-                                 }
-                    };
-
-                    localRoute.PartimInformation.Add(partimInfo);
-                }
-
-                _routeRepository.Insert(localRoute);
+                });
             }
-
-
+            if (!_routeRepository.Table.Where(x => x.EducationId == student.EducationId).Any(x => x.Name == "ModelRoute"))
+                _routeRepository.Insert(new Route
+                {
+                    Name = "ModelRoute",
+                    Education = _educationRepository.GetById(student.Education.Id)
+                });
+            storePartimInfo(education.Modules.ToList(), student.EducationId, "ModelRoute");
+            foreach (var route in education.KeuzeTrajecten) storePartimInfo(route.Modules.ToList(), student.EducationId, route.Naam);
+            
             return true;
 
         }
 
-        private bool IsStudentEducationFromCurrentAcademicYear(string academicYear, Entities.Student student)
+        private void storePartimInfo(List<OpleidingsProgrammaOnderdeel> modules, int eductationId, string RouteName)
         {
-            var isStudentEducationFromCurrentAcademicYear = _educationRepository
-                .GetById(student.Education.Id)
-                .AcademicYear == academicYear;
-            return isStudentEducationFromCurrentAcademicYear;
+            foreach (var module in modules)
+            {
+                if (!_moduleRepository.Table.Any(x => x.Code == module.Code))
+                    _moduleRepository.Insert(new Module
+                    {
+                        Code = module.Code,
+                        Name = module.Naam
+                    });
+                var moduleClass = _moduleRepository
+                        .Table
+                        .First(m => m.Code == module.Code);
+                foreach (var partim in module.Partims)
+                {
+                    if (!_partimRepository.Table.Any(x => x.Code == partim.Code))
+                        _partimRepository.Insert(new Partim
+                        {
+                            Code = partim.Code,
+                            Name = partim.Naam
+                        });
+                    var partimClass = _partimRepository
+                        .Table
+                        .First(m => m.Code == partim.Code);
+
+                    if (!_partimInformationRepository.Table.Any(x => x.SuperCode == partim.Supercode))
+                    {
+                        var partimInfo = new PartimInformation
+                        {
+                            SuperCode = partim.Supercode,
+                            Lecturer = _lectureRepository.Table.First(d => d.Email == "docent@howest.be"),
+                            Partim = partimClass,
+                            Module = moduleClass,
+                            Route = _routeRepository.Table.Where(x => x.EducationId == eductationId).First(x => x.Name == RouteName)
+                        };
+                        _partimInformationRepository.Insert(partimInfo);
+                    }
+                }
+            }
+        }
+
+        private bool StudentPartimsSynced(string academicYear, Entities.Student student)
+        {
+            return _educationRepository.GetById(student.Education.Id)
+                .AcademicYear == academicYear; ;
         }
 
         private bool StudentHasFilesInAcademicYear(string email, string academicYear)

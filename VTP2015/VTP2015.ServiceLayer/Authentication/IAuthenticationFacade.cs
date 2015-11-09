@@ -9,5 +9,6 @@ namespace VTP2015.ServiceLayer.Authentication
         bool IsCounselor(string email);
         bool AuthenticateUserByEmail(string email, string password);
         void SyncStudentByUser(string email);
+        void SyncLecturer(string email);
     }
 }

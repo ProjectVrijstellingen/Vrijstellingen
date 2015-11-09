@@ -40,6 +40,7 @@ namespace VTP2015
             bundles.Add(new ScriptBundle("~/bundles/counselor").Include(
                 "~/Scripts/App/Counselor/DocentBewijsViewScript.js",
                 "~/Scripts/App/Counselor/DossierScherm.js",
+                "~/Scripts/App/Counselor/CounselorView.js",
                 "~/Scripts/App/Counselor/script.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/lecturer").Include(

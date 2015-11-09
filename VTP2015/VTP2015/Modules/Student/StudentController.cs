@@ -160,7 +160,7 @@ namespace VTP2015.Modules.Student
         [HttpGet]
         public PartialViewResult RequestDetailWidget(int dossierId)
         {
-            var models = _studentFacade.GetRequestsByFileId(dossierId)
+            var models = _studentFacade.GetRequestByFileId(dossierId)
                 .Project().To<RequestDetailViewModel>();
 
             return PartialView(models.ToArray());
