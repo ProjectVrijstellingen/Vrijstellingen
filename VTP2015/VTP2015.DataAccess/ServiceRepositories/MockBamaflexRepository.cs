@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using VTP2015.DataAccess.Bamaflex;
 using VTP2015.Entities;
 
@@ -15,7 +16,7 @@ namespace VTP2015.DataAccess.ServiceRepositories
             };
         }
 
-        public ICollection<OpleidingsProgramma> GetRoutes(Education education)
+        public ICollection<OpleidingsProgramma> GetEducation(Education education)
         {
             return new List<OpleidingsProgramma>
             {
@@ -49,6 +50,11 @@ namespace VTP2015.DataAccess.ServiceRepositories
             {
                 new Opleiding { Code = "", Naam = "" }
             };
+        }
+
+        OpleidingsProgramma IBamaflexRepository.GetEducation(Education education)
+        {
+            throw new NotImplementedException();
         }
     }
 }

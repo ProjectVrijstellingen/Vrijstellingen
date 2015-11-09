@@ -16,9 +16,9 @@ namespace VTP2015.DataAccess.ServiceRepositories
                 .Opleidingen[0];
         }
 
-        public ICollection<OpleidingsProgramma> GetRoutes(Education education)
+        public OpleidingsProgramma GetEducation(Education education)
         {
-            return _bamaflexService.GetOpleidingsprogrammaByOpleidingscode(education.Code).KeuzeTrajecten;
+            return _bamaflexService.GetOpleidingsprogrammaByOpleidingscode(education.Code);
         }
 
         public PartimInformatie GetPartimInformationBySupercode(string supercode)
