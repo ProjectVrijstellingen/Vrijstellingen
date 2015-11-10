@@ -50,7 +50,7 @@
                 </table>
             </div>
             <div id="blok">
-                @foreach (var dossier in Model)
+                @foreach (var dossier in Model.OrderBy(m => m.PercentageOfRequestsOpen))
                 {
                     <div class="col-md-2 dossier" data-name="@dossier.StudentName" data-prename="@dossier.StudentFirstName">
                         @{
