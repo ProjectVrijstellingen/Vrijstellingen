@@ -35,7 +35,7 @@
 }
 
 .panel-groen {
-    background-color: #149c82;
+    background-color: #18bc9c;
 }
 
 .panel-blauw {
@@ -140,4 +140,16 @@ fieldset[disabled] .btn-default.active {
 
 .hidden {
     display: none;
+}
+
+.progress {
+    margin-bottom: 0 !important;
+}
+
+.progress-bar {
+    border-radius: 4px;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
 }

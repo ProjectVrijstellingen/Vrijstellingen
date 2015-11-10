@@ -83,7 +83,7 @@ namespace VTP2015.ServiceLayer.Counselor
                     PercentageOfRequestsOpen = 90,
                     Route = "ssd",
                     StudentFirstName = "Olivier",
-                    StudentName = "Souri"
+                    StudentName = "Sourie"
                 },
                 new File
                 {
