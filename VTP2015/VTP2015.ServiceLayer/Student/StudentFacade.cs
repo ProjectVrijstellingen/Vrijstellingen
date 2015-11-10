@@ -96,14 +96,14 @@ namespace VTP2015.ServiceLayer.Student
         {
             return _fileRepository
                 .Table.Where(f => f.Student.Email == email)
-                .Project().To<Models.File>();
+                .ProjectTo<Models.File>();
         }
 
         public IQueryable<Models.Evidence> GetEvidenceByStudentEmail(string email)
         {
             return _evidenceRepository.Table
                 .Where(e => e.Student.Email == email)
-                .Project().To<Models.Evidence>();
+                .ProjectTo<Models.Evidence>();
         }
 
         public bool IsFileFromStudent(string email, int fileId)
@@ -123,7 +123,7 @@ namespace VTP2015.ServiceLayer.Student
             switch (partimMode)
             { 
                 case PartimMode.Requested:
-                    return requestedPartims.Project().To<Models.PartimInformation>();
+                    return requestedPartims.ProjectTo<Models.PartimInformation>();
                 case PartimMode.Available:
                     return
                         _studentRepository.Table.Where(s => s.Email == email)
@@ -131,8 +131,7 @@ namespace VTP2015.ServiceLayer.Student
                             .SelectMany(e => e.Routes)
                             .SelectMany(r => r.PartimInformation)
                             .Except(requestedPartims)
-                            .Project()
-                            .To<Models.PartimInformation>();
+                            .ProjectTo<Models.PartimInformation>();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(partimMode), partimMode, null);
             }

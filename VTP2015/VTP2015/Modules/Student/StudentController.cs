@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.Web.Mvc;
 using VTP2015.Config;
@@ -85,7 +84,7 @@ namespace VTP2015.Modules.Student
         public PartialViewResult FileWidget()
         {
             var models = _studentFacade.GetFilesByStudentEmail(User.Identity.Name)
-                .Project().To<FileListViewModel>();
+                .ProjectTo<FileListViewModel>();
 
             return PartialView(models.ToArray());
         }
@@ -95,7 +94,7 @@ namespace VTP2015.Modules.Student
         public PartialViewResult EvidenceListWidget()
         {
             var models = _studentFacade.GetEvidenceByStudentEmail(User.Identity.Name)
-                .Project().To<EvidenceListViewModel>();
+                .ProjectTo<EvidenceListViewModel>();
 
             return PartialView(models.ToArray());
         }
@@ -128,7 +127,7 @@ namespace VTP2015.Modules.Student
                 return RedirectToAction("Index");
 
             var models = _studentFacade.GetPartims(User.Identity.Name, dossierId, PartimMode.Requested)
-                .Project().To<PartimViewModel>();
+                .ProjectTo<PartimViewModel>();
 
             return PartialView(models.ToArray());
         }
@@ -141,7 +140,7 @@ namespace VTP2015.Modules.Student
                 return RedirectToAction("Index");
 
             var models = _studentFacade.GetPartims(User.Identity.Name, dossierId, PartimMode.Available)
-                .Project().To<PartimViewModel>();
+                .ProjectTo<PartimViewModel>();
 
             return PartialView(models.ToArray());
         }
@@ -151,7 +150,7 @@ namespace VTP2015.Modules.Student
         public PartialViewResult SelectEvidenceWidget()
         {
             var models = _studentFacade.GetEvidenceByStudentEmail(User.Identity.Name)
-                .Project().To<EvidenceListViewModel>();
+                .ProjectTo<EvidenceListViewModel>();
 
             return PartialView(models.ToArray());
         }
@@ -161,7 +160,7 @@ namespace VTP2015.Modules.Student
         public PartialViewResult RequestDetailWidget(int dossierId)
         {
             var models = _studentFacade.GetRequestByFileId(dossierId)
-                .Project().To<RequestDetailViewModel>();
+                .ProjectTo<RequestDetailViewModel>();
 
             return PartialView(models.ToArray());
         }
@@ -191,7 +190,7 @@ namespace VTP2015.Modules.Student
             return this.RedirectToAction(c => c.File(newId));
         }
 
-        [Route("AddAanvraag"]
+        [Route("AddAanvraag")]
         [HttpPost]
         public ActionResult AddAanvraag(AddRequestViewModel viewModel)
         {
