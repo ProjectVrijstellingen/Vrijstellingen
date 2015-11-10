@@ -323,7 +323,9 @@
     </None>
     <Content Include="Icon.png" />
     <Content Include="Scripts\App\Admin\adminPanel.js" />
+    <Content Include="Scripts\App\Counselor\CounselorSelect.js" />
     <Content Include="Scripts\App\Counselor\CounselorView.js" />
+    <Content Include="Scripts\App\Counselor\CustomCheckBox.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\App\Lecturer\DocentBewijsViewScript.js" />
