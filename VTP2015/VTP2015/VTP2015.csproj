@@ -196,6 +196,7 @@
     <Compile Include="Modules\Student\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Modules\Student\StudentController.cs" />
     <Compile Include="Modules\Student\ViewModels\RequestPartimInformationViewModel.cs" />
+    <Compile Include="Modules\Student\ViewModels\AddRequestViewModel.cs" />
     <Compile Include="Validation\DayMonthValidation.cs" />
     <Compile Include="Validation\FileValidation.cs" />
     <Compile Include="Global.asax.cs">
@@ -319,6 +320,7 @@
     </None>
     <Content Include="Icon.png" />
     <Content Include="Scripts\App\Admin\adminPanel.js" />
+    <Content Include="Scripts\App\Counselor\CounselorView.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\App\Lecturer\DocentBewijsViewScript.js" />

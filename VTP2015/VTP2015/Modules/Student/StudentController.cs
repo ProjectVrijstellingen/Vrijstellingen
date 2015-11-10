@@ -191,6 +191,13 @@ namespace VTP2015.Modules.Student
             return this.RedirectToAction(c => c.File(newId));
         }
 
+        [Route("AddAanvraag"]
+        [HttpPost]
+        public ActionResult AddAanvraag(AddRequestViewModel viewModel)
+        {
+            return Content("");
+        }
+
         [Route("SaveAanvraag")]
         [HttpPost]
         public ActionResult SaveAanvraag(RequestViewModel viewModel)
@@ -211,22 +218,6 @@ namespace VTP2015.Modules.Student
             };
 
             return Content(!_studentFacade.SyncRequestInFile(request) ? "Don't cheat!" : "Saved!");
-
-            //if (!_mailRepository.EmailExists(aanvraag.PartimInformation.Lecturer.Email))
-            //{
-            //    _mailRepository.AddDocent(aanvraag.PartimInformation.Lecturer.Email);
-            //}
-            //System.TimeSpan passedTimeSinceLastEmail = System.DateTime.Now.Subtract(_mailRepository.GetByEmail(aanvraag.PartimInformation.Lecturer.Email).WarningMail);
-            //if (_configFile.WarningMailTimeIsAllowed(passedTimeSinceLastEmail))
-            //{
-            //    string bodyText = "Geachte \r \r Een nieuwe aanvraag betreffende " +
-            //        aanvraag.PartimInformation.Lecturer.Email + " vereist uw goedkeuring. Verder heeft u nog steeds " +
-            //        _studentFacade.GetUntreadedRequests(aanvraag.PartimInformation.Lecturer.Email).Count() + " openstaande aanvragen." +
-            //        " U kunt deze aanvragen keuren op het online webplatform" +
-            //        "\r \r (Deze mail werd verstuurd vanop het webplatform op vraag van de betreffende trajectbegeleider, antwoorden op dit emailadres worden niet gelezen.)";
-
-            //    _mailHelper.sendEmail(User.Identity.Name, aanvraag.PartimInformation.Lecturer.Email, bodyText);
-            //}
         }
 
         [Route("Delete")]
