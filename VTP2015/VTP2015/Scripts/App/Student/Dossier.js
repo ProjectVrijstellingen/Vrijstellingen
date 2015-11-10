@@ -137,6 +137,8 @@ $(document).on("click", ".partim", function () {
         }
         if (!$(beschikbarePartims).hasClass("hide")) toSecondView();
     }
+    $('[data-toggle="tooltip"]').tooltip();
+    
 });
 
 $(document).on("click", ".module", function () {
@@ -246,8 +248,9 @@ $(document).on("click", ".glyphicon-remove", function (e) {
 
 $(document).ready(function () {
     $("bewijzenColumn").addClass("hide");
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
-$(document).on("ready", '[data-toggle="tooltip"]', function () {
-    $(this).tooltip();
-});
+//$(document).on("hover", '[data-toggle="tooltip"]', function () {
+//    $(this).tooltip();
+//});
