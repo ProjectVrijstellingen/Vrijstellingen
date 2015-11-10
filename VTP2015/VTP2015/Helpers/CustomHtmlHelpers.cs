@@ -49,29 +49,24 @@ namespace VTP2015.Helpers
             return new MvcHtmlString(htmlString);
         }
 
-        public static MvcHtmlString ShowBewijzenList(this HtmlHelper html, EvidenceListViewModel[] bewijzen, bool draggable)
+        public static MvcHtmlString ShowBewijzenList(this HtmlHelper html, EvidenceListViewModel[] bewijzen, bool moveable)
         {
             var tag = new TagBuilder("ul");
             tag.AddCssClass("list-group");
-            tag.Attributes.Add("id", draggable ? "draggableList" : "bewijzenList");
+            tag.Attributes.Add("id", moveable ? "draggableList" : "bewijzenList");
             foreach (var bewijs in bewijzen)
             {
-                tag.InnerHtml += ShowBewijsLi(html, bewijs,draggable);
+                tag.InnerHtml += ShowBewijsLi(html, bewijs,moveable);
             }
             return new MvcHtmlString(tag.ToString());
         }
 
-        public static MvcHtmlString ShowBewijsLi(this HtmlHelper html, EvidenceListViewModel evidence, bool draggable)
+        public static MvcHtmlString ShowBewijsLi(this HtmlHelper html, EvidenceListViewModel evidence, bool movable)
         {
             var itemTag = new TagBuilder("li");
             itemTag.AddCssClass("list-group-item");
             itemTag.Attributes.Add("data-bewijsid", evidence.Id.ToString());
-            if (draggable)
-            {
-                itemTag.Attributes.Add("id", "evidence-" + evidence.Id);
-                itemTag.Attributes.Add("draggable", "true");
-                itemTag.Attributes.Add("ondragstart", "drag(event)");
-            }
+            if (movable) itemTag.Attributes.Add("id", "evidence-" + evidence.Id);
             itemTag.InnerHtml += ShowGlyphicon(html, "file");
             var descriptionTag = new TagBuilder("span");
             descriptionTag.AddCssClass("glyphicon-class");
@@ -82,8 +77,8 @@ namespace VTP2015.Helpers
             }
             descriptionTag.SetInnerText(TextLimiter(evidence.Path,20) + " - " + evidence.Description);
             itemTag.InnerHtml += descriptionTag;
-            itemTag.InnerHtml += ShowGlyphicon(html, "minus","btn badge" + (draggable? " hide":""));
-            if (draggable) itemTag.InnerHtml += ShowGlyphicon(html, "plus","btn badge");
+            itemTag.InnerHtml += ShowGlyphicon(html, "minus","btn badge" + (movable? " hide":""));
+            if (movable) itemTag.InnerHtml += ShowGlyphicon(html, "plus","btn badge");
             return new MvcHtmlString(itemTag.ToString());
         }
 
