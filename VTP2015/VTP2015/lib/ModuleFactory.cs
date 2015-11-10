@@ -25,17 +25,17 @@ namespace VTP2015.lib
 
         private void AddPartim(PartimViewModel viewModel)
         {
-            var module = new Module { ModuleId = Convert.ToInt32(viewModel.ModuleId), Name = viewModel.ModuleName };
+            var module = new Module { Code = viewModel.Code, Name = viewModel.ModuleName };
             var partim = new Partim { Name = viewModel.PartimName, SuperCode = viewModel.SuperCode};
 
-            if (Modules.All(m => m.ModuleId != module.ModuleId))
+            if (Modules.All(m => m.Code != module.Code))
             {
                 module.Partims.Add(partim);
                 Modules.Add(module);
             }
             else
             {
-                Modules.First(m => m.ModuleId == module.ModuleId).Partims.Add(partim);
+                Modules.First(m => m.Code == module.Code).Partims.Add(partim);
             }
         }
         

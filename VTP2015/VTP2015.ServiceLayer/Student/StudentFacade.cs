@@ -24,7 +24,8 @@ namespace VTP2015.ServiceLayer.Student
         private readonly Repository<Route> _routeRepository;
         private readonly Repository<Entities.Lecturer> _lectureRepository;
         private readonly Repository<Partim> _partimRepository;
-        private readonly Repository<Module> _moduleRepository; 
+        private readonly Repository<Module> _moduleRepository;
+        private readonly Repository<RequestPartimInformation> _requestPartimInformationRepository; 
 
         public StudentFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository)
         {
@@ -40,6 +41,7 @@ namespace VTP2015.ServiceLayer.Student
             _lectureRepository = unitOfWork.Repository<Entities.Lecturer>();
             _partimRepository = unitOfWork.Repository<Partim>();
             _moduleRepository = unitOfWork.Repository<Module>();
+            _requestPartimInformationRepository = unitOfWork.Repository<RequestPartimInformation>();
 
             var automapperConfig = new AutoMapperConfig();
             automapperConfig.Execute();
@@ -51,13 +53,13 @@ namespace VTP2015.ServiceLayer.Student
                 .First(user => user.Email == email).Code;
         }
 
-        public void InsertEvidence(Models.Evidence evidence)
+        public void InsertEvidence(Models.Evidence evidence, string studentMail)
         {
             var entity = new Evidence
             {
                 Description = evidence.Description,
                 Path = evidence.Path,
-                Student = _studentRepository.Table.First(s => s.Email == evidence.StudentMail)
+                Student = _studentRepository.Table.First(s => s.Email == studentMail)
             };
             _evidenceRepository.Insert(entity);
         }
@@ -96,14 +98,14 @@ namespace VTP2015.ServiceLayer.Student
         {
             return _fileRepository
                 .Table.Where(f => f.Student.Email == email)
-                .Project().To<Models.File>();
+                .ProjectTo<Models.File>();
         }
 
         public IQueryable<Models.Evidence> GetEvidenceByStudentEmail(string email)
         {
             return _evidenceRepository.Table
                 .Where(e => e.Student.Email == email)
-                .Project().To<Models.Evidence>();
+                .ProjectTo<Models.Evidence>();
         }
 
         public bool IsFileFromStudent(string email, int fileId)
@@ -123,7 +125,7 @@ namespace VTP2015.ServiceLayer.Student
             switch (partimMode)
             { 
                 case PartimMode.Requested:
-                    return requestedPartims.Project().To<Models.PartimInformation>();
+                    return requestedPartims.ProjectTo<Models.PartimInformation>();
                 case PartimMode.Available:
                     return
                         _studentRepository.Table.Where(s => s.Email == email)
@@ -131,8 +133,7 @@ namespace VTP2015.ServiceLayer.Student
                             .SelectMany(e => e.Routes)
                             .SelectMany(r => r.PartimInformation)
                             .Except(requestedPartims)
-                            .Project()
-                            .To<Models.PartimInformation>();
+                            .ProjectTo<Models.PartimInformation>();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(partimMode), partimMode, null);
             }
@@ -144,18 +145,21 @@ namespace VTP2015.ServiceLayer.Student
                 .Where(request => request.FileId == fileId)
                 .Select(request => new Models.Request
                 {
-                    RequestId = request.Id,
-                    Argumentation = request.Argumentation,
                     FileId = request.FileId,
-                    LastChanged = request.LastChanged,
-                    PartimInformationIds = request.RequestPartimInformations.Select(x => x.PartimInformationId).AsQueryable(),
-                    Evidence = request.Evidence.Select(evidence => new Models.Evidence
-                    {
-                        Description = evidence.Description,
-                        Id = evidence.Id,
-                        Path = evidence.Path,
-                        StudentMail = evidence.Student.Email
-                    }).AsQueryable()
+                    Id = request.Id,
+                    ModuleName = request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Name,
+                    PartimName =
+                        request.RequestPartimInformations.Count > 1
+                            ? ""
+                            : request.RequestPartimInformations.FirstOrDefault().PartimInformation.Partim.Name,
+                    Code =
+                        request.RequestPartimInformations.Count > 1
+                            ? request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Code
+                            : request.RequestPartimInformations.FirstOrDefault().PartimInformation.SuperCode,
+                    Argumentation = request.Argumentation,
+                    Evidence =
+                        request.Evidence.Select(
+                            x => new Models.Evidence {Id = x.Id, Description = x.Description, Path = x.Path}).AsQueryable()
                 });
         }
 
@@ -197,47 +201,58 @@ namespace VTP2015.ServiceLayer.Student
             return entity.Id;
         }
 
-        public bool SyncRequestInFile(Models.Request request)
+        public string AddRequestInFile(int fileId, string code)
         {
-            //Todo:hermaken
-            //if (
-            //    _requestRepository.Table.Any(
-            //        x => x.FileId == request.FileId && x.SuperCode == request.PartimInformation.SuperCode))
-            //{
-            //    var bestaandeAanvraag = _requestRepository.Table.First(
-            //        x => x.FileId == request.FileId && x.SuperCode == request.PartimInformation.SuperCode);
+            if (!_fileRepository.Table.Any(d => d.Id == fileId)) return "";
+            var newRequest = new Request{LastChanged = DateTime.Now};
+            _fileRepository.GetById(fileId).Requests.Add(newRequest);
+            newRequest.Name = "request " + newRequest.Id;
 
-            //    bestaandeAanvraag.LastChanged = request.LastChanged;
-            //    bestaandeAanvraag.Argumentation = request.Argumentation;
+            int fakeint;
+            if (int.TryParse(code.Substring(0,1),out fakeint))
+            {
+                _requestPartimInformationRepository.Insert(new RequestPartimInformation
+                {
+                    Status = Status.Untreated,
+                    PartimInformation = _partimInformationRepository.Table.First(x => x.SuperCode == code),
+                    Request = newRequest
+                });
+            }
+            else
+            {
+                _partimInformationRepository.Table.Where(x => x.Module.Code == code).ToList()
+                    .ForEach(partimInfo => _requestPartimInformationRepository.Insert(new RequestPartimInformation
+                    {
+                        Status = Status.Untreated,
+                        PartimInformation = partimInfo,
+                        Request = newRequest
+                    }));
+            }
+            return newRequest.Id.ToString();
+        }
 
-            //    var verwijderdeBewijzen = bestaandeAanvraag.Evidence.Except(request.Evidence).ToList();
-            //    var toegevoegdeBewijzen = request.Evidence.Except(bestaandeAanvraag.Evidence).ToList();
+        public bool SyncRequestInFile(Models.Request requestModel)
+        {
+            var request = _requestRepository.GetById(requestModel.Id);
+            request.Argumentation = requestModel.Argumentation;
+            request.LastChanged = DateTime.Now;
+            if (requestModel.Evidence != null)
+            {
+                var evidence = requestModel.Evidence.Select(e => _evidenceRepository.GetById(e.Id))
+                    .Where(e => e.Student.Files.Last().Id == requestModel.FileId);
 
-            //    verwijderdeBewijzen.ForEach(b => bestaandeAanvraag.Evidence.Remove(b));
-
-            //    foreach (var b in toegevoegdeBewijzen)
-            //    {
-            //        if (_db.Context.Entry(b).State == EntityState.Detached)
-            //        {
-            //            _db.Context.Evidence.Attach(b);
-            //        }
-            //        bestaandeAanvraag.Evidence.Add(b);
-            //    }
-            //    _genericRepository.Update(bestaandeAanvraag);
-            //}
-            //else
-            //{
-            //    _genericRepository.Insert(request);
-            //}
+                request.Evidence.Except(evidence).ToList().ForEach(e => request.Evidence.Remove(e));
+                evidence.Except(request.Evidence).ToList().ForEach(e => request.Evidence.Add(e));
+            }
             return true;
         }
 
         public bool DeleteRequest(int fileId, int requestId)
         {
-            if (!_requestRepository.Table.Any(d => d.Id == fileId && d.Id == requestId))
+            if (!_requestRepository.Table.Any(d => d.FileId == fileId && d.Id == requestId))
                 return false;
 
-            var request = _requestRepository.Table.First(d => d.Id == fileId && d.Id == requestId);
+            var request = _requestRepository.GetById(requestId);
             _requestRepository.Delete(request);
 
             return true;

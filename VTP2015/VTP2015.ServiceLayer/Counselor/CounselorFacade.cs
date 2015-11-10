@@ -28,7 +28,7 @@ namespace VTP2015.ServiceLayer.Counselor
         public IQueryable<Models.RequestPartimInformation> GetRequests()
         {
             return _requestRepository.Table
-                .Project().To<Models.RequestPartimInformation>();
+                .ProjectTo<Models.RequestPartimInformation>();
         }
 
         public string GetEducationNameByCounselorEmail(string email)
@@ -41,7 +41,7 @@ namespace VTP2015.ServiceLayer.Counselor
         public IQueryable<Models.Education> GetEducations()
         {
             return _educationRepository.Table
-                .Project().To<Models.Education>();
+                .ProjectTo<Models.Education>();
         }
 
         public void ChangeEducation(string email, string educationName)
@@ -64,7 +64,7 @@ namespace VTP2015.ServiceLayer.Counselor
 
             return _fileRepository.Table.Where(
                 d => d.Requests.Count > 0 && d.AcademicYear == academicYear && d.Education.Id == education.Id)
-                .Project().To<Models.File>();
+                .ProjectTo<Models.File>();
         }
 
         public void SendReminder(int aanvraagId)

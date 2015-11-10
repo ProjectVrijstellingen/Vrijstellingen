@@ -63,14 +63,14 @@ namespace VTP2015.ServiceLayer.Synchronisation
                     Name = "ModelRoute",
                     Education = _educationRepository.GetById(student.Education.Id)
                 });
-            storePartimInfo(education.Modules.ToList(), student.EducationId, "ModelRoute");
-            foreach (var route in education.KeuzeTrajecten) storePartimInfo(route.Modules.ToList(), student.EducationId, route.Naam);
+            StorePartimInfo(education.Modules.ToList(), student.EducationId, "ModelRoute");
+            foreach (var route in education.KeuzeTrajecten) StorePartimInfo(route.Modules.ToList(), student.EducationId, route.Naam);
             
             return true;
 
         }
 
-        private void storePartimInfo(List<OpleidingsProgrammaOnderdeel> modules, int eductationId, string RouteName)
+        private void StorePartimInfo(List<OpleidingsProgrammaOnderdeel> modules, int eductationId, string RouteName)
         {
             foreach (var module in modules)
             {

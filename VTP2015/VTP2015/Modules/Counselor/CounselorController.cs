@@ -37,7 +37,7 @@ namespace VTP2015.Modules.Counselor
             {
                 SelectedOpleiding = _counselorFacade.GetEducationNameByCounselorEmail(User.Identity.Name),
                 Opleidingen = _counselorFacade.GetEducations()
-                    .Project().To<EducationViewModel>()
+                    .ProjectTo<EducationViewModel>()
             };
 
             return PartialView(viewModel);
@@ -56,7 +56,7 @@ namespace VTP2015.Modules.Counselor
         public PartialViewResult FileOverviewWidget()
         {
             var models = _counselorFacade.GetFileByCounselorEmail(User.Identity.Name, _configFile.AcademieJaar())
-                .Project().To<FileOverviewViewModel>();
+                .ProjectTo<FileOverviewViewModel>();
 
             return PartialView(models);
 
@@ -67,7 +67,7 @@ namespace VTP2015.Modules.Counselor
         public PartialViewResult RequestDetailWidget()
         {
             var models = _counselorFacade.GetRequests()
-                .Project().To<RequestDetailViewModel>();
+                .ProjectTo<RequestDetailViewModel>();
 
             return PartialView(models);
         }

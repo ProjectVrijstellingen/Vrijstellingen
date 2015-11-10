@@ -9,7 +9,7 @@
                 <li class="list-group-item">
                     @if (file.Editable)
                     {
-                        @Html.RouteLink(file.Description, new { controller = "Student", action = "File", dossierId = file.Id })
+                        @Html.RouteLink(file.Description, new { controller = "Student", action = "File", fileId = file.Id })
                     }
                     else
                     {

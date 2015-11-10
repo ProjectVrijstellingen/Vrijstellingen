@@ -10,7 +10,7 @@ namespace VTP2015.ServiceLayer.Student
     public interface IStudentFacade
     {
         string GetStudentCodeByEmail(string email);
-        void InsertEvidence(Evidence evidence);
+        void InsertEvidence(Evidence evidence, string studentMail);
         bool IsEvidenceFromStudent(string email);
         bool IsRequestFromStudent(int fileId, int requestId, string email);
         bool DeleteEvidence(int evidenceId, string mapPath);
@@ -26,5 +26,6 @@ namespace VTP2015.ServiceLayer.Student
         bool SyncRequestInFile(Request request);
         bool DeleteRequest(int fileId, int requestId);
         Education GetEducation(string studentMail);
+        string AddRequestInFile(int fileId, string code);
     }
 }
