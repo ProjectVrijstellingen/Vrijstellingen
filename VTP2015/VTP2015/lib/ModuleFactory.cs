@@ -25,7 +25,7 @@ namespace VTP2015.lib
 
         private void AddPartim(PartimViewModel viewModel)
         {
-            var module = new Module { Code = viewModel.Code, Name = viewModel.ModuleName };
+            var module = new Module { Code = viewModel.Code, Name = viewModel.ModuleName, TotalCount = viewModel.TotalCount};
             var partim = new Partim { Name = viewModel.PartimName, SuperCode = viewModel.SuperCode};
 
             if (Modules.All(m => m.Code != module.Code))

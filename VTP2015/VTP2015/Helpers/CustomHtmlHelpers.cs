@@ -14,17 +14,18 @@ namespace VTP2015.Helpers
 
             foreach (var module in modules)
             {
+                var count = module.Partims.Count;
                 var tag = new TagBuilder("div");
                 tag.Attributes.Add("data-moduleid",module.Code);
 
                 var moduleNameTag = new TagBuilder("span");
-                moduleNameTag.AddCssClass("name h4 module");
+                moduleNameTag.AddCssClass("name h4" + (count == module.TotalCount && deletable ? " module" : ""));
                 moduleNameTag.SetInnerText(module.Name);
                 tag.InnerHtml += moduleNameTag;
-                tag.InnerHtml += ShowGlyphicon(html, "remove", "btn badge" + (deletable ? "" : " hide"));
+                tag.InnerHtml += ShowGlyphicon(html, "remove", "btn badge" + (count == module.TotalCount && deletable ? "" : " hide"));
 
                 var moduleTag = new TagBuilder("ul");
-                moduleTag.AddCssClass("list-group");
+                moduleTag.AddCssClass("list-group" + (count == module.TotalCount && deletable ? " hide" : ""));
                 foreach (var partim in module.Partims)
                 {
                     var partimTag = new TagBuilder("li");

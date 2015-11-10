@@ -15,6 +15,6 @@ namespace VTP2015.lib
         }
 
         public string Name { get; set; }
-
+        public int TotalCount { get; set; }
     }
 }
