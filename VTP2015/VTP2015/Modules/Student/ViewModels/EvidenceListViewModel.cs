@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Path { get; set; }
-        public string Omschrijving { get; set; }
+        public string Description { get; set; }
 
     }
 }

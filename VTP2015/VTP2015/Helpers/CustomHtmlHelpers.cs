@@ -80,7 +80,7 @@ namespace VTP2015.Helpers
                 descriptionTag.MergeAttribute("data-toggle", "tooltip");
                 descriptionTag.MergeAttribute("title", evidence.Path);
             }
-            descriptionTag.SetInnerText(TextLimiter(evidence.Path,20) + " - " + evidence.Omschrijving);
+            descriptionTag.SetInnerText(TextLimiter(evidence.Path,20) + " - " + evidence.Description);
             itemTag.InnerHtml += descriptionTag;
             itemTag.InnerHtml += ShowGlyphicon(html, "minus","btn badge" + (draggable? " hide":""));
             if (draggable) itemTag.InnerHtml += ShowGlyphicon(html, "plus","btn badge");
