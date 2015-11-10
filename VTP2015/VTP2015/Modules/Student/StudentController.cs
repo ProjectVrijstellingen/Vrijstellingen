@@ -191,7 +191,7 @@ namespace VTP2015.Modules.Student
             return this.RedirectToAction(c => c.File(newId));
         }
 
-        [Route("AddAanvraag"]
+        [Route("AddAanvraag")]
         [HttpPost]
         public ActionResult AddAanvraag(AddRequestViewModel viewModel)
         {
