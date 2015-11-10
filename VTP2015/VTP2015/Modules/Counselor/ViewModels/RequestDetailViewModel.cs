@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using VTP2015.Entities;
 
 namespace VTP2015.Modules.Counselor.ViewModels
 {

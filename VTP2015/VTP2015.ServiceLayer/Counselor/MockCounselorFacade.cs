@@ -7,11 +7,11 @@ namespace VTP2015.ServiceLayer.Counselor
 {
     public class MockCounselorFacade : ICounselorFacade
     {
-        public IQueryable<RequestPartimInformation> GetRequests()
+        public IQueryable<Request> GetRequests()
         {
-            return new List<RequestPartimInformation>
+            return new List<Request>
             {
-                new RequestPartimInformation
+                new Request
                 {
                     Argumentation = "argumentation",
                     Status = Status.Untreated,
@@ -83,7 +83,7 @@ namespace VTP2015.ServiceLayer.Counselor
                     PercentageOfRequestsOpen = 90,
                     Route = "ssd",
                     StudentFirstName = "Olivier",
-                    StudentName = "Souri"
+                    StudentName = "Sourie"
                 },
                 new File
                 {

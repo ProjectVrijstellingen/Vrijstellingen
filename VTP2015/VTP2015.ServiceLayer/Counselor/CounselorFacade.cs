@@ -4,6 +4,7 @@ using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
 using VTP2015.ServiceLayer.Counselor.Mappings;
+using Status = VTP2015.ServiceLayer.Counselor.Models.Status;
 
 namespace VTP2015.ServiceLayer.Counselor
 {
@@ -13,6 +14,7 @@ namespace VTP2015.ServiceLayer.Counselor
         private readonly Repository<Education> _educationRepository;
         private readonly Repository<Entities.Counselor> _counselorRepository;
         private readonly Repository<File> _fileRepository;
+        private readonly Repository<RequestPartimInformation> _requestPartimInformationRepository; 
 
         public CounselorFacade(IUnitOfWork unitOfWork)
         {
@@ -20,15 +22,32 @@ namespace VTP2015.ServiceLayer.Counselor
             _educationRepository = unitOfWork.Repository<Education>();
             _counselorRepository = unitOfWork.Repository<Entities.Counselor>();
             _fileRepository = unitOfWork.Repository<File>();
+            _requestPartimInformationRepository = unitOfWork.Repository<RequestPartimInformation>();
 
             var autoMapperConfig = new AutoMapperConfig();
             autoMapperConfig.Execute();
         }
 
-        public IQueryable<Models.RequestPartimInformation> GetRequests()
+        public IQueryable<Models.Request> GetRequests()
         {
-            return _requestRepository.Table
-                .ProjectTo<Models.RequestPartimInformation>();
+            return _requestPartimInformationRepository.Table
+                .Select(requestPartimInformation => new Models.Request
+                {
+                    Argumentation = requestPartimInformation.Request.Argumentation,
+                    FileId = requestPartimInformation.Request.FileId,
+                    Evidence = requestPartimInformation.Request.Evidence
+                        .Select(e => new Models.Evidence
+                        {
+                            Description = e.Description,
+                            EvidenceId = e.Id,
+                            Path = e.Path,
+                            StudentEmail = e.Student.Email
+                        }).AsQueryable(),
+                    ModuleName = requestPartimInformation.PartimInformation.Module.Name,
+                    PartimName = requestPartimInformation.PartimInformation.Partim.Name,
+                    RequestId = requestPartimInformation.RequestId,
+                    Status = (Status) requestPartimInformation.Status
+                });
         }
 
         public string GetEducationNameByCounselorEmail(string email)

@@ -114,17 +114,29 @@ $(document).ready(function () {
 });
 
 function hideRequestList() {
-    if ($(".aanvraag").hasClass("hide"))
-        $(".aanvraag").removeClass("hide");
+    if ($(".col-md-8").hasClass("hide"))
+    {
+        $(".col-md-8").removeClass("hide");
+        $(".hideRequest").val("Hide requests")
+    }
     else
-        $(".aanvraag").addClass("hide");
+    {
+        $(".col-md-8").addClass("hide");
+        $(".hideRequest").val("Show requests")
+    }
 }
 
 function hideStudentList() {
-    if ($(".list-group-item studentpointer").hasClass("hide"))
-        $(".list-group-item studentpointer").removeClass("hide");
+    if ($(".col-md-4").hasClass("hide"))
+    {
+        $(".col-md-4").removeClass("hide");
+        $(".hideStudent").val("Hide students")
+    }
     else
-        $(".list-group-item studentpointer").addClass("hide");
+    {
+        $(".col-md-4").addClass("hide");
+        $(".hideStudent").val("Show students")
+    }
 }
 
 

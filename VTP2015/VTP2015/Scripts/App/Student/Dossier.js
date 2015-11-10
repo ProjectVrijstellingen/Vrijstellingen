@@ -141,18 +141,21 @@ $(document).on("click", ".partim", function () {
         clon.data("requestid", addRequest(supercode));
         clon.appendTo("section");
     }
-    if ($(this).hasClass("active")) {
-        Return();
-        return;
-    } else {
-        hideShown();
-        var show = $(aanvraagDetail).find("#" + $(this).data("supercode"));
-        $(this).addClass("active");
-        show.removeClass("hide");
-        show.addClass("nothidden");
+        if ($(this).hasClass("active")) {
+            Return();
+            return;
+        } else {
+            hideShown();
+            var show = $(aanvraagDetail).find("#" + $(this).data("supercode"));
+            $(this).addClass("active");
+            show.removeClass("hide");
+            show.addClass("nothidden");
+        }
+        if (!$(beschikbarePartims).hasClass("hide")) toSecondView();
     }
-    if (!$(beschikbarePartims).hasClass("hide")) toSecondView();
-    
+    //($(".tooltip ").addClass("hide"));
+    $(".tooltip ").remove();
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 $(document).on("click", ".module", function () {
@@ -269,8 +272,9 @@ $(document).on("click", ".glyphicon-remove", function (e) {
 
 $(document).ready(function () {
     $("bewijzenColumn").addClass("hide");
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
-$(document).on("ready", '[data-toggle="tooltip"]', function () {
-    $(this).tooltip();
-});
+//$(document).on("hover", '[data-toggle="tooltip"]', function () {
+//    $(this).tooltip();
+//});

@@ -13,6 +13,10 @@
     margin-left: 20px;
 }
 
+.dossier {
+
+}
+
 .container {
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -31,7 +35,7 @@
 }
 
 .panel-groen {
-    background-color: #149c82;
+    background-color: #18bc9c;
 }
 
 .panel-blauw {
@@ -136,4 +140,43 @@ fieldset[disabled] .btn-default.active {
 
 .hidden {
     display: none;
+}
+
+.progress {
+    margin-bottom: 0 !important;
+}
+
+.progress-bar {
+    border-radius: 4px;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.chart{
+  color: #E7F7F5;
+  text-align: center;
+  font-family: 'Helvetica Neue', 'Arial';
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 0px;
+  vertical-align: top;
+  position: relative;
+  padding-top: 4px;
+
+  
+}
+
+.chart span{
+    display: block;
+    font-size: 1em;
+    font-weight: normal;
+  }
+
+.chart canvas{
+    position: absolute;
+    left: 0;
+    top: -3px;
 }

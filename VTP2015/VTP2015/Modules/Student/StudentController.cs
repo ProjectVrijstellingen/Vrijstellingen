@@ -212,8 +212,8 @@ namespace VTP2015.Modules.Student
             {
                 viewModel.Evidence = viewModel.Evidence.Distinct().ToArray();
                 request.Evidence = viewModel.Evidence.Select(evidenceId => new Evidence
-                    {
-                        Id = evidenceId
+                {
+                    Id = evidenceId
                     }).AsQueryable();
             }
 
