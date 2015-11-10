@@ -33,14 +33,6 @@ function hideShown() {
     shown.removeClass("nothidden");
 }
 
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-}
-
 function changed(partimdetail) {
     clearTimeout(timer);
     $(partimdetail).find("#status").text("wachten...");
@@ -53,6 +45,7 @@ function changed(partimdetail) {
 }
 
 function savePartimdetails() {
+    clearTimeout(timer);
     var bewijzen = [];
     var dossierId = document.URL.split("/")[document.URL.split("/").length - 1];
     $.each(partimdetails, function () {
@@ -81,13 +74,6 @@ function savePartimdetails() {
     partimdetails = [];
 }
 
-function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    var that = document.getElementById(data);
-    addBewijs(that);
-}
-
 function addBewijs(that) {
     var newParent = $("#aanvraagDetail").find(".nothidden").find("ul");
 
@@ -114,20 +100,21 @@ $(document).on("click", ".partim", function () {
     var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
     var aanvraagDetail = document.getElementById("aanvraagDetail");
     var parentDiv = $(this).parent().parent()[0];
-    var moduleId = $(parentDiv).data("moduleid");
+    var moduleid = $(parentDiv).data("moduleid");
     var supercode = $(this).data("supercode");
-    var moduleNaam = parentDiv.getElementsByTagName("h4")[0].innerHTML;
+    var moduleNaam = $(parentDiv).find(".h4").text();
     var newParent;
 
     if ($.contains(beschikbarePartims, this)) {
-        if ($("#aangevraagdePartimsColumn div[data-moduleId=" + moduleId + "]").length === 0) $("#aangevraagdePartimsColumn .panel-body").html($("#aangevraagdePartimsColumn .panel-body").html() + "<div data-moduleid=\"" + moduleId + "\"><h4>" + moduleNaam + "</h4><ul class=\"list-group\"></ul></div>");
+        if ($("#aangevraagdePartimsColumn div[data-moduleid=" + moduleid + "]").length === 0) $("#aangevraagdePartimsColumn .panel-body").html($("#aangevraagdePartimsColumn .panel-body").html() + "<div data-moduleid=\"" + moduleid + "\"><h4>" + moduleNaam + "</h4><ul class=\"list-group\"></ul></div>");
 
-        newParent = $("#aangevraagdePartimsColumn div[data-moduleId=" + moduleId + "] ul");
+        newParent = $("#aangevraagdePartimsColumn div[data-moduleid=" + moduleid + "] ul");
         $(this).detach();
         $(newParent).parent().removeClass("hide");
         $(this).appendTo($(newParent));
         $(this).find(".btn").removeClass("hide");
 
+        $(parentDiv).children("span:first").removeClass("module");
         if ($(parentDiv).find("ul").children().length === 0) $(parentDiv).remove();
 
         var clon = $("#dummy").clone();
@@ -136,6 +123,7 @@ $(document).on("click", ".partim", function () {
         clon.find("h4").append($(this).children("span:first").clone());
         clon.attr("id", supercode);
         clon.appendTo("section");
+        changed($(clon));
     } else {
         if ($(this).hasClass("active")) {
             Return();
@@ -155,29 +143,30 @@ $(document).on("click", ".module", function () {
     console.log("module clicked");
     var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
     var aanvraagDetail = document.getElementById("aanvraagDetail");
-    var parentDiv = $(this).parent().parent()[0];
-    var moduleId = $(parentDiv).data("moduleid");
-    var moduleNaam = parentDiv.getElementsByTagName("h4")[0].innerHTML;
+    var parentDiv = $(this).parent()[0];
+    var moduleid = $(parentDiv).data("moduleid");
+    var moduleNaam = $(parentDiv).find(".h4").text();
 
     if ($.contains(beschikbarePartims, this)) {
         $(parentDiv).find("ul").addClass("hide");
 
         $(parentDiv).detach();
-        $("#aangevraagdePartimsColumn").find(".panel-body").append($(this));
-        $(this).find(".btn").removeClass("hide");
+        $("#aangevraagdePartimsColumn").find(".panel-body").append($(parentDiv));
+        $(parentDiv).find(".btn").removeClass("hide");
 
         var clon = $("#dummy").clone();
         clon.find("h3").text(moduleNaam);
         clon.find("h4").text("");
-        clon.attr("id", moduleId);
+        clon.attr("id", moduleid);
         clon.appendTo("section");
+        changed($(clon));
     } else {
         if ($(this).hasClass("active")) {
             Return();
             return;
         } else {
             hideShown();
-            var show = $(aanvraagDetail).find("#" + moduleId);
+            var show = $(aanvraagDetail).find("#" + moduleid);
             $(this).addClass("active");
             show.removeClass("hide");
             show.addClass("nothidden");
@@ -192,29 +181,56 @@ $(document).on("click", ".glyphicon-plus", function () {
 });
 
 $(document).on("click", ".glyphicon-remove", function (e) {
-    console.log("remove RequestPartimInformation");
+    console.log("remove Request");
     e.stopPropagation();
     var that = $(this).parent();
-    var parentDiv = $(that).parent().parent()[0];
-    var moduleId = $(parentDiv).data("moduleid");
-    var moduleNaam = parentDiv.find("h4").text();
-    if ($("#beschikbarePartimsColumn div[data-moduleId=" + moduleId + "]").length === 0) $("#beschikbarePartimsColumn .panel-body").html($("#beschikbarePartimsColumn .panel-body").html() + "<div data-moduleid=\"" + moduleId + "\"><h4>" + moduleNaam + "</h4><ul class=\"list-group\"></ul></div>");
-    var newParent = $("#beschikbarePartimsColumn").find("div[data-moduleId=" + moduleId + "] ul");
-    var aanvraag = $("#aanvraagDetail").find("#" + $(that).data("supercode"));
+    var supercode;
+    if ($(that).is("li")) {
+        console.log("partim...")
+        var parentDiv = $(that).parent().parent()[0];
+        var moduleid = $(parentDiv).data("moduleid");
+        var moduleNaam = $(parentDiv).find(".h4").text();
+        if ($("#beschikbarePartimsColumn div[data-moduleid=" + moduleid + "]").length === 0) $("#beschikbarePartimsColumn .panel-body").append("<div data-moduleid=\"" + moduleid + "\"><span class=\"name h4 module\">" + moduleNaam + "</span><span class=\"glyphicon glyphicon-remove btn badge hide\"> </span><ul class=\"list-group\"></ul></div>");
+        var newParent = $("#beschikbarePartimsColumn").find("div[data-moduleid=" + moduleid + "] ul");
+        var aanvraag = $("#aanvraagDetail").find("#" + $(that).data("supercode"));
+        supercode = $(that).data("supercode");
 
-    $(that).detach();
-    $(that).removeClass("active");
-    $(that).appendTo($(newParent));
-    $(that).find(".btn").addClass("hide");
+        $(that).detach();
+        $(that).removeClass("active");
+        $(that).appendTo($(newParent));
+        $(that).find(".btn").addClass("hide");
 
-    if ($(parentDiv).find("ul").children().length === 0) parentDiv.remove();
+        if ($(parentDiv).find("ul").children().length === 0) {
+            parentDiv.remove();
+            $("#beschikbarePartimsColumn").find("div[data-moduleid=" + moduleid + "]").children("span:first").addClass("module");
+        }
+        if ($(aanvraag).hasClass("nothidden")) toFirstView();
 
-    if ($(aanvraag).hasClass("nothidden")) toFirstView();
+        aanvraag.remove();
+    } else {
+        console.log("module...")
+        var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
+        var aanvraagDetail = document.getElementById("aanvraagDetail");
+        var newParent = $(beschikbarePartims).find(".panel-body")
+        var parentDiv = $(that).parent()[0];
+        var moduleid = $(parentDiv).data("moduleid");
+        var moduleNaam = $(parentDiv).find(".h4").text();
+        var aanvraag = $("#aanvraagDetail").find("#" + moduleid)
+        supercode = moduleid;
 
-    aanvraag.remove();
+        $(parentDiv).find("ul").removeClass("hide");
 
-    var supercode = $(that).data("supercode");
+        $(that).detach();
+        $(that).removeClass("active");
+        $(that).appendTo($(newParent));
+        $(that).find(".btn").addClass("hide");
+
+        if ($(aanvraag).hasClass("nothidden")) toFirstView();
+
+        aanvraag.remove();
+    }
     var dossierId = document.URL.split("/")[document.URL.split("/").length - 1];
+    savePartimdetails();
     $.ajax({
         url: $("#aangevraagdePartimsColumn").data("url"),
         data: {
