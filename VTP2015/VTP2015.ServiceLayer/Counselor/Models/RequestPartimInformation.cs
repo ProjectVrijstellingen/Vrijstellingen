@@ -3,7 +3,7 @@ using VTP2015.Entities;
 
 namespace VTP2015.ServiceLayer.Counselor.Models
 {
-    public class RequestPartimInformation
+    public class Request
     {
         public int RequestId { get; set; }
         public int FileId { get; set; }
