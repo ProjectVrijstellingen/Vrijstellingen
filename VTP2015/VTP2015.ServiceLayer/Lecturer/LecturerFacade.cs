@@ -30,7 +30,7 @@ namespace VTP2015.ServiceLayer.Lecturer
 
         public IQueryable<Models.RequestPartimInformation> GetUntreadedRequests(string email)
         {
-            return GetUntreadedRequestEntities(email).Project().To<Models.RequestPartimInformation>();
+            return GetUntreadedRequestEntities(email).ProjectTo<Models.RequestPartimInformation>();
         }
 
         public IQueryable<Models.RequestPartimInformation> GetUntreadedRequestsDistinct(string email)
@@ -43,7 +43,7 @@ namespace VTP2015.ServiceLayer.Lecturer
                             into groups
                             select groups.FirstOrDefault();
 
-            return result.Project().To<Models.RequestPartimInformation>();
+            return result.ProjectTo<Models.RequestPartimInformation>();
         }
 
         public bool Approve(int requestPartimInformationId, bool isApproved, string email)

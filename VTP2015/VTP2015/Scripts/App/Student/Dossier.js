@@ -44,13 +44,25 @@ function changed(partimdetail) {
     timer = setTimeout(savePartimdetails, saveTime);
 }
 
+function addRequest(code) {
+    var dossierId = document.URL.split("/")[document.URL.split("/").length - 1];
+    $.ajax({
+        url: $("#aanvraagDetail").data("url2"),
+        data: $.toDictionary(aanvraagViewModel),
+        type: "POST",
+        success: function (data) {
+            $(that).find("#status").text(data);
+        }
+    });
+}
+
 function savePartimdetails() {
     clearTimeout(timer);
     var bewijzen = [];
     var dossierId = document.URL.split("/")[document.URL.split("/").length - 1];
     $.each(partimdetails, function () {
         var that = this;
-        var supercode = $(this).attr("id");
+        var requestId = $(this).attr("id");
         var argumentatie = $(this).find("#argumentatie").val();
         $(this).find("li").each(function () {
             bewijzen.push($(this).data("bewijsid"));
@@ -58,7 +70,7 @@ function savePartimdetails() {
 
         var aanvraagViewModel = {
             dossierId: dossierId,
-            supercode: supercode,
+            requestId: requestId,
             argumentatie: argumentatie,
             bewijzen: bewijzen
         }
@@ -137,8 +149,9 @@ $(document).on("click", ".partim", function () {
         }
         if (!$(beschikbarePartims).hasClass("hide")) toSecondView();
     }
+    //($(".tooltip ").addClass("hide"));
+    $(".tooltip ").remove();
     $('[data-toggle="tooltip"]').tooltip();
-    
 });
 
 $(document).on("click", ".module", function () {

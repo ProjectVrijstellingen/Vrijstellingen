@@ -1,6 +1,6 @@
 ﻿@using VTP2015.Helpers
 @model VTP2015.Modules.Student.ViewModels.RequestDetailViewModel[]
-<div id="aanvraagDetail" data-url="@Url.Action("SaveAanvraag", "Student")" ondrop="drop(event)" ondragover="allowDrop(event)" class="col-md-4 hide">
+<div id="aanvraagDetail" data-url="@Url.Action("SaveAanvraag", "Student")" data-url2="@Url.Action("AddAanvraag","Student")" ondrop="drop(event)" ondragover="allowDrop(event)" class="col-md-4 hide">
     @using (Html.BeginPanel("RequestPartimInformation details"))
     {
         <section>

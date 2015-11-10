@@ -2,6 +2,8 @@
 using VTP2015.Infrastructure.Tasks;
 using VTP2015.Modules.Counselor.ViewModels;
 using VTP2015.ServiceLayer.Counselor.Models;
+using Evidence = VTP2015.ServiceLayer.Counselor.Models.Evidence;
+using File = VTP2015.ServiceLayer.Counselor.Models.File;
 
 namespace VTP2015.Modules.Counselor.Mappings
 {
@@ -10,9 +12,7 @@ namespace VTP2015.Modules.Counselor.Mappings
         public void Execute()
         {
             Mapper.CreateMap<File, FileOverviewViewModel>();
-            //.ForMember(m => m.PercentageCompleted,
-            //    opt => opt.MapFrom(i => i.Requests.Count != 0 ? (int)((i.Requests.Count(a => a.StatusViewModel != 0) / (i.Requests.Count * 1.0)) * 100) : 0));
-            Mapper.CreateMap<RequestPartimInformation, RequestDetailViewModel>();
+            Mapper.CreateMap<Request, RequestDetailViewModel>();
             Mapper.CreateMap<Education, EducationViewModel>();
             Mapper.CreateMap<Evidence, EvidenceViewModel>();
         }

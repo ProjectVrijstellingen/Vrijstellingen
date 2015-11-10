@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.Web.Mvc;
 using VTP2015.Config;
@@ -85,7 +84,7 @@ namespace VTP2015.Modules.Student
         public PartialViewResult FileWidget()
         {
             var models = _studentFacade.GetFilesByStudentEmail(User.Identity.Name)
-                .Project().To<FileListViewModel>();
+                .ProjectTo<FileListViewModel>();
 
             return PartialView(models.ToArray());
         }
@@ -95,7 +94,7 @@ namespace VTP2015.Modules.Student
         public PartialViewResult EvidenceListWidget()
         {
             var models = _studentFacade.GetEvidenceByStudentEmail(User.Identity.Name)
-                .Project().To<EvidenceListViewModel>();
+                .ProjectTo<EvidenceListViewModel>();
 
             return PartialView(models.ToArray());
         }
@@ -128,7 +127,7 @@ namespace VTP2015.Modules.Student
                 return RedirectToAction("Index");
 
             var models = _studentFacade.GetPartims(User.Identity.Name, dossierId, PartimMode.Requested)
-                .Project().To<PartimViewModel>();
+                .ProjectTo<PartimViewModel>();
 
             return PartialView(models.ToArray());
         }
@@ -141,7 +140,7 @@ namespace VTP2015.Modules.Student
                 return RedirectToAction("Index");
 
             var models = _studentFacade.GetPartims(User.Identity.Name, dossierId, PartimMode.Available)
-                .Project().To<PartimViewModel>();
+                .ProjectTo<PartimViewModel>();
 
             return PartialView(models.ToArray());
         }
@@ -151,7 +150,7 @@ namespace VTP2015.Modules.Student
         public PartialViewResult SelectEvidenceWidget()
         {
             var models = _studentFacade.GetEvidenceByStudentEmail(User.Identity.Name)
-                .Project().To<EvidenceListViewModel>();
+                .ProjectTo<EvidenceListViewModel>();
 
             return PartialView(models.ToArray());
         }
@@ -161,7 +160,7 @@ namespace VTP2015.Modules.Student
         public PartialViewResult RequestDetailWidget(int dossierId)
         {
             var models = _studentFacade.GetRequestByFileId(dossierId)
-                .Project().To<RequestDetailViewModel>();
+                .ProjectTo<RequestDetailViewModel>();
 
             return PartialView(models.ToArray());
         }
@@ -191,6 +190,13 @@ namespace VTP2015.Modules.Student
             return this.RedirectToAction(c => c.File(newId));
         }
 
+        [Route("AddAanvraag")]
+        [HttpPost]
+        public ActionResult AddAanvraag(AddRequestViewModel viewModel)
+        {
+            return Content("");
+        }
+
         [Route("SaveAanvraag")]
         [HttpPost]
         public ActionResult SaveAanvraag(RequestViewModel viewModel)
@@ -211,22 +217,6 @@ namespace VTP2015.Modules.Student
             };
 
             return Content(!_studentFacade.SyncRequestInFile(request) ? "Don't cheat!" : "Saved!");
-
-            //if (!_mailRepository.EmailExists(aanvraag.PartimInformation.Lecturer.Email))
-            //{
-            //    _mailRepository.AddDocent(aanvraag.PartimInformation.Lecturer.Email);
-            //}
-            //System.TimeSpan passedTimeSinceLastEmail = System.DateTime.Now.Subtract(_mailRepository.GetByEmail(aanvraag.PartimInformation.Lecturer.Email).WarningMail);
-            //if (_configFile.WarningMailTimeIsAllowed(passedTimeSinceLastEmail))
-            //{
-            //    string bodyText = "Geachte \r \r Een nieuwe aanvraag betreffende " +
-            //        aanvraag.PartimInformation.Lecturer.Email + " vereist uw goedkeuring. Verder heeft u nog steeds " +
-            //        _studentFacade.GetUntreadedRequests(aanvraag.PartimInformation.Lecturer.Email).Count() + " openstaande aanvragen." +
-            //        " U kunt deze aanvragen keuren op het online webplatform" +
-            //        "\r \r (Deze mail werd verstuurd vanop het webplatform op vraag van de betreffende trajectbegeleider, antwoorden op dit emailadres worden niet gelezen.)";
-
-            //    _mailHelper.sendEmail(User.Identity.Name, aanvraag.PartimInformation.Lecturer.Email, bodyText);
-            //}
         }
 
         [Route("Delete")]

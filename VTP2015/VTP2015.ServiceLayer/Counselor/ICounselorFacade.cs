@@ -5,7 +5,7 @@ namespace VTP2015.ServiceLayer.Counselor
 {
     public interface ICounselorFacade
     {
-        IQueryable<RequestPartimInformation> GetRequests(); 
+        IQueryable<Request> GetRequests(); 
         string GetEducationNameByCounselorEmail(string email);
         IQueryable<Education> GetEducations();
         void ChangeEducation(string email, string educationName);
