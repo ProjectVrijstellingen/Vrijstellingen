@@ -108,8 +108,24 @@ $(document).ready(function () {
         }
         e.preventDefault(); // prevent the default action (scroll / move caret)
     });
+
+    $('[data-toggle="tooltip"]').tooltip();
+
 });
 
+function hideRequestList() {
+    if ($(".aanvraag").hasClass("hide"))
+        $(".aanvraag").removeClass("hide");
+    else
+        $(".aanvraag").addClass("hide");
+}
+
+function hideStudentList() {
+    if ($(".list-group-item studentpointer").hasClass("hide"))
+        $(".list-group-item studentpointer").removeClass("hide");
+    else
+        $(".list-group-item studentpointer").addClass("hide");
+}
 
 
 function scroll_to(selectorOfElementToScrollTo) {
@@ -188,6 +204,3 @@ function selectStudent(student) {
     }
 }
 
-$(document).ready(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-});
