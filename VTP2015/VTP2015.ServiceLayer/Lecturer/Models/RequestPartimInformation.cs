@@ -7,5 +7,6 @@
         public Partim Partim { get; set; }
         public string Argumentation { get; set; }
         public File File { get; set; }
+        public System.Collections.Generic.IEnumerable<Evidence> Evidence { get; set; }
     }
 }

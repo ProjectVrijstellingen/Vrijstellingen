@@ -18,15 +18,15 @@
         <div class="form-group col-md-4">
             <div class="btn-group" data-toggle="buttons">
                 <span class="button-checkbox">
-                    <button type="button" class="btn" data-color="success" onclick="toggleGreen()">Afgewerkt</button>
+                    <button id="btnGreen" type="button" class="btn" data-color="success" onclick="toggleGreen()">Afgewerkt</button>
                     <input id="chGreen" type="checkbox" class="hidden"/>
                 </span>
                 <span class="button-checkbox">
-                    <button type="button" class="btn" data-color="warning" onclick="toggleOrange()">Bezig</button>
+                    <button id="btnOrange" type="button" class="btn" data-color="warning" onclick="toggleOrange()">Bezig</button>
                     <input id="chOrange" type="checkbox" class="hidden" checked/>
                 </span>
                 <span class="button-checkbox">
-                    <button type="button" class="btn" data-color="danger" onclick="toggleRed()">Nieuw</button>
+                    <button id="btnRed" type="button" class="btn" data-color="danger" onclick="toggleRed()">Nieuw</button>
                     <input id="chRed" type="checkbox" class="hidden" checked/>
                 </span>
             </div>
@@ -41,17 +41,31 @@
                     <tr>
                         <th>Voornaam</th>
                         <th>Familienaam</th>
-                        <th>Open requests</th>
+                        <th>Progress</th>
                         <th>Acties</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach (var dossier in Model.OrderBy(m => m.PercentageOfRequestsOpen))
                     {
-                        <tr class="dossier" data-name="@dossier.StudentName" data-prename="@dossier.StudentFirstName">
+                        var percentage = dossier.PercentageOfRequestsOpen;
+
+                        var kleur = "warning";
+                        if (percentage == 100) { kleur = "danger"; }
+                        else if (percentage == 0) { kleur = "success"; }
+
+                        percentage = 100 - percentage;
+
+                        <tr class="@kleur">
                             <td>@dossier.StudentFirstName</td>
                             <td>@dossier.StudentName</td>
-                            <td>@dossier.AmountOfRequestsOpen</td>
+                            <td>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
+                                         aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100" style="width:@percentage%">
+                                    </div>
+                                </div>
+                            </td>
                             <td>
                                 <a href="#" id="links-list">
                                     <span class="glyphicon glyphicon-list-alt dossierpointer" data-dossierid="@dossier.Id" aria-hidden="true"></span>
@@ -75,7 +89,6 @@
                             var kleur = "oranje";
                             if (percentage == 100 ) { kleur = "rood"; }
                             else if (percentage == 0) { kleur = "groen"; }
-
                         }
                         <div class="panel panel-text panel-@kleur panel-default clearfix panel-body">
                             <p class="naam">@dossier.StudentFirstName @dossier.StudentName</p>
@@ -83,9 +96,10 @@
                                 <a href="#" id="links">
                                     <span class="glyphicon glyphicon-list-alt white dossierpointer" data-dossierid="@dossier.Id" aria-hidden="true"></span>
                                 </a>
-                                <span class="white percentage" id="rechts">@dossier.AmountOfRequestsOpen</span>
-                                <a href="#" id="midden">
-                                    <span class="glyphicon glyphicon-print white" aria-hidden="true"></span>
+                                <span class="white percentage" id="middem">@dossier.AmountOfRequestsOpen</span>
+                                <a href="#" id="rechts">
+                                    @*<span class="glyphicon glyphicon-print white" aria-hidden="true"></span>*@
+                                    <div class="chart" data-percent="66"><span>14</span></div>
                                 </a>
                                 <span class="hide academiejaar">@dossier.AcademicYear</span>
                                 <span class="hide afstudeerrichting">@dossier.Route</span>

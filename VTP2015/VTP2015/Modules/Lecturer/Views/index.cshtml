@@ -15,12 +15,15 @@
                 <div class="col-md-4">
                     @Html.Action("StudentListWidget")
                 </div>
-                <button onclick="hideStudentList()">Hide students</button>
-
+                
                 <div class="col-md-8">
                     @Html.Action("RequestListWidget")
                 </div>
-                <button onclick="hideRequestList()">Hide requests</button>
+                
+                <div class="opinionButtons row">
+                    <input onclick="hideRequestList()" class="btn hideRequest" value="Hide requests" type="button">
+                    <input onclick="hideStudentList()" class="btn hideStudent" value="Hide students" type="button">
+                </div>
             }
             else
             {

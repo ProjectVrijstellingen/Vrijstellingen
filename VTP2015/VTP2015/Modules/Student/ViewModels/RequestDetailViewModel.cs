@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace VTP2015.Modules.Student.ViewModels
 {
     public class RequestDetailViewModel
     {
-        public int RequestId { get; set; }
-        public string Naam { get; set; }
+        public int FileId { get; set; }
+        public int Id { get; set; }
+        public string ModuleName { get; set; }
+        public string PartimName { get; set; }
+        public string Code { get; set; }
         public string Argumentation { get; set; }
         public IEnumerable<EvidenceListViewModel> Evidence { get; set; }
-        public IEnumerable<RequestPartimInformationViewModel> RequestPartimInformation { get; set; } 
     }
 }

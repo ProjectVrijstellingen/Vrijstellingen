@@ -4,6 +4,7 @@
     {
         public string Path { get; set; }
         public string Description { get; set; }
+        public string StudentEmail { get; set; }
 
     }
 }
