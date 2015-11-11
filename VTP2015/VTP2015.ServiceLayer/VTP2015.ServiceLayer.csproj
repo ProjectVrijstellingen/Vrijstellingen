@@ -81,6 +81,10 @@
     <Compile Include="Lecturer\Models\Module.cs" />
     <Compile Include="Lecturer\Models\Partim.cs" />
     <Compile Include="Lecturer\Models\RequestPartimInformation.cs" />
+    <Compile Include="Mail\IMail.cs" />
+    <Compile Include="Mail\IMailer.cs" />
+    <Compile Include="Mail\Mail.cs" />
+    <Compile Include="Mail\Mailer.cs" />
     <Compile Include="Student\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Student\MockStudentFacade.cs" />
     <Compile Include="Student\Models\Evidence.cs" />

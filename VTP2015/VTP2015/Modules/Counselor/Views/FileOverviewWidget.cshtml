@@ -48,7 +48,7 @@
                     <tbody>
                     @foreach (var dossier in Model.OrderBy(m => m.PercentageOfRequestsOpen))
                     {
-                        <tr>
+                        <tr class="dossier" data-name="@dossier.StudentName" data-prename="@dossier.StudentFirstName">
                             <td>@dossier.StudentFirstName</td>
                             <td>@dossier.StudentName</td>
                             <td>@dossier.AmountOfRequestsOpen</td>
