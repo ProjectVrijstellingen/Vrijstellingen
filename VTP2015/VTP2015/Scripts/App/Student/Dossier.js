@@ -152,7 +152,6 @@ $(document).on("click", ".partim", function () {
             show.addClass("nothidden");
         }
         if (!$(beschikbarePartims).hasClass("hide")) toSecondView();
-    }
     //($(".tooltip ").addClass("hide"));
     $(".tooltip ").remove();
     $('[data-toggle="tooltip"]').tooltip();
