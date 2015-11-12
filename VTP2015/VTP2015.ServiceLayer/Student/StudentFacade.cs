@@ -115,10 +115,10 @@ namespace VTP2015.ServiceLayer.Student
                 .Any(d => d.Student.Email == email);
         }
 
-        public IQueryable<Models.PartimInformation> GetPartims(string email, int fileId, PartimMode partimMode)
+        public IQueryable<Models.PartimInformation> GetPartims(int fileId, PartimMode partimMode)
         {
             var requestedPartims = _requestRepository.Table
-                .Where(a => a.Id == fileId && a.File.Student.Email == email)
+                .Where(a => a.FileId == fileId)
                 .SelectMany(a => a.RequestPartimInformations)
                 .Select(a => a.PartimInformation);
 
@@ -128,7 +128,7 @@ namespace VTP2015.ServiceLayer.Student
                     return requestedPartims.ProjectTo<Models.PartimInformation>();
                 case PartimMode.Available:
                     return
-                        _studentRepository.Table.Where(s => s.Email == email)
+                        _fileRepository.Table.Where(s => s.Id == fileId)
                             .Select(s => s.Education)
                             .SelectMany(e => e.Routes)
                             .SelectMany(r => r.PartimInformation)
@@ -204,12 +204,25 @@ namespace VTP2015.ServiceLayer.Student
         public string AddRequestInFile(int fileId, string code)
         {
             if (!_fileRepository.Table.Any(d => d.Id == fileId)) return "";
-            var newRequest = new Request{LastChanged = DateTime.Now};
+            int fakeint;
+            var isSuperCode = int.TryParse(code.Substring(0, 1), out fakeint);
+            if (
+                !_fileRepository.Table.Where(f => f.Id == fileId)
+                    .SelectMany(f => f.Requests)
+                    .SelectMany(r => r.RequestPartimInformations)
+                    .Any(
+                        r =>
+                            isSuperCode
+                                ? r.PartimInformation.SuperCode == code
+                                : (r.PartimInformation.Module.Code == code ||
+                                   r.PartimInformation.Module.PartimInformation.Any(
+                                       p => p.SuperCode == r.PartimInformation.SuperCode)))) return "fake!";
+
+            var newRequest = new Request {LastChanged = DateTime.Now};
             _fileRepository.GetById(fileId).Requests.Add(newRequest);
             newRequest.Name = "request " + newRequest.Id;
 
-            int fakeint;
-            if (int.TryParse(code.Substring(0,1),out fakeint))
+            if (isSuperCode)
             {
                 _requestPartimInformationRepository.Insert(new RequestPartimInformation
                 {

@@ -125,7 +125,7 @@ namespace VTP2015.Modules.Student
             if (!_studentFacade.IsFileFromStudent(User.Identity.Name, fileId))
                 return RedirectToAction("Index");
 
-            var models = _studentFacade.GetPartims(User.Identity.Name, fileId, PartimMode.Requested)
+            var models = _studentFacade.GetPartims(fileId, PartimMode.Requested)
                 .ProjectTo<PartimViewModel>();
 
             return PartialView(models.ToArray());
@@ -138,7 +138,7 @@ namespace VTP2015.Modules.Student
             if (!_studentFacade.IsFileFromStudent(User.Identity.Name, fileId))
                 return RedirectToAction("Index");
 
-            var models = _studentFacade.GetPartims(User.Identity.Name, fileId, PartimMode.Available)
+            var models = _studentFacade.GetPartims(fileId, PartimMode.Available)
                 .ProjectTo<PartimViewModel>();
 
             return PartialView(models.ToArray());
@@ -193,7 +193,7 @@ namespace VTP2015.Modules.Student
         public ActionResult AddAanvraag(AddRequestViewModel viewModel)
         {
             if (_studentFacade.IsFileFromStudent(User.Identity.Name, viewModel.FileId)) Content("Don't cheat!");
-            return Content(_studentFacade.AddRequestInFile(viewModel.FileId,viewModel.Code));
+            return Content(_studentFacade.AddRequestInFile(viewModel.FileId,viewModel.Code.Replace("_"," ")));
         }
 
         [Route("SaveAanvraag")]

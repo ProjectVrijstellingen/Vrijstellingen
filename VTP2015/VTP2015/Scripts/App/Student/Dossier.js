@@ -35,7 +35,6 @@ function hideShown() {
 
 function changed(partimdetail) {
     clearTimeout(timer);
-    $(partimdetail).find("#status").text("wachten...");
     var cons = false;
     $.each(partimdetails, function() {
         if ($(this).attr("id") === $(partimdetail).attr("id")) cons = true;
@@ -55,7 +54,8 @@ function addRequest(code) {
         data: $.toDictionary(viewModel),
         type: "POST",
         success: function (data) {
-            return data;
+            if (data === "fake!") Window.reload();
+            $("#aanvraagDetail").find("#" + code).data("requestid", data);
         }
     });
 }
@@ -83,7 +83,6 @@ function savePartimdetails() {
             data: $.toDictionary(viewModel),
             type: "POST",
             success: function (data) {
-                $(that).find("#status").text(data);
             }
         });
     });
@@ -122,9 +121,9 @@ $(document).on("click", ".partim", function () {
     var newParent;
 
     if ($.contains(beschikbarePartims, this)) {
-        if ($("#aangevraagdePartimsColumn div[data-moduleid=" + moduleid + "]").length === 0) $("#aangevraagdePartimsColumn .panel-body").html($("#aangevraagdePartimsColumn .panel-body").html() + "<div data-moduleid=\"" + moduleid + "\"><h4>" + moduleNaam + "</h4><ul class=\"list-group\"></ul></div>");
+        if ($("#aangevraagdePartimsColumn div[data-moduleid=\"" + moduleid + "\"]").length === 0) $("#aangevraagdePartimsColumn .panel-body").html($("#aangevraagdePartimsColumn .panel-body").html() + "<div data-moduleid=\"" + moduleid + "\"><span class=\"h4\">" + moduleNaam + "</span><ul class=\"list-group\"></ul></div>");
 
-        newParent = $("#aangevraagdePartimsColumn div[data-moduleid=" + moduleid + "] ul");
+        newParent = $("#aangevraagdePartimsColumn div[data-moduleid=\"" + moduleid + "\"] ul");
         $(this).detach();
         $(newParent).parent().removeClass("hide");
         $(this).appendTo($(newParent));
@@ -138,9 +137,9 @@ $(document).on("click", ".partim", function () {
         clon.find("h4").text("");
         clon.find("h4").append($(this).children("span:first").clone());
         clon.attr("id", supercode);
-        clon.data("requestid", addRequest(supercode));
+        addRequest(supercode);
         clon.appendTo("section");
-    }
+    } else {
         if ($(this).hasClass("active")) {
             Return();
             return;
@@ -152,6 +151,7 @@ $(document).on("click", ".partim", function () {
             show.addClass("nothidden");
         }
         if (!$(beschikbarePartims).hasClass("hide")) toSecondView();
+    }
     //($(".tooltip ").addClass("hide"));
     $(".tooltip ").remove();
     $('[data-toggle="tooltip"]').tooltip();
@@ -176,7 +176,7 @@ $(document).on("click", ".module", function () {
         clon.find("h3").text(moduleNaam);
         clon.find("h4").text("");
         clon.attr("id", moduleid);
-        clon.data("requestid",addRequest(moduleid));
+        addRequest(moduleid);
         clon.appendTo("section");
     } else {
         if ($(this).hasClass("active")) {
@@ -201,6 +201,7 @@ $(document).on("click", ".glyphicon-plus", function () {
 $(document).on("click", ".glyphicon-remove", function (e) {
     console.log("remove Request");
     e.stopPropagation();
+    savePartimdetails();
     var that = $(this).parent();
     var aanvraagId;
     var moduleid;
@@ -213,8 +214,9 @@ $(document).on("click", ".glyphicon-remove", function (e) {
         parentDiv = $(that).parent().parent()[0];
         moduleid = $(parentDiv).data("moduleid");
         moduleNaam = $(parentDiv).find(".h4").text();
-        if ($("#beschikbarePartimsColumn div[data-moduleid=" + moduleid + "]").length === 0) $("#beschikbarePartimsColumn .panel-body").append("<div data-moduleid=\"" + moduleid + "\"><span class=\"name h4 module\">" + moduleNaam + "</span><span class=\"glyphicon glyphicon-remove btn badge hide\"> </span><ul class=\"list-group\"></ul></div>");
-        newParent = $("#beschikbarePartimsColumn").find("div[data-moduleid=" + moduleid + "] ul");
+        console.log(moduleNaam);
+        if ($("#beschikbarePartimsColumn div[data-moduleid=\"" + moduleid + "\"]").length === 0) $("#beschikbarePartimsColumn .panel-body").append("<div data-moduleid=\"" + moduleid + "\"><span class=\"name h4 module\">" + moduleNaam + "</span><span class=\"glyphicon glyphicon-remove btn badge hide\"> </span><ul class=\"list-group\"></ul></div>");
+        newParent = $("#beschikbarePartimsColumn").find("div[data-moduleid=\"" + moduleid + "\"] ul");
         aanvraag = $("#aanvraagDetail").find("#" + $(that).data("supercode"));
         aanvraagId = $(aanvraag).data("requestid");
 
@@ -225,7 +227,7 @@ $(document).on("click", ".glyphicon-remove", function (e) {
 
         if ($(parentDiv).find("ul").children().length === 0) {
             parentDiv.remove();
-            $("#beschikbarePartimsColumn").find("div[data-moduleid=" + moduleid + "]").children("span:first").addClass("module");
+            $("#beschikbarePartimsColumn").find("div[data-moduleid=\"" + moduleid + "\"]").children("span:first").addClass("module");
         }
         if ($(aanvraag).hasClass("nothidden")) toFirstView();
 
@@ -235,11 +237,10 @@ $(document).on("click", ".glyphicon-remove", function (e) {
         var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
         newParent = $(beschikbarePartims).find(".panel-body");
         parentDiv = $(that).parent()[0];
-        moduleid = $(parentDiv).data("moduleid");
+        moduleid = $(that).data("moduleid");
         moduleNaam = $(parentDiv).find(".h4").text();
         aanvraag = $("#aanvraagDetail").find("#" + moduleid);
         aanvraagId = $(aanvraag).data("requestid");
-
         $(parentDiv).find("ul").removeClass("hide");
 
         $(that).detach();
@@ -251,7 +252,6 @@ $(document).on("click", ".glyphicon-remove", function (e) {
         aanvraag.remove();
     }
     var fileId = document.URL.split("/")[document.URL.split("/").length - 1];
-    savePartimdetails();
     $.ajax({
         url: $("#aangevraagdePartimsColumn").data("url"),
         data: {

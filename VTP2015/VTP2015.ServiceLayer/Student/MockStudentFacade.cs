@@ -79,7 +79,7 @@ namespace VTP2015.ServiceLayer.Student
             return true;
         }
 
-        public IQueryable<PartimInformation> GetPartims(string email, int fileId, PartimMode partimMode)
+        public IQueryable<PartimInformation> GetPartims(int fileId, PartimMode partimMode)
         {
             var partimInformation = new List<PartimInformation>
             {

@@ -16,10 +16,10 @@ namespace VTP2015.Helpers
             {
                 var count = module.Partims.Count;
                 var tag = new TagBuilder("div");
-                tag.Attributes.Add("data-moduleid",module.Code);
+                tag.Attributes.Add("data-moduleid",module.Code.Replace(" ","_"));
 
                 var moduleNameTag = new TagBuilder("span");
-                moduleNameTag.AddCssClass("name h4" + (count == module.TotalCount && deletable ? " module" : ""));
+                moduleNameTag.AddCssClass("name h4" + (count == module.TotalCount ? " module" : ""));
                 moduleNameTag.SetInnerText(module.Name);
                 tag.InnerHtml += moduleNameTag;
                 tag.InnerHtml += ShowGlyphicon(html, "remove", "btn badge" + (count == module.TotalCount && deletable ? "" : " hide"));
@@ -89,7 +89,7 @@ namespace VTP2015.Helpers
             foreach (var aanvraag in aanvragen)
             {
                 var articleTag = new TagBuilder("article");
-                articleTag.Attributes.Add("id",aanvraag.Code);
+                articleTag.Attributes.Add("id",aanvraag.Code.Replace(" ","_"));
                 articleTag.Attributes.Add("data-requestId",aanvraag.Id.ToString());
                 articleTag.AddCssClass("hide");
                 var moduleTag = new TagBuilder("h3");
@@ -125,10 +125,6 @@ namespace VTP2015.Helpers
                 buttonTag.Attributes.Add("type","button");
                 buttonTag.SetInnerText("Terug");
                 articleTag.InnerHtml += buttonTag;
-                var labelTag = new TagBuilder("label");
-                labelTag.Attributes.Add("id", "status");
-                labelTag.SetInnerText("Saved!");
-                articleTag.InnerHtml += labelTag;
                 htmlString += articleTag.ToString();
             }
             return new MvcHtmlString(htmlString);
