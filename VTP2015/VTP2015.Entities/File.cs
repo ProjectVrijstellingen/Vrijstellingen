@@ -8,7 +8,7 @@ namespace VTP2015.Entities
         public int StudentId { get; set; }
         public string AcademicYear { get; set; }
         public DateTime DateCreated { get; set; }
-        public bool Editable { get; set; }
+        public FileStatus FileStatus { get; set; }
         public int EducationId { get; set; }    
 
         public virtual Education Education { get; set; }

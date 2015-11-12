@@ -192,7 +192,7 @@ namespace VTP2015.ServiceLayer.Student
             {
                 AcademicYear = file.AcademicYear,
                 DateCreated = file.DateCreated,
-                Editable = file.Editable,
+                FileStatus = FileStatus.InProgress, // TODO: needs to be Checked
                 Education = _educationRepository.Table.First(education => education.Name == file.Education),
                 Student = _studentRepository.Table.First(student => student.Email == file.StudentMail)
             };

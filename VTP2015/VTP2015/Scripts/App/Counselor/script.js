@@ -17,6 +17,26 @@ $(document).ready(function() {
         });
 
     });
+
+    $(".dossier").click(function (sender) {
+        $("#overview").addClass("hide");
+
+        var currentTarget = $(sender.currentTarget);
+        
+        var naam = currentTarget.find(".naam").text();
+        var academieJaar = currentTarget.find(".academiejaar").text();
+        var afstudeerRichting = currentTarget.find(".afstudeerrichting").text();
+        $("#naam").text(naam);
+        $("#academiejaar").text(academieJaar);
+        $("#afstudeerrichting").text(afstudeerRichting);
+        
+        $("#details").removeClass("hide");
+    });
+
+    $("#tooverview").click(function(sender) {
+        $("#details").addClass("hide");
+        $("#overview").removeClass("hide");
+    });
 });
 
 

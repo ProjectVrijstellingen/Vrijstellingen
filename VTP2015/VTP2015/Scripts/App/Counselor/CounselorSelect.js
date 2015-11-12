@@ -1,5 +1,4 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
     if (!$('#btnGreen').hasClass('btn-success')) {
         $('.panel-groen').parent().addClass('hidden');
         $('.success').addClass('hidden');
@@ -12,7 +11,6 @@ $(document).ready(function () {
         $('.panel-rood').parent().addClass('hidden');
         $('.danger').addClass('hidden');
     }
-    
 });
 
 function toggle(panel) {

@@ -7,12 +7,13 @@ var huidigeAanvraag;
 var huidigBewijs;
 
 $(document).ready(function () {
-        
+
     stopStudentenInArray();
 
     selectStudent(alleStudenten[0]);
 
     $(".studentpointer").click(function (event) {
+        console.log(event);
         $(".studentpointer").click(function (event) {
             if ($(document).width() <= 990) {
                 scroll_to($(".aanvraagcontainer"));
