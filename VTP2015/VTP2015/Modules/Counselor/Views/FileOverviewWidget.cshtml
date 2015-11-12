@@ -101,14 +101,15 @@
                                     var startDate = dossier.DateCreated;
                                     DateTime nowDate = DateTime.Today;
                                     var daysLeft = 21 - (nowDate - startDate).Days;
-
-                                    var perc = daysLeft * 100 / 21 ;
+                                    if (daysLeft < 0)
+                                    {
+                                        daysLeft = 0;
+                                    }
+                                    var perc = 100 - (daysLeft * 100 / 21);
                                 }
-                                <a href="#" id="rechts">
-                                    <div class="chart" data-percent="@perc"><span>@daysLeft</span></div>
-                                </a>
-                                <span class="hide academiejaar">@dossier.AcademicYear</span>
-                                <span class="hide afstudeerrichting">@dossier.Route</span>
+                                <span id="rechts" class="rechts chart" data-percent="@perc">
+                                    <span id="cirlceNumber" class="cirlceNumber">@daysLeft</span>
+                                </span>
                             </div>
                         </div>
                     </div>
