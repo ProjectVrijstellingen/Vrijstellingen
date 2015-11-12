@@ -54,7 +54,7 @@ function addRequest(code) {
         data: $.toDictionary(viewModel),
         type: "POST",
         success: function (data) {
-            if (data === "fake!") Window.reload();
+            if (data === "fake!") Location.reload();
             $("#aanvraagDetail").find("#" + code).data("requestid", data);
         }
     });
@@ -67,6 +67,7 @@ function savePartimdetails() {
     $.each(partimdetails, function () {
         var that = this;
         var requestid = $(this).data("requestid");
+        console.log(requestid);
         var argumentatie = $(this).find("#argumentatie").val();
         $(this).find("li").each(function () {
             bewijzen.push($(this).data("bewijsid"));

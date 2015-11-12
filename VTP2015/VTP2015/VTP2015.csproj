@@ -321,6 +321,7 @@
     </Content>
     <Content Include="packages.config" />
     <Content Include="Modules\Feedback\Views\Index.cshtml" />
+    <Content Include="Modules\Counselor\Views\FileOverviewWidget.cshtml" />
     <None Include="Properties\PublishProfiles\Foundation.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -391,7 +392,6 @@
     <Content Include="Modules\Lecturer\Views\StudentListWidget.cshtml" />
     <Content Include="Modules\Lecturer\Views\RequestListWidget.cshtml" />
     <Content Include="Modules\Counselor\Views\RequestDetailWidget.cshtml" />
-    <Content Include="Modules\Counselor\Views\FileOverviewWidget.cshtml" />
     <None Include="Modules\Counselor\Views\FileDetailsPartial.cshtml" />
     <Content Include="Modules\Admin\Views\index.cshtml" />
     <Content Include="Modules\Admin\Views\SettingsWidget.cshtml" />

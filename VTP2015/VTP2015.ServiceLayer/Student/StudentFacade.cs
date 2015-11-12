@@ -119,8 +119,7 @@ namespace VTP2015.ServiceLayer.Student
         {
             var requestedPartims = _requestRepository.Table
                 .Where(a => a.FileId == fileId)
-                .SelectMany(a => a.RequestPartimInformations)
-                .Select(a => a.PartimInformation);
+                .SelectMany(a => a.RequestPartimInformations);
 
             switch (partimMode)
             { 
@@ -132,7 +131,7 @@ namespace VTP2015.ServiceLayer.Student
                             .Select(s => s.Education)
                             .SelectMany(e => e.Routes)
                             .SelectMany(r => r.PartimInformation)
-                            .Except(requestedPartims)
+                            .Except(requestedPartims.Select(x => x.PartimInformation))
                             .ProjectTo<Models.PartimInformation>();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(partimMode), partimMode, null);
@@ -207,7 +206,7 @@ namespace VTP2015.ServiceLayer.Student
             int fakeint;
             var isSuperCode = int.TryParse(code.Substring(0, 1), out fakeint);
             if (
-                !_fileRepository.Table.Where(f => f.Id == fileId)
+                _fileRepository.Table.Where(f => f.Id == fileId)
                     .SelectMany(f => f.Requests)
                     .SelectMany(r => r.RequestPartimInformations)
                     .Any(
