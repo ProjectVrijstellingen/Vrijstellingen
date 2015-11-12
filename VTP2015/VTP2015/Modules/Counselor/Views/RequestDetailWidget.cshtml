@@ -12,7 +12,7 @@
             <div id="aanvraag-@getoondeAanvraagId" class="aanvraag hide" data-dossierid="@request.FileId" data-RequestPartimInformationPartimInformationid="@request.RequestId">
                 <button class="btn btn-danger herinnering">Poke docent</button>
                 <p>@request.ModuleName - @request.PartimName</p>
-                <label for="argumentatie" class="control-label">Argumentation:</label>
+                <label for="argumentatie" class="control-label">Argumentatie:</label>
                 <textarea id="argumentatie" class="form-control" readonly="">@request.Argumentation</textarea>
                 <label for="status" class="control-label">StatusViewModel:</label>
                 <textarea id="status" class="form-control" readonly="">@Enum.GetName(typeof(Status), request.StatusViewModel)</textarea>
