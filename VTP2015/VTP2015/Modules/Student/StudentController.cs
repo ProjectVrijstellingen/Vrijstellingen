@@ -180,7 +180,6 @@ namespace VTP2015.Modules.Student
                 StudentMail = User.Identity.Name,
                 DateCreated = DateTime.Now,
                 Education = education.Name,
-                Editable = true,
                 AcademicYear = academieJaar
             };
 
@@ -239,6 +238,8 @@ namespace VTP2015.Modules.Student
         [HttpPost]
         public ActionResult SubmitFile(int fileId)
         {
+            _studentFacade.IsFileFromStudent(User.Identity.Name, fileId);
+            _studentFacade.SumbitFile(fileId);
             return RedirectToAction("Index");
         }
         #endregion

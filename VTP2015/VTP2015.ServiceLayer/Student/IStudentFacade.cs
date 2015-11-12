@@ -27,5 +27,6 @@ namespace VTP2015.ServiceLayer.Student
         bool DeleteRequest(int fileId, int requestId);
         Education GetEducation(string studentMail);
         string AddRequestInFile(int fileId, string code);
+        void SumbitFile(int fileId);
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using AutoMapper;
+using AutoMapper.Internal;
 using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.ServiceRepositories;
 using VTP2015.DataAccess.UnitOfWork;
@@ -191,7 +192,7 @@ namespace VTP2015.ServiceLayer.Student
             {
                 AcademicYear = file.AcademicYear,
                 DateCreated = file.DateCreated,
-                FileStatus = FileStatus.InProgress, // TODO: needs to be Checked
+                FileStatus = FileStatus.InProgress,
                 Education = _educationRepository.Table.First(education => education.Name == file.Education),
                 Student = _studentRepository.Table.First(student => student.Email == file.StudentMail)
             };
@@ -225,7 +226,7 @@ namespace VTP2015.ServiceLayer.Student
             {
                 _requestPartimInformationRepository.Insert(new RequestPartimInformation
                 {
-                    Status = Status.Untreated,
+                    Status = Status.Empty,
                     PartimInformation = _partimInformationRepository.Table.First(x => x.SuperCode == code),
                     Request = newRequest
                 });
@@ -235,12 +236,20 @@ namespace VTP2015.ServiceLayer.Student
                 _partimInformationRepository.Table.Where(x => x.Module.Code == code).ToList()
                     .ForEach(partimInfo => _requestPartimInformationRepository.Insert(new RequestPartimInformation
                     {
-                        Status = Status.Untreated,
+                        Status = Status.Empty,
                         PartimInformation = partimInfo,
                         Request = newRequest
                     }));
             }
             return newRequest.Id.ToString();
+        }
+
+        public void SumbitFile(int fileId)
+        {
+            var file = _fileRepository.Table.Where(x => x.Id == fileId);
+            if(file.First().FileStatus == FileStatus.InProgress) file.First().DateCreated = DateTime.Now;
+            file.First().FileStatus = FileStatus.Submitted;
+            file.SelectMany(x => x.Requests).SelectMany(x => x.RequestPartimInformations).Where(x => x.Status == Status.Empty).Each(x => x.Status = Status.Untreated);
         }
 
         public bool SyncRequestInFile(Models.Request requestModel)

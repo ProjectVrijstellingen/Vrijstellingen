@@ -1,7 +1,7 @@
 ﻿@using VTP2015.Helpers
 @model VTP2015.Modules.Student.ViewModels.PartimViewModel[]
 
-<div id="beschikbarePartimsColumn" class="col-md-6">
+<div id="beschikbarePartimsColumn" class="col-md-6" data-url="@Url.Action("SubmitFile","Student")">
     @using (Html.BeginPanel("Beschikbare modules"))
     {
         @Html.ShowPartimList(Model, false)
