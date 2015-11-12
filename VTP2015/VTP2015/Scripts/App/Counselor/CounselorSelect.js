@@ -1,15 +1,14 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
     if (!$("#btnGreen").hasClass("btn-success")) {
-        $(".panel-groen").parent().addClass("hidden");
+        $(".panel-success").parent().addClass("hidden");
         $(".success").addClass("hidden");
     }
     if (!$("#btnOrange").hasClass("btn-warning")) {
-        $(".panel-oranje").parent().addClass("hidden");
+        $(".panel-warning").parent().addClass("hidden");
         $(".warning").addClass("hidden");
     }
     if (!$("#btnRed").hasClass("btn-danger")) {
-        $(".panel-rood").parent().addClass("hidden");
+        $(".panel-danger").parent().addClass("hidden");
         $(".danger").addClass("hidden");
     }
 });
@@ -23,16 +22,16 @@ function toggle(panel) {
 }
 
 function toggleGreen() {
-    toggle($(".panel-groen").parent());
+    toggle($(".panel-success").parent());
     toggle($(".success"));
 }
 
 function toggleOrange() {
-    toggle($(".panel-oranje").parent());
+    toggle($(".panel-warning").parent());
     toggle($(".warning"));
 }
 
 function toggleRed() {
-    toggle($(".panel-rood").parent());
+    toggle($(".panel-danger").parent());
     toggle($(".danger"));
 }
