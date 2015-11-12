@@ -190,6 +190,7 @@ namespace VTP2015.Modules.Student
         }
 
         [Route("AddAanvraag")]
+        [HttpPost]
         public ActionResult AddAanvraag(AddRequestViewModel viewModel)
         {
             if (_studentFacade.IsFileFromStudent(User.Identity.Name, viewModel.FileId)) Content("Don't cheat!");
@@ -197,6 +198,7 @@ namespace VTP2015.Modules.Student
         }
 
         [Route("SaveAanvraag")]
+        [HttpPost]
         public ActionResult SaveAanvraag(RequestViewModel viewModel)
         {
             var requestId = int.Parse(viewModel.RequestId);
@@ -233,6 +235,12 @@ namespace VTP2015.Modules.Student
                     : "Voltooid!");
         }
 
+        [Route("Submit")]
+        [HttpPost]
+        public ActionResult SubmitFile(int fileId)
+        {
+            return RedirectToAction("Index");
+        }
         #endregion
     }
 }

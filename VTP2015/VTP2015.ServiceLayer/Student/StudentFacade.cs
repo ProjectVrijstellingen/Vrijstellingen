@@ -119,8 +119,7 @@ namespace VTP2015.ServiceLayer.Student
         {
             var requestedPartims = _requestRepository.Table
                 .Where(a => a.FileId == fileId)
-                .SelectMany(a => a.RequestPartimInformations)
-                .Select(a => a.PartimInformation);
+                .SelectMany(a => a.RequestPartimInformations);
 
             switch (partimMode)
             { 
@@ -132,7 +131,7 @@ namespace VTP2015.ServiceLayer.Student
                             .Select(s => s.Education)
                             .SelectMany(e => e.Routes)
                             .SelectMany(r => r.PartimInformation)
-                            .Except(requestedPartims)
+                            .Except(requestedPartims.Select(x => x.PartimInformation))
                             .ProjectTo<Models.PartimInformation>();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(partimMode), partimMode, null);
@@ -192,7 +191,7 @@ namespace VTP2015.ServiceLayer.Student
             {
                 AcademicYear = file.AcademicYear,
                 DateCreated = file.DateCreated,
-                Editable = file.Editable,
+                FileStatus = FileStatus.InProgress, // TODO: needs to be Checked
                 Education = _educationRepository.Table.First(education => education.Name == file.Education),
                 Student = _studentRepository.Table.First(student => student.Email == file.StudentMail)
             };
