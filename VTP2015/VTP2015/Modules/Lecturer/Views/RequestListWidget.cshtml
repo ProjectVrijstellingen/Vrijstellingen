@@ -12,11 +12,11 @@
 
                 <p>@aanvraag.ModuleName - @aanvraag.PartimName</p>
                 <p>
-                    <label for="argumentatie" class="control-label">Argumentation:</label>
+                    <label for="argumentatie" class="control-label">Argumentatie:</label>
                     @*<textarea id="argumentatie" class="form-control" readonly="">@aanvraag.Argumentation</textarea>*@
                     <label class="control-label">@aanvraag.Argumentation</label>
                 </p>
-                <label class="control-label">Evidence: <a href="#" class="vorigBewijs"><<</a><span class="huidigBewijs">1</span>/@aanvraag.Evidence.Count()<a href="#" class="volgendBewijs">>></a></label>
+                <label class="control-label">Bewijzen: <a href="#" class="vorigBewijs"><<</a><span class="huidigBewijs">1</span>/@aanvraag.Evidence.Count()<a href="#" class="volgendBewijs">>></a></label>
                 @foreach (var bewijs in aanvraag.Evidence)
                 {
                     <div data-evidenceid="@bewijs.EvidenceId" class="inheritWidth bewijs hide">

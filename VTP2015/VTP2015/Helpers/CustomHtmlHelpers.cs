@@ -101,7 +101,7 @@ namespace VTP2015.Helpers
                 var argumentatieLabelTag = new TagBuilder("label");
                 argumentatieLabelTag.Attributes.Add("for","argumentatie");
                 argumentatieLabelTag.AddCssClass("control-label");
-                argumentatieLabelTag.SetInnerText("Argumentation:");
+                argumentatieLabelTag.SetInnerText("Argumentatie:");
                 articleTag.InnerHtml += argumentatieLabelTag;
                 var argumentatieTag = new TagBuilder("textarea");
                 argumentatieTag.Attributes.Add("id","argumentatie");
@@ -110,7 +110,7 @@ namespace VTP2015.Helpers
                 articleTag.InnerHtml += argumentatieTag;
                 var bewijzenLabelTag = new TagBuilder("label");
                 bewijzenLabelTag.AddCssClass("control-label");
-                bewijzenLabelTag.SetInnerText("Evidence:");
+                bewijzenLabelTag.SetInnerText("Bewijzen:");
                 articleTag.InnerHtml += bewijzenLabelTag;
                 var bewijzenTag = new TagBuilder("ul");
                 bewijzenTag.AddCssClass("list-group");
