@@ -207,7 +207,7 @@ namespace VTP2015.ServiceLayer.Student
             int fakeint;
             var isSuperCode = int.TryParse(code.Substring(0, 1), out fakeint);
             if (
-                !_fileRepository.Table.Where(f => f.Id == fileId)
+                _fileRepository.Table.Where(f => f.Id == fileId)
                     .SelectMany(f => f.Requests)
                     .SelectMany(r => r.RequestPartimInformations)
                     .Any(
