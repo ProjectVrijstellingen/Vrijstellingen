@@ -97,9 +97,15 @@
                                     <span class="glyphicon glyphicon-list-alt white dossierpointer" data-dossierid="@dossier.Id" aria-hidden="true"></span>
                                 </a>
                                 <span class="white percentage" id="middem">@dossier.AmountOfRequestsOpen</span>
+                                @{
+                                    var startDate = dossier.DateCreated;
+                                    DateTime nowDate = DateTime.Today;
+                                    var daysLeft = 21 - (nowDate - startDate).Days;
+
+                                    var perc = daysLeft * 100 / 21 ;
+                                }
                                 <a href="#" id="rechts">
-                                    @*<span class="glyphicon glyphicon-print white" aria-hidden="true"></span>*@
-                                    <div class="chart" data-percent="66"><span>14</span></div>
+                                    <div class="chart" data-percent="@perc"><span>@daysLeft</span></div>
                                 </a>
                                 <span class="hide academiejaar">@dossier.AcademicYear</span>
                                 <span class="hide afstudeerrichting">@dossier.Route</span>
