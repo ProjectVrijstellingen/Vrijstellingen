@@ -46,12 +46,16 @@ function changed(partimdetail) {
 
 function addRequest(code) {
     var dossierId = document.URL.split("/")[document.URL.split("/").length - 1];
+    var viewModel = {
+        FileId: dossierId,
+        Code: code
+    };
     $.ajax({
         url: $("#aanvraagDetail").data("url2"),
-        data: $.toDictionary(aanvraagViewModel),
+        data: $.toDictionary(viewModel),
         type: "POST",
         success: function (data) {
-            $(that).find("#status").text(data);
+            return data;
         }
     });
 }
@@ -62,21 +66,21 @@ function savePartimdetails() {
     var dossierId = document.URL.split("/")[document.URL.split("/").length - 1];
     $.each(partimdetails, function () {
         var that = this;
-        var requestId = $(this).attr("id");
+        var requestid = $(this).data("requestid");
         var argumentatie = $(this).find("#argumentatie").val();
         $(this).find("li").each(function () {
             bewijzen.push($(this).data("bewijsid"));
         });
 
-        var aanvraagViewModel = {
-            dossierId: dossierId,
-            requestId: requestId,
-            argumentatie: argumentatie,
-            bewijzen: bewijzen
-        }
+        var viewModel = {
+            FileId: dossierId,
+            RequestId: requestid,
+            Argumentation: argumentatie,
+            Evidence: bewijzen
+        };
         $.ajax({
             url: $("#aanvraagDetail").data("url"),
-            data: $.toDictionary(aanvraagViewModel),
+            data: $.toDictionary(viewModel),
             type: "POST",
             success: function (data) {
                 $(that).find("#status").text(data);
@@ -134,9 +138,9 @@ $(document).on("click", ".partim", function () {
         clon.find("h4").text("");
         clon.find("h4").append($(this).children("span:first").clone());
         clon.attr("id", supercode);
+        clon.data("requestid", addRequest(supercode));
         clon.appendTo("section");
-        changed($(clon));
-    } else {
+    }
         if ($(this).hasClass("active")) {
             Return();
             return;
@@ -173,8 +177,8 @@ $(document).on("click", ".module", function () {
         clon.find("h3").text(moduleNaam);
         clon.find("h4").text("");
         clon.attr("id", moduleid);
+        clon.data("requestid",addRequest(moduleid));
         clon.appendTo("section");
-        changed($(clon));
     } else {
         if ($(this).hasClass("active")) {
             Return();
@@ -199,16 +203,21 @@ $(document).on("click", ".glyphicon-remove", function (e) {
     console.log("remove Request");
     e.stopPropagation();
     var that = $(this).parent();
-    var supercode;
+    var aanvraagId;
+    var moduleid;
+    var moduleNaam;
+    var newParent;
+    var aanvraag;
+    var parentDiv;
     if ($(that).is("li")) {
-        console.log("partim...")
-        var parentDiv = $(that).parent().parent()[0];
-        var moduleid = $(parentDiv).data("moduleid");
-        var moduleNaam = $(parentDiv).find(".h4").text();
+        console.log("partim...");
+        parentDiv = $(that).parent().parent()[0];
+        moduleid = $(parentDiv).data("moduleid");
+        moduleNaam = $(parentDiv).find(".h4").text();
         if ($("#beschikbarePartimsColumn div[data-moduleid=" + moduleid + "]").length === 0) $("#beschikbarePartimsColumn .panel-body").append("<div data-moduleid=\"" + moduleid + "\"><span class=\"name h4 module\">" + moduleNaam + "</span><span class=\"glyphicon glyphicon-remove btn badge hide\"> </span><ul class=\"list-group\"></ul></div>");
-        var newParent = $("#beschikbarePartimsColumn").find("div[data-moduleid=" + moduleid + "] ul");
-        var aanvraag = $("#aanvraagDetail").find("#" + $(that).data("supercode"));
-        supercode = $(that).data("supercode");
+        newParent = $("#beschikbarePartimsColumn").find("div[data-moduleid=" + moduleid + "] ul");
+        aanvraag = $("#aanvraagDetail").find("#" + $(that).data("supercode"));
+        aanvraagId = $(aanvraag).data("requestid");
 
         $(that).detach();
         $(that).removeClass("active");
@@ -223,15 +232,14 @@ $(document).on("click", ".glyphicon-remove", function (e) {
 
         aanvraag.remove();
     } else {
-        console.log("module...")
+        console.log("module...");
         var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
-        var aanvraagDetail = document.getElementById("aanvraagDetail");
-        var newParent = $(beschikbarePartims).find(".panel-body")
-        var parentDiv = $(that).parent()[0];
-        var moduleid = $(parentDiv).data("moduleid");
-        var moduleNaam = $(parentDiv).find(".h4").text();
-        var aanvraag = $("#aanvraagDetail").find("#" + moduleid)
-        supercode = moduleid;
+        newParent = $(beschikbarePartims).find(".panel-body");
+        parentDiv = $(that).parent()[0];
+        moduleid = $(parentDiv).data("moduleid");
+        moduleNaam = $(parentDiv).find(".h4").text();
+        aanvraag = $("#aanvraagDetail").find("#" + moduleid);
+        aanvraagId = $(aanvraag).data("requestid");
 
         $(parentDiv).find("ul").removeClass("hide");
 
@@ -241,19 +249,22 @@ $(document).on("click", ".glyphicon-remove", function (e) {
         $(that).find(".btn").addClass("hide");
 
         if ($(aanvraag).hasClass("nothidden")) toFirstView();
-
         aanvraag.remove();
     }
-    var dossierId = document.URL.split("/")[document.URL.split("/").length - 1];
+    var fileId = document.URL.split("/")[document.URL.split("/").length - 1];
     savePartimdetails();
     $.ajax({
         url: $("#aangevraagdePartimsColumn").data("url"),
         data: {
-            dossierId: dossierId,
-            supercode: supercode
+            fileId: fileId,
+            requestId: aanvraagId
         },
         type: "POST",
         success: function (data) {
+            console.log(data);
+        },
+        error: function (data) {
+            console.log(aanvraagId);
             console.log(data);
         }
     });

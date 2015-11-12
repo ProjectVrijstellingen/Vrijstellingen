@@ -1,6 +1,6 @@
 ﻿@using VTP2015.Helpers
 @model VTP2015.Modules.Student.ViewModels.RequestDetailViewModel[]
-<div id="aanvraagDetail" data-url="@Url.Action("SaveAanvraag", "Student")" data-url2="@Url.Action("AddAanvraag","Student")" ondrop="drop(event)" ondragover="allowDrop(event)" class="col-md-4 hide">
+<div id="aanvraagDetail" data-url="@Url.Action("SaveAanvraag", "Student")" data-url2="@Url.Action("AddAanvraag","Student")" class="col-md-4 hide">
     @using (Html.BeginPanel("RequestPartimInformation details"))
     {
         <section>
@@ -12,7 +12,7 @@
                 <label class="control-label">bewijzen:</label>
                 <ul class="list-group"></ul>
                 <button type="button" onclick=" Return() " class="btn btn-success">Terug</button>
-                <label id="status">niet opgeslaan!</label>
+                <label id="status">opgeslaan!</label>
             </article>
             @Html.ShowAanvraagDetails(Model)
         </section>

@@ -43,6 +43,7 @@ namespace VTP2015
                 "~/Scripts/App/Counselor/CounselorView.js",
                 "~/Scripts/App/Counselor/CustomCheckBox.js",
                 "~/Scripts/App/Counselor/CounselorSelect.js",
+                "~/Scripts/App/Counselor/Countdown.js",
                 "~/Scripts/App/Counselor/script.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/lecturer").Include(

@@ -55,12 +55,11 @@ namespace VTP2015.Modules.Student
 
             var dbBewijs = new Evidence
             {
-                StudentMail = User.Identity.Name,
                 Path = pic,
                 Description = viewModel.Description
             };
 
-            _studentFacade.InsertEvidence(dbBewijs);
+            _studentFacade.InsertEvidence(dbBewijs, User.Identity.Name);
             errors.Add("Finish");
             return Json(errors.ToArray());
         }
@@ -109,11 +108,11 @@ namespace VTP2015.Modules.Student
         #endregion
 
         #region dossier
-        [Route("FileName/{dossierId}")]
+        [Route("File/{fileId}")]
         [HttpGet]
-        public ActionResult File(int dossierId)
+        public ActionResult File(int fileId)
         {
-            if (!_studentFacade.IsFileFromStudent(User.Identity.Name, dossierId))
+            if (!_studentFacade.IsFileFromStudent(User.Identity.Name, fileId))
                 return RedirectToAction("Index");
 
             return View();
@@ -121,12 +120,12 @@ namespace VTP2015.Modules.Student
 
         [Route("RequestedPartimsWidget")]
         [HttpGet]
-        public ActionResult RequestedPartimsWidget(int dossierId)
+        public ActionResult RequestedPartimsWidget(int fileId)
         {
-            if (!_studentFacade.IsFileFromStudent(User.Identity.Name, dossierId))
+            if (!_studentFacade.IsFileFromStudent(User.Identity.Name, fileId))
                 return RedirectToAction("Index");
 
-            var models = _studentFacade.GetPartims(User.Identity.Name, dossierId, PartimMode.Requested)
+            var models = _studentFacade.GetPartims(User.Identity.Name, fileId, PartimMode.Requested)
                 .ProjectTo<PartimViewModel>();
 
             return PartialView(models.ToArray());
@@ -134,12 +133,12 @@ namespace VTP2015.Modules.Student
 
         [Route("AvailablePartimsWidget")]
         [HttpGet]
-        public ActionResult AvailablePartimsWidget(int dossierId)
+        public ActionResult AvailablePartimsWidget(int fileId)
         {
-            if (!_studentFacade.IsFileFromStudent(User.Identity.Name, dossierId))
+            if (!_studentFacade.IsFileFromStudent(User.Identity.Name, fileId))
                 return RedirectToAction("Index");
 
-            var models = _studentFacade.GetPartims(User.Identity.Name, dossierId, PartimMode.Available)
+            var models = _studentFacade.GetPartims(User.Identity.Name, fileId, PartimMode.Available)
                 .ProjectTo<PartimViewModel>();
 
             return PartialView(models.ToArray());
@@ -157,9 +156,9 @@ namespace VTP2015.Modules.Student
 
         [Route("RequestDetailWidget")]
         [HttpGet]
-        public PartialViewResult RequestDetailWidget(int dossierId)
+        public PartialViewResult RequestDetailWidget(int fileId)
         {
-            var models = _studentFacade.GetRequestByFileId(dossierId)
+            var models = _studentFacade.GetRequestByFileId(fileId)
                 .ProjectTo<RequestDetailViewModel>();
 
             return PartialView(models.ToArray());
@@ -191,41 +190,45 @@ namespace VTP2015.Modules.Student
         }
 
         [Route("AddAanvraag")]
-        [HttpPost]
         public ActionResult AddAanvraag(AddRequestViewModel viewModel)
         {
-            return Content("");
+            if (_studentFacade.IsFileFromStudent(User.Identity.Name, viewModel.FileId)) Content("Don't cheat!");
+            return Content(_studentFacade.AddRequestInFile(viewModel.FileId,viewModel.Code));
         }
 
         [Route("SaveAanvraag")]
-        [HttpPost]
         public ActionResult SaveAanvraag(RequestViewModel viewModel)
         {
-            if(viewModel.Evidence == null) return Content("Geen bewijzen!");
-            //viewModel.Evidence = viewModel.Evidence.Distinct().ToArray();
-            //viewModel.Evidence.Select(bewijsId => _studentFacade.GetEvidenceById(bewijsId)).ToList();
+            var requestId = int.Parse(viewModel.RequestId);
+            if (_studentFacade.IsRequestFromStudent(viewModel.FileId, requestId, User.Identity.Name)) Content("Don't cheat!");
 
             var request = new Request
             {
+                Id = requestId,
                 FileId = viewModel.FileId,
-                Argumentation = viewModel.Argumentation,
-                LastChanged = DateTime.Now,
-                Evidence = viewModel.Evidence.Select(evidenceId => new Evidence
+                Argumentation = viewModel.Argumentation
+            }; ;
+            if (viewModel.Evidence != null)
+            {
+                viewModel.Evidence = viewModel.Evidence.Distinct().ToArray();
+                request.Evidence = viewModel.Evidence.Select(evidenceId => new Evidence
                 {
                     Id = evidenceId
-                }).AsQueryable()
-            };
+                    }).AsQueryable();
+            }
+
 
             return Content(!_studentFacade.SyncRequestInFile(request) ? "Don't cheat!" : "Saved!");
         }
 
         [Route("Delete")]
         [HttpPost]
-        public ActionResult DeleteAanvraag(int dossierId, int aanvraagId)
+        public ActionResult DeleteAanvraag(int fileId, string requestId)
         {
-            return _studentFacade.IsRequestFromStudent(dossierId, aanvraagId, User.Identity.Name)
+            var aanvraagId = int.Parse(requestId);
+            return !_studentFacade.IsRequestFromStudent(fileId, aanvraagId, User.Identity.Name)
                 ? Content("Don't cheat!")
-                : Content(!_studentFacade.DeleteRequest(dossierId, aanvraagId)
+                : Content(!_studentFacade.DeleteRequest(fileId, aanvraagId)
                     ? "RequestPartimInformation bestaat niet!"
                     : "Voltooid!");
         }

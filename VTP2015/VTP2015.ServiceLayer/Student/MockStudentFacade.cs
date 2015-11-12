@@ -17,7 +17,7 @@ namespace VTP2015.ServiceLayer.Student
             return "";
         }
 
-        public void InsertEvidence(Evidence evidence)
+        public void InsertEvidence(Evidence evidence, string studentMail)
         {
             
         }
@@ -68,7 +68,7 @@ namespace VTP2015.ServiceLayer.Student
         {
             var evidence = new List<Evidence>
             {
-                new Evidence { Description = "first evidence", StudentMail = "sam.de.creus@student.howest.be", Path = " "} //TODO: Path
+                new Evidence { Description = "first evidence", Path = " "} //TODO: Path
             };
 
             return evidence.AsQueryable();
@@ -85,7 +85,7 @@ namespace VTP2015.ServiceLayer.Student
             {
                 new PartimInformation
                 {
-                    ModuleId = 1,
+                    Code = "SDEV",
                     SuperCode = "",
                     ModuleName = "Software ontwikkeling",
                     PartimName = "C#"
@@ -105,7 +105,6 @@ namespace VTP2015.ServiceLayer.Student
                     //Status = Status.Untreated,
                     //Evidence = new List<Evidence>().AsQueryable(),
                     FileId = 1,
-                    LastChanged = DateTime.Now,
                     //PartimInformationId = 1,
                 }
             };
@@ -123,8 +122,7 @@ namespace VTP2015.ServiceLayer.Student
             return new Evidence
             {
                 Description = "description",
-                Path = "",
-                StudentMail = "sam.de.creus@student.howest.be"
+                Path = ""
             };
         }
 
@@ -133,7 +131,7 @@ namespace VTP2015.ServiceLayer.Student
             return new PartimInformation
             {
                 ModuleName = "C#",
-                ModuleId = 1
+                Code = "SDEV"
             };
         }
 
@@ -153,6 +151,11 @@ namespace VTP2015.ServiceLayer.Student
         }
 
         public Education GetEducation(string studentMail)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string AddRequestInFile(int fileId, string code)
         {
             throw new NotImplementedException();
         }

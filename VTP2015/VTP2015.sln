@@ -11,10 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTP2015.DataAccess", "VTP20
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FD78AE78-BD1F-451C-A9A4-2556E8DB8795}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{F424ADC1-7A63-42A6-8426-465421FB0A7E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{C9EF3BF5-7134-4DA7-BFA8-C2B237B7C699}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0CD8E614-EAC3-4AC5-950B-078B0AE5BB8B}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -23,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0CD8E6
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTP2015.ServiceLayer", "VTP2015.ServiceLayer\VTP2015.ServiceLayer.csproj", "{FCE6CC8C-02F0-4636-8920-5569B3A33CE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{7003D507-81B1-4279-9CB1-BB22E6B598EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,12 +44,15 @@ Global
 		{FCE6CC8C-02F0-4636-8920-5569B3A33CE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCE6CC8C-02F0-4636-8920-5569B3A33CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCE6CC8C-02F0-4636-8920-5569B3A33CE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7003D507-81B1-4279-9CB1-BB22E6B598EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7003D507-81B1-4279-9CB1-BB22E6B598EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7003D507-81B1-4279-9CB1-BB22E6B598EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7003D507-81B1-4279-9CB1-BB22E6B598EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F424ADC1-7A63-42A6-8426-465421FB0A7E} = {FD78AE78-BD1F-451C-A9A4-2556E8DB8795}
-		{C9EF3BF5-7134-4DA7-BFA8-C2B237B7C699} = {FD78AE78-BD1F-451C-A9A4-2556E8DB8795}
+		{7003D507-81B1-4279-9CB1-BB22E6B598EE} = {FD78AE78-BD1F-451C-A9A4-2556E8DB8795}
 	EndGlobalSection
 EndGlobal

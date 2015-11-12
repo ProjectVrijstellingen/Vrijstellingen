@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using VTP2015.Infrastructure.Tasks;
 using VTP2015.Modules.Student.ViewModels;
 using VTP2015.ServiceLayer.Student.Models;

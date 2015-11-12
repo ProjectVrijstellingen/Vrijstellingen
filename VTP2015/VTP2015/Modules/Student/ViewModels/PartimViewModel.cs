@@ -4,7 +4,8 @@
     {
         public string SuperCode { get; set; }
         public string PartimName { get; set; }
-        public string ModuleId { get; set; }
+        public string Code { get; set; }
         public string ModuleName { get; set; }
+        public int TotalCount { get; set; }
     }
 }
