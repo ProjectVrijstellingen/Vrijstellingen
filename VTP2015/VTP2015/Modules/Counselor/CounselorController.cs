@@ -62,7 +62,7 @@ namespace VTP2015.Modules.Counselor
 
         }
 
-        [Route("RequestDetailWidget")]
+        [Route("RequestDetailWidget")]  
         [HttpGet]
         public PartialViewResult RequestDetailWidget()
         {
@@ -73,7 +73,7 @@ namespace VTP2015.Modules.Counselor
         }
 
         [Route("SendReminder")]
-        [HttpPost]
+        [HttpGet]
         public ActionResult SendReminder(int aanvraagId)
         {
             _counselorFacade.SendReminder(aanvraagId);

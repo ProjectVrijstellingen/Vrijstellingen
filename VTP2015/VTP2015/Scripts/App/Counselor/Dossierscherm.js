@@ -21,7 +21,7 @@ var SearchQueryKeyupEventHandler = function () {
 };
 
 var appendFilesToArray = function () {
-    $("#files .row div").each(function () {
+    $("dossier").each(function () {
         files.push(this);
     });
 };

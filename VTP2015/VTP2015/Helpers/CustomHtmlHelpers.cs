@@ -14,17 +14,18 @@ namespace VTP2015.Helpers
 
             foreach (var module in modules)
             {
+                var count = module.Partims.Count;
                 var tag = new TagBuilder("div");
-                tag.Attributes.Add("data-moduleid",module.ModuleId.ToString());
+                tag.Attributes.Add("data-moduleid",module.Code);
 
                 var moduleNameTag = new TagBuilder("span");
-                moduleNameTag.AddCssClass("name h4 module");
+                moduleNameTag.AddCssClass("name h4" + (count == module.TotalCount && deletable ? " module" : ""));
                 moduleNameTag.SetInnerText(module.Name);
                 tag.InnerHtml += moduleNameTag;
-                tag.InnerHtml += ShowGlyphicon(html, "remove", "btn badge" + (deletable ? "" : " hide"));
+                tag.InnerHtml += ShowGlyphicon(html, "remove", "btn badge" + (count == module.TotalCount && deletable ? "" : " hide"));
 
                 var moduleTag = new TagBuilder("ul");
-                moduleTag.AddCssClass("list-group");
+                moduleTag.AddCssClass("list-group" + (count == module.TotalCount && deletable ? " hide" : ""));
                 foreach (var partim in module.Partims)
                 {
                     var partimTag = new TagBuilder("li");
@@ -88,11 +89,15 @@ namespace VTP2015.Helpers
             foreach (var aanvraag in aanvragen)
             {
                 var articleTag = new TagBuilder("article");
-                articleTag.Attributes.Add("id",aanvraag.RequestId.ToString());
+                articleTag.Attributes.Add("id",aanvraag.Code);
+                articleTag.Attributes.Add("data-requestId",aanvraag.Id.ToString());
                 articleTag.AddCssClass("hide");
-                var naamTag = new TagBuilder("h3");
-                naamTag.SetInnerText(aanvraag.Naam);
-                articleTag.InnerHtml += naamTag;
+                var moduleTag = new TagBuilder("h3");
+                moduleTag.SetInnerText(aanvraag.ModuleName);
+                articleTag.InnerHtml += moduleTag;
+                var partimTag = new TagBuilder("h4");
+                partimTag.SetInnerText(aanvraag.PartimName);
+                articleTag.InnerHtml += partimTag;
                 var argumentatieLabelTag = new TagBuilder("label");
                 argumentatieLabelTag.Attributes.Add("for","argumentatie");
                 argumentatieLabelTag.AddCssClass("control-label");

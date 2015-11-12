@@ -4,6 +4,7 @@ using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
 using VTP2015.ServiceLayer.Counselor.Mappings;
+using VTP2015.ServiceLayer.Mail;
 using Status = VTP2015.ServiceLayer.Counselor.Models.Status;
 
 namespace VTP2015.ServiceLayer.Counselor
@@ -88,7 +89,14 @@ namespace VTP2015.ServiceLayer.Counselor
 
         public void SendReminder(int aanvraagId)
         {
-            throw new System.NotImplementedException();//todo
+            IMailer mailer = new Mailer();
+            var mail = mailer.ProduceMail();
+
+            mail.To = _requestRepository.GetById(aanvraagId).File.Student.Email;
+
+            mail.Body = "this is the body of the mail, now fuck off";
+
+            mailer.SendMail(mail);
         }
     }
 }

@@ -14,7 +14,6 @@ namespace VTP2015.DataAccess.Config
             ToTable("Requests");
             Property(t => t.Name).IsRequired();
             Property(t => t.LastChanged).IsRequired();
-            Property(t => t.Argumentation).IsRequired();
 
 
             // Relationships

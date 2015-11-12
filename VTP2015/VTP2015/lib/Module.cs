@@ -6,7 +6,7 @@ namespace VTP2015.lib
     {
         private List<Partim> _partims = new List<Partim>();
 
-        public int ModuleId { get; set; }
+        public string Code { get; set; }
 
         public List<Partim> Partims
         {
@@ -15,6 +15,6 @@ namespace VTP2015.lib
         }
 
         public string Name { get; set; }
-
+        public int TotalCount { get; set; }
     }
 }
