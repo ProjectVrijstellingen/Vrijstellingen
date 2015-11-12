@@ -2,7 +2,7 @@
 @model VTP2015.Modules.Student.ViewModels.PartimViewModel[]
 
 <div id="aangevraagdePartimsColumn" data-url="@Url.Action("DeleteAanvraag", "Student")" class="col-md-6">
-    @using (Html.BeginPanel("Aangevraagde modules"))
+    @using (Html.BeginPanel("Aangevraagde modules<span id=\"BtnIndienen\" class=\"btn badge\">Indienen</span>"))
     {
         @Html.ShowPartimList(Model, true)
     }

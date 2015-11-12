@@ -20,6 +20,12 @@ namespace VTP2015.ServiceLayer.Student.Mappings
                 .ForMember(x => x.TotalCount,
                 ops => ops.MapFrom(x => x.Module.PartimInformation.Count));
             Mapper.CreateMap<Evidence, Models.Evidence>();
+            Mapper.CreateMap<RequestPartimInformation, Models.PartimInformation>()
+                .ForMember(x => x.SuperCode, opt => opt.MapFrom(x => x.PartimInformation.SuperCode))
+                .ForMember(x => x.Code, opt => opt.MapFrom(x => x.PartimInformation.Module.Code))
+                .ForMember(x => x.ModuleName, opt => opt.MapFrom(x => x.PartimInformation.Module.Name))
+                .ForMember(x => x.PartimName, opt => opt.MapFrom(x => x.PartimInformation.Partim.Name))
+                .ForMember(x => x.TotalCount, opt => opt.MapFrom(x => x.Request.RequestPartimInformations.Count));
 
             Mapper.CreateMap<Models.Evidence, Evidence>();
             Mapper.CreateMap<Models.File, File>();
