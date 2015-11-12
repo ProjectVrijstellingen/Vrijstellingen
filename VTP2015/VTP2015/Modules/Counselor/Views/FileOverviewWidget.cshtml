@@ -2,7 +2,7 @@
 
 <div>
     <div class="row">
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-2">
             <input type="text" class="form-control" id="searchQuery" placeholder="Zoek op naam">
         </div>
         <div class="form-group col-md-2">
@@ -15,18 +15,18 @@
                 </label>
             </div>
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-5">
             <div class="btn-group" data-toggle="buttons">
                 <span class="button-checkbox">
-                    <button id="btnGreen" type="button" class="btn" data-color="success" onclick="toggleGreen()">Afgewerkt</button>
+                    <button id="btnGreen" type="button" class="btn" data-color="success" onclick="toggleGreen()">Afgewerkt<span class="badge badge-success" style="margin-left:1em">0</span></button>
                     <input id="chGreen" type="checkbox" class="hidden"/>
                 </span>
                 <span class="button-checkbox">
-                    <button id="btnOrange" type="button" class="btn" data-color="warning" onclick="toggleOrange()">Bezig</button>
+                    <button id="btnOrange" type="button" class="btn" data-color="warning" onclick="toggleOrange()">Bezig<span class="badge badge-warning" style="margin-left:1em">0</span></button>
                     <input id="chOrange" type="checkbox" class="hidden" checked/>
                 </span>
                 <span class="button-checkbox">
-                    <button id="btnRed" type="button" class="btn" data-color="danger" onclick="toggleRed()">Nieuw</button>
+                    <button id="btnRed" type="button" class="btn" data-color="danger" onclick="toggleRed()">Nieuw<span class="badge badge-danger" style="margin-left:1em">0</span></button>
                     <input id="chRed" type="checkbox" class="hidden" checked/>
                 </span>
             </div>
@@ -80,7 +80,7 @@
                         @{
                             var perc = 100 - (dossier.DaysRemaining * 100 / 21);
                         }
-                        <div class="panel panel-text panel-@dossier.Color panel-default clearfix panel-body">
+                        <div class="panel panel-text panel-@dossier.Color-vtp panel-default clearfix panel-body">
                             <p class="naam">@dossier.StudentFirstName @dossier.StudentName</p>
                             <div id="kader">
                                 <a href="#" id="links">

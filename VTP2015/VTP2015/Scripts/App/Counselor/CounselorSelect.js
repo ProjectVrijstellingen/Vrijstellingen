@@ -1,16 +1,20 @@
 ﻿$(document).ready(function () {
     if (!$("#btnGreen").hasClass("btn-success")) {
-        $(".panel-success").parent().addClass("hidden");
+        $(".panel-success-vtp").parent().addClass("hidden");
         $(".success").addClass("hidden");
     }
     if (!$("#btnOrange").hasClass("btn-warning")) {
-        $(".panel-warning").parent().addClass("hidden");
+        $(".panel-warning-vtp").parent().addClass("hidden");
         $(".warning").addClass("hidden");
     }
     if (!$("#btnRed").hasClass("btn-danger")) {
-        $(".panel-danger").parent().addClass("hidden");
+        $(".panel-danger-vtp").parent().addClass("hidden");
         $(".danger").addClass("hidden");
     }
+
+    $(".badge-success").text($("#blok").find(".panel-success-vtp").length);
+    $(".badge-warning").text($("#blok").find(".panel-warning-vtp").length);
+    $(".badge-danger").text($("#blok").find(".panel-danger-vtp").length);
 });
 
 function toggle(panel) {
@@ -22,16 +26,16 @@ function toggle(panel) {
 }
 
 function toggleGreen() {
-    toggle($(".panel-success").parent());
+    toggle($(".panel-success-vtp").parent());
     toggle($(".success"));
 }
 
 function toggleOrange() {
-    toggle($(".panel-warning").parent());
+    toggle($(".panel-warning-vtp").parent());
     toggle($(".warning"));
 }
 
 function toggleRed() {
-    toggle($(".panel-danger").parent());
+    toggle($(".panel-danger-vtp").parent());
     toggle($(".danger"));
 }

@@ -30,19 +30,19 @@
     color: white;
 }
 
-.panel-success {
+.panel-success-vtp {
     background-color: #18bc9c;
 }
 
-.panel-info {
+.panel-info-vtp {
     background-color: #3498db;
 }
 
-.panel-warning {
+.panel-warning-vtp {
     background-color: #f39c12;
 }
 
-.panel-danger {
+.panel-danger-vtp {
     background-color: #e74c3c;
 }
 
