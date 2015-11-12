@@ -1,4 +1,6 @@
-﻿namespace VTP2015.ServiceLayer.Counselor.Models
+﻿using System;
+
+namespace VTP2015.ServiceLayer.Counselor.Models
 {
     public class File
     {
@@ -9,5 +11,7 @@
         public int PercentageOfRequestsOpen { get; set; }
         public string Route { get; set; }
         public string AcademicYear { get; set; }
+        public DateTime DateCreated { get; set; }
+
     }
 }

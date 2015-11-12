@@ -53,7 +53,8 @@ namespace VTP2015.ServiceLayer.Counselor
                     PercentageOfRequestsOpen = 50,
                     Route = "ssd",
                     StudentFirstName = "Sam",
-                    StudentName = "De Creus"
+                    StudentName = "De Creus",
+                    DateCreated = Convert.ToDateTime("01-11-2015 08:05:07")
                 },
                 new File
                 {
@@ -63,7 +64,8 @@ namespace VTP2015.ServiceLayer.Counselor
                     PercentageOfRequestsOpen = 75,
                     Route = "cccp",
                     StudentFirstName = "Toon",
-                    StudentName = "Swyzen"
+                    StudentName = "Swyzen",
+                    DateCreated = Convert.ToDateTime("23-10-2015 08:05:07")
                 },
                 new File
                 {
@@ -73,7 +75,8 @@ namespace VTP2015.ServiceLayer.Counselor
                     PercentageOfRequestsOpen = 100,
                     Route = "cccp",
                     StudentFirstName = "Joachim",
-                    StudentName = "Bockland"
+                    StudentName = "Bockland",
+                    DateCreated = Convert.ToDateTime("27-10-2015 08:05:07")
                 },
                 new File
                 {
@@ -83,7 +86,8 @@ namespace VTP2015.ServiceLayer.Counselor
                     PercentageOfRequestsOpen = 90,
                     Route = "ssd",
                     StudentFirstName = "Olivier",
-                    StudentName = "Sourie"
+                    StudentName = "Sourie",
+                    DateCreated = Convert.ToDateTime("04-11-2015 08:05:07")
                 },
                 new File
                 {
@@ -93,7 +97,8 @@ namespace VTP2015.ServiceLayer.Counselor
                     PercentageOfRequestsOpen = 0,
                     Route = "ssd",
                     StudentFirstName = "Joske",
-                    StudentName = "Vermeulen"
+                    StudentName = "Vermeulen",
+                    DateCreated = Convert.ToDateTime("10-11-2015 08:05:07")
                 },
 
             }.AsQueryable();

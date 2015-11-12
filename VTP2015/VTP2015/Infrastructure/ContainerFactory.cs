@@ -11,8 +11,8 @@ namespace VTP2015.Infrastructure
             {
                 cfg.AddRegistry(new StandardRegistry());
                 cfg.AddRegistry(new ControllerRegistry());
-                cfg.AddRegistry(new ServiceLayerRegistry());
-                //cfg.AddRegistry(new MockServiceLayerRegistry());
+                //cfg.AddRegistry(new ServiceLayerRegistry());
+                cfg.AddRegistry(new MockServiceLayerRegistry());
                 cfg.AddRegistry(new TaskRegistry());
                 cfg.AddRegistry(new RepostitoryRegistry());
             });

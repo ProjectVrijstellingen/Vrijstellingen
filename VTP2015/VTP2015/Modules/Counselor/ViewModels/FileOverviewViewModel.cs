@@ -1,4 +1,6 @@
-﻿namespace VTP2015.Modules.Counselor.ViewModels
+﻿using System;
+
+namespace VTP2015.Modules.Counselor.ViewModels
 {
     public class FileOverviewViewModel
     {
@@ -9,5 +11,6 @@
         public int PercentageOfRequestsOpen { get; set; }
         public string Route { get; set; }
         public string AcademicYear { get; set; }
+        public DateTime DateCreated { get; set; }
     }
 }
