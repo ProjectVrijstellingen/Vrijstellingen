@@ -272,9 +272,19 @@ $(document).on("click", ".glyphicon-remove", function (e) {
 
 $(document).ready(function () {
     $("bewijzenColumn").addClass("hide");
-    $('[data-toggle="tooltip"]').tooltip();
+    $("[data-toggle=\"tooltip\"]").tooltip();
 });
 
-//$(document).on("hover", '[data-toggle="tooltip"]', function () {
-//    $(this).tooltip();
-//});
+$(document).on("click", "#submit", function () {
+    var fileId = document.URL.split("/")[document.URL.split("/").length - 1];
+    $.ajax({
+        url: $("#beschikbarePartimsColumn").data("url"),
+        data: {
+            fileId: fileId
+        },
+        type: "POST",
+        success: function (data) {
+            
+        }
+    });
+});
