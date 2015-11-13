@@ -85,7 +85,11 @@
     <Compile Include="Lecturer\Models\File.cs" />
     <Compile Include="Lecturer\Models\Module.cs" />
     <Compile Include="Lecturer\Models\Partim.cs" />
+    <Compile Include="Lecturer\Models\PartimInformation.cs" />
+    <Compile Include="Lecturer\Models\Request.cs" />
     <Compile Include="Lecturer\Models\RequestPartimInformation.cs" />
+    <Compile Include="Lecturer\Models\Status.cs" />
+    <Compile Include="Lecturer\Models\Student.cs" />
     <Compile Include="Mail\IMail.cs" />
     <Compile Include="Mail\IMailer.cs" />
     <Compile Include="Mail\Mail.cs" />

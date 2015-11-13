@@ -8,7 +8,7 @@
         @{ var getoondeAanvraagId = 1; }
         @foreach (var aanvraag in Model)
         {
-            <div id="aanvraag-@getoondeAanvraagId" class="aanvraag hide" data-studentid="@aanvraag.StudentId" data-RequestPartimInformationid="@aanvraag.RequestId">
+            <div id="aanvraag-@getoondeAanvraagId" class="aanvraag hide" data-studentid="@aanvraag.Student.Id" data-aanvraagid="@aanvraag.RequestId">
 
                 <p>@aanvraag.ModuleName - @aanvraag.PartimName</p>
                 <p>

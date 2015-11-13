@@ -23,8 +23,8 @@ namespace VTP2015.Modules.Lecturer
         [Route("")]
         public ViewResult Index()
         {
-            ViewBag.DocentHeeftAanvragen = _lecturerFacade
-                .GetUntreadedRequests(User.Identity.Name).Any();
+            ViewBag.DocentHeeftAanvragen = _lecturerFacade.hasAny(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Untreated);
+               // .GetRequests(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Untreated).Any().ToString();
 
             return View();
         }
@@ -43,7 +43,43 @@ namespace VTP2015.Modules.Lecturer
         [Route("RequestListWidget")]
         public PartialViewResult RequestListWidget()
         {
-            var viewModel = _lecturerFacade.GetUntreadedRequests(User.Identity.Name)
+            var viewModel = _lecturerFacade.GetRequests(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Untreated)
+                .ProjectTo<RequestListViewModel>();
+
+            return PartialView(viewModel);
+        }
+
+        [HttpGet]
+        [Route("Archive")]
+        public ViewResult Archive()
+        {
+            ViewBag.DocentHeeftApprovedAanvragen = _lecturerFacade
+                .GetRequests(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Approved).Any();
+
+            ViewBag.DocentHeeftRejectedAanvragen = _lecturerFacade
+                .GetRequests(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Rejected).Any();
+
+
+
+            return View();
+        }
+
+        [HttpGet]
+        [Route("ApprovedRequestListWidget")]
+        public PartialViewResult ApprovedRequestListWidget()
+        {
+
+            var viewModel = _lecturerFacade.GetRequests(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Approved)
+                .ProjectTo<RequestListViewModel>();
+
+            return PartialView(viewModel);
+        }
+
+        [HttpGet]
+        [Route("RejectedRequestListWidget")]
+        public PartialViewResult RejectedRequestListWidget()
+        {
+            var viewModel = _lecturerFacade.GetRequests(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Rejected)
                 .ProjectTo<RequestListViewModel>();
 
             return PartialView(viewModel);

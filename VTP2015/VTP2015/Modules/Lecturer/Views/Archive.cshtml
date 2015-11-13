@@ -1,0 +1,29 @@
+﻿@using System.Linq;
+
+@model IQueryable<VTP2015.Modules.Lecturer.ViewModels.StudentListViewModel>
+@{
+    ViewBag.Title = "Lecturer - Archive";
+}
+
+<br/>
+
+<div class="container">
+    <div class="container">
+        <div class="row" id="dossiers">
+            @if (ViewBag.DocentHeeftApprovedAanvragen)
+            {
+            <div class="col-md-10">
+                @Html.Action("ApprovedRequestListWidget")
+            </div>
+            }
+            @if (ViewBag.DocentHeeftRejectedAanvragen)
+            {
+                <div class="col-md-10">
+                    @Html.Action("RejectedRequestListWidget")
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/lecturer")

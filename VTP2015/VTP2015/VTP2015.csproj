@@ -321,6 +321,9 @@
     </Content>
     <Content Include="packages.config" />
     <Content Include="Modules\Feedback\Views\Index.cshtml" />
+    <Content Include="Modules\Lecturer\Views\ApprovedRequestListWidget.cshtml" />
+    <Content Include="Modules\Lecturer\Views\Archive.cshtml" />
+    <Content Include="Modules\Lecturer\Views\RejectedRequestListWidget.cshtml" />
     <None Include="Properties\PublishProfiles\Foundation.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
