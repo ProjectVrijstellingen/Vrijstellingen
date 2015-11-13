@@ -1,8 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.UnitOfWork;
-using VTP2015.Entities;
 using VTP2015.ServiceLayer.Lecturer.Mappings;
+using VTP2015.ServiceLayer.Lecturer.Models;
 
 namespace VTP2015.ServiceLayer.Lecturer
 {
@@ -20,43 +21,63 @@ namespace VTP2015.ServiceLayer.Lecturer
             autoMaperConfig.Execute();
         }
 
-        private IQueryable<Entities.RequestPartimInformation> GetUntreadedRequestEntities(string email)
+        private IQueryable<RequestPartimInformation> GetRequestEntities(string email, Status status)
         {
             return _lecturerRepository.Table.Where(b => b.Email == email)
                 .SelectMany(p => p.PartimInformation)
                 .SelectMany(p => p.RequestPartimInformations)
-                .Where(a => a.Status == Status.Untreated);
+                .Where(a => a.Status == (Entities.Status)(int)status)
+                .ProjectTo<RequestPartimInformation>();
         }
 
-        public IQueryable<Models.RequestPartimInformation> GetUntreadedRequests(string email)
+        public IQueryable<RequestPartimInformation> GetRequests(string email, Status status)
         {
-            return GetUntreadedRequestEntities(email).ProjectTo<Models.RequestPartimInformation>();
+            //return GetRequestEntities(email, status).ProjectTo<RequestPartimInformation>();
+            return _lecturerRepository.Table.Where(b => b.Email == email)
+                .SelectMany(p => p.PartimInformation)
+                .SelectMany(p => p.RequestPartimInformations)
+                .Where(a => a.Status == (Entities.Status)(int)status)
+                .ProjectTo<RequestPartimInformation>();
         }
 
-        public IQueryable<Models.RequestPartimInformation> GetUntreadedRequestsDistinct(string email)
+        public IQueryable<RequestPartimInformation> GetUntreadedRequestsDistinct(string email)
         {
-            var requestPartimInformations = GetUntreadedRequestEntities(email);
+           // var requestPartimInformations = GetRequestEntities(email, Status.Untreated);
 
-            var result = from requestPartimInformation in requestPartimInformations
+            var result = from requestPartimInformation in _lecturerRepository.Table.Where(b => b.Email == email)
+                .SelectMany(p => p.PartimInformation)
+                .SelectMany(p => p.RequestPartimInformations)
+                .Where(a => a.Status == Entities.Status.Untreated)
+                //.ProjectTo<RequestPartimInformation>()
                          where requestPartimInformation.Id > 0
-                         group requestPartimInformation by requestPartimInformation.Request.File.Student.Id
+                         //group requestPartimInformation by requestPartimInformation.Request.File.Student.Id
+                         group requestPartimInformation by requestPartimInformation.Student.Id
                             into groups
                             select groups.FirstOrDefault();
 
-            return result.ProjectTo<Models.RequestPartimInformation>();
+            return result.ProjectTo<RequestPartimInformation>();
         }
 
         public bool Approve(int requestPartimInformationId, bool isApproved, string email)
         {
             var requestPartimInformation = _requestPartimInformationRepository.GetById(requestPartimInformationId);
 
-            if (requestPartimInformation.Status != Status.Untreated || requestPartimInformation.PartimInformation.Lecturer.Email != email)
+            if (requestPartimInformation.Status != (Entities.Status)(int)Status.Untreated || requestPartimInformation.PartimInformation.Lecturer.Email != email)
                 return false;
 
-            requestPartimInformation.Status = isApproved ? Status.Approved : Status.Rejected;
+            requestPartimInformation.Status = isApproved ? (Entities.Status)(int)Status.Approved : (Entities.Status)(int)Status.Rejected;
             _requestPartimInformationRepository.Update(requestPartimInformation);
             
             return true;
+        }
+
+        public bool hasAny(string email, Status status)
+        {
+            return _lecturerRepository.Table.Where(x => x.Email==email)
+                .SelectMany(p => p.PartimInformation)
+                .SelectMany(p => p.RequestPartimInformations)
+                .Where(a => a.Status == (Entities.Status)(int)status)
+                .Any();
         }
     }
 }

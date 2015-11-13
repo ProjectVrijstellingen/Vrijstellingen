@@ -19,17 +19,21 @@
                 <div class="col-md-8">
                     @Html.Action("RequestListWidget")
                 </div>
-                
-                <div class="opinionButtons row">
-                    <input onclick="hideRequestList()" class="btn hideRequest" value="Hide requests" type="button">
-                    <input onclick="hideStudentList()" class="btn hideStudent" value="Hide students" type="button">
-                </div>
             }
             else
             {
                 <h2 class="page-header">Er zijn geen openstaande aanvragen</h2>
             }
+
         </div>
+
+@if (ViewBag.DocentHeeftAanvragen)
+    {
+        <div class="opinionButtons row">
+            <input onclick="hideRequestList()" class="btn hideRequest" value="Hide requests" type="button">
+            <input onclick="hideStudentList()" class="btn hideStudent" value="Hide students" type="button">
+        </div>
+    }
     </div>
 </div>
 
