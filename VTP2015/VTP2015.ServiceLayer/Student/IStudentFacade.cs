@@ -5,6 +5,7 @@ using Evidence = VTP2015.ServiceLayer.Student.Models.Evidence;
 using File = VTP2015.ServiceLayer.Student.Models.File;
 using PartimInformation = VTP2015.ServiceLayer.Student.Models.PartimInformation;
 using Request = VTP2015.ServiceLayer.Student.Models.Request;
+using FileStatus = VTP2015.ServiceLayer.Student.Models.FileStatus;
 
 namespace VTP2015.ServiceLayer.Student
 {
@@ -28,5 +29,6 @@ namespace VTP2015.ServiceLayer.Student
         Education GetEducation(string studentMail);
         string AddRequestInFile(int fileId, string code);
         void SumbitFile(int fileId);
+        FileStatus GetFileStatus(int fileId);
     }
 }

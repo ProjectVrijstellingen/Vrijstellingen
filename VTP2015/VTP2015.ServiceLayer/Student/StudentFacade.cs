@@ -149,7 +149,7 @@ namespace VTP2015.ServiceLayer.Student
                     Id = request.Id,
                     ModuleName = request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Name,
                     PartimName =
-                        request.RequestPartimInformations.Count > 1
+                        request.RequestPartimInformations.Count == request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.PartimInformation.Count
                             ? ""
                             : request.RequestPartimInformations.FirstOrDefault().PartimInformation.Partim.Name,
                     Code =
@@ -243,6 +243,11 @@ namespace VTP2015.ServiceLayer.Student
             if(file.First().FileStatus == FileStatus.InProgress) file.First().DateCreated = DateTime.Now;
             file.First().FileStatus = FileStatus.Submitted;
             file.SelectMany(x => x.Requests).SelectMany(x => x.RequestPartimInformations).Where(x => x.Status == Status.Empty).Each(x => x.Status = Status.Untreated);
+        }
+
+        public Models.FileStatus GetFileStatus(int fileId)
+        {
+            return (Models.FileStatus) (int) _fileRepository.GetById(fileId).FileStatus;
         }
 
         public bool SyncRequestInFile(Models.Request requestModel)

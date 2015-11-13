@@ -115,7 +115,7 @@ namespace VTP2015.Modules.Student
             if (!_studentFacade.IsFileFromStudent(User.Identity.Name, fileId))
                 return RedirectToAction("Index");
 
-            return View();
+            return View(_studentFacade.GetFileStatus(fileId));
         }
 
         [Route("RequestedPartimsWidget")]

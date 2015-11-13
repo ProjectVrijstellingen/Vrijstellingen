@@ -55,7 +55,7 @@ function addRequest(code) {
         type: "POST",
         success: function (data) {
             if (data === "fake!") Location.reload();
-            $("#aanvraagDetail").find("[data-code=\"" + code + "\"]").data("requestid", data);
+            $("#aanvraagDetail").find("[data-code=\"" + code + "\"]").attr("data-requestid", data);
             $("#aanvraagDetail").find("[data-code=\"" + code + "\"]").attr("id", data);
         }
     });
@@ -137,7 +137,7 @@ $(document).on("click", ".partim", function () {
         clon.find("h3").text(moduleNaam);
         clon.find("h4").text("");
         clon.find("h4").append($(this).children("span:first").clone());
-        clon.data("code", supercode);
+        clon.attr("data-code", supercode);
         addRequest(supercode);
         clon.appendTo("section");
     } else {
@@ -161,7 +161,6 @@ $(document).on("click", ".partim", function () {
 $(document).on("click", ".module", function () {
     console.log("module clicked");
     var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
-    var aanvraagDetail = document.getElementById("aanvraagDetail");
     var parentDiv = $(this).parent()[0];
     var moduleid = $(parentDiv).data("moduleid");
     console.log(moduleid);
@@ -177,7 +176,7 @@ $(document).on("click", ".module", function () {
         var clon = $("#dummy").clone();
         clon.find("h3").text(moduleNaam);
         clon.find("h4").text("");
-        clon.data("code", moduleid);
+        clon.attr("data-code", moduleid);
         addRequest(moduleid);
         clon.appendTo("section");
     } else {

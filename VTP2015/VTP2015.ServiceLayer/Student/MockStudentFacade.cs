@@ -166,5 +166,10 @@ namespace VTP2015.ServiceLayer.Student
         {
             throw new NotImplementedException();
         }
+
+        public FileStatus GetFileStatus(int fileId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

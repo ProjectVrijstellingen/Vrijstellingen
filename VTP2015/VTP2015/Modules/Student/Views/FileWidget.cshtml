@@ -8,14 +8,7 @@
             @foreach (var file in Model)
             {
                 <li class="list-group-item">
-                    @if (file.FileStatus != FileStatus.Submitted)
-                    {
                         @Html.RouteLink(file.Description, new { controller = "Student", action = "File", fileId = file.Id })
-                    }
-                    else
-                    {
-                        @file.Description
-                    }
                 </li>
             }
         </ul>
