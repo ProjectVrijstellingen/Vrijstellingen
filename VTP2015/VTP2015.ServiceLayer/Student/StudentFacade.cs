@@ -10,6 +10,7 @@ using VTP2015.Entities;
 using VTP2015.ServiceLayer.Student.Mappings;
 using VTP2015.ServiceLayer.Synchronisation;
 using File = VTP2015.Entities.File;
+using PartimMode = VTP2015.ServiceLayer.Student.Models.PartimMode;
 
 namespace VTP2015.ServiceLayer.Student
 {
@@ -98,8 +99,7 @@ namespace VTP2015.ServiceLayer.Student
         public IQueryable<Models.File> GetFilesByStudentEmail(string email)
         {
             return _fileRepository
-                .Table.Where(f => f.Student.Email == email)
-                .ProjectTo<Models.File>();
+                .Table.Where(f => f.Student.Email == email).ProjectTo<Models.File>();
         }
 
         public IQueryable<Models.Evidence> GetEvidenceByStudentEmail(string email)
@@ -153,7 +153,7 @@ namespace VTP2015.ServiceLayer.Student
                             ? ""
                             : request.RequestPartimInformations.FirstOrDefault().PartimInformation.Partim.Name,
                     Code =
-                        request.RequestPartimInformations.Count > 1
+                        request.RequestPartimInformations.Count == request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.PartimInformation.Count
                             ? request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Code
                             : request.RequestPartimInformations.FirstOrDefault().PartimInformation.SuperCode,
                     Argumentation = request.Argumentation,
@@ -177,13 +177,6 @@ namespace VTP2015.ServiceLayer.Student
             var entity = _evidenceRepository.Table.First(e => e.Id == evidenceId);
 
             return Mapper.Map<Models.Evidence>(entity);
-        }
-
-        public Models.PartimInformation GetPartimInformationBySuperCode(string superCode)
-        {
-            var entity = _partimInformationRepository.Table.First(p => p.SuperCode == superCode);
-
-            return Mapper.Map<Models.PartimInformation>(entity);
         }
 
         public int InsertFile(Models.File file)

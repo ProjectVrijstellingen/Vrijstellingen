@@ -37,7 +37,7 @@ function changed(partimdetail) {
     clearTimeout(timer);
     var cons = false;
     $.each(partimdetails, function() {
-        if ($(this).attr("id") === $(partimdetail).attr("id")) cons = true;
+        if ($(this).data("code") === $(partimdetail).data("code")) cons = true;
     });
     if (!cons) partimdetails.push($(partimdetail));
     timer = setTimeout(savePartimdetails, saveTime);
@@ -55,7 +55,8 @@ function addRequest(code) {
         type: "POST",
         success: function (data) {
             if (data === "fake!") Location.reload();
-            $("#aanvraagDetail").find("#" + code).data("requestid", data);
+            $("#aanvraagDetail").find("[data-code=\"" + code + "\"]").data("requestid", data);
+            $("#aanvraagDetail").find("[data-code=\"" + code + "\"]").attr("id", data);
         }
     });
 }
@@ -114,7 +115,6 @@ $(document).on("keyup", ".form-control", function() {
 $(document).on("click", ".partim", function () {
     console.log("partim clicked");
     var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
-    var aanvraagDetail = document.getElementById("aanvraagDetail");
     var parentDiv = $(this).parent().parent()[0];
     var moduleid = $(parentDiv).data("moduleid");
     var supercode = $(this).data("supercode");
@@ -137,7 +137,7 @@ $(document).on("click", ".partim", function () {
         clon.find("h3").text(moduleNaam);
         clon.find("h4").text("");
         clon.find("h4").append($(this).children("span:first").clone());
-        clon.attr("id", supercode);
+        clon.data("code", supercode);
         addRequest(supercode);
         clon.appendTo("section");
     } else {
@@ -146,7 +146,7 @@ $(document).on("click", ".partim", function () {
             return;
         } else {
             hideShown();
-            var show = $(aanvraagDetail).find("#" + $(this).data("supercode"));
+            var show = $("#aanvraagDetail").find("[data-code=\"" + supercode + "\"]");
             $(this).addClass("active");
             show.removeClass("hide");
             show.addClass("nothidden");
@@ -164,6 +164,7 @@ $(document).on("click", ".module", function () {
     var aanvraagDetail = document.getElementById("aanvraagDetail");
     var parentDiv = $(this).parent()[0];
     var moduleid = $(parentDiv).data("moduleid");
+    console.log(moduleid);
     var moduleNaam = $(parentDiv).find(".h4").text();
 
     if ($.contains(beschikbarePartims, this)) {
@@ -176,7 +177,7 @@ $(document).on("click", ".module", function () {
         var clon = $("#dummy").clone();
         clon.find("h3").text(moduleNaam);
         clon.find("h4").text("");
-        clon.attr("id", moduleid);
+        clon.data("code", moduleid);
         addRequest(moduleid);
         clon.appendTo("section");
     } else {
@@ -185,7 +186,7 @@ $(document).on("click", ".module", function () {
             return;
         } else {
             hideShown();
-            var show = $(aanvraagDetail).find("#" + moduleid);
+            var show = $("#aanvraagDetail").find("[data-code=\"" + moduleid + "\"]");
             $(this).addClass("active");
             show.removeClass("hide");
             show.addClass("nothidden");
@@ -218,7 +219,7 @@ $(document).on("click", ".glyphicon-remove", function (e) {
         console.log(moduleNaam);
         if ($("#beschikbarePartimsColumn div[data-moduleid=\"" + moduleid + "\"]").length === 0) $("#beschikbarePartimsColumn .panel-body").append("<div data-moduleid=\"" + moduleid + "\"><span class=\"name h4 module\">" + moduleNaam + "</span><span class=\"glyphicon glyphicon-remove btn badge hide\"> </span><ul class=\"list-group\"></ul></div>");
         newParent = $("#beschikbarePartimsColumn").find("div[data-moduleid=\"" + moduleid + "\"] ul");
-        aanvraag = $("#aanvraagDetail").find("#" + $(that).data("supercode"));
+        aanvraag = $("#aanvraagDetail").find("[data-code=\"" + $(that).data("supercode") + "\"]");
         aanvraagId = $(aanvraag).data("requestid");
 
         $(that).detach();
@@ -240,7 +241,7 @@ $(document).on("click", ".glyphicon-remove", function (e) {
         parentDiv = $(that).parent()[0];
         moduleid = $(that).data("moduleid");
         moduleNaam = $(parentDiv).find(".h4").text();
-        aanvraag = $("#aanvraagDetail").find("#" + moduleid);
+        aanvraag = $("#aanvraagDetail").find("[data-code=\"" + moduleid + "\"]");
         aanvraagId = $(aanvraag).data("requestid");
         $(parentDiv).find("ul").removeClass("hide");
 

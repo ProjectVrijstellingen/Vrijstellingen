@@ -4,6 +4,7 @@
     {
         public string Name { get; set; }
         public string SuperCode { get; set; }
+        public int Status { get; set; }
 
     }
 }

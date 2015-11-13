@@ -193,7 +193,7 @@ namespace VTP2015.Modules.Student
         public ActionResult AddAanvraag(AddRequestViewModel viewModel)
         {
             if (_studentFacade.IsFileFromStudent(User.Identity.Name, viewModel.FileId)) Content("Don't cheat!");
-            return Content(_studentFacade.AddRequestInFile(viewModel.FileId,viewModel.Code.Replace("_"," ")));
+            return Content(_studentFacade.AddRequestInFile(viewModel.FileId,viewModel.Code));
         }
 
         [Route("SaveAanvraag")]

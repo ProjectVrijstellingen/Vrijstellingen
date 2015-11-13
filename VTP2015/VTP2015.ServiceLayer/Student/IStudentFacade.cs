@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using VTP2015.Entities;
+using VTP2015.ServiceLayer.Student.Models;
 using Evidence = VTP2015.ServiceLayer.Student.Models.Evidence;
 using File = VTP2015.ServiceLayer.Student.Models.File;
 using PartimInformation = VTP2015.ServiceLayer.Student.Models.PartimInformation;
@@ -21,7 +22,6 @@ namespace VTP2015.ServiceLayer.Student
         IQueryable<Request> GetRequestByFileId(int fileId);
         bool SyncStudentPartims(string email, string academicYear);
         Evidence GetEvidenceById(int evidenceId);
-        PartimInformation GetPartimInformationBySuperCode(string superCode);
         int InsertFile(File file);
         bool SyncRequestInFile(Request request);
         bool DeleteRequest(int fileId, int requestId);

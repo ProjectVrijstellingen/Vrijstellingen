@@ -14,7 +14,8 @@ namespace VTP2015.Modules.Student.Mappings
             Mapper.CreateMap<File, FileViewModel>();
             Mapper.CreateMap<File, FileListViewModel>();
             Mapper.CreateMap<Evidence, EvidenceListViewModel>();
-            Mapper.CreateMap<PartimInformation, PartimViewModel>();
+            Mapper.CreateMap<PartimInformation, PartimViewModel>()
+                .ForMember(x => x.Status, opt => opt.MapFrom(x => (int)x.Status));
             Mapper.CreateMap<Request, RequestDetailViewModel>();
         }
     }

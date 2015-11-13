@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using VTP2015.Entities;
+using PartimMode = VTP2015.ServiceLayer.Student.Models.PartimMode;
 using Evidence = VTP2015.ServiceLayer.Student.Models.Evidence;
 using File = VTP2015.ServiceLayer.Student.Models.File;
 using FileStatus = VTP2015.ServiceLayer.Student.Models.FileStatus;
