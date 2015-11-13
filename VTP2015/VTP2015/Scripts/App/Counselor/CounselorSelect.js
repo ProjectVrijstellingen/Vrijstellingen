@@ -1,39 +1,41 @@
-﻿
-$(document).ready(function () {
-    if (!$('#btnGreen').hasClass('btn-success')) {
-        $('.panel-groen').parent().addClass('hidden');
-        $('.success').addClass('hidden');
+﻿$(document).ready(function () {
+    if (!$("#btnGreen").hasClass("btn-success")) {
+        $(".panel-success-vtp").parent().addClass("hidden");
+        $(".success").addClass("hidden");
     }
-    if (!$('#btnOrange').hasClass('btn-warning')) {
-        $('.panel-oranje').parent().addClass('hidden');
-        $('.warning').addClass('hidden');
+    if (!$("#btnOrange").hasClass("btn-warning")) {
+        $(".panel-warning-vtp").parent().addClass("hidden");
+        $(".warning").addClass("hidden");
     }
-    if (!$('#btnRed').hasClass('btn-danger')) {
-        $('.panel-rood').parent().addClass('hidden');
-        $('.danger').addClass('hidden');
+    if (!$("#btnRed").hasClass("btn-danger")) {
+        $(".panel-danger-vtp").parent().addClass("hidden");
+        $(".danger").addClass("hidden");
     }
-    
+
+    $(".badge-success").text($("#blok").find(".panel-success-vtp").length);
+    $(".badge-warning").text($("#blok").find(".panel-warning-vtp").length);
+    $(".badge-danger").text($("#blok").find(".panel-danger-vtp").length);
 });
 
 function toggle(panel) {
-    if (panel.hasClass('hidden')) {
-        panel.removeClass('hidden');
+    if (panel.hasClass("hidden")) {
+        panel.removeClass("hidden");
     } else {
-        panel.addClass('hidden');
+        panel.addClass("hidden");
     }
 }
 
 function toggleGreen() {
-    toggle($('.panel-groen').parent());
-    toggle($('.success'));
+    toggle($(".panel-success-vtp").parent());
+    toggle($(".success"));
 }
 
 function toggleOrange() {
-    toggle($('.panel-oranje').parent());
-    toggle($('.warning'));
+    toggle($(".panel-warning-vtp").parent());
+    toggle($(".warning"));
 }
 
 function toggleRed() {
-    toggle($('.panel-rood').parent());
-    toggle($('.danger'));
+    toggle($(".panel-danger-vtp").parent());
+    toggle($(".danger"));
 }

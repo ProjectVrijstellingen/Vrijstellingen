@@ -14,7 +14,7 @@ namespace VTP2015.DataAccess.Config
             ToTable("Files");
             Property(t => t.DateCreated).IsRequired();
             Property(t => t.AcademicYear).HasMaxLength(8).IsRequired();
-            Property(t => t.Editable).IsRequired();
+            Property(t => t.FileStatus).IsRequired();
 
             // Relationships
             HasRequired(t => t.Student)

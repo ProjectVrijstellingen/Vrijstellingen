@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using AutoMapper;
+using AutoMapper.Internal;
 using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.ServiceRepositories;
 using VTP2015.DataAccess.UnitOfWork;
@@ -9,6 +10,7 @@ using VTP2015.Entities;
 using VTP2015.ServiceLayer.Student.Mappings;
 using VTP2015.ServiceLayer.Synchronisation;
 using File = VTP2015.Entities.File;
+using PartimMode = VTP2015.ServiceLayer.Student.Models.PartimMode;
 
 namespace VTP2015.ServiceLayer.Student
 {
@@ -97,8 +99,7 @@ namespace VTP2015.ServiceLayer.Student
         public IQueryable<Models.File> GetFilesByStudentEmail(string email)
         {
             return _fileRepository
-                .Table.Where(f => f.Student.Email == email)
-                .ProjectTo<Models.File>();
+                .Table.Where(f => f.Student.Email == email).ProjectTo<Models.File>();
         }
 
         public IQueryable<Models.Evidence> GetEvidenceByStudentEmail(string email)
@@ -119,8 +120,7 @@ namespace VTP2015.ServiceLayer.Student
         {
             var requestedPartims = _requestRepository.Table
                 .Where(a => a.FileId == fileId)
-                .SelectMany(a => a.RequestPartimInformations)
-                .Select(a => a.PartimInformation);
+                .SelectMany(a => a.RequestPartimInformations);
 
             switch (partimMode)
             { 
@@ -132,7 +132,7 @@ namespace VTP2015.ServiceLayer.Student
                             .Select(s => s.Education)
                             .SelectMany(e => e.Routes)
                             .SelectMany(r => r.PartimInformation)
-                            .Except(requestedPartims)
+                            .Except(requestedPartims.Select(x => x.PartimInformation))
                             .ProjectTo<Models.PartimInformation>();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(partimMode), partimMode, null);
@@ -153,7 +153,7 @@ namespace VTP2015.ServiceLayer.Student
                             ? ""
                             : request.RequestPartimInformations.FirstOrDefault().PartimInformation.Partim.Name,
                     Code =
-                        request.RequestPartimInformations.Count > 1
+                        request.RequestPartimInformations.Count == request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.PartimInformation.Count
                             ? request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Code
                             : request.RequestPartimInformations.FirstOrDefault().PartimInformation.SuperCode,
                     Argumentation = request.Argumentation,
@@ -179,20 +179,13 @@ namespace VTP2015.ServiceLayer.Student
             return Mapper.Map<Models.Evidence>(entity);
         }
 
-        public Models.PartimInformation GetPartimInformationBySuperCode(string superCode)
-        {
-            var entity = _partimInformationRepository.Table.First(p => p.SuperCode == superCode);
-
-            return Mapper.Map<Models.PartimInformation>(entity);
-        }
-
         public int InsertFile(Models.File file)
         {
             var entity = new File
             {
                 AcademicYear = file.AcademicYear,
                 DateCreated = file.DateCreated,
-                Editable = file.Editable,
+                FileStatus = FileStatus.InProgress,
                 Education = _educationRepository.Table.First(education => education.Name == file.Education),
                 Student = _studentRepository.Table.First(student => student.Email == file.StudentMail)
             };
@@ -226,7 +219,7 @@ namespace VTP2015.ServiceLayer.Student
             {
                 _requestPartimInformationRepository.Insert(new RequestPartimInformation
                 {
-                    Status = Status.Untreated,
+                    Status = Status.Empty,
                     PartimInformation = _partimInformationRepository.Table.First(x => x.SuperCode == code),
                     Request = newRequest
                 });
@@ -236,12 +229,20 @@ namespace VTP2015.ServiceLayer.Student
                 _partimInformationRepository.Table.Where(x => x.Module.Code == code).ToList()
                     .ForEach(partimInfo => _requestPartimInformationRepository.Insert(new RequestPartimInformation
                     {
-                        Status = Status.Untreated,
+                        Status = Status.Empty,
                         PartimInformation = partimInfo,
                         Request = newRequest
                     }));
             }
             return newRequest.Id.ToString();
+        }
+
+        public void SumbitFile(int fileId)
+        {
+            var file = _fileRepository.Table.Where(x => x.Id == fileId);
+            if(file.First().FileStatus == FileStatus.InProgress) file.First().DateCreated = DateTime.Now;
+            file.First().FileStatus = FileStatus.Submitted;
+            file.SelectMany(x => x.Requests).SelectMany(x => x.RequestPartimInformations).Where(x => x.Status == Status.Empty).Each(x => x.Status = Status.Untreated);
         }
 
         public bool SyncRequestInFile(Models.Request requestModel)

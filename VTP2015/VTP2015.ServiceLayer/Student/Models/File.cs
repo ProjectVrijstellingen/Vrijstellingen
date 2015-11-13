@@ -9,6 +9,6 @@ namespace VTP2015.ServiceLayer.Student.Models
         public string Education { get; set; }
         public string AcademicYear { get; set; }
         public DateTime DateCreated { get; set; }
-        public bool Editable { get; set; }
+        public FileStatus FileStatus { get; set; }
     }
 }

@@ -62,7 +62,7 @@ namespace VTP2015.ServiceLayer.Lecturer
         {
             var requestPartimInformation = _requestPartimInformationRepository.GetById(requestPartimInformationId);
 
-            if (requestPartimInformation.Status != (int)Status.Untreated || requestPartimInformation.PartimInformation.Lecturer.Email != email)
+            if (requestPartimInformation.Status != (Entities.Status)(int)Status.Untreated || requestPartimInformation.PartimInformation.Lecturer.Email != email)
                 return false;
 
             requestPartimInformation.Status = isApproved ? (Entities.Status)(int)Status.Approved : (Entities.Status)(int)Status.Rejected;
@@ -73,7 +73,11 @@ namespace VTP2015.ServiceLayer.Lecturer
 
         public bool hasAny(string email, Status status)
         {
-            return _lecturerRepository.Table.Any();
+            return _lecturerRepository.Table.Where(x => x.Email==email)
+                .SelectMany(p => p.PartimInformation)
+                .SelectMany(p => p.RequestPartimInformations)
+                .Where(a => a.Status == (Entities.Status)(int)status)
+                .Any();
         }
     }
 }

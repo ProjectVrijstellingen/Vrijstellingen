@@ -16,7 +16,7 @@ namespace VTP2015.Helpers
             {
                 var count = module.Partims.Count;
                 var tag = new TagBuilder("div");
-                tag.Attributes.Add("data-moduleid",module.Code.Replace(" ","_"));
+                tag.Attributes.Add("data-moduleid",module.Code);
 
                 var moduleNameTag = new TagBuilder("span");
                 moduleNameTag.AddCssClass("name h4" + (count == module.TotalCount ? " module" : ""));
@@ -89,7 +89,7 @@ namespace VTP2015.Helpers
             foreach (var aanvraag in aanvragen)
             {
                 var articleTag = new TagBuilder("article");
-                articleTag.Attributes.Add("id",aanvraag.Code.Replace(" ","_"));
+                articleTag.Attributes.Add("data-code",aanvraag.Code);
                 articleTag.Attributes.Add("data-requestId",aanvraag.Id.ToString());
                 articleTag.AddCssClass("hide");
                 var moduleTag = new TagBuilder("h3");

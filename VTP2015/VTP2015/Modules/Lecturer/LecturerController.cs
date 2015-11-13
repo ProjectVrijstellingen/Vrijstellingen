@@ -24,8 +24,7 @@ namespace VTP2015.Modules.Lecturer
         public ViewResult Index()
         {
             ViewBag.DocentHeeftAanvragen = _lecturerFacade.hasAny(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Untreated);
-               // .GetRequests(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Untreated).Any().ToString();
-
+              
             return View();
         }
 
@@ -53,14 +52,12 @@ namespace VTP2015.Modules.Lecturer
         [Route("Archive")]
         public ViewResult Archive()
         {
-            ViewBag.DocentHeeftApprovedAanvragen = _lecturerFacade
-                .GetRequests(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Approved).Any();
+            ViewBag.DocentHeeftApprovedAanvragen = _lecturerFacade.hasAny
+                (User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Approved);
 
-            ViewBag.DocentHeeftRejectedAanvragen = _lecturerFacade
-                .GetRequests(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Rejected).Any();
-
-
-
+            ViewBag.DocentHeeftRejectedAanvragen = _lecturerFacade.hasAny
+                (User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Rejected);
+            
             return View();
         }
 

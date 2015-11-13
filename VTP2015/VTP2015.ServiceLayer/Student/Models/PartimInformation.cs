@@ -7,5 +7,6 @@
         public string ModuleName { get; set; }
         public string PartimName { get; set; }
         public int TotalCount { get; set; }
+        public Status Status { get; set; }
     }
 }

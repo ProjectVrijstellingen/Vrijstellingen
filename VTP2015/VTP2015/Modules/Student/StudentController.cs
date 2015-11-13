@@ -180,7 +180,6 @@ namespace VTP2015.Modules.Student
                 StudentMail = User.Identity.Name,
                 DateCreated = DateTime.Now,
                 Education = education.Name,
-                Editable = true,
                 AcademicYear = academieJaar
             };
 
@@ -190,13 +189,15 @@ namespace VTP2015.Modules.Student
         }
 
         [Route("AddAanvraag")]
+        [HttpPost]
         public ActionResult AddAanvraag(AddRequestViewModel viewModel)
         {
             if (_studentFacade.IsFileFromStudent(User.Identity.Name, viewModel.FileId)) Content("Don't cheat!");
-            return Content(_studentFacade.AddRequestInFile(viewModel.FileId,viewModel.Code.Replace("_"," ")));
+            return Content(_studentFacade.AddRequestInFile(viewModel.FileId,viewModel.Code));
         }
 
         [Route("SaveAanvraag")]
+        [HttpPost]
         public ActionResult SaveAanvraag(RequestViewModel viewModel)
         {
             var requestId = int.Parse(viewModel.RequestId);
@@ -233,6 +234,14 @@ namespace VTP2015.Modules.Student
                     : "Voltooid!");
         }
 
+        [Route("Submit")]
+        [HttpPost]
+        public ActionResult SubmitFile(int fileId)
+        {
+            _studentFacade.IsFileFromStudent(User.Identity.Name, fileId);
+            _studentFacade.SumbitFile(fileId);
+            return RedirectToAction("Index");
+        }
         #endregion
     }
 }

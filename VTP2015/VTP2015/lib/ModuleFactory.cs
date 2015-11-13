@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using VTP2015.Modules.Student.ViewModels;
 
@@ -26,7 +25,7 @@ namespace VTP2015.lib
         private void AddPartim(PartimViewModel viewModel)
         {
             var module = new Module { Code = viewModel.Code, Name = viewModel.ModuleName, TotalCount = viewModel.TotalCount};
-            var partim = new Partim { Name = viewModel.PartimName, SuperCode = viewModel.SuperCode};
+            var partim = new Partim { Name = viewModel.PartimName, SuperCode = viewModel.SuperCode, Status = viewModel.Status};
 
             if (Modules.All(m => m.Code != module.Code))
             {

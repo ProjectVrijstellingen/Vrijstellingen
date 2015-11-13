@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using VTP2015.ServiceLayer.Counselor.Models;
 
@@ -54,18 +55,18 @@ namespace VTP2015.ServiceLayer.Counselor
                     Route = "ssd",
                     StudentFirstName = "Sam",
                     StudentName = "De Creus",
-                    DateCreated = Convert.ToDateTime("01-11-2015 08:05:07")
+                    DateCreated = new DateTime(2015, 10, 23)
                 },
                 new File
                 {
                     AcademicYear = "2015-16",
                     Id = 2,
-                    AmountOfRequestsOpen = 3,
-                    PercentageOfRequestsOpen = 75,
+                    AmountOfRequestsOpen = 0,
+                    PercentageOfRequestsOpen = 0,
                     Route = "cccp",
                     StudentFirstName = "Toon",
                     StudentName = "Swyzen",
-                    DateCreated = Convert.ToDateTime("23-10-2015 08:05:07")
+                    DateCreated = new DateTime(2015, 11, 01)
                 },
                 new File
                 {
@@ -76,7 +77,7 @@ namespace VTP2015.ServiceLayer.Counselor
                     Route = "cccp",
                     StudentFirstName = "Joachim",
                     StudentName = "Bockland",
-                    DateCreated = Convert.ToDateTime("27-10-2015 08:05:07")
+                    DateCreated = new DateTime(2015, 11, 05)
                 },
                 new File
                 {
@@ -87,18 +88,18 @@ namespace VTP2015.ServiceLayer.Counselor
                     Route = "ssd",
                     StudentFirstName = "Olivier",
                     StudentName = "Sourie",
-                    DateCreated = Convert.ToDateTime("04-11-2015 08:05:07")
+                    DateCreated = new DateTime(2015, 10, 28)
                 },
                 new File
                 {
                     AcademicYear = "2015-16",
                     Id = 5,
-                    AmountOfRequestsOpen = 0,
-                    PercentageOfRequestsOpen = 0,
+                    AmountOfRequestsOpen = 3,
+                    PercentageOfRequestsOpen = 75,
                     Route = "ssd",
                     StudentFirstName = "Joske",
                     StudentName = "Vermeulen",
-                    DateCreated = Convert.ToDateTime("10-11-2015 08:05:07")
+                    DateCreated = new DateTime(2015, 11, 08)
                 },
 
             }.AsQueryable();

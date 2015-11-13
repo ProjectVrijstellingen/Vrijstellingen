@@ -13,10 +13,6 @@
     margin-left: 20px;
 }
 
-.dossier {
-
-}
-
 .container {
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -34,19 +30,19 @@
     color: white;
 }
 
-.panel-groen {
+.panel-success-vtp {
     background-color: #18bc9c;
 }
 
-.panel-blauw {
+.panel-info-vtp {
     background-color: #3498db;
 }
 
-.panel-oranje {
+.panel-warning-vtp {
     background-color: #f39c12;
 }
 
-.panel-rood {
+.panel-danger-vtp {
     background-color: #e74c3c;
 }
 
@@ -177,4 +173,13 @@ fieldset[disabled] .btn-default.active {
     position: absolute;
     left: 0;
     top: -3px;
+}
+
+.cirlceNumber {
+    width: 30px;
+    height: 30px;
+    visibility: visible;
+    opacity:0;
+    filter:alpha(opacity=0);
+    z-index: -1;
 }
