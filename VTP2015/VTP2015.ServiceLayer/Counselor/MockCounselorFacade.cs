@@ -61,8 +61,8 @@ namespace VTP2015.ServiceLayer.Counselor
                 {
                     AcademicYear = "2015-16",
                     Id = 2,
-                    AmountOfRequestsOpen = 3,
-                    PercentageOfRequestsOpen = 75,
+                    AmountOfRequestsOpen = 0,
+                    PercentageOfRequestsOpen = 0,
                     Route = "cccp",
                     StudentFirstName = "Toon",
                     StudentName = "Swyzen",
@@ -94,8 +94,8 @@ namespace VTP2015.ServiceLayer.Counselor
                 {
                     AcademicYear = "2015-16",
                     Id = 5,
-                    AmountOfRequestsOpen = 0,
-                    PercentageOfRequestsOpen = 0,
+                    AmountOfRequestsOpen = 3,
+                    PercentageOfRequestsOpen = 75,
                     Route = "ssd",
                     StudentFirstName = "Joske",
                     StudentName = "Vermeulen",
