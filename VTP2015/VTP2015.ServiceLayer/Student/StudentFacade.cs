@@ -159,7 +159,8 @@ namespace VTP2015.ServiceLayer.Student
                     Argumentation = request.Argumentation,
                     Evidence =
                         request.Evidence.Select(
-                            x => new Models.Evidence {Id = x.Id, Description = x.Description, Path = x.Path}).AsQueryable()
+                            x => new Models.Evidence {Id = x.Id, Description = x.Description, Path = x.Path}).AsQueryable(),
+                    Submitted = request.RequestPartimInformations.Any(r => r.Status != 0)
                 });
         }
 
@@ -210,6 +211,7 @@ namespace VTP2015.ServiceLayer.Student
                                 : (r.PartimInformation.Module.Code == code ||
                                    r.PartimInformation.Module.PartimInformation.Any(
                                        p => p.SuperCode == r.PartimInformation.SuperCode)))) return "fake!";
+            if (_fileRepository.GetById(fileId).FileStatus == FileStatus.Submitted) return "Denied!";
 
             var newRequest = new Request {LastChanged = DateTime.Now};
             _fileRepository.GetById(fileId).Requests.Add(newRequest);
@@ -253,8 +255,10 @@ namespace VTP2015.ServiceLayer.Student
         public bool SyncRequestInFile(Models.Request requestModel)
         {
             var request = _requestRepository.GetById(requestModel.Id);
+            if (request.RequestPartimInformations.Any(x => x.Status != Status.Empty)) return false;
             request.Argumentation = requestModel.Argumentation;
             request.LastChanged = DateTime.Now;
+            _requestRepository.Update(request);
             if (requestModel.Evidence != null)
             {
                 var evidence = requestModel.Evidence.Select(e => _evidenceRepository.GetById(e.Id))

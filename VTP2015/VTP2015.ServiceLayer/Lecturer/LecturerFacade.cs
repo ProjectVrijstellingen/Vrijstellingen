@@ -51,7 +51,7 @@ namespace VTP2015.ServiceLayer.Lecturer
                 //.ProjectTo<RequestPartimInformation>()
                          where requestPartimInformation.Id > 0
                          //group requestPartimInformation by requestPartimInformation.Request.File.Student.Id
-                         group requestPartimInformation by requestPartimInformation.Student.Id
+                         group requestPartimInformation by requestPartimInformation.Request.File.Student.Id
                             into groups
                             select groups.FirstOrDefault();
 

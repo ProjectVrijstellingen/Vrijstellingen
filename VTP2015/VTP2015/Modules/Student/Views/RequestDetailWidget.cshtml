@@ -1,4 +1,5 @@
 ﻿@using VTP2015.Helpers
+@using VTP2015.ServiceLayer.Student.Models
 @model VTP2015.Modules.Student.ViewModels.RequestDetailViewModel[]
 <div id="aanvraagDetail" data-url="@Url.Action("SaveAanvraag", "Student")" data-url2="@Url.Action("AddAanvraag","Student")" class="col-md-4 hide">
     @using (Html.BeginPanel("Aanvraag details"))
@@ -10,7 +11,7 @@
                 <label class="control-label" for="argumentatie">Argumentatie:</label>
                 <textarea class="form-control" id="argumentatie"></textarea>
                 <label class="control-label">Bewijzen:</label>
-                <ul class="list-group"></ul>
+                <ul id="bewijzen" class="list-group"></ul>
                 <button type="button" onclick=" Return() " class="btn btn-success">Terug</button>
             </article>
             @Html.ShowAanvraagDetails(Model)

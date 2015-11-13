@@ -1,6 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using VTP2015.lib;
 using VTP2015.Modules.Student.ViewModels;
+using VTP2015.ServiceLayer.Student.Models;
 
 namespace VTP2015.Helpers
 {
@@ -15,14 +17,15 @@ namespace VTP2015.Helpers
             foreach (var module in modules)
             {
                 var count = module.Partims.Count;
+                var submitted = module.Partims.All(x => x.Status != 0);
                 var tag = new TagBuilder("div");
                 tag.Attributes.Add("data-moduleid",module.Code);
 
                 var moduleNameTag = new TagBuilder("span");
-                moduleNameTag.AddCssClass("name h4" + (count == module.TotalCount ? " module" : ""));
+                moduleNameTag.AddCssClass("name h4" + (count == module.TotalCount && !submitted ? " module" : ""));
                 moduleNameTag.SetInnerText(module.Name);
                 tag.InnerHtml += moduleNameTag;
-                tag.InnerHtml += ShowGlyphicon(html, "remove", "btn badge" + (count == module.TotalCount && deletable ? "" : " hide"));
+                if (!submitted) tag.InnerHtml += ShowGlyphicon(html, "remove", "btn badge" + (count == module.TotalCount && deletable ? "" : " hide"));
 
                 var moduleTag = new TagBuilder("ul");
                 moduleTag.AddCssClass("list-group" + (count == module.TotalCount && deletable ? " hide" : ""));
@@ -30,7 +33,7 @@ namespace VTP2015.Helpers
                 {
                     var partimTag = new TagBuilder("li");
                     partimTag.Attributes.Add("data-SuperCode", partim.SuperCode);
-                    partimTag.AddCssClass("list-group-item partim");
+                    partimTag.AddCssClass("list-group-item" +  (partim.Status == 0 ? " partim" : ""));
                     var partimNameTag = new TagBuilder("span");
                     if (TextLimiter(partim.Name, 30).EndsWith("..."))
                     {
@@ -41,7 +44,7 @@ namespace VTP2015.Helpers
                     partimNameTag.AddCssClass("name");
                     partimNameTag.SetInnerText(TextLimiter(partim.Name, 30));
                     partimTag.InnerHtml += partimNameTag;
-                    partimTag.InnerHtml += ShowGlyphicon(html, "remove","btn badge" + (deletable ? "" : " hide"));
+                    if (partim.Status == 0) partimTag.InnerHtml += ShowGlyphicon(html, "remove","btn badge" + (deletable ? "" : " hide"));
                     moduleTag.InnerHtml += partimTag;
                 }
                 tag.InnerHtml += moduleTag;
@@ -64,6 +67,11 @@ namespace VTP2015.Helpers
 
         public static MvcHtmlString ShowBewijsLi(this HtmlHelper html, EvidenceListViewModel evidence, bool movable)
         {
+            return ShowBewijsLi(html,evidence,movable,false);
+        }
+
+        public static MvcHtmlString ShowBewijsLi(this HtmlHelper html, EvidenceListViewModel evidence, bool movable, bool submitted)
+        {
             var itemTag = new TagBuilder("li");
             itemTag.AddCssClass("list-group-item");
             itemTag.Attributes.Add("data-bewijsid", evidence.Id.ToString());
@@ -78,7 +86,7 @@ namespace VTP2015.Helpers
             }
             descriptionTag.SetInnerText(TextLimiter(evidence.Path,20) + " - " + evidence.Description);
             itemTag.InnerHtml += descriptionTag;
-            itemTag.InnerHtml += ShowGlyphicon(html, "minus","btn badge" + (movable? " hide":""));
+            if (!submitted) itemTag.InnerHtml += ShowGlyphicon(html, "minus","btn badge" + (movable? " hide":""));
             if (movable) itemTag.InnerHtml += ShowGlyphicon(html, "plus","btn badge");
             return new MvcHtmlString(itemTag.ToString());
         }
@@ -104,7 +112,7 @@ namespace VTP2015.Helpers
                 argumentatieLabelTag.SetInnerText("Argumentatie:");
                 articleTag.InnerHtml += argumentatieLabelTag;
                 var argumentatieTag = new TagBuilder("textarea");
-                argumentatieTag.Attributes.Add("id","argumentatie");
+                if(!aanvraag.Submitted) argumentatieTag.Attributes.Add("id","argumentatie");
                 argumentatieTag.AddCssClass("form-control");
                 argumentatieTag.SetInnerText(aanvraag.Argumentation);
                 articleTag.InnerHtml += argumentatieTag;
@@ -113,10 +121,11 @@ namespace VTP2015.Helpers
                 bewijzenLabelTag.SetInnerText("Bewijzen:");
                 articleTag.InnerHtml += bewijzenLabelTag;
                 var bewijzenTag = new TagBuilder("ul");
+                if(!aanvraag.Submitted) bewijzenTag.Attributes.Add("id","bewijzen");
                 bewijzenTag.AddCssClass("list-group");
                 foreach (var bewijs in aanvraag.Evidence)
                 {
-                    bewijzenTag.InnerHtml += ShowBewijsLi(html, bewijs, false);
+                    bewijzenTag.InnerHtml += ShowBewijsLi(html, bewijs, false, aanvraag.Submitted);
                 }
                 articleTag.InnerHtml += bewijzenTag;
                 var buttonTag = new TagBuilder("button");

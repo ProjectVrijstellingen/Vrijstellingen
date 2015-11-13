@@ -11,6 +11,7 @@ namespace VTP2015.Modules.Student.ViewModels
         public string PartimName { get; set; }
         public string Code { get; set; }
         public string Argumentation { get; set; }
+        public bool Submitted { get; set; }
         public IEnumerable<EvidenceListViewModel> Evidence { get; set; }
     }
 }

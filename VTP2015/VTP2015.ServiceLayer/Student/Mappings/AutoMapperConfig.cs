@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AutoMapper;
+using AutoMapper.Internal;
 using AutoMapper.Mappers;
 using VTP2015.Entities;
 

@@ -92,7 +92,7 @@ function savePartimdetails() {
 }
 
 function addBewijs(that) {
-    var newParent = $("#aanvraagDetail").find(".nothidden").find("ul");
+    var newParent = $("#aanvraagDetail").find(".nothidden").find("#bewijzen");
 
     var clon = $(that).clone();
     clon.removeAttr("id");
@@ -108,7 +108,7 @@ $(document).on("click", ".glyphicon-minus", function () {
     changed($("#aanvraagDetail").find(".nothidden"));
 });
 
-$(document).on("keyup", ".form-control", function() {
+$(document).on("keyup", "#argumentatie", function() {
     changed($("#aanvraagDetail").find(".nothidden"));
 });
 

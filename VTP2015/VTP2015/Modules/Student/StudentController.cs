@@ -115,7 +115,7 @@ namespace VTP2015.Modules.Student
             if (!_studentFacade.IsFileFromStudent(User.Identity.Name, fileId))
                 return RedirectToAction("Index");
 
-            return View(_studentFacade.GetFileStatus(fileId));
+            return View();
         }
 
         [Route("RequestedPartimsWidget")]
@@ -127,7 +127,7 @@ namespace VTP2015.Modules.Student
 
             var models = _studentFacade.GetPartims(fileId, PartimMode.Requested)
                 .ProjectTo<PartimViewModel>();
-
+            
             return PartialView(models.ToArray());
         }
 
@@ -146,10 +146,12 @@ namespace VTP2015.Modules.Student
 
         [Route("SelectEvidenceWidget")]
         [HttpGet]
-        public PartialViewResult SelectEvidenceWidget()
+        public PartialViewResult SelectEvidenceWidget(int fileId)
         {
             var models = _studentFacade.GetEvidenceByStudentEmail(User.Identity.Name)
                 .ProjectTo<EvidenceListViewModel>();
+
+            ViewBag.FileStatus = _studentFacade.GetFileStatus(fileId);
 
             return PartialView(models.ToArray());
         }
