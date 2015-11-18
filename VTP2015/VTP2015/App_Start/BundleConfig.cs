@@ -38,13 +38,10 @@ namespace VTP2015
                 "~/Scripts/App/Student/toDictionary.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/counselor").Include(
-                "~/Scripts/App/Counselor/DocentBewijsViewScript.js",
-                "~/Scripts/App/Counselor/DossierScherm.js",
-                "~/Scripts/App/Counselor/CounselorView.js",
+                "~/Scripts/App/Counselor/fileOverview.js",
+                "~/Scripts/App/Counselor/CountDown.js",
                 "~/Scripts/App/Counselor/CustomCheckBox.js",
-                "~/Scripts/App/Counselor/CounselorSelect.js",
-                "~/Scripts/App/Counselor/Countdown.js",
-                "~/Scripts/App/Counselor/script.js"));
+                "~/Scripts/App/Counselor/fileDetail.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/lecturer").Include(
                 "~/Scripts/App/Lecturer/DocentBewijsViewScript.js"));

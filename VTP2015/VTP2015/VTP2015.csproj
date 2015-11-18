@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -24,6 +25,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
+    <TypeScriptToolsVersion>1.6</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -332,8 +334,10 @@
     </None>
     <Content Include="Icon.png" />
     <Content Include="Scripts\App\Admin\adminPanel.js" />
-    <Content Include="Scripts\App\Counselor\CounselorSelect.js" />
-    <Content Include="Scripts\App\Counselor\CounselorView.js" />
+    <Content Include="Scripts\App\Counselor\fileDetail.js" />
+    <Content Include="Scripts\App\Counselor\fileOverview.js" />
+    <Content Include="Scripts\App\Counselor\garbage\CounselorSelect.js" />
+    <Content Include="Scripts\App\Counselor\garbage\CounselorView.js" />
     <Content Include="Scripts\App\Counselor\Countdown.js" />
     <Content Include="Scripts\App\Counselor\CustomCheckBox.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -364,9 +368,9 @@
     <Content Include="Scripts\App\Student\Dossier.js" />
     <Content Include="Scripts\App\Student\StudentIndex.js" />
     <Content Include="Scripts\App\Student\toDictionary.js" />
-    <Content Include="Scripts\App\Counselor\DocentBewijsViewScript.js" />
-    <Content Include="Scripts\App\Counselor\Dossierscherm.js" />
-    <Content Include="Scripts\App\Counselor\script.js" />
+    <Content Include="Scripts\App\Counselor\garbage\DocentBewijsViewScript.js" />
+    <Content Include="Scripts\App\Counselor\garbage\Dossierscherm.js" />
+    <Content Include="Scripts\App\Counselor\garbage\script.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -422,11 +426,15 @@
       <Name>VTP2015.ServiceLayer</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

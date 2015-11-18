@@ -15,6 +15,22 @@
     $(".badge-success").text($("#blok").find(".panel-success-vtp").length);
     $(".badge-warning").text($("#blok").find(".panel-warning-vtp").length);
     $(".badge-danger").text($("#blok").find(".panel-danger-vtp").length);
+
+    //cookies
+    if (document.cookie.indexOf("type") < 0) {
+        createCookie("type", "blok");
+    }
+
+    type === "blok" ? showBlok() : showList();
+
+    $(".rechts").hover(
+        function () {
+            $(this).children(":first").fadeTo(400, 1);
+        }, function () {
+            $(this).children(":first").fadeTo(400, 0);
+        }
+    );
+
 });
 
 function toggle(panel) {

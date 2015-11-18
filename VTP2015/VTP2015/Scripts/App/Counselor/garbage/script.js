@@ -1,4 +1,5 @@
 ﻿var files = [];
+var requests = [];
 var currentFileSelected;
 
 $(document).ready(function() {
@@ -26,11 +27,15 @@ $(document).ready(function() {
         var naam = currentTarget.find(".naam").text();
         var academieJaar = currentTarget.find(".academiejaar").text();
         var afstudeerRichting = currentTarget.find(".afstudeerrichting").text();
+
+        console.log(academieJaar);
+
         $("#naam").text(naam);
         $("#academiejaar").text(academieJaar);
         $("#afstudeerrichting").text(afstudeerRichting);
         
         $("#details").removeClass("hide");
+
     });
 
     $("#tooverview").click(function(sender) {

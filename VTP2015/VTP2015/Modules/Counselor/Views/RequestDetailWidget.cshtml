@@ -3,19 +3,19 @@
 
 <div class="panel panel-success clearfix inheritWidth">
     <div class="panel-heading ">
-        <h3 class="panel-title">RequestPartimInformationPartimInformations <span id="vorigeAanvraag"><<</span><span id="huidigeAanvraag">1</span>/<span id="aantalAanvragen"></span><span id="volgendeAanvraag">>></span></h3>
+        <h3 class="panel-title">aanvragen</h3>
     </div>
     <div class="panel-body">
         @{ var getoondeAanvraagId = 1; }
         @foreach (var request in Model)
         {
-            <div id="aanvraag-@getoondeAanvraagId" class="aanvraag hide" data-dossierid="@request.FileId" data-RequestPartimInformationPartimInformationid="@request.RequestId">
-                <button class="btn btn-danger herinnering">Poke docent</button>
-                <p>@request.ModuleName - @request.PartimName</p>
-                <label for="argumentatie" class="control-label">Argumentatie:</label>
-                <textarea id="argumentatie" class="form-control" readonly="">@request.Argumentation</textarea>
-                <label for="status" class="control-label">StatusViewModel:</label>
-                <textarea id="status" class="form-control" readonly="">@Enum.GetName(typeof(Status), request.StatusViewModel)</textarea>
+            <div class="request hide" data-requestid="@getoondeAanvraagId" data-fileid="@request.FileId" data-RequestPartimInformationPartimInformationid="@request.RequestId">
+                @*<button class="btn btn-danger herinnering">Poke docent</button>*@
+                <p><b>partim:</b> @request.ModuleName - @request.PartimName</p>
+                <label class="control-label">Argumentatie:</label>
+                <p>@request.Argumentation</p>
+                <label class="control-label">Status:</label>
+                <p>@Enum.GetName(typeof(Status), request.StatusViewModel)</p>
                 <label class="control-label">Evidence: <a href="#" class="vorigBewijs"><<</a><span class="huidigBewijs">1</span>/@request.Evidence.Count()<a href="#" class="volgendBewijs">>></a></label>
                 @foreach (var evidence in request.Evidence)
                 {
@@ -40,6 +40,7 @@
 
                     </div>
                                 { getoondeAanvraagId++; }
+
                 }
             </div>
         }

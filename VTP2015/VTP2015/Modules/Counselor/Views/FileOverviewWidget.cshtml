@@ -74,21 +74,21 @@
                 </table>
             </div>
             <div id="blok">
-                @foreach (var dossier in Model.OrderBy(d => d.DaysRemaining))
+                @foreach (var file in Model.OrderBy(d => d.DaysRemaining))
                 {
-                    <div class="col-md-2 dossier" data-name="@dossier.StudentName" data-prename="@dossier.StudentFirstName">
+                    <div class="col-md-2 file" data-name="@file.StudentName" data-firstname="@file.StudentFirstName" >
                         @{
-                            var perc = 100 - (dossier.DaysRemaining * 100 / 21);
+                            var perc = 100 - (file.DaysRemaining * 100 / 21);
                         }
-                        <div class="panel panel-text panel-@dossier.Color-vtp panel-default clearfix panel-body">
-                            <p class="naam">@dossier.StudentFirstName @dossier.StudentName</p>
+                        <div class="panel panel-text panel-@file.Color-vtp panel-default clearfix panel-body">
+                            <p class="naam">@file.StudentFirstName @file.StudentName</p>
                             <div id="kader">
                                 <a href="#" id="links">
-                                    <span class="glyphicon glyphicon-list-alt white dossierpointer" data-dossierid="@dossier.Id" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-list-alt white btnShowOverview" aria-hidden="true" data-fileid="@file.Id" data-name="@file.StudentFirstName @file.StudentName."></span>
                                 </a>
-                                <span class="white percentage" id="middem">@dossier.AmountOfRequestsOpen</span>
+                                <span class="white percentage" id="middem">@file.AmountOfRequestsOpen</span>
                                 <span id="rechts" class="rechts chart" data-percent="@perc">
-                                    <span id="cirlceNumber" class="cirlceNumber">@dossier.DaysRemaining</span>
+                                    <span id="cirlceNumber" class="cirlceNumber">@file.DaysRemaining</span>
                                 </span>
                             </div>
                         </div>
