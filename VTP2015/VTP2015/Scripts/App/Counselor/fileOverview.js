@@ -15,11 +15,11 @@ $(document).ready(function () {
         $(".panel-success-vtp").parent().addClass("hidden");
         $(".success").addClass("hidden");
     }
-    if (!$("#btnOrange").hasClass("btn-warning")) {
+    if ($("#btnOrange").hasClass("btn-warning")) {
         $(".panel-warning-vtp").parent().addClass("hidden");
         $(".warning").addClass("hidden");
     }
-    if (!$("#btnRed").hasClass("btn-danger")) {
+    if ($("#btnRed").hasClass("btn-danger")) {
         $(".panel-danger-vtp").parent().addClass("hidden");
         $(".danger").addClass("hidden");
     }
