@@ -6,8 +6,15 @@
 <form id="addBewijs-form" class="form-horizontal" data-url="@Url.Action("AddFile","Student")">
     <div class="input-group">
         @Html.LabelFor(m => m.File, new { @class = "form-label" })
-        @*@Html.TextBoxFor(m => m.FileName, new {type = "file"})*@
-        <input id="File" type="file" name="FileName" />
+        <div class="input-group">
+            <span class="input-group-btn">
+                <span class="btn btn-success btn-file">
+                    Browse&hellip; <input id="File" type="file" name="FileName">
+                </span>
+            </span>
+            <input type="text" class="form-control" readonly>
+        </div>
+@*        <input id="File" type="file" name="FileName">*@
     </div>
     <br />
     <div class="input-group">

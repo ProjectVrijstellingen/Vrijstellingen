@@ -12,7 +12,12 @@
             processData: false,
             contentType: false,
             success: function (data) {
-                if (data[0] === "Finish") location.reload();
+                if (data[0] === "Finish") {
+                    location.reload();
+//                    console.log("success");
+//                    console.log(document.getElementById("File").files[0]);
+//                    console.log($("#Description").val());
+                }
                 else {
                     var errorList = $(document.getElementById("addBewijs-form")).find("ul");
                     errorList.empty();
