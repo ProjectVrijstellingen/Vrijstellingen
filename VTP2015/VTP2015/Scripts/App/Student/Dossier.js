@@ -54,7 +54,7 @@ function addRequest(code) {
         data: $.toDictionary(viewModel),
         type: "POST",
         success: function (data) {
-            if (data === "fake!") Location.reload();
+            if (data === "Fake!") location.reload();
             $("#aanvraagDetail").find("[data-code=\"" + code + "\"]").attr("data-requestid", data);
             $("#aanvraagDetail").find("[data-code=\"" + code + "\"]").attr("id", data);
         }
