@@ -340,6 +340,7 @@
     <Content Include="Scripts\App\Counselor\garbage\CounselorView.js" />
     <Content Include="Scripts\App\Counselor\Countdown.js" />
     <Content Include="Scripts\App\Counselor\CustomCheckBox.js" />
+    <Content Include="Scripts\App\Lecturer\ArchiveScripts.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\App\Lecturer\DocentBewijsViewScript.js" />
