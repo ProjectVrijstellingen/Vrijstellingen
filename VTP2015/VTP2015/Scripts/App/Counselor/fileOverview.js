@@ -58,11 +58,9 @@ function showFileDetails(sender) {
 }
 
 var SearchQueryKeyupEventHandler = function () {
-    console.log(files);
-
     $.each(files, function (key, value) {
         var name = $(value).data("name");
-        var prename = $(value).data("prename");
+        var prename = $(value).data("firstname");
         if (name != undefined) {
             if (searchQueryContains(name) || searchQueryContains(prename) || searchQueryContains(name + " " + prename) || searchQueryContains(prename + " " + name)) {
                 $(value).show();
@@ -75,6 +73,9 @@ var SearchQueryKeyupEventHandler = function () {
 
 var appendFilesToArray = function () {
     $(".file").each(function () {
+        files.push(this);
+    });
+    $(".d").each(function () {
         files.push(this);
     });
 };
