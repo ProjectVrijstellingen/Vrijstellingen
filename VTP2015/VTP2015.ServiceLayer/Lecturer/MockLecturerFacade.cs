@@ -21,9 +21,9 @@ namespace VTP2015.ServiceLayer.Lecturer
                     Partim = new Partim{ Code="1", Name="Partim" },
                     Argumentation = "Test 1",
                     File = new File{ },
-                    Evidence = new List<Evidence> { new Evidence { Description="Evidence1", Path="Evidence.png", StudentEmail="student@student.howest.be" } }.AsEnumerable(),
-                    Student = new Lecturer.Models.Student { Id="1", Name="Gebruiker", Prename="Test" },
-                    Status = new Status()
+                    Evidence = new List<Evidence> { new Evidence { Description="Evidence1", Path="Evidence.png", StudentEmail= "test@student.howest.be" } }.AsEnumerable(),
+                    Student = new Lecturer.Models.Student { Id="1", Name="Gebruiker", Prename="Test", StudentMail = "test@student.howest.be" },
+                    Status = Status.Untreated
                 },
                 new RequestPartimInformation{
                     Id = 2,
@@ -32,8 +32,8 @@ namespace VTP2015.ServiceLayer.Lecturer
                     Argumentation = "Test 2",
                     File = new File{ },
                     Evidence = new List<Evidence> { new Evidence { Description="Evidence2", Path="Evidence.png", StudentEmail = "student@student.howest.be" } }.AsEnumerable(),
-                    Student = new Lecturer.Models.Student { Id="2", Name="User", Prename="Test" },
-                    Status = new Status()
+                    Student = new Lecturer.Models.Student { Id="2", Name="User", Prename="Test", StudentMail = "student@student.howest.be" },
+                    Status = Status.Untreated
                 },
                 new RequestPartimInformation{
                     Id = 3,
@@ -42,7 +42,7 @@ namespace VTP2015.ServiceLayer.Lecturer
                     Argumentation = "Test 3",
                     File = new File{ },
                     Evidence = new List<Evidence> { new Evidence { Description="Evidence3", Path="Evidence.png", StudentEmail = "student@student.howest.be" } }.AsEnumerable(),
-                    Student = new Lecturer.Models.Student { Id="2", Name="User", Prename="Test" },
+                    Student = new Lecturer.Models.Student { Id="2", Name="User", Prename="Test", StudentMail = "student@student.howest.be" },
                     Status = Status.Approved
                 },
                 new RequestPartimInformation{
@@ -52,7 +52,17 @@ namespace VTP2015.ServiceLayer.Lecturer
                     Argumentation = "Test 4",
                     File = new File{ },
                     Evidence = new List<Evidence> { new Evidence { Description="Evidence4", Path="Evidence.png", StudentEmail = "student@student.howest.be" } }.AsEnumerable(),
-                    Student = new Lecturer.Models.Student { Id="2", Name="User", Prename="Test" },
+                    Student = new Lecturer.Models.Student { Id="2", Name="User", Prename="Test", StudentMail = "student@student.howest.be" },
+                    Status = Status.Rejected
+                },
+                new RequestPartimInformation{
+                    Id = 5,
+                    Module = new Module { Code="5", Name="Module5" },
+                    Partim = new Partim{ Code="5", Name="Partim5" },
+                    Argumentation = "Test 5",
+                    File = new File{ },
+                    Evidence = new List<Evidence> { new Evidence { Description="Evidence5", Path="Evidence.png", StudentEmail = "student@student.howest.be" } }.AsEnumerable(),
+                    Student = new Lecturer.Models.Student { Id="2", Name="User", Prename="Test", StudentMail = "student@student.howest.be" },
                     Status = Status.Rejected
                 }
 

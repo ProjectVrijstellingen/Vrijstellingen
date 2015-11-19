@@ -17,8 +17,8 @@ namespace VTP2015.ServiceLayer.Lecturer.Mappings
                 opt => opt.MapFrom(x => x.Request.Argumentation))
                 .ForMember(x => x.File,
                 opt => opt.MapFrom(x => x.Request.File))
-                .ForMember(x => x.Student,
-                opt => opt.MapFrom(x => x.Request.File.Student))
+                //.ForMember(x => x.Student,
+                //opt => opt.MapFrom(x => x.Request.File.Student))
                 .ForMember(x => x.Status,
                 opt => opt.MapFrom(x => (Models.Status)(int)x.Status));
 

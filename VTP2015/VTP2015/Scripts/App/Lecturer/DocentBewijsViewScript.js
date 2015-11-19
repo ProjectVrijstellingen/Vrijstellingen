@@ -111,33 +111,23 @@ $(document).ready(function () {
 
     $('[data-toggle="tooltip"]').tooltip();
 
+
+    $($(".studentcontainer").children()[0]).click(function (event) {
+        if ($("#aanvraagPointerDiv").hasClass("hide"))
+            $("#aanvraagPointerDiv").removeClass("hide")
+        else
+            $("#aanvraagPointerDiv").addClass("hide")
+    });
+
+
+    $($(".aanvraagcontainer").children()[0]).click(function (event) {
+        if ($($(".aanvraagcontainer").children()[1]).hasClass("hide"))
+            $($(".aanvraagcontainer").children()[1]).removeClass("hide")
+        else
+            $($(".aanvraagcontainer").children()[1]).addClass("hide")
+    });
+
 });
-
-function hideRequestList() {
-    if ($(".col-md-8").hasClass("hide"))
-    {
-        $(".col-md-8").removeClass("hide");
-        $(".hideRequest").val("Hide requests")
-    }
-    else
-    {
-        $(".col-md-8").addClass("hide");
-        $(".hideRequest").val("Show requests")
-    }
-}
-
-function hideStudentList() {
-    if ($(".col-md-4").hasClass("hide"))
-    {
-        $(".col-md-4").removeClass("hide");
-        $(".hideStudent").val("Hide students")
-    }
-    else
-    {
-        $(".col-md-4").addClass("hide");
-        $(".hideStudent").val("Show students")
-    }
-}
 
 
 function scroll_to(selectorOfElementToScrollTo) {

@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<VTP2015.Modules.Lecturer.ViewModels.StudentListViewModel>
 
-<div class="panel panel-success clearfix">
+<div class="panel panel-success clearfix studentcontainer">
     <div class="panel-heading">
         <h3 class="panel-title">Students</h3>
     </div>
@@ -8,7 +8,8 @@
         <ul class="list-group">
             @foreach (var student in Model)
             {
-                <li class="list-group-item studentpointer" data-studentid="@student.StudentId"><span class="name">@student.Prename @student.Name</span></li>
+                @*<li class="list-group-item studentpointer" data-studentid="@student.StudentId"><span class="name">@student.Prename @student.Name</span></li>*@
+                <li class="list-group-item studentpointer" data-studentid="@student.Email"><span class="name">@student.Prename @student.Name</span></li>
             }
         </ul>
     </div>

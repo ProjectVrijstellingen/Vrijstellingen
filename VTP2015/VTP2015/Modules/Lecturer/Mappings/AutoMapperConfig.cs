@@ -15,12 +15,14 @@ namespace VTP2015.Modules.Lecturer.Mappings
                 .ForMember(m => m.Name,
                 opt => opt.MapFrom(i => i.Student.Name))
                 .ForMember(m => m.Prename,
-                opt => opt.MapFrom(i => i.Student.Prename));
+                opt => opt.MapFrom(i => i.Student.Prename))
+                .ForMember(m => m.Email,
+                opt => opt.MapFrom(i => i.Student.StudentMail));
 
             Mapper.CreateMap<RequestPartimInformation, RequestListViewModel>()
                 //.ForMember(m => m.StudentId,
-                .ForMember(m => m.Student,
-                    opt => opt.MapFrom(i => i.Student))
+                //.ForMember(m => m.Student,
+                //    opt => opt.MapFrom(i => i.Student))
                 .ForMember(m => m.PartimName,
                     opt => opt.MapFrom(i => i.Partim.Name))
                 .ForMember(m => m.ModuleName,
