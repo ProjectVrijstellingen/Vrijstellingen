@@ -242,7 +242,10 @@ namespace VTP2015.ServiceLayer.Student
             var file = _fileRepository.Table.Where(x => x.Id == fileId);
             if(file.First().FileStatus == FileStatus.InProgress) file.First().DateCreated = DateTime.Now;
             file.First().FileStatus = FileStatus.Submitted;
-            file.SelectMany(x => x.Requests).SelectMany(x => x.RequestPartimInformations).Where(x => x.Status == Status.Empty).Each(x => x.Status = Status.Untreated);
+            foreach (var request in file.SelectMany(x => x.Requests))
+            {
+                request.RequestPartimInformations.Where(x => x.Status == Status.Empty).Each(x => x.Status = (request.Evidence.Count > 0 ? Status.Untreated : Status.Rejected));
+            }
         }
 
         public Models.FileStatus GetFileStatus(int fileId)
