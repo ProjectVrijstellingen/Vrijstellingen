@@ -266,6 +266,7 @@ namespace VTP2015.ServiceLayer.Student
                 request.Evidence.Except(evidence).ToList().ForEach(e => request.Evidence.Remove(e));
                 evidence.Except(request.Evidence).ToList().ForEach(e => request.Evidence.Add(e));
             }
+            _requestRepository.Update(request);
             return true;
         }
 
