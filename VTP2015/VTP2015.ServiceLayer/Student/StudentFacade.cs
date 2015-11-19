@@ -200,17 +200,15 @@ namespace VTP2015.ServiceLayer.Student
             if (!_fileRepository.Table.Any(d => d.Id == fileId)) return "";
             int fakeint;
             var isSuperCode = int.TryParse(code.Substring(0, 1), out fakeint);
-            if (
-                _fileRepository.Table.Where(f => f.Id == fileId)
-                    .SelectMany(f => f.Requests)
-                    .SelectMany(r => r.RequestPartimInformations)
-                    .Any(
-                        r =>
-                            isSuperCode
-                                ? r.PartimInformation.SuperCode == code
-                                : (r.PartimInformation.Module.Code == code ||
-                                   r.PartimInformation.Module.PartimInformation.Any(
-                                       p => p.SuperCode == r.PartimInformation.SuperCode)))) return "fake!";
+            var requestedPartims = _requestPartimInformationRepository.Table.Where(x => x.Request.FileId == fileId);
+            if (isSuperCode
+                ? requestedPartims.Any(x => x.PartimInformation.SuperCode == code)
+                : (requestedPartims.Any(x => x.PartimInformation.Module.Code == code) ||
+                   requestedPartims.Any(
+                       x =>
+                           _partimInformationRepository.Table.Where(p => p.Module.Code == code)
+                               .Any(p => p == x.PartimInformation))))
+                return "Fake!";
             if (_fileRepository.GetById(fileId).FileStatus == FileStatus.Submitted) return "Denied!";
 
             var newRequest = new Request {LastChanged = DateTime.Now};
