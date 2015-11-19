@@ -8,7 +8,6 @@ using VTP2015.Config;
 using VTP2015.Modules.Student.ViewModels;
 using VTP2015.ServiceLayer.Student;
 using VTP2015.ServiceLayer.Student.Models;
-using File = VTP2015.ServiceLayer.Student.Models.File;
 
 namespace VTP2015.Modules.Student
 {
@@ -177,7 +176,7 @@ namespace VTP2015.Modules.Student
                 return RedirectToAction("Index");
 
             var education = _studentFacade.GetEducation(User.Identity.Name);
-            var dossier = new File
+            var dossier = new ServiceLayer.Student.Models.File
             {
                 StudentMail = User.Identity.Name,
                 DateCreated = DateTime.Now,

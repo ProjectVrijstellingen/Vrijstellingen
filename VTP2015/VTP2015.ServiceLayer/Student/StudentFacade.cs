@@ -86,10 +86,8 @@ namespace VTP2015.ServiceLayer.Student
 
             var path = Path.Combine(mapPath, evidence.Path);
 
-            if (!System.IO.File.Exists(path))
-                return false;
-
-            System.IO.File.Delete(path);
+            if (System.IO.File.Exists(path))
+                System.IO.File.Delete(path);
 
             _evidenceRepository.Delete(evidence);
 
