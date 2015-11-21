@@ -91,6 +91,14 @@ li {
     cursor: pointer;
 }
 
+.oddRowColor {
+    background-color: #FFFFDD;
+}
+
+.evenRowColor {
+    background-color: #FFFFFF;
+}
+
 .btn-default {
   color: #000000;
   background-color: #ffffff;
