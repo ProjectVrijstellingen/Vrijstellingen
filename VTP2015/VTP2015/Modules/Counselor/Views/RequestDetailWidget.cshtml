@@ -1,6 +1,40 @@
 ﻿@using VTP2015.Entities
 @model IEnumerable<VTP2015.Modules.Counselor.ViewModels.RequestDetailViewModel>
 
+<div class="row">
+    <div class="form-group col-md-3">
+        <input type="text" class="form-control" id="searchQuery" placeholder="Zoek op naam">
+    </div>
+    <div class="form-group col-md-2">
+        <div class="btn-group" data-toggle="buttons">
+            <label id="rbDetailBlok" class="btn btn-default active">
+                <input type="radio" id="rBlok" value="Blok"/> <span class="glyphicon glyphicon-th"></span>
+            </label>
+            <label id="rbDetailList" class="btn btn-default">
+                <input type="radio" id="rLijst" value="Lijst"/> <span class="glyphicon glyphicon-list"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group col-md-7">
+        <div class="btn-group" data-toggle="buttons">
+            <span class="button-checkbox">
+                <button id="btnApprovedRequests" type="button" class="btn" data-color="success">Goedgekeurd<span class="badge badge-success" style="margin-left: 1em">0</span></button>
+                <input id="chApprovedRequests" type="checkbox" class="hidden" />
+            </span>
+            <span class="button-checkbox">
+                <button id="btnDeniedRequests" type="button" class="btn" data-color="danger">Afgekeurd<span class="badge badge-danger" style="margin-left: 1em">0</span></button>
+                <input id="chDeniedRequests" type="checkbox" class="hidden" checked />
+            </span>
+            <span class="button-checkbox">
+                <button id="btnUntreatedRequests" type="button" class="btn" data-color="warning">Onbeslist<span class="badge badge-warning" style="margin-left: 1em">0</span></button>
+                <input id="chUntreatedRequests" type="checkbox" class="hidden" checked />
+            </span>
+        </div>
+    </div>
+
+</div>
+
 <div class="panel panel-success clearfix inheritWidth">
     <div class="panel-heading ">
         <h3 class="panel-title">aanvragen</h3>
@@ -8,7 +42,7 @@
     <div class="panel-body">
         @foreach (var request in Model)
         {
-            <div class="request hide" data-fileid="@request.FileId" data-RequestPartimInformationPartimInformationid="@request.RequestId">
+            <div class="request hide" data-fileid="@request.FileId" data-RequestPartimInformationPartimInformationid="@request.RequestId" data-status="@request.StatusViewModel.ToString()">
                 <h2> @request.ModuleName - @request.PartimName</h2>
                 <div>
                     
@@ -39,11 +73,15 @@
                         @foreach (var evidence in request.Evidence)
                         {
                             <div data-evidenceindex="@currentEvidenceIndex" class="inheritWidth bewijs hide">
+                                
                                 <div class="inheritWidth bewijspointer" data-RequestPartimInformationPartimInformationid="RequestPartimInformationPartimInformation_ //TODO: right value">
+                                    
                                     <p id="argumentatie" readonly="">@evidence.Description</p>
+                                    
                                     <a href="~/bewijzen/@evidence.StudentEmail.Split('@').First()/@evidence.Path" download>
                                         Als onderstaande voorstelling niet werkt kunt u op deze link klikken om het bewijs te downloaden
                                     </a>
+
                                     <div class="bewijsdiv">
                                         @if (evidence.Path.Split('.').Last().Equals("pdf"))
                                         {

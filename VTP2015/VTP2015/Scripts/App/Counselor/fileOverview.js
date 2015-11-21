@@ -24,9 +24,9 @@ $(document).ready(function () {
         $(".danger").addClass("hidden");
     }
 
-    $(".badge-success").text($("#blok").find(".panel-success-vtp").length);
-    $(".badge-warning").text($("#blok").find(".panel-warning-vtp").length);
-    $(".badge-danger").text($("#blok").find(".panel-danger-vtp").length);
+    $(".badge-success").text($("#overviewBlok").find(".panel-success-vtp").length);
+    $(".badge-warning").text($("#overviewBlok").find(".panel-warning-vtp").length);
+    $(".badge-danger").text($("#overviewBlok").find(".panel-danger-vtp").length);
     
     if (document.cookie.indexOf("type") < 0) {
         createCookie("type", "blok");
@@ -115,15 +115,15 @@ function createCookie(name, value) {
 }
 
 function showBlok() {
-    $("#blok").removeClass("hidden");
-    $("#lijst").addClass("hidden");
+    $("#overviewBlok").removeClass("hidden");
+    $("#overviewList").addClass("hidden");
     $("#rbList").removeClass("active");
     $("#rbBlok").addClass("active");
 }
 
 function showList() {
-    $("#lijst").removeClass("hidden");
-    $("#blok").addClass("hidden");
+    $("#overviewList").removeClass("hidden");
+    $("#overviewBlok").addClass("hidden");
     $("#rbBlok").removeClass("active");
     $("#rbList").addClass("active");
 }
