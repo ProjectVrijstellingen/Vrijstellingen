@@ -24,9 +24,9 @@ $(document).ready(function () {
         $(".danger").addClass("hidden");
     }
 
-    $(".badge-success").text($("#overviewBlok").find(".panel-success-vtp").length);
-    $(".badge-warning").text($("#overviewBlok").find(".panel-warning-vtp").length);
-    $(".badge-danger").text($("#overviewBlok").find(".panel-danger-vtp").length);
+    $("#spnFinishedFiles").text($("#overviewBlok").find(".panel-success-vtp").length);
+    $("#spnBusyFiles").text($("#overviewBlok").find(".panel-warning-vtp").length);
+    $("#spnNewFiles").text($("#overviewBlok").find(".panel-danger-vtp").length);
     
     if (document.cookie.indexOf("type") < 0) {
         createCookie("type", "blok");

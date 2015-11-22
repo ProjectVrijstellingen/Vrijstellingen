@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="form-group col-md-3">
-        <input type="text" class="form-control" id="searchQuery" placeholder="Zoek op naam">
+        <input type="text" class="form-control" id="searchQuery" placeholder="Zoek op partim">
     </div>
     <div class="form-group col-md-2">
         <div class="btn-group" data-toggle="buttons">
@@ -19,15 +19,15 @@
     <div class="form-group col-md-7">
         <div class="btn-group" data-toggle="buttons">
             <span class="button-checkbox">
-                <button id="btnApprovedRequests" type="button" class="btn" data-color="success">Goedgekeurd<span class="badge badge-success" style="margin-left: 1em">0</span></button>
-                <input id="chApprovedRequests" type="checkbox" class="hidden" />
+                <button id="btnApprovedRequests" type="button" class="btn" data-color="success">Goedgekeurd<span id="spnAmountOfApprovedRequests" class="badge badge-success" style="margin-left: 1em">0</span></button>
+                <input id="chApprovedRequests" type="checkbox" class="hidden" checked />
             </span>
             <span class="button-checkbox">
-                <button id="btnDeniedRequests" type="button" class="btn" data-color="danger">Afgekeurd<span class="badge badge-danger" style="margin-left: 1em">0</span></button>
+                <button id="btnDeniedRequests" type="button" class="btn" data-color="danger">Afgekeurd<span id="spnAmountOfDeniedRequests" class="badge badge-danger" style="margin-left: 1em">0</span></button>
                 <input id="chDeniedRequests" type="checkbox" class="hidden" checked />
             </span>
             <span class="button-checkbox">
-                <button id="btnUntreatedRequests" type="button" class="btn" data-color="warning">Onbeslist<span class="badge badge-warning" style="margin-left: 1em">0</span></button>
+                <button id="btnUntreatedRequests" type="button" class="btn" data-color="warning">Onbeslist<span id="spnAmountOfUntreatedRequests" class="badge badge-warning" style="margin-left: 1em">0</span></button>
                 <input id="chUntreatedRequests" type="checkbox" class="hidden" checked />
             </span>
         </div>
@@ -42,7 +42,7 @@
     <div class="panel-body">
         @foreach (var request in Model)
         {
-            <div class="request hide" data-fileid="@request.FileId" data-RequestPartimInformationPartimInformationid="@request.RequestId" data-status="@request.StatusViewModel.ToString()">
+            <div class="request hide" data-fileid="@request.FileId" data-RequestPartimInformationPartimInformationid="@request.RequestId" data-status="@request.Status.ToString()">
                 <h2> @request.ModuleName - @request.PartimName</h2>
                 <div>
                     

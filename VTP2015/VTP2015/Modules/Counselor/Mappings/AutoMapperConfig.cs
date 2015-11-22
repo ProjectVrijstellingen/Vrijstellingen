@@ -12,7 +12,8 @@ namespace VTP2015.Modules.Counselor.Mappings
         public void Execute()
         {
             Mapper.CreateMap<File, FileOverviewViewModel>();
-            Mapper.CreateMap<Request, RequestDetailViewModel>();
+            Mapper.CreateMap<Request, RequestDetailViewModel>()
+                .ForMember(opt => opt.Status, r => r.MapFrom(f => (StatusViewModel)f.Status));
             Mapper.CreateMap<Education, EducationViewModel>();
             Mapper.CreateMap<Evidence, EvidenceViewModel>();
         }

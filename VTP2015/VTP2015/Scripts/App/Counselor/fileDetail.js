@@ -4,12 +4,30 @@
 
     $(".nextEvidence").click(function (e) {
         e.preventDefault(); 
-        showNextEvidence(this);
+        switchEvidence(this, "next");
     });
 
     $(".previousEvidence").click(function(e) {
         e.preventDefault();
-        showPreviousEvidence(this);
+        switchEvidence(this, "previous");
+    });
+
+    $("#btnApprovedRequests").click(function(e) {
+        e.preventDefault();
+        
+        toggle($("[data-status=Approved]"));
+    });
+
+    $("#btnDeniedRequests").click(function(e) {
+        e.preventDefault();
+
+        toggle($("[data-status=Rejected]"));
+    });
+
+    $("#btnUntreatedRequests").click(function(e) {
+        e.preventDefault();
+
+        toggle($("[data-status=Untreated]"));
     });
 
 });
@@ -35,21 +53,35 @@ function hideEvidence(request, requestIndex) {
     evidence.addClass("hide");
 }
 
-function showNextEvidence(sender) {
-
+function switchEvidence(sender, direction) {
     var currentEvidenceIndexSpan = $(sender).parent().find(".currentEvidence");
     var amountOfEvidence = $(sender).parent().find(".amountOfEvidence").text();
 
     var currentEvidenceIndex = parseInt(currentEvidenceIndexSpan.text());
 
     var request = $(sender).parent().parent().parent().parent();
-    var newCurrentEvidenceIndex;
+    var newCurrentEvidenceIndex = 0;
 
-    if (currentEvidenceIndex < amountOfEvidence) 
-        newCurrentEvidenceIndex = currentEvidenceIndex + 1;
-    else 
-        newCurrentEvidenceIndex = 1;
-    
+    switch(direction) {
+        case "next":
+        {
+            if (currentEvidenceIndex < amountOfEvidence)
+                newCurrentEvidenceIndex = currentEvidenceIndex + 1;
+            else
+                newCurrentEvidenceIndex = 1;
+            break;
+        }
+        case "previous":
+        {
+            if (currentEvidenceIndex > 1)
+                newCurrentEvidenceIndex = currentEvidenceIndex - 1;
+            else
+                newCurrentEvidenceIndex = amountOfEvidence;
+            break;
+        }
+
+    }
+
     hideEvidence(request, currentEvidenceIndex);
     showEvidence(request, newCurrentEvidenceIndex);
 
@@ -57,27 +89,6 @@ function showNextEvidence(sender) {
 
 }
 
-function showPreviousEvidence(sender) {
-
-    var currentEvidenceIndexSpan = $(sender).parent().find(".currentEvidence");
-    var amountOfEvidence = $(sender).parent().find(".amountOfEvidence").text();
-
-    var currentEvidenceIndex = parseInt(currentEvidenceIndexSpan.text());
-
-    var request = $(sender).parent().parent().parent().parent();
-    var newCurrentEvidenceIndex;
-    
-    if (currentEvidenceIndex > 1)
-        newCurrentEvidenceIndex = currentEvidenceIndex - 1;
-    else
-        newCurrentEvidenceIndex = amountOfEvidence;
-
-    hideEvidence(request, currentEvidenceIndex);
-    showEvidence(request, newCurrentEvidenceIndex);
-
-    currentEvidenceIndexSpan.text(newCurrentEvidenceIndex);
-
-}
 // "public" function for the fileoverview
 function selectFileById(file) {
     $(".request").addClass("hide");
@@ -86,6 +97,9 @@ function selectFileById(file) {
     $("#name").text(file.name);
 
     var selectedIndex = 1; //starts at one for simplicity
+    var amountOfApprovedRequests = 0;
+    var amountOfDeniedRequests = 0;
+    var amountOfUntreatedRequests = 0;
 
     $(".request").each(function (index, value) {
 
@@ -99,11 +113,28 @@ function selectFileById(file) {
                 $(value).addClass("oddRowColor");
             }
 
+            switch($(value).data("status")) {
+                case "Approved":
+                    amountOfApprovedRequests++;
+                    break;
+                case "Rejected":
+                    amountOfDeniedRequests++;
+                    break;
+                case "Untreated":
+                    amountOfUntreatedRequests++;
+                    break;
+            }
+
             showEvidence(value, 1); //show first evidence for request
 
             selectedIndex++;
         }
 
     });
+
+    $("#spnAmountOfApprovedRequests").text(amountOfApprovedRequests);
+    $("#spnAmountOfDeniedRequests").text(amountOfDeniedRequests);
+    $("#spnAmountOfUntreatedRequests").text(amountOfUntreatedRequests);
+
 
 }

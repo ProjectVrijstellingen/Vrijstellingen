@@ -18,15 +18,15 @@
         <div class="form-group col-md-5">
             <div class="btn-group" data-toggle="buttons">
                 <span class="button-checkbox">
-                    <button id="btnGreen" type="button" class="btn" data-color="success" onclick="toggleGreen()">Afgewerkt<span class="badge badge-success" style="margin-left:1em">0</span></button>
+                    <button id="btnGreen" type="button" class="btn" data-color="success" onclick="toggleGreen()">Afgewerkt<span id="spnFinishedFiles" class="badge badge-success" style="margin-left:1em">0</span></button>
                     <input id="chGreen" type="checkbox" class="hidden"/>
                 </span>
                 <span class="button-checkbox">
-                    <button id="btnOrange" type="button" class="btn" data-color="warning" onclick="toggleOrange()">Bezig<span class="badge badge-warning" style="margin-left:1em">0</span></button>
+                    <button id="btnOrange" type="button" class="btn" data-color="warning" onclick="toggleOrange()">Bezig<span id="spnBusyFiles" class="badge badge-warning" style="margin-left:1em">0</span></button>
                     <input id="chOrange" type="checkbox" class="hidden" checked/>
                 </span>
                 <span class="button-checkbox">
-                    <button id="btnRed" type="button" class="btn" data-color="danger" onclick="toggleRed()">Nieuw<span class="badge badge-danger" style="margin-left:1em">0</span></button>
+                    <button id="btnRed" type="button" class="btn" data-color="danger" onclick="toggleRed()">Nieuw<span id="spnNewFiles" class="badge badge-danger" style="margin-left:1em">0</span></button>
                     <input id="chRed" type="checkbox" class="hidden" checked/>
                 </span>
             </div>
