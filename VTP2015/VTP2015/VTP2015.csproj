@@ -203,6 +203,7 @@
     <Compile Include="Modules\Feedback\ViewModels\IndexViewModel.cs" />
     <Compile Include="Modules\Lecturer\LecturerController.cs" />
     <Compile Include="Modules\Lecturer\Mappings\AutoMapperConfig.cs" />
+    <Compile Include="Modules\Lecturer\ViewModels\ModuleListViewModel.cs" />
     <Compile Include="Modules\Student\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Modules\Student\StudentController.cs" />
     <Compile Include="Modules\Student\ViewModels\RequestPartimInformationViewModel.cs" />
@@ -327,6 +328,7 @@
     <Content Include="Modules\Lecturer\Views\Archive.cshtml" />
     <Content Include="Modules\Lecturer\Views\RejectedRequestListWidget.cshtml" />
     <Content Include="Modules\Counselor\Views\FileOverviewWidget.cshtml" />
+    <Content Include="Modules\Lecturer\Views\ModuleListWidget.cshtml" />
     <None Include="Properties\PublishProfiles\Foundation.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

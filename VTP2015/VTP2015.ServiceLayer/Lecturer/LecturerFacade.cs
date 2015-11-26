@@ -40,7 +40,7 @@ namespace VTP2015.ServiceLayer.Lecturer
                 .ProjectTo<RequestPartimInformation>();
         }
 
-        public IQueryable<RequestPartimInformation> GetUntreadedRequestsDistinct(string email)
+        public IQueryable<RequestPartimInformation> GetUntreadedRequestsDistinct(string email) //students
         {
            // var requestPartimInformations = GetRequestEntities(email, Status.Untreated);
 
@@ -54,6 +54,20 @@ namespace VTP2015.ServiceLayer.Lecturer
                          group requestPartimInformation by requestPartimInformation.Request.File.Student.Id
                             into groups
                             select groups.FirstOrDefault();
+
+            return result.ProjectTo<RequestPartimInformation>();
+        }
+
+        public IQueryable<RequestPartimInformation> GetUntreadedRequestPartims(string email) //partims
+        {
+            var result = from requestPartimInformation in _lecturerRepository.Table.Where(b => b.Email == email)
+                .SelectMany(p => p.PartimInformation)
+                .SelectMany(p => p.RequestPartimInformations)
+                .Where(a => a.Status == Entities.Status.Untreated)
+                         where requestPartimInformation.Id > 0
+                         group requestPartimInformation by requestPartimInformation.PartimInformation
+                            into groups
+                         select groups.FirstOrDefault();
 
             return result.ProjectTo<RequestPartimInformation>();
         }

@@ -64,6 +64,16 @@ namespace VTP2015.ServiceLayer.Lecturer
                     Evidence = new List<Evidence> { new Evidence { Description="Evidence5", Path="Evidence.png", StudentEmail = "student@student.howest.be" } }.AsEnumerable(),
                     Student = new Lecturer.Models.Student { Id="2", Name="User", Prename="Test", StudentMail = "student@student.howest.be" },
                     Status = Status.Rejected
+                },
+                new RequestPartimInformation{
+                    Id = 6,
+                    Module = new Module { Code="2", Name="Module2" },
+                    Partim = new Partim{ Code="2", Name="Partim2" },
+                    Argumentation = "Test 2",
+                    File = new File{ },
+                    Evidence = new List<Evidence> { new Evidence { Description="Evidence1", Path="Evidence.png", StudentEmail= "test@student.howest.be" } }.AsEnumerable(),
+                    Student = new Lecturer.Models.Student { Id="1", Name="Gebruiker", Prename="Test", StudentMail = "test@student.howest.be" },
+                    Status = Status.Untreated
                 }
 
 
@@ -80,7 +90,7 @@ namespace VTP2015.ServiceLayer.Lecturer
 
         public IQueryable<RequestPartimInformation> GetUntreadedRequestsDistinct(string email)
         {
-            return mockdata.Where(x => x.Status == Status.Untreated);
+            return mockdata.Where(x => x.Status == Status.Untreated).GroupBy(s => s.Student.Id).Select(grp => grp.First());
         }
 
         public bool Approve(int requestId, bool isApproved, string email)
@@ -100,6 +110,11 @@ namespace VTP2015.ServiceLayer.Lecturer
         public bool hasAny(string email, Status status)
         {
             return mockdata.Any();
+        }
+
+        public IQueryable<RequestPartimInformation> GetUntreadedRequestPartims(string email)
+        {
+            return mockdata.Where(x => x.Status == Status.Untreated).GroupBy(s => s.Partim).Select(grp => grp.First());
         }
     }
 }

@@ -7,6 +7,7 @@ namespace VTP2015.ServiceLayer.Lecturer
     {
         IQueryable<RequestPartimInformation> GetRequests(string email, Status status);
         IQueryable<RequestPartimInformation> GetUntreadedRequestsDistinct(string email);
+        IQueryable<RequestPartimInformation> GetUntreadedRequestPartims(string email);
         bool Approve(int requestId, bool isApproved, string email);
         bool hasAny(string email, Status status);
     }
