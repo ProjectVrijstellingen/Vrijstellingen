@@ -70,14 +70,3 @@ var appendFilesToArray = function() {
 var searchQueryContains = function(string) {
     return string.toLowerCase().indexOf($("#searchQuery").val().toLowerCase()) >= 0;
 };
-
-$("#select-education").on("change", function () {
-    $.ajax({
-        url: "Counselors/ChangeEducation",
-        data: { opleiding: $("#select-education option:selected").text() },
-        type: "POST",
-        success: function(data) {
-            location.reload();
-        }
-    });
-});
