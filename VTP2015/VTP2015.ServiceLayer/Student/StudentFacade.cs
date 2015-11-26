@@ -237,13 +237,14 @@ namespace VTP2015.ServiceLayer.Student
 
         public void SumbitFile(int fileId)
         {
-            var file = _fileRepository.Table.Where(x => x.Id == fileId);
-            if(file.First().FileStatus == FileStatus.InProgress) file.First().DateCreated = DateTime.Now;
-            file.First().FileStatus = FileStatus.Submitted;
-            foreach (var request in file.SelectMany(x => x.Requests))
+            var file = _fileRepository.GetById(fileId);
+            if(file.FileStatus == FileStatus.InProgress) file.DateCreated = DateTime.Now;
+            file.FileStatus = FileStatus.Submitted;
+            foreach (var request in file.Requests)
             {
                 request.RequestPartimInformations.Where(x => x.Status == Status.Empty).Each(x => x.Status = (request.Evidence.Count > 0 ? Status.Untreated : Status.Rejected));
             }
+            _fileRepository.Update(file);
         }
 
         public Models.FileStatus GetFileStatus(int fileId)

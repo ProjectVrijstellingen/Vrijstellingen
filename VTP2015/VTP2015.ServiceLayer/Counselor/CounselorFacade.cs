@@ -82,8 +82,7 @@ namespace VTP2015.ServiceLayer.Counselor
                 .Table.First(t => t.Email == email)
                 .Education;
 
-            return _fileRepository.Table.Where(
-                d => d.Requests.Count > 0 && d.AcademicYear == academicYear && d.Education.Id == education.Id)
+            return _fileRepository.Table.Where(d => d.FileStatus != FileStatus.InProgress && d.AcademicYear == academicYear && d.Education.Id == education.Id)
                 .ProjectTo<Models.File>();
         }
 

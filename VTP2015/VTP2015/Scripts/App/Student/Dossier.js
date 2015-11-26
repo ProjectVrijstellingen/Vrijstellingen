@@ -114,6 +114,7 @@ $(document).on("keyup", "#argumentatie", function() {
 
 $(document).on("click", ".partim", function () {
     console.log("partim clicked");
+    if (isIngediend()) return;
     var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
     var parentDiv = $(this).parent().parent()[0];
     var moduleid = $(parentDiv).data("moduleid");
@@ -160,6 +161,7 @@ $(document).on("click", ".partim", function () {
 
 $(document).on("click", ".module", function () {
     console.log("module clicked");
+    if (isIngediend()) return;
     var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
     var parentDiv = $(this).parent()[0];
     var moduleid = $(parentDiv).data("moduleid");
@@ -275,7 +277,9 @@ $(document).ready(function () {
     $("[data-toggle=\"tooltip\"]").tooltip();
 });
 
-$(document).on("click", "#submit", function () {
+$(document).on("click", "#btnIndienen", function () {
+    console.log("Dossier indienen");
+    savePartimdetails();
     var fileId = document.URL.split("/")[document.URL.split("/").length - 1];
     $.ajax({
         url: $("#beschikbarePartimsColumn").data("url"),
@@ -284,7 +288,12 @@ $(document).on("click", "#submit", function () {
         },
         type: "POST",
         success: function (data) {
-            
+            if(data === "Submitted!") location.reload();
         }
     });
 });
+
+function isIngediend() {
+    var string = $("#aangevraagdePartimsColumn .panel .panel-heading").find("span").text();
+    return string === "Ingediend";
+}

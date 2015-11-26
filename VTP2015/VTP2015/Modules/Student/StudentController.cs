@@ -241,7 +241,7 @@ namespace VTP2015.Modules.Student
         {
             _studentFacade.IsFileFromStudent(User.Identity.Name, fileId);
             _studentFacade.SumbitFile(fileId);
-            return RedirectToAction("Index");
+            return Content("Submitted!");
         }
         #endregion
     }
