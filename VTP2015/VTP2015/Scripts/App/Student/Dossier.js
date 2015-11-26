@@ -275,7 +275,8 @@ $(document).ready(function () {
     $("[data-toggle=\"tooltip\"]").tooltip();
 });
 
-$(document).on("click", "#BtnIndienen", function () {
+$(document).on("click", "#btnIndienen", function () {
+    console.log("Dossier indienen");
     savePartimdetails();
     var fileId = document.URL.split("/")[document.URL.split("/").length - 1];
     $.ajax({
@@ -285,7 +286,7 @@ $(document).on("click", "#BtnIndienen", function () {
         },
         type: "POST",
         success: function (data) {
-            //location.reload();
+            if(data === "Submitted!") location.reload();
         }
     });
 });
