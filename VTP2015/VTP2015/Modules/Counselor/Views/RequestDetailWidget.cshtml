@@ -6,42 +6,67 @@
         <h3 class="panel-title">aanvragen</h3>
     </div>
     <div class="panel-body">
-        @{ var getoondeAanvraagId = 1; }
         @foreach (var request in Model)
         {
-            <div class="request hide" data-requestid="@getoondeAanvraagId" data-fileid="@request.FileId" data-RequestPartimInformationPartimInformationid="@request.RequestId">
-                @*<button class="btn btn-danger herinnering">Poke docent</button>*@
-                <p><b>partim:</b> @request.ModuleName - @request.PartimName</p>
-                <label class="control-label">Argumentatie:</label>
-                <p>@request.Argumentation</p>
-                <label class="control-label">Status:</label>
-                <p>@Enum.GetName(typeof(Status), request.StatusViewModel)</p>
-                <label class="control-label">Evidence: <a href="#" class="vorigBewijs"><<</a><span class="huidigBewijs">1</span>/@request.Evidence.Count()<a href="#" class="volgendBewijs">>></a></label>
-                @foreach (var evidence in request.Evidence)
-                {
-                    <div data-evidenceid="@evidence.EvidenceId" class="inheritWidth bewijs hide">
-                        <div class="inheritWidth bewijspointer" data-RequestPartimInformationPartimInformationid="RequestPartimInformationPartimInformation_ //TODO: right value">
-                            <textarea id="argumentatie" class="form-control" readonly="">@evidence.Description</textarea>
-                            <a href="~/bewijzen/@evidence.StudentEmail.Split('@').First()/@evidence.Path" download>
-                                Als onderstaande voorstelling niet werkt kunt u op deze link klikken om het evidence te downloaden
-                            </a>
-                            <div class="bewijsdiv">
-                                @if (evidence.Path.Split('.').Last().Equals("pdf"))
-                                {
-                                    <embed src="~/bewijzen/@evidence.StudentEmail.Split('@').First()/@evidence.Path" class="inheritWidth" />
-                                }
-                                else
-                                {
-                                    <img src="~/bewijzen/@evidence.StudentEmail.Split('@').First()/@evidence.Path" class="inheritWidth" alt=""/>
-                                }
-                            </div>
+            <div class="request hide" data-fileid="@request.FileId" data-RequestPartimInformationPartimInformationid="@request.RequestId">
+                <h2> @request.ModuleName - @request.PartimName</h2>
+                <div>
+                    
+                    <div class="requestDetails">
 
-                        </div>
+                        @*<button class="btn btn-danger herinnering">Poke docent</button>*@
+                        <label class="control-label">Argumentatie:</label>
+                        <p>@request.Argumentation</p>
+                    </div>
+
+                    <div class="requestEvidence">
+                        @if (!request.Evidence.Any())
+                        {
+                            <p>Er zijn voor deze aanvraag geen bewijzen.</p>
+                        }
+                        else
+                        {
+                            <label class="control-label" data-requestid="@request.RequestId">
+                                Evidence:
+                                <a href="#" class="previousEvidence"><<</a>
+                                <span class="currentEvidence">1</span>/
+                                <span class="amountOfEvidence">@request.Evidence.Count()</span>
+                                <a href="#" class="nextEvidence">>></a>
+                            </label>
+                        }
+
+                        @{ var currentEvidenceIndex = 1; }
+                        @foreach (var evidence in request.Evidence)
+                        {
+                            <div data-evidenceindex="@currentEvidenceIndex" class="inheritWidth bewijs hide">
+                                <div class="inheritWidth bewijspointer" data-RequestPartimInformationPartimInformationid="RequestPartimInformationPartimInformation_ //TODO: right value">
+                                    <p id="argumentatie" readonly="">@evidence.Description</p>
+                                    <a href="~/bewijzen/@evidence.StudentEmail.Split('@').First()/@evidence.Path" download>
+                                        Als onderstaande voorstelling niet werkt kunt u op deze link klikken om het bewijs te downloaden
+                                    </a>
+                                    <div class="bewijsdiv">
+                                        @if (evidence.Path.Split('.').Last().Equals("pdf"))
+                                        {
+                                            <embed src="~/bewijzen/@evidence.StudentEmail.Split('@').First()/@evidence.Path" class="inheritWidth"/>
+                                        }
+                                        else
+                                        {
+                                            <img src="~/bewijzen/@evidence.StudentEmail.Split('@').First()/@evidence.Path" class="inheritWidth" alt=""/>
+                                        }
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            {
+                                currentEvidenceIndex++; 
+                            }
+                        }
+
 
                     </div>
-                                { getoondeAanvraagId++; }
 
-                }
+                </div>
             </div>
         }
     </div>
