@@ -275,7 +275,8 @@ $(document).ready(function () {
     $("[data-toggle=\"tooltip\"]").tooltip();
 });
 
-$(document).on("click", "#submit", function () {
+$(document).on("click", "#BtnIndienen", function () {
+    savePartimdetails();
     var fileId = document.URL.split("/")[document.URL.split("/").length - 1];
     $.ajax({
         url: $("#beschikbarePartimsColumn").data("url"),
@@ -284,7 +285,7 @@ $(document).on("click", "#submit", function () {
         },
         type: "POST",
         success: function (data) {
-            
+            //location.reload();
         }
     });
 });
