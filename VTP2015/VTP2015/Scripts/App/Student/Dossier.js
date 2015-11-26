@@ -114,6 +114,7 @@ $(document).on("keyup", "#argumentatie", function() {
 
 $(document).on("click", ".partim", function () {
     console.log("partim clicked");
+    if (isIngediend()) return;
     var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
     var parentDiv = $(this).parent().parent()[0];
     var moduleid = $(parentDiv).data("moduleid");
@@ -160,6 +161,7 @@ $(document).on("click", ".partim", function () {
 
 $(document).on("click", ".module", function () {
     console.log("module clicked");
+    if (isIngediend()) return;
     var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
     var parentDiv = $(this).parent()[0];
     var moduleid = $(parentDiv).data("moduleid");
@@ -290,3 +292,8 @@ $(document).on("click", "#btnIndienen", function () {
         }
     });
 });
+
+function isIngediend() {
+    var string = $("#aangevraagdePartimsColumn .panel .panel-heading").find("span").text();
+    return string === "Ingediend";
+}
