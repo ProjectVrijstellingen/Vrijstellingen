@@ -13,14 +13,85 @@ $(document).ready(function () {
     selectStudent(alleStudenten[0]);
 
     $(".studentpointer").click(function (event) {
-        $(".studentpointer").click(function (event) {
-            if ($(document).width() <= 990) {
-                scroll_to($(".aanvraagcontainer"));
+        //$(".studentpointer").click(function (event) {
+        //    if ($(document).width() <= 990) {
+        //        scroll_to($(".aanvraagcontainer"));
+        //    }
+        //});
+        //$(alleStudenten[huidigeStudent]).removeClass("active");
+        //selectStudent(this);
+
+        var active = $(this).hasClass("active");
+
+        $(this).parent().find(".active").removeClass("active");
+
+        if (!active) {
+            $(this).addClass("active");
+            $(".aanvraag").addClass("hide");
+            if ($('.partimpointer.active').length > 0)
+            {
+                $("." + $(".partimpointer.active").find("span").html()).find('[data-studentid="' + $(this).data("studentid") + '"]').removeClass("hide");
             }
-        });
-        $(alleStudenten[huidigeStudent]).removeClass("active");
-        selectStudent(this);
+            else
+            {
+                $('[data-studentid="' + $(this).data("studentid") + '"]').removeClass("hide");
+            }
+        }
+        else {
+            if ($('.partimpointer.active').length > 0) {
+                $(".aanvraag").addClass("hide");
+                $("." + $('.partimpointer.active').find("span").html()).find(".aanvraag").removeClass("hide");
+            }
+            else {
+                $(".aanvraag").removeClass("hide");
+            }
+        }
     });
+
+    $(".partimpointer").click(function (event) {
+        var active = $(this).hasClass("active");
+        $(this).parent().find(".active").removeClass("active");
+
+        if (!active)
+        {
+            $(this).addClass("active");
+            $(".aanvraag").addClass("hide");
+            if ($('.studentpointer.active').length > 0) {
+                $("." + $(this).find("span").html()).find('[data-studentid="' + $(".studentpointer.active").data("studentid") + '"]').removeClass("hide");
+            }
+            else {
+                $("." + $(this).find("span").html()).find(".aanvraag").removeClass("hide");
+            }
+        }
+        else
+        {
+            if ($('.studentpointer.active').length > 0) {
+                $(".aanvraag").addClass("hide");
+                $('[data-studentid="' + $(".studentpointer.active").data("studentid") + '"]').removeClass("hide");
+            }
+            else {
+                $(".aanvraag").removeClass("hide");
+            }
+        }
+    });
+
+
+    $("#filter").bind("keyup", function () {
+       for(i=0;i<$("#studentlist").children().length;i++)
+        {
+           if (!$($("#studentlist").children()[i]).data("studentid").substr(0, $($("#studentlist").children()[i]).data("studentid").indexOf('@')).contains($(this).val().replace(" ",".").toLowerCase()))
+            {
+               $($("#studentlist").children()[i]).addClass("hide");
+               $($("#studentlist").children()[i]).removeClass("active");
+            }
+            else
+            {
+                $($("#studentlist").children()[i]).removeClass("hide");
+            }
+        }
+    });
+
+
 
     $(".vorigBewijs").click(function(event) {
         event.preventDefault();
