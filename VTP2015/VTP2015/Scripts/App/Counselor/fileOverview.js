@@ -140,3 +140,14 @@ function onList() {
     createCookie("type", "list");
     showList();
 }
+
+$("#select-education").on("change", function () {
+    $.ajax({
+        url: "Counselors/ChangeEducation",
+        data: { opleiding: $("#select-education option:selected").text() },
+        type: "POST",
+        success: function (data) {
+            location.reload();
+        }
+    });
+});

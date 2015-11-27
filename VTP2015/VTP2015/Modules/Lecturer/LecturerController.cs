@@ -39,11 +39,22 @@ namespace VTP2015.Modules.Lecturer
         }
 
         [HttpGet]
+        [Route("ModuleListWidget")]
+        public PartialViewResult ModuleListWidget()
+        {
+            var viewModel = _lecturerFacade.GetUntreadedRequestsDistinct(User.Identity.Name)
+                .ProjectTo<PartimListViewModel>();
+
+            return PartialView(viewModel);
+        }
+
+
+        [HttpGet]
         [Route("RequestListWidget")]
         public PartialViewResult RequestListWidget()
         {
             var viewModel = _lecturerFacade.GetRequests(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Untreated)
-                .ProjectTo<RequestListViewModel>();
+                .ProjectTo<RequestListViewModel>().OrderBy(m => m.ModuleName).OrderBy(p => p.PartimName);
 
             return PartialView(viewModel);
         }

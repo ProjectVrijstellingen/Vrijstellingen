@@ -13,6 +13,7 @@ namespace VTP2015.Helpers
             var htmlString = "";
             var moduleFactory = new ModuleFactory(viewModels);
             var modules = moduleFactory.Modules;
+            var status = new string[] { "", " - onbehandeld", " - afgekeurd", " - goedgekeurd"};
 
             foreach (var module in modules)
             {
@@ -28,7 +29,7 @@ namespace VTP2015.Helpers
                 if (!submitted) tag.InnerHtml += ShowGlyphicon(html, "remove", "btn badge" + (count == module.TotalCount && deletable ? "" : " hide"));
 
                 var moduleTag = new TagBuilder("ul");
-                moduleTag.AddCssClass("list-group" + (count == module.TotalCount && deletable ? " hide" : ""));
+                moduleTag.AddCssClass("list-group" + (count == module.TotalCount && deletable && !submitted ? " hide" : ""));
                 foreach (var partim in module.Partims)
                 {
                     var partimTag = new TagBuilder("li");
@@ -42,7 +43,7 @@ namespace VTP2015.Helpers
 
                     }
                     partimNameTag.AddCssClass("name");
-                    partimNameTag.SetInnerText(TextLimiter(partim.Name, 30));
+                    partimNameTag.SetInnerText(TextLimiter(partim.Name, 30) + status[partim.Status]);
                     partimTag.InnerHtml += partimNameTag;
                     if (partim.Status == 0) partimTag.InnerHtml += ShowGlyphicon(html, "remove","btn badge" + (deletable ? "" : " hide"));
                     moduleTag.InnerHtml += partimTag;
