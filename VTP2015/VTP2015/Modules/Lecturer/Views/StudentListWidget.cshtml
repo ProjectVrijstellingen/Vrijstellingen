@@ -9,7 +9,7 @@
         <ul id="studentlist" class="list-group">
             @foreach (var student in Model)
             {
-                <li class="list-group-item studentpointer" data-studentid="@student.Email"><span class="name">@student.Prename @student.Name</span></li>
+                <li class="list-group-item studentpointer" data-studentid="@student.Email"><span class="name">@student.FirstName @student.Name</span></li>
             }
         </ul>
     </div>

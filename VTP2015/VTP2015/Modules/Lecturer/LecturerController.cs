@@ -32,7 +32,7 @@ namespace VTP2015.Modules.Lecturer
         [Route("StudentListWidget")]
         public PartialViewResult StudentListWidget()
         {
-            var viewModel = _lecturerFacade.GetUntreadedRequestsDistinct(User.Identity.Name)
+            var viewModel = _lecturerFacade.GetUntreadedStudent(User.Identity.Name)
                 .ProjectTo<StudentListViewModel>();
 
             return PartialView(viewModel);
@@ -42,7 +42,7 @@ namespace VTP2015.Modules.Lecturer
         [Route("ModuleListWidget")]
         public PartialViewResult ModuleListWidget()
         {
-            var viewModel = _lecturerFacade.GetUntreadedRequestsDistinct(User.Identity.Name)
+            var viewModel = _lecturerFacade.GetPartims(User.Identity.Name)
                 .ProjectTo<PartimListViewModel>();
 
             return PartialView(viewModel);

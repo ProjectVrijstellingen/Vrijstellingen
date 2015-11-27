@@ -10,7 +10,7 @@ namespace VTP2015.ServiceLayer.Lecturer.Models
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public string Prename { get; set; }
-        public string StudentMail { get; set; }
+        public string FirstName { get; set; }
+        public string Email { get; set; }
     }
 }
