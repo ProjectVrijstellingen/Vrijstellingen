@@ -20,9 +20,8 @@ namespace VTP2015.ServiceLayer.Lecturer
                     Module = new Module { Code="1", Name="Module" },
                     Partim = new Partim{ Code="1", Name="Partim" },
                     Argumentation = "Test 1",
-                    File = new File{ },
-                    Evidence = new List<Evidence> { new Evidence { Description="Evidence1", Path="Evidence.png", StudentEmail= "test@student.howest.be" } }.AsEnumerable(),
-                    Student = new Lecturer.Models.Student { Id="1", Name="Gebruiker", Prename="Test", StudentMail = "test@student.howest.be" },
+                    Evidence = new List<Evidence> { new Evidence { Description="Evidence1", Path="Evidence.png" } }.AsQueryable(),
+                    Student = new Lecturer.Models.Student { Id="1", Name="Gebruiker", FirstName="Test", Email = "test@student.howest.be" },
                     Status = Status.Untreated
                 },
                 new RequestPartimInformation{
@@ -30,9 +29,8 @@ namespace VTP2015.ServiceLayer.Lecturer
                     Module = new Module { Code="2", Name="Module2" },
                     Partim = new Partim{ Code="2", Name="Partim2" },
                     Argumentation = "Test 2",
-                    File = new File{ },
-                    Evidence = new List<Evidence> { new Evidence { Description="Evidence2", Path="Evidence.png", StudentEmail = "student@student.howest.be" } }.AsEnumerable(),
-                    Student = new Lecturer.Models.Student { Id="2", Name="User", Prename="Test", StudentMail = "student@student.howest.be" },
+                    Evidence = new List<Evidence> { new Evidence { Description="Evidence2", Path="Evidence.png"} }.AsQueryable(),
+                    Student = new Lecturer.Models.Student { Id="2", Name="User", FirstName="Test", Email = "student@student.howest.be" },
                     Status = Status.Untreated
                 },
                 new RequestPartimInformation{
@@ -40,9 +38,8 @@ namespace VTP2015.ServiceLayer.Lecturer
                     Module = new Module { Code="3", Name="Module3" },
                     Partim = new Partim{ Code="3", Name="Partim3" },
                     Argumentation = "Test 3",
-                    File = new File{ },
-                    Evidence = new List<Evidence> { new Evidence { Description="Evidence3", Path="Evidence.png", StudentEmail = "student@student.howest.be" } }.AsEnumerable(),
-                    Student = new Lecturer.Models.Student { Id="2", Name="User", Prename="Test", StudentMail = "student@student.howest.be" },
+                    Evidence = new List<Evidence> { new Evidence { Description="Evidence3", Path="Evidence.png"} }.AsQueryable(),
+                    Student = new Lecturer.Models.Student { Id="2", Name="User", FirstName="Test", Email = "student@student.howest.be" },
                     Status = Status.Approved
                 },
                 new RequestPartimInformation{
@@ -50,9 +47,8 @@ namespace VTP2015.ServiceLayer.Lecturer
                     Module = new Module { Code="4", Name="Module4" },
                     Partim = new Partim{ Code="4", Name="Partim4" },
                     Argumentation = "Test 4",
-                    File = new File{ },
-                    Evidence = new List<Evidence> { new Evidence { Description="Evidence4", Path="Evidence.png", StudentEmail = "student@student.howest.be" } }.AsEnumerable(),
-                    Student = new Lecturer.Models.Student { Id="2", Name="User", Prename="Test", StudentMail = "student@student.howest.be" },
+                    Evidence = new List<Evidence> { new Evidence { Description="Evidence4", Path="Evidence.png"} }.AsQueryable(),
+                    Student = new Lecturer.Models.Student { Id="2", Name="User", FirstName="Test", Email = "student@student.howest.be" },
                     Status = Status.Rejected
                 },
                 new RequestPartimInformation{
@@ -60,9 +56,8 @@ namespace VTP2015.ServiceLayer.Lecturer
                     Module = new Module { Code="5", Name="Module5" },
                     Partim = new Partim{ Code="5", Name="Partim5" },
                     Argumentation = "Test 5",
-                    File = new File{ },
-                    Evidence = new List<Evidence> { new Evidence { Description="Evidence5", Path="Evidence.png", StudentEmail = "student@student.howest.be" } }.AsEnumerable(),
-                    Student = new Lecturer.Models.Student { Id="2", Name="User", Prename="Test", StudentMail = "student@student.howest.be" },
+                    Evidence = new List<Evidence> { new Evidence { Description="Evidence5", Path="Evidence.png"} }.AsQueryable(),
+                    Student = new Lecturer.Models.Student { Id="2", Name="User", FirstName="Test", Email = "student@student.howest.be" },
                     Status = Status.Rejected
                 },
                 new RequestPartimInformation{
@@ -70,9 +65,8 @@ namespace VTP2015.ServiceLayer.Lecturer
                     Module = new Module { Code="2", Name="Module2" },
                     Partim = new Partim{ Code="2", Name="Partim2" },
                     Argumentation = "Test 2",
-                    File = new File{ },
-                    Evidence = new List<Evidence> { new Evidence { Description="Evidence1", Path="Evidence.png", StudentEmail= "test@student.howest.be" } }.AsEnumerable(),
-                    Student = new Lecturer.Models.Student { Id="1", Name="Gebruiker", Prename="Test", StudentMail = "test@student.howest.be" },
+                    Evidence = new List<Evidence> { new Evidence { Description="Evidence1", Path="Evidence.png" } }.AsQueryable(),
+                    Student = new Lecturer.Models.Student { Id="1", Name="Gebruiker", FirstName="Test", Email = "test@student.howest.be" },
                     Status = Status.Untreated
                 }
 
@@ -88,9 +82,9 @@ namespace VTP2015.ServiceLayer.Lecturer
             return mockdata.Where(x => x.Status ==status );
         }
 
-        public IQueryable<RequestPartimInformation> GetUntreadedRequestsDistinct(string email)
+        public IQueryable<Models.Student> GetUntreadedStudent(string email)
         {
-            return mockdata.Where(x => x.Status == Status.Untreated).GroupBy(s => s.Student.Id).Select(grp => grp.First());
+            return null; // mockdata.Where(x => x.Status == Status.Untreated).GroupBy(s => s.Student.Id).Select(grp => grp.First());
         }
 
         public bool Approve(int requestId, bool isApproved, string email)
@@ -112,9 +106,9 @@ namespace VTP2015.ServiceLayer.Lecturer
             return mockdata.Any();
         }
 
-        public IQueryable<RequestPartimInformation> GetUntreadedRequestPartims(string email)
+        public IQueryable<PartimInformation> GetPartims(string email)
         {
-            return mockdata.Where(x => x.Status == Status.Untreated).GroupBy(s => s.Partim).Select(grp => grp.First());
+            return null; //mockdata.GroupBy(s => s.Partim).Select(grp => grp.First());
         }
     }
 }

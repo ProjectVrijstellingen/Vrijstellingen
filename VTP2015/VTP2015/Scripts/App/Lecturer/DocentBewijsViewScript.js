@@ -30,7 +30,7 @@ $(document).ready(function () {
             $(".aanvraag").addClass("hide");
             if ($('.partimpointer.active').length > 0)
             {
-                $("." + $(".partimpointer.active").find("span").html()).find('[data-studentid="' + $(this).data("studentid") + '"]').removeClass("hide");
+                $("#" + $(".partimpointer.active").data("supercode")).find('[data-studentid="' + $(this).data("studentid") + '"]').removeClass("hide");
             }
             else
             {
@@ -40,7 +40,7 @@ $(document).ready(function () {
         else {
             if ($('.partimpointer.active').length > 0) {
                 $(".aanvraag").addClass("hide");
-                $("." + $('.partimpointer.active').find("span").html()).find(".aanvraag").removeClass("hide");
+                $("#" + $(".partimpointer.active").data("supercode")).find(".aanvraag").removeClass("hide");
             }
             else {
                 $(".aanvraag").removeClass("hide");
@@ -57,10 +57,10 @@ $(document).ready(function () {
             $(this).addClass("active");
             $(".aanvraag").addClass("hide");
             if ($('.studentpointer.active').length > 0) {
-                $("." + $(this).find("span").html()).find('[data-studentid="' + $(".studentpointer.active").data("studentid") + '"]').removeClass("hide");
+                $("#" + $(this).data("supercode")).find('[data-studentid="' + $(".studentpointer.active").data("studentid") + '"]').removeClass("hide");
             }
             else {
-                $("." + $(this).find("span").html()).find(".aanvraag").removeClass("hide");
+                $("#" + $(this).data("supercode")).find(".aanvraag").removeClass("hide");
             }
         }
         else
@@ -91,6 +91,14 @@ $(document).ready(function () {
         }
     });
 
+
+    $(".argumentatie").click(function (event) {
+        if ($($(this).parent().children()[1]).hasClass("hide"))
+            $($(this).parent().children()[1]).removeClass("hide");
+        else
+            $($(this).parent().children()[1]).addClass("hide");
+
+    });
 
 
     $(".vorigBewijs").click(function(event) {

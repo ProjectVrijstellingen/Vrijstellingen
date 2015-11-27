@@ -4,6 +4,7 @@ using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.ServiceLayer.Lecturer.Mappings;
 using VTP2015.ServiceLayer.Lecturer.Models;
+using System.Collections.Generic;
 
 namespace VTP2015.ServiceLayer.Lecturer
 {
@@ -32,44 +33,59 @@ namespace VTP2015.ServiceLayer.Lecturer
 
         public IQueryable<RequestPartimInformation> GetRequests(string email, Status status)
         {
-            //return GetRequestEntities(email, status).ProjectTo<RequestPartimInformation>();
-            return _lecturerRepository.Table.Where(b => b.Email == email)
+            //var result = _lecturerRepository.Table.Where(b => b.Email == email)
+            //    .SelectMany(p => p.PartimInformation)
+            //    .SelectMany(p => p.RequestPartimInformations)
+            //    .Where(a => (int)a.Status == (int)status).AsQueryable();
+            //return result.ProjectTo<RequestPartimInformation>();
+
+            var data = _lecturerRepository.Table.Where(b => b.Email == email)
                 .SelectMany(p => p.PartimInformation)
                 .SelectMany(p => p.RequestPartimInformations)
-                .Where(a => a.Status == (Entities.Status)(int)status)
-                .ProjectTo<RequestPartimInformation>();
+                .Where(a => (int)a.Status == (int)status).AsQueryable();
+            var result = new List<RequestPartimInformation>();
+            foreach(var request in data){
+                var student = request.Request.File.Student;
+                result.Add(new RequestPartimInformation {
+                    Id = request.Id,
+                    Partim = new Partim {Code=request.PartimInformation.Partim.Code, Name=request.PartimInformation.Partim.Name },
+                    Module = new Module { Code=request.PartimInformation.Module.Code, Name=request.PartimInformation.Module.Name},
+                    Argumentation = request.Request.Argumentation,
+                    Evidence = request.Request.Evidence.AsQueryable().ProjectTo<Evidence>(),
+                    Status = (Status)(int)request.Status,
+                    SuperCode = request.PartimInformation.SuperCode,
+                    Student = new Models.Student { Id=student.Id.ToString(), Name=student.Name, FirstName=student.FirstName, Email=student.Email}
+                });
+            }
+            return result.AsQueryable();
         }
 
-        public IQueryable<RequestPartimInformation> GetUntreadedRequestsDistinct(string email) //students
+        public IQueryable<Models.Student> GetUntreadedStudent(string email) //students
         {
-           // var requestPartimInformations = GetRequestEntities(email, Status.Untreated);
+            var result = _lecturerRepository.Table.Where(b => b.Email == email)
+                .SelectMany(p => p.PartimInformation).SelectMany(x => x.RequestPartimInformations)
+                .Where(e => e.Status == Entities.Status.Untreated).Select(x => x.Request)
+                .Select(f => f.File).Select(s => s.Student).Distinct().AsQueryable();
 
-            var result = from requestPartimInformation in _lecturerRepository.Table.Where(b => b.Email == email)
-                .SelectMany(p => p.PartimInformation)
-                .SelectMany(p => p.RequestPartimInformations)
-                .Where(a => a.Status == Entities.Status.Untreated)
-                //.ProjectTo<RequestPartimInformation>()
-                         where requestPartimInformation.Id > 0
-                         //group requestPartimInformation by requestPartimInformation.Request.File.Student.Id
-                         group requestPartimInformation by requestPartimInformation.Request.File.Student.Id
-                            into groups
-                            select groups.FirstOrDefault();
-
-            return result.ProjectTo<RequestPartimInformation>();
+            return result.ProjectTo<Models.Student>();
         }
 
-        public IQueryable<RequestPartimInformation> GetUntreadedRequestPartims(string email) //partims
+        public IQueryable<PartimInformation> GetPartims(string email) //partims
         {
-            var result = from requestPartimInformation in _lecturerRepository.Table.Where(b => b.Email == email)
-                .SelectMany(p => p.PartimInformation)
-                .SelectMany(p => p.RequestPartimInformations)
-                .Where(a => a.Status == Entities.Status.Untreated)
-                         where requestPartimInformation.Id > 0
-                         group requestPartimInformation by requestPartimInformation.PartimInformation
-                            into groups
-                         select groups.FirstOrDefault();
+            //var result = from requestPartimInformation in _lecturerRepository.Table.Where(b => b.Email == email)
+            //    .SelectMany(p => p.PartimInformation)
+            //    .SelectMany(p => p.RequestPartimInformations)
+            //    .Where(a => a.Status == Entities.Status.Untreated)
+            //             where requestPartimInformation.Id > 0
+            //             group requestPartimInformation by requestPartimInformation.PartimInformation
+            //                into groups
+            //             select groups.FirstOrDefault();
 
-            return result.ProjectTo<RequestPartimInformation>();
+            //return result.ProjectTo<RequestPartimInformation>();
+
+            var result = _lecturerRepository.Table.Where(b => b.Email == email).SelectMany(p => p.PartimInformation).AsQueryable();
+            return result.ProjectTo<PartimInformation>();
+
         }
 
         public bool Approve(int requestPartimInformationId, bool isApproved, string email)

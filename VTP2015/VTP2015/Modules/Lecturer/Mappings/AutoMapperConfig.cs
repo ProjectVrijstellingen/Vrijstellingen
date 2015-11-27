@@ -14,10 +14,10 @@ namespace VTP2015.Modules.Lecturer.Mappings
                 opt => opt.MapFrom(i => i.Student.Id))
                 .ForMember(m => m.Name,
                 opt => opt.MapFrom(i => i.Student.Name))
-                .ForMember(m => m.Prename,
-                opt => opt.MapFrom(i => i.Student.Prename))
+                .ForMember(m => m.FirstName,
+                opt => opt.MapFrom(i => i.Student.FirstName))
                 .ForMember(m => m.Email,
-                opt => opt.MapFrom(i => i.Student.StudentMail));
+                opt => opt.MapFrom(i => i.Student.Email));
 
             Mapper.CreateMap<RequestPartimInformation, PartimListViewModel>()
                 .ForMember(m => m.PartimId,
@@ -33,7 +33,7 @@ namespace VTP2015.Modules.Lecturer.Mappings
                     opt => opt.MapFrom(i => i.Partim.Name))
                 .ForMember(m => m.ModuleName,
                     opt => opt.MapFrom(i => i.Module.Name))
-                .ForMember(m => m.RequestId,
+                .ForMember(m => m.Id,
                     opt => opt.MapFrom(i => i.Id))
                 .ForMember(m => m.Argumentation,
                     opt => opt.MapFrom(i => i.Argumentation))
@@ -44,6 +44,8 @@ namespace VTP2015.Modules.Lecturer.Mappings
             //    .ForMember(m => m.StudentEmail,
             //        opt => opt.MapFrom(i => i.Student.Email));
 
+            Mapper.CreateMap<PartimInformation, PartimListViewModel>();
+            Mapper.CreateMap<ServiceLayer.Lecturer.Models.Student, StudentListViewModel>();
         }
     }
 }
