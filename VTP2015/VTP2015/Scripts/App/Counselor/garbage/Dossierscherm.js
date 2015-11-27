@@ -2,11 +2,11 @@
 
 $(document).ready(function () {
     appendFilesToArray();
-    $("#searchQuery").keyup(SearchQueryKeyupEventHandler);
+    $("#searchQuery").keyup(searchFilesForName);
 
 });
 
-var SearchQueryKeyupEventHandler = function () {
+var searchFilesForName = function () {
     $.each(files, function (key, value) {
         var name = $(value).data("name");
         var prename = $(value).data("prename");

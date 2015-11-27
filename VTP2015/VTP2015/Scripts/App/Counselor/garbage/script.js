@@ -5,7 +5,7 @@ var currentFileSelected;
 $(document).ready(function() {
     appendFilesToArray();
     $("#searchQuery").focus();
-    $("#searchQuery").keyup(SearchQueryKeyupEventHandler);
+    $("#searchQuery").keyup(searchFilesForName);
     $(".herinnering").click(function (sender) {
         console.log($(sender.target).parent().data("aanvraagid"));
         $.ajax({
@@ -47,7 +47,7 @@ $(document).ready(function() {
 
 
 
-var SearchQueryKeyupEventHandler = function () {
+var searchFilesForName = function () {
     $.each(files, function (key, value) {
         var name = $(value).data("name");
         var prename = $(value).data("prename");

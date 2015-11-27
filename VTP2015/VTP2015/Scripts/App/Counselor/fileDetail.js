@@ -30,6 +30,10 @@
         toggle($("[data-status=Untreated]"));
     });
 
+    $("#partimNameSearchQuery").keyup(function (e) {
+        searchFilesForPartimName(this);
+    });
+
 });
 
 function showFileOverview() {
@@ -88,6 +92,22 @@ function switchEvidence(sender, direction) {
     currentEvidenceIndexSpan.text(newCurrentEvidenceIndex);
 
 }
+
+function searchFilesForPartimName(sender) {
+    $(".request").each(function (key, value) {
+        
+        var name = $(value).data("partimname");
+
+        if (name != undefined) {
+            if (searchQueryContains(name, sender)) {
+                $(value).show();
+            } else {
+                $(value).hide();
+            }
+        }
+
+    });
+};
 
 // "public" function for the fileoverview
 function selectFileById(file) {

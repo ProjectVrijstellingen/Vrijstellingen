@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     appendFilesToArray();
 
-    $("#searchQuery").keyup(SearchQueryKeyupEventHandler);
+    $("#nameSearchQuery").keyup(searchFilesForName);
 
     $(".btnShowOverview").click(function (sender) { showFileDetails(sender); });
 
@@ -57,12 +57,15 @@ function showFileDetails(sender) {
     selectFileById(file);
 }
 
-var SearchQueryKeyupEventHandler = function () {
+var searchFilesForName = function () {
     $.each(files, function (key, value) {
         var name = $(value).data("name");
         var prename = $(value).data("firstname");
+
+        var control = $("#nameSearchQuery");
+
         if (name != undefined) {
-            if (searchQueryContains(name) || searchQueryContains(prename) || searchQueryContains(name + " " + prename) || searchQueryContains(prename + " " + name)) {
+            if (searchQueryContains(name, control) || searchQueryContains(prename, control) || searchQueryContains(name + " " + prename, control) || searchQueryContains(prename + " " + name, control)) {
                 $(value).show();
             } else {
                 $(value).hide();
@@ -80,8 +83,8 @@ var appendFilesToArray = function () {
     });
 };
 
-var searchQueryContains = function (string) {
-    return string.toLowerCase().indexOf($("#searchQuery").val().toLowerCase()) >= 0;
+var searchQueryContains = function (string, control) {
+    return string.toLowerCase().indexOf($(control).val().toLowerCase()) >= 0;
 };
 
 function toggle(panel) {
