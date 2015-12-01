@@ -127,21 +127,24 @@ function selectFileById(file) {
 
             $(value).removeClass("hide");
 
-            if (isEven(selectedIndex)) {
-                $(value).addClass("evenRowColor");
-            } else {
-                $(value).addClass("oddRowColor");
-            }
+            //if (isEven(selectedIndex)) {
+            //    $(value).addClass("evenRowColor");
+            //} else {
+            //    $(value).addClass("oddRowColor");
+            //}
 
             switch($(value).data("status")) {
                 case "Approved":
                     amountOfApprovedRequests++;
+                    $(value).addClass("approvedRow");
                     break;
                 case "Rejected":
                     amountOfDeniedRequests++;
+                    $(value).addClass("deniedRow");
                     break;
                 case "Untreated":
                     amountOfUntreatedRequests++;
+                    $(value).addClass("untreatedRow");
                     break;
             }
 

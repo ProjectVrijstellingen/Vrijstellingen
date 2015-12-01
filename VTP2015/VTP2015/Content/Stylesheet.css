@@ -91,12 +91,16 @@ li {
     cursor: pointer;
 }
 
-.oddRowColor {
-    background-color: #FFFFDD;
+.approvedRow {
+    background-color: #18bc9c;
 }
 
-.evenRowColor {
-    background-color: #FFFFFF;
+.deniedRow {
+    background-color: #e74c3c;
+}
+
+.untreatedRow {
+    background-color: #f39c12;
 }
 
 .btn-default {

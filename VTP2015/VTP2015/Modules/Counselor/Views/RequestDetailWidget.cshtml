@@ -39,12 +39,12 @@
     <div class="panel-heading ">
         <h3 class="panel-title">aanvragen</h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body list-group">
         @foreach (var request in Model)
         {
-            <div class="request hide" data-fileid="@request.FileId" data-RequestPartimInformationPartimInformationid="@request.RequestId" data-status="@request.Status.ToString()">
-                <h2> @request.ModuleName - @request.PartimName</h2>
-                <div>
+            <div class="request hide list-group-item" data-fileid="@request.FileId" data-RequestPartimInformationPartimInformationid="@request.RequestId" data-status="@request.Status.ToString()">
+                <h3 class="requestTitle"> @request.ModuleName - @request.PartimName</h3>
+                <div class="hide">
                     
                     <div class="requestDetails">
 
