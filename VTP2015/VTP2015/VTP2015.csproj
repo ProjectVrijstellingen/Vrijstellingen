@@ -54,6 +54,14 @@
       <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Elmah, Version=1.2.13605.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\elmah.corelibrary.1.2\lib\Elmah.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Elmah.Mvc, Version=2.1.2.1389, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Elmah.Mvc.2.1.2\lib\net40\Elmah.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -401,7 +409,7 @@
     <Content Include="Modules\Lecturer\Views\StudentListWidget.cshtml" />
     <Content Include="Modules\Lecturer\Views\RequestListWidget.cshtml" />
     <Content Include="Modules\Counselor\Views\RequestDetailWidget.cshtml" />
-    <None Include="Modules\Counselor\Views\FileDetailsPartial.cshtml" />
+    <Content Include="Modules\Counselor\Views\FileDetailsPartial.cshtml" />
     <Content Include="Modules\Admin\Views\index.cshtml" />
     <Content Include="Modules\Admin\Views\SettingsWidget.cshtml" />
     <Content Include="Modules\Admin\Views\UserTableWidget.cshtml" />

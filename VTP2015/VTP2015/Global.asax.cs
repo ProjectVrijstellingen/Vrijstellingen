@@ -14,6 +14,7 @@ namespace VTP2015
 {
     public class MvcApplication : HttpApplication
     {
+
         public IContainer Container
         {
             get { return (IContainer) HttpContext.Current.Items["_Container"]; }
@@ -44,6 +45,8 @@ namespace VTP2015
 
             Database.SetInitializer<Context>(null);
             Database.SetInitializer<ApplicationDbContext>(null);
+
+            
         }
 
         public void Application_BeginRequest()
