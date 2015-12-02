@@ -7,7 +7,7 @@ using VTP2015.ServiceLayer.Counselor;
 
 namespace VTP2015.Modules.Counselor
 {
-    //[Authorize(Roles = "Counselor")]
+    [Authorize(Roles = "Counselor")]
     [RoutePrefix("Counselor")]
     public class CounselorController : Controller
     {
