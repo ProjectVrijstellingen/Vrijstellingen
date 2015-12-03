@@ -16,7 +16,7 @@
 
                     @foreach (var aanvraag in Model.Where(m => m.PartimName.Equals(partim.PartimName)))
                     {
-                        <div id="aanvraag-@getoondeAanvraagId" class="aanvraag hide" data-studentid="@aanvraag.Student.Email" data-aanvraagid="@aanvraag.Id" data-module="@aanvraag.ModuleName">
+                        <div id="aanvraag-@getoondeAanvraagId" class="aanvraag " data-studentid="@aanvraag.Student.Email" data-aanvraagid="@aanvraag.Id" data-module="@aanvraag.ModuleName">
                             <div class="opinionButtons row">
                                 <input type="button" class="btn btn-success approveButton" value="Accepteren">
                                 <input type="button" class="btn btn-danger dissapproveButton" value="Weigeren">
