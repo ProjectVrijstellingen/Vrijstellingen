@@ -17,17 +17,17 @@ namespace VTP2015.ServiceLayer.Student
     public class StudentFacade : IStudentFacade
     {
         private readonly IBamaflexRepository _bamaflexRepository;
-        private readonly Repository<Entities.Student> _studentRepository;
-        private readonly Repository<Evidence> _evidenceRepository;
-        private readonly Repository<File> _fileRepository;
-        private readonly Repository<Request> _requestRepository; 
-        private readonly Repository<PartimInformation> _partimInformationRepository;
-        private readonly Repository<Education> _educationRepository;
-        private readonly Repository<Route> _routeRepository;
-        private readonly Repository<Entities.Lecturer> _lectureRepository;
-        private readonly Repository<Partim> _partimRepository;
-        private readonly Repository<Module> _moduleRepository;
-        private readonly Repository<RequestPartimInformation> _requestPartimInformationRepository; 
+        private readonly IRepository<Entities.Student> _studentRepository;
+        private readonly IRepository<Evidence> _evidenceRepository;
+        private readonly IRepository<File> _fileRepository;
+        private readonly IRepository<Request> _requestRepository; 
+        private readonly IRepository<PartimInformation> _partimInformationRepository;
+        private readonly IRepository<Education> _educationRepository;
+        private readonly IRepository<Route> _routeRepository;
+        private readonly IRepository<Entities.Lecturer> _lectureRepository;
+        private readonly IRepository<Partim> _partimRepository;
+        private readonly IRepository<Module> _moduleRepository;
+        private readonly IRepository<RequestPartimInformation> _requestPartimInformationRepository; 
 
         public StudentFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository)
         {

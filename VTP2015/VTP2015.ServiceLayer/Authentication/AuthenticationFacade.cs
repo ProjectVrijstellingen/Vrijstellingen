@@ -11,10 +11,10 @@ namespace VTP2015.ServiceLayer.Authentication
     {
         private readonly IIdentityRepository _identityRepository;
         private readonly IBamaflexRepository _bamaflexRepository;
-        private readonly Repository<Entities.Counselor> _counselorRepository;
-        private readonly Repository<Entities.Student> _studentRepository;
-        private readonly Repository<Education> _educationRepository;
-        private readonly Repository<Entities.Lecturer> _lecturerRepository;
+        private readonly IRepository<Entities.Counselor> _counselorRepository;
+        private readonly IRepository<Entities.Student> _studentRepository;
+        private readonly IRepository<Education> _educationRepository;
+        private readonly IRepository<Entities.Lecturer> _lecturerRepository;
 
         public AuthenticationFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository,
             IIdentityRepository identityRepository)

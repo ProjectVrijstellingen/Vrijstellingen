@@ -1,21 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic;
 using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
 using VTP2015.ServiceLayer.Counselor.Mappings;
+using VTP2015.ServiceLayer.Counselor.Models;
 using VTP2015.ServiceLayer.Mail;
+using Education = VTP2015.Entities.Education;
+using Evidence = VTP2015.ServiceLayer.Counselor.Models.Evidence;
+using File = VTP2015.Entities.File;
+using Partim = VTP2015.ServiceLayer.Counselor.Models.Partim;
+using Request = VTP2015.Entities.Request;
 using Status = VTP2015.ServiceLayer.Counselor.Models.Status;
 
 namespace VTP2015.ServiceLayer.Counselor
 {
     public class CounselorFacade : ICounselorFacade
     {
-        private readonly Repository<Request> _requestRepository;
-        private readonly Repository<Education> _educationRepository;
-        private readonly Repository<Entities.Counselor> _counselorRepository;
-        private readonly Repository<File> _fileRepository;
-        private readonly Repository<RequestPartimInformation> _requestPartimInformationRepository; 
+        private readonly IRepository<Request> _requestRepository;
+        private readonly IRepository<Education> _educationRepository;
+        private readonly IRepository<Entities.Counselor> _counselorRepository;
+        private readonly IRepository<File> _fileRepository;
 
         public CounselorFacade(IUnitOfWork unitOfWork)
         {
@@ -23,7 +29,6 @@ namespace VTP2015.ServiceLayer.Counselor
             _educationRepository = unitOfWork.Repository<Education>();
             _counselorRepository = unitOfWork.Repository<Entities.Counselor>();
             _fileRepository = unitOfWork.Repository<File>();
-            _requestPartimInformationRepository = unitOfWork.Repository<RequestPartimInformation>();
 
             var autoMapperConfig = new AutoMapperConfig();
             autoMapperConfig.Execute();
@@ -31,24 +36,38 @@ namespace VTP2015.ServiceLayer.Counselor
 
         public IQueryable<Models.Request> GetRequests()
         {
-            return _requestPartimInformationRepository.Table
-                .Select(requestPartimInformation => new Models.Request
+            var requests = _requestRepository.Table;
+
+            var result = new List<Models.Request>();
+
+            foreach (var request in requests)
+            {
+                var modules = new List<Models.Module>();
+                foreach (var partimInformation in request.RequestPartimInformations.Select(requestPartimInformation => requestPartimInformation.PartimInformation))
                 {
-                    Argumentation = requestPartimInformation.Request.Argumentation,
-                    FileId = requestPartimInformation.Request.FileId,
-                    Evidence = requestPartimInformation.Request.Evidence
-                        .Select(e => new Models.Evidence
+                    if (modules.All(module => module.Name != partimInformation.Module.Name))
+                        modules.Add(new Models.Module {Name = partimInformation.Module.Name, Partims = new List<Partim>()});
+
+                    var partims = (List<Partim>) modules
+                        .First(module => module.Name == partimInformation.Module.Name)
+                        .Partims;
+
+                    var partim = new Partim
+                    {
+                        Name = partimInformation.Partim.Name,
+                        Evidence = request.Evidence.Select(evidence => new Evidence
                         {
-                            Description = e.Description,
-                            EvidenceId = e.Id,
-                            Path = e.Path,
-                            StudentEmail = e.Student.Email
-                        }).AsQueryable(),
-                    ModuleName = requestPartimInformation.PartimInformation.Module.Name,
-                    PartimName = requestPartimInformation.PartimInformation.Partim.Name,
-                    RequestId = requestPartimInformation.RequestId,
-                    Status = (Status) requestPartimInformation.Status
-                });
+                            Description = evidence.Description,
+                            Path = evidence.Path
+                        })
+                    };
+
+                    partims.Add(partim);
+                }
+                result.Add(new Models.Request { StudentName = request.File.Student.Name, Modules = modules});
+            }
+
+            return result.AsQueryable();
         }
 
         public string GetEducationNameByCounselorEmail(string email)

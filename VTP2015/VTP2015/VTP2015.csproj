@@ -118,10 +118,6 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
@@ -204,7 +200,9 @@
     <Compile Include="Modules\Authentication\AuthenticationController.cs" />
     <Compile Include="Modules\Counselor\CounselorController.cs" />
     <Compile Include="Modules\Counselor\Mappings\AutoMapperConfig.cs" />
-    <Compile Include="Modules\Counselor\ViewModels\EvidenceViewModel.cs" />
+    <Compile Include="Modules\Counselor\ViewModels\Models\Evidence.cs" />
+    <Compile Include="Modules\Counselor\ViewModels\Models\Module.cs" />
+    <Compile Include="Modules\Counselor\ViewModels\Models\Partim.cs" />
     <Compile Include="Modules\Counselor\ViewModels\PartimInformationViewModel.cs" />
     <Compile Include="Modules\Counselor\ViewModels\StatusViewModel.cs" />
     <Compile Include="Modules\Feedback\FeedbackController.cs" />
@@ -409,7 +407,6 @@
     <Content Include="Modules\Lecturer\Views\StudentListWidget.cshtml" />
     <Content Include="Modules\Lecturer\Views\RequestListWidget.cshtml" />
     <Content Include="Modules\Counselor\Views\RequestDetailWidget.cshtml" />
-    <Content Include="Modules\Counselor\Views\FileDetailsPartial.cshtml" />
     <Content Include="Modules\Admin\Views\index.cshtml" />
     <Content Include="Modules\Admin\Views\SettingsWidget.cshtml" />
     <Content Include="Modules\Admin\Views\UserTableWidget.cshtml" />
