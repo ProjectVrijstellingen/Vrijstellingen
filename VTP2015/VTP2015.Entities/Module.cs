@@ -6,6 +6,7 @@ namespace VTP2015.Entities
 {
     public string Name { get; set; }
     public string Code { get; set; }
+    public int Semester { get; set; }
 
     public ICollection<PartimInformation> PartimInformation { get; set; }
 }

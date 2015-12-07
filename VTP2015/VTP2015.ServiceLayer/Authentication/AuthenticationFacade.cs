@@ -37,7 +37,7 @@ namespace VTP2015.ServiceLayer.Authentication
             return _identityRepository.AuthenticateUserByEmail(email, password);
         }
 
-        public void SyncStudentByUser(string email)
+        public void SyncStudentByUser(string email, string academicYear)
         {
             var user = _identityRepository.GetUserByEmail(email);
             var opleiding = _bamaflexRepository.GetEducationByStudentCode(user.Id);
@@ -45,8 +45,8 @@ namespace VTP2015.ServiceLayer.Authentication
             var student = _studentRepository.Table.FirstOrDefault(s => s.Email == email)
                           ?? new Entities.Student {Code = user.Id};
 
-            var education = _educationRepository.Table.FirstOrDefault(e => e.Code == opleiding.Code)
-                            ?? SyncEducations(opleiding.Code);
+            var education = _educationRepository.Table.FirstOrDefault(e => e.Code == opleiding.Code && e.AcademicYear == academicYear)
+                            ?? SyncEducations(opleiding.Code, academicYear);
 
             student.Name = user.Lastname;
             student.FirstName = user.Firstname;
@@ -60,22 +60,21 @@ namespace VTP2015.ServiceLayer.Authentication
                 _studentRepository.Insert(student);
         }
 
-        private Education SyncEducations(string educationCode)
+        private Education SyncEducations(string educationCode, string academicYear)
         {
             var educations = _bamaflexRepository.GetEducations();
 
             Education returnValue = null;
 
-            foreach (var model in educations.Select(education => new Education
+            foreach (var model in educations)
             {
-                AcademicYear = "2015-16", //Todo: ConfigFile gebruiken
-                Code = education.Code,
-                Name = education.Naam,
-            }))
-            {
-                _educationRepository.Insert(model);
-                if (model.Code == educationCode)
-                    returnValue = model;
+                var education = _educationRepository.Table.FirstOrDefault(x => x.Code == model.Code);
+                education.AcademicYear = academicYear;
+                education.Code = model.Code;
+                education.Name = model.Naam;
+                _educationRepository.Update(education);
+                if (education.Code == educationCode)
+                    returnValue = education;
             }
 
             return returnValue;

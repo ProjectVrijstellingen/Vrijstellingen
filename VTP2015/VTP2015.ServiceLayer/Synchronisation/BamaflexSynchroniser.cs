@@ -49,9 +49,9 @@ namespace VTP2015.ServiceLayer.Synchronisation
             var education = _bamaflexRepository
                 .GetEducation(student.Education);
 
-            foreach (var route in education.KeuzeTrajecten)
+            foreach (var route in education.KeuzeTrajecten.Where(route => !_routeRepository.Table.Any(x => x.Name == route.Naam)))
             {
-                if (!_routeRepository.Table.Any(x => x.Name == route.Naam)) _routeRepository.Insert(new Route
+                _routeRepository.Insert(new Route
                 {
                     Name = route.Naam,
                     Education = _educationRepository.GetById(student.Education.Id)
@@ -74,39 +74,34 @@ namespace VTP2015.ServiceLayer.Synchronisation
         {
             foreach (var module in modules)
             {
-                if (!_moduleRepository.Table.Any(x => x.Code == module.Code))
-                    _moduleRepository.Insert(new Module
-                    {
-                        Code = module.Code,
-                        Name = module.Naam
-                    });
                 var moduleClass = _moduleRepository
                         .Table
-                        .First(m => m.Code == module.Code);
+                        .FirstOrDefault(m => m.Code == module.Code);
+                moduleClass.Code = module.Code;
+                moduleClass.Name = module.Naam;
+                moduleClass.Semester = module.Semester;
+                _moduleRepository.Update(moduleClass);
+
                 foreach (var partim in module.Partims)
                 {
-                    if (!_partimRepository.Table.Any(x => x.Code == partim.Code))
-                        _partimRepository.Insert(new Partim
-                        {
-                            Code = partim.Code,
-                            Name = partim.Naam
-                        });
-                    var partimClass = _partimRepository
+                    var partimClass = new Partim();
+                    
+                    partimClass = _partimRepository
                         .Table
-                        .First(m => m.Code == partim.Code);
+                        .FirstOrDefault(m => m.Code == partim.Code);
+                    partimClass.Code = partim.Code;
+                    partimClass.Name = partim.Naam;
+                    _partimRepository.Update(partimClass);
 
-                    if (!_partimInformationRepository.Table.Any(x => x.SuperCode == partim.Supercode))
-                    {
-                        var partimInfo = new PartimInformation
-                        {
-                            SuperCode = partim.Supercode,
-                            Lecturer = _lectureRepository.Table.First(d => d.Email == "docent@howest.be"),
-                            Partim = partimClass,
-                            Module = moduleClass,
-                            Route = _routeRepository.Table.Where(x => x.EducationId == eductationId).First(x => x.Name == RouteName)
-                        };
-                        _partimInformationRepository.Insert(partimInfo);
-                    }
+                    var partimInfo =
+                        _partimInformationRepository.Table.FirstOrDefault(x => x.SuperCode == partim.Supercode);
+                    partimInfo.SuperCode = partim.Supercode;
+                    partimInfo.Lecturer = partimInfo.Lecturer ?? _lectureRepository.Table.First(d => d.Email == "docent@howest.be");
+                    partimInfo.Partim = partimClass;
+                    partimInfo.Module = moduleClass;
+                    partimInfo.Route =
+                        _routeRepository.Table.Where(x => x.EducationId == eductationId).First(x => x.Name == RouteName);
+                    _partimInformationRepository.Update(partimInfo);
                 }
             }
         }
