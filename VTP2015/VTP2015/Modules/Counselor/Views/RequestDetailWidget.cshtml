@@ -8,10 +8,10 @@
     <div class="form-group col-md-2">
         <div class="btn-group" data-toggle="buttons">
             <label id="rbDetailBlok" class="btn btn-default active">
-                <input type="radio" id="rBlok" value="Blok"/> <span class="glyphicon glyphicon-th"></span>
+                <input type="radio" id="rBlok" value="Blok" /> <span class="glyphicon glyphicon-th"></span>
             </label>
             <label id="rbDetailList" class="btn btn-default">
-                <input type="radio" id="rLijst" value="Lijst"/> <span class="glyphicon glyphicon-list"></span>
+                <input type="radio" id="rLijst" value="Lijst" /> <span class="glyphicon glyphicon-list"></span>
             </label>
         </div>
     </div>
@@ -35,24 +35,26 @@
 
 </div>
 
-<div class="panel panel-success clearfix inheritWidth">
-    <div class="panel-heading ">
-        <h3 class="panel-title">aanvragen</h3>
-    </div>
-    <div class="panel-body list-group">
+<table class="table">
+    <thead>
+        <tr>
+            <th >modulenaam</th>
+            <th>partimnaam</th>
+            <th>test</th>
+            <th>test</th>
+        </tr>
+    </thead>
+    <tbody>
         @foreach (var request in Model)
         {
-            <div class="request hide list-group-item" data-fileid="@request.FileId" data-RequestPartimInformationPartimInformationid="@request.RequestId" data-status="@request.Status.ToString()">
-                <h3 class="requestTitle"> @request.ModuleName - @request.PartimName</h3>
-                <div class="hide">
-                    
-                    <div class="requestDetails">
-
-                        @*<button class="btn btn-danger herinnering">Poke docent</button>*@
-                        <label class="control-label">Argumentatie:</label>
-                        <p>@request.Argumentation</p>
-                    </div>
-
+            <tr class="request hide" data-fileid="@request.FileId" data-RequestPartimInformationPartimInformationid="@request.RequestId" data-status="@request.Status.ToString()">
+                <td>@request.ModuleName</td>
+                <td>@request.PartimName</td>
+                <td>@*<button class="btn btn-danger herinnering">Poke docent</button>*@</td>
+                <td></td>
+            </tr>
+            <tr class="hide">
+                <td>
                     <div class="requestEvidence">
                         @if (!request.Evidence.Any())
                         {
@@ -73,11 +75,11 @@
                         @foreach (var evidence in request.Evidence)
                         {
                             <div data-evidenceindex="@currentEvidenceIndex" class="inheritWidth bewijs hide">
-                                
+
                                 <div class="inheritWidth bewijspointer" data-RequestPartimInformationPartimInformationid="RequestPartimInformationPartimInformation_ //TODO: right value">
-                                    
+
                                     <p id="argumentatie" readonly="">@evidence.Description</p>
-                                    
+
                                     <a href="~/bewijzen/@evidence.StudentEmail.Split('@').First()/@evidence.Path" download>
                                         Als onderstaande voorstelling niet werkt kunt u op deze link klikken om het bewijs te downloaden
                                     </a>
@@ -85,11 +87,11 @@
                                     <div class="bewijsdiv">
                                         @if (evidence.Path.Split('.').Last().Equals("pdf"))
                                         {
-                                            <embed src="~/bewijzen/@evidence.StudentEmail.Split('@').First()/@evidence.Path" class="inheritWidth"/>
+                                            <embed src="~/bewijzen/@evidence.StudentEmail.Split('@').First()/@evidence.Path" class="inheritWidth" />
                                         }
                                         else
                                         {
-                                            <img src="~/bewijzen/@evidence.StudentEmail.Split('@').First()/@evidence.Path" class="inheritWidth" alt=""/>
+                                            <img src="~/bewijzen/@evidence.StudentEmail.Split('@').First()/@evidence.Path" class="inheritWidth" alt="" />
                                         }
                                     </div>
 
@@ -97,15 +99,17 @@
 
                             </div>
                             {
-                                currentEvidenceIndex++; 
+                                currentEvidenceIndex++;
                             }
                         }
 
 
                     </div>
 
-                </div>
-            </div>
+                </td>
+            </tr>
+            
         }
-    </div>
-</div>
+    </tbody>
+</table>
+

@@ -10,7 +10,7 @@ $(document).ready(function () {
         
     stopStudentenInArray();
 
-    selectStudent(alleStudenten[0]);
+    //selectStudent(alleStudenten[0]);
 
     $(".studentpointer").click(function (event) {
         //$(".studentpointer").click(function (event) {
