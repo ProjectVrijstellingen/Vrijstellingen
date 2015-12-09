@@ -200,6 +200,7 @@
     <Compile Include="Infrastructure\Registries\ServiceLayerRegistry.cs" />
     <Compile Include="Infrastructure\ViewEngine\CustomViewEngine.cs" />
     <Compile Include="lib\Education.cs" />
+    <Compile Include="lib\Semester.cs" />
     <Compile Include="Modules\Admin\AdminController.cs" />
     <Compile Include="Modules\Authentication\AuthenticationController.cs" />
     <Compile Include="Modules\Counselor\CounselorController.cs" />
@@ -239,7 +240,7 @@
     <Compile Include="Infrastructure\Tasks\IRunOnEachRequest.cs" />
     <Compile Include="Infrastructure\Tasks\IRunOnError.cs" />
     <Compile Include="lib\Module.cs" />
-    <Compile Include="lib\ModuleFactory.cs" />
+    <Compile Include="lib\PartimFactory.cs" />
     <Compile Include="lib\Partim.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
