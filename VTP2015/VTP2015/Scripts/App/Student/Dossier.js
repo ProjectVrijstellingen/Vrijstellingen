@@ -120,12 +120,19 @@ $(document).on("click", ".partim", function () {
     var moduleid = $(parentDiv).data("moduleid");
     var supercode = $(this).data("supercode");
     var moduleNaam = $(parentDiv).find(".h4").text();
+    var semesterDiv = $(this).closest(".semesterDiv");
     var newParent;
 
     if ($.contains(beschikbarePartims, this)) {
-        if ($("#aangevraagdePartimsColumn div[data-moduleid=\"" + moduleid + "\"]").length === 0) $("#aangevraagdePartimsColumn .panel-body").html($("#aangevraagdePartimsColumn .panel-body").html() + "<div data-moduleid=\"" + moduleid + "\"><span class=\"h4\">" + moduleNaam + "</span><ul class=\"list-group\"></ul></div>");
+        var semester = $(semesterDiv).data("semester");
+        if($("#aangevraagdePartimsColumn div[data-semester=\"" + semester + "\"]").length === 0)
+            $("#aangevraagdePartimsColumn .panel-body").html($("#aangevraagdePartimsColumn .panel-body").html() + "<div class=\"semesterDiv\" data-semester=\"" + semester + "\"><div class=\"semester\">" + $(semesterDiv).find(".semester").html() + "</div><div class=\"nohide\"></div></div>");
+        var newSemesterDiv = $("#aangevraagdePartimsColumn div[data-semester=\"" + semester + "\"]");
+        if ($(newSemesterDiv).find("div[data-moduleid=\"" + moduleid + "\"]").length === 0) {
+            $(newSemesterDiv).children("div:last").html($(newSemesterDiv).children("div:last").html() + "<div data-moduleid=\"" + moduleid + "\"><span class=\"h4\">" + moduleNaam + "</span><ul class=\"list-group\"></ul></div>");
+        }
 
-        newParent = $("#aangevraagdePartimsColumn div[data-moduleid=\"" + moduleid + "\"] ul");
+        newParent = $(newSemesterDiv).children("div:last").find("div[data-moduleid=\"" + moduleid + "\"] ul");
         $(this).detach();
         $(newParent).parent().removeClass("hide");
         $(this).appendTo($(newParent));
@@ -133,6 +140,7 @@ $(document).on("click", ".partim", function () {
 
         $(parentDiv).children("span:first").removeClass("module");
         if ($(parentDiv).find("ul").children().length === 0) $(parentDiv).remove();
+        if ($(semesterDiv).children("div:last").children().length === 0) $(semesterDiv).remove();
 
         var clon = $("#dummy").clone();
         clon.find("h3").text(moduleNaam);
@@ -162,6 +170,7 @@ $(document).on("click", ".partim", function () {
 $(document).on("click", ".module", function () {
     console.log("module clicked");
     if (isIngediend()) return;
+    var semesterDiv = $(this).closest(".semesterDiv");
     var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
     var parentDiv = $(this).parent()[0];
     var moduleid = $(parentDiv).data("moduleid");
@@ -169,11 +178,18 @@ $(document).on("click", ".module", function () {
     var moduleNaam = $(parentDiv).find(".h4").text();
 
     if ($.contains(beschikbarePartims, this)) {
+        var semester = $(semesterDiv).data("semester");
+        if ($("#aangevraagdePartimsColumn div[data-semester=\"" + semester + "\"]").length === 0)
+            $("#aangevraagdePartimsColumn .panel-body").html($("#aangevraagdePartimsColumn .panel-body").html() + "<div class=\"semesterDiv\" data-semester=\"" + semester + "\"><div class=\"semester\">" + $(semesterDiv).find(".semester").html() + "</div><div class=\"nohide\"></div></div>");
+        var newSemesterDiv = $("#aangevraagdePartimsColumn div[data-semester=\"" + semester + "\"]");
+
         $(parentDiv).find("ul").addClass("hide");
 
         $(parentDiv).detach();
-        $("#aangevraagdePartimsColumn").find(".panel-body").append($(parentDiv));
+        $(newSemesterDiv).children("div:last").append($(parentDiv));
         $(parentDiv).find(".btn").removeClass("hide");
+
+        if ($(semesterDiv).children("div:last").children().length === 0) $(semesterDiv).remove();
 
         var clon = $("#dummy").clone();
         clon.find("h3").text(moduleNaam);
@@ -206,21 +222,25 @@ $(document).on("click", ".glyphicon-remove", function (e) {
     e.stopPropagation();
     savePartimdetails();
     var that = $(this).parent();
-    var aanvraagId;
-    var moduleid;
-    var moduleNaam;
-    var newParent;
-    var aanvraag;
-    var parentDiv;
+    var semesterDiv = $(that).closest(".semesterDiv");
+    var aanvraagId, moduleid, moduleNaam, aanvraag, parentDiv, semester, newSemesterDiv;
     if ($(that).is("li")) {
         console.log("partim...");
         parentDiv = $(that).parent().parent()[0];
         moduleid = $(parentDiv).data("moduleid");
         moduleNaam = $(parentDiv).find(".h4").text();
+        var supercode = $(that).data("supercode");
         console.log(moduleNaam);
-        if ($("#beschikbarePartimsColumn div[data-moduleid=\"" + moduleid + "\"]").length === 0) $("#beschikbarePartimsColumn .panel-body").append("<div data-moduleid=\"" + moduleid + "\"><span class=\"name h4 module\">" + moduleNaam + "</span><span class=\"glyphicon glyphicon-remove btn badge hide\"> </span><ul class=\"list-group\"></ul></div>");
-        newParent = $("#beschikbarePartimsColumn").find("div[data-moduleid=\"" + moduleid + "\"] ul");
-        aanvraag = $("#aanvraagDetail").find("[data-code=\"" + $(that).data("supercode") + "\"]");
+        semester = $(semesterDiv).data("semester");
+        if ($("#beschikbarePartimsColumn div[data-semester=\"" + semester + "\"]").length === 0)
+            $("#beschikbarePartimsColumn .panel-body").html($("#beschikbarePartimsColumn .panel-body").html() + "<div class=\"semesterDiv\" data-semester=\"" + semester + "\"><div class=\"semester\">" + $(semesterDiv).find(".semester").html() + "</div><div class=\"nohide\"></div></div>");
+        newSemesterDiv = $("#beschikbarePartimsColumn div[data-semester=\"" + semester + "\"]");
+        if ($(newSemesterDiv).find("div[data-moduleid=\"" + moduleid + "\"]").length === 0) {
+            $(newSemesterDiv).children("div:last").html($(newSemesterDiv).children("div:last").html() + "<div data-moduleid=\"" + moduleid + "\"><span class=\"h4\">" + moduleNaam + "</span><ul class=\"list-group\"></ul></div>");
+        }
+
+        var newParent = $(newSemesterDiv).children("div:last").find("div[data-moduleid=\"" + moduleid + "\"] ul");
+        aanvraag = $("#aanvraagDetail").find("[data-code=\"" + supercode + "\"]");
         aanvraagId = $(aanvraag).data("requestid");
 
         $(that).detach();
@@ -230,15 +250,18 @@ $(document).on("click", ".glyphicon-remove", function (e) {
 
         if ($(parentDiv).find("ul").children().length === 0) {
             parentDiv.remove();
-            $("#beschikbarePartimsColumn").find("div[data-moduleid=\"" + moduleid + "\"]").children("span:first").addClass("module");
+            $(newSemesterDiv).find("div[data-moduleid=\"" + moduleid + "\"]").children("span:first").addClass("module");
         }
+        if ($(semesterDiv).children("div:last").children().length === 0) $(semesterDiv).remove();
         if ($(aanvraag).hasClass("nothidden")) toFirstView();
 
         aanvraag.remove();
     } else {
         console.log("module...");
-        var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
-        newParent = $(beschikbarePartims).find(".panel-body");
+        semester = $(semesterDiv).data("semester");
+        if ($("#beschikbarePartimsColumn div[data-semester=\"" + semester + "\"]").length === 0)
+            $("#beschikbarePartimsColumn .panel-body").html($("#beschikbarePartimsColumn .panel-body").html() + "<div class=\"semesterDiv\" data-semester=\"" + semester + "\"><div class=\"semester\">" + $(semesterDiv).find(".semester").html() + "</div><div class=\"nohide\"></div></div>");
+        newSemesterDiv = $("#beschikbarePartimsColumn div[data-semester=\"" + semester + "\"]");
         parentDiv = $(that).parent()[0];
         moduleid = $(that).data("moduleid");
         moduleNaam = $(parentDiv).find(".h4").text();
@@ -246,10 +269,13 @@ $(document).on("click", ".glyphicon-remove", function (e) {
         aanvraagId = $(aanvraag).data("requestid");
         $(parentDiv).find("ul").removeClass("hide");
 
+
         $(that).detach();
         $(that).removeClass("active");
-        $(that).appendTo($(newParent));
+        $(that).appendTo($(newSemesterDiv).children("div:last"));
         $(that).find(".btn").addClass("hide");
+
+        if ($(semesterDiv).children("div:last").children().length === 0) $(semesterDiv).remove();
 
         if ($(aanvraag).hasClass("nothidden")) toFirstView();
         aanvraag.remove();
@@ -291,6 +317,22 @@ $(document).on("click", "#btnIndienen", function () {
             if(data === "Submitted!") location.reload();
         }
     });
+});
+
+$(document).on("click", ".semester", function() {
+    var list = $(this).parent().children()[1];
+    var glyph = $(this).children()[0];
+    if ($(list).hasClass("hide")) {
+        $(list).removeClass("hide");
+        $(list).addClass("nohide");
+        $(glyph).removeClass("glyphicon-triangle-right");
+        $(glyph).addClass("glyphicon-triangle-bottom");
+    } else {
+        $(list).removeClass("nohide");
+        $(list).addClass("hide");
+        $(glyph).removeClass("glyphicon-triangle-bottom");
+        $(glyph).addClass("glyphicon-triangle-right");
+    }
 });
 
 function isIngediend() {

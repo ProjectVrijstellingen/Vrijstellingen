@@ -16,13 +16,22 @@ namespace VTP2015.Helpers
             foreach (var semester in partimFactory.Semesters.OrderBy(x => x.Number))
             {
                 var semesterTag = new TagBuilder("div");
+                semesterTag.AddCssClass("semesterDiv");
                 semesterTag.Attributes.Add("data-semester", semester.Number.ToString());
-                semesterTag.InnerHtml += ShowGlyphicon(html, "triangle-right");
 
-                var semesterNameTag = new TagBuilder("span");
-                semesterNameTag.AddCssClass("h4 semester");
-                semesterNameTag.SetInnerText("Semester " + semester.Number);
+                var semesterNameTag = new TagBuilder("div");
+                semesterNameTag.InnerHtml += ShowGlyphicon(html, "triangle-right");
+                semesterNameTag.AddCssClass("semester");
+
+                var nameTag = new TagBuilder("span");
+                nameTag.AddCssClass("h3");
+                nameTag.SetInnerText("Semester " + semester.Number);
+                semesterNameTag.InnerHtml += nameTag;
                 semesterTag.InnerHtml += semesterNameTag;
+
+                var moduleListTag = new TagBuilder("div");
+                moduleListTag.AddCssClass("hide");
+
 
                 foreach (var module in semester.Modules)
                 {
@@ -63,8 +72,9 @@ namespace VTP2015.Helpers
                         moduleTag.InnerHtml += partimTag;
                     }
                     tag.InnerHtml += moduleTag;
-                    semesterTag.InnerHtml += tag;
+                    moduleListTag.InnerHtml += tag;
                 }
+                semesterTag.InnerHtml += moduleListTag;
                 htmlString += semesterTag.ToString();
             }
             return new MvcHtmlString(htmlString);
