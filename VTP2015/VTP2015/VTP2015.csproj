@@ -218,8 +218,8 @@
     <Compile Include="Modules\Student\ViewModels\RequestPartimInformationViewModel.cs" />
     <Compile Include="Modules\Student\ViewModels\AddRequestViewModel.cs" />
     <Compile Include="Modules\Student\ViewModels\StudentViewModel.cs" />
-    <Compile Include="Validation\DayMonthValidation.cs" />
-    <Compile Include="Validation\FileValidation.cs" />
+    <Compile Include="Security\DayMonthValidation.cs" />
+    <Compile Include="Security\FileValidation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -250,6 +250,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Security\PreventSpamAttribute.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Modules\Admin\ViewModels\ConfigViewModel.cs" />
     <Compile Include="Modules\Admin\ViewModels\UserViewModel.cs" />

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace VTP2015.Validation
+namespace VTP2015.Security
 {
     public class DayMonthValidation:RequiredAttribute
     {

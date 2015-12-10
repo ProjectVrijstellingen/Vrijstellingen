@@ -6,6 +6,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.Web.Mvc;
 using VTP2015.Config;
 using VTP2015.Modules.Student.ViewModels;
+using VTP2015.Security;
 using VTP2015.ServiceLayer.Student;
 using VTP2015.ServiceLayer.Student.Models;
 
@@ -254,11 +255,12 @@ namespace VTP2015.Modules.Student
         }
         #endregion
 
+        [PreventSpam(DelayRequest = 3600)]
         [Route("StudentSync")]
         public ActionResult StudentSync()
         {
             var configFile = new ConfigFile();
-            _studentFacade.SyncStudent(User.Identity.Name, configFile.AcademieJaar());
+            if (ViewData.ModelState.IsValid) _studentFacade.SyncStudent(User.Identity.Name, configFile.AcademieJaar());
             return RedirectToAction("Index");
         }
     }
