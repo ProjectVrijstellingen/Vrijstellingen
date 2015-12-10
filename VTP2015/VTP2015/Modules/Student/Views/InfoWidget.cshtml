@@ -1,0 +1,11 @@
+﻿@using VTP2015.Helpers
+@model VTP2015.Modules.Student.ViewModels.StudentViewModel
+
+@using (Html.BeginPanel("Informatie"))
+{
+    <h3>@Model.FirstName @Model.Name</h3>
+    <p>@Model.Email</p>
+    <p><b>@Model.Education</b><br/>Begeleider: @Model.Counselor</p>
+    <br/>
+    @Ajax.ActionLink("Account synchronisatie", "StudentSync", "Student", new AjaxOptions {HttpMethod = "POST"}, new { @class = "btn btn-success" })
+}
