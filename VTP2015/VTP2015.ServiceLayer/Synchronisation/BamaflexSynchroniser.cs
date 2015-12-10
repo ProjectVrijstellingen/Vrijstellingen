@@ -24,7 +24,7 @@ namespace VTP2015.ServiceLayer.Synchronisation
             IRepository<Education> educationRepository, IBamaflexRepository bamaflexRepository,
             IRepository<PartimInformation> partimInformationRepository, IRepository<Partim> partimRepository,
             IRepository<Module> moduleRepository, IRepository<Entities.Lecturer> lectureRepository,
-            IRepository<Route> routeRepository)
+            IRepository<Route> routeRepository, IIdentityRepository identityRepository)
         {
             _studentRepository = studentRepository;
             _educationRepository = educationRepository;

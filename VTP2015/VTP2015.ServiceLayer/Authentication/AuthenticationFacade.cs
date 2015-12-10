@@ -14,12 +14,12 @@ namespace VTP2015.ServiceLayer.Authentication
         private readonly IBamaflexRepository _bamaflexRepository;
         private readonly IRepository<Entities.Counselor> _counselorRepository;
         private readonly IRepository<Entities.Student> _studentRepository;
-        private readonly Repository<PartimInformation> _partimInformationRepository;
-        private readonly IRepository<Entities.Lecturer> _lecturerRepository;
-        private readonly Repository<Entities.Lecturer> _lecturerRepository;
-        private readonly Repository<Entities.Lecturer> _lectureRepository;
-        private readonly Repository<Partim> _partimRepository;
-        private readonly Repository<Module> _moduleRepository;
+        private readonly IRepository<PartimInformation> _partimInformationRepository;
+        private readonly IRepository<Entities.Lecturer> _lectureRepository;
+        private readonly IRepository<Partim> _partimRepository;
+        private readonly IRepository<Module> _moduleRepository;
+        private readonly IRepository<Education> _educationRepository;
+        private readonly IRepository<Route> _routeRepository;  
 
         public AuthenticationFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository,
             IIdentityRepository identityRepository)
