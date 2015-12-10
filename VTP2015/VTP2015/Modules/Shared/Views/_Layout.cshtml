@@ -66,18 +66,18 @@
             </div>
         </div>
     </div>
-}
+    }
     <div class="container body-content">
         @RenderBody()
-
-        @if (Request.IsAuthenticated) {
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - Vrijstellingen / Trajecten tool Howest</p>
-                <p>By Joachim, Sam, Tiem, Toon & Dries</p>
-            </footer>
-        }
     </div>
+    @if (Request.IsAuthenticated)
+    {
+        <hr/>
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Vrijstellingen / Trajecten tool Howest</p>
+            <p>By Joachim, Sam, Tiem, Toon & Dries</p>
+        </footer>
+    }
     @RenderSection("scripts", required: false)
     @RenderSection("css", required: false)
 </body>

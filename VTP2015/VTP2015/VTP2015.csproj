@@ -217,6 +217,7 @@
     <Compile Include="Modules\Student\StudentController.cs" />
     <Compile Include="Modules\Student\ViewModels\RequestPartimInformationViewModel.cs" />
     <Compile Include="Modules\Student\ViewModels\AddRequestViewModel.cs" />
+    <Compile Include="Modules\Student\ViewModels\StudentViewModel.cs" />
     <Compile Include="Validation\DayMonthValidation.cs" />
     <Compile Include="Validation\FileValidation.cs" />
     <Compile Include="Global.asax.cs">
@@ -338,6 +339,7 @@
     <Content Include="Modules\Lecturer\Views\RejectedRequestListWidget.cshtml" />
     <Content Include="Modules\Counselor\Views\FileOverviewWidget.cshtml" />
     <Content Include="Modules\Lecturer\Views\ModuleListWidget.cshtml" />
+    <Content Include="Modules\Student\Views\InfoWidget.cshtml" />
     <None Include="Properties\PublishProfiles\Foundation.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

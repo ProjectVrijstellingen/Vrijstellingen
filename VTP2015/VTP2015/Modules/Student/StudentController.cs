@@ -77,6 +77,15 @@ namespace VTP2015.Modules.Student
                 : "Voltooid!");
         }
 
+        [Route("InfoWidget")]
+        [HttpGet]
+        public ActionResult InfoWidget()
+        {
+            var model = _studentFacade.GetStudent(User.Identity.Name).ProjectTo<StudentViewModel>().First();
+
+            return PartialView(model);
+        }
+
         [Route("FileWidget")]
         [HttpGet]
         public PartialViewResult FileWidget()
@@ -244,5 +253,13 @@ namespace VTP2015.Modules.Student
             return Content("Submitted!");
         }
         #endregion
+
+        [Route("StudentSync")]
+        public ActionResult StudentSync()
+        {
+            var configFile = new ConfigFile();
+            _studentFacade.SyncStudent(User.Identity.Name, configFile.AcademieJaar());
+            return RedirectToAction("Index");
+        }
     }
 }

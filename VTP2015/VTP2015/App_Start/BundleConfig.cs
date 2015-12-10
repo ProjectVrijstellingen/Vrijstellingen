@@ -8,7 +8,9 @@ namespace VTP2015
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery-{version}.js"));
+                "~/Scripts/jquery-{version}.js",
+                "~/Scripts/jquery.unobstrusive.js",
+                "~/Scripts/jquery.unobstrusive.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                 "~/Scripts/jquery.validate*"));

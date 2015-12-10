@@ -41,16 +41,16 @@ namespace VTP2015.Helpers
                     tag.Attributes.Add("data-moduleid", module.Code);
 
                     var moduleNameTag = new TagBuilder("span");
-                    moduleNameTag.AddCssClass("name h4" + (count == module.TotalCount && !submitted ? " module" : ""));
+                    moduleNameTag.AddCssClass("name h4" + (count == module.RequestCount && module.TotalCount != 1 && !submitted ? " module" : ""));
                     moduleNameTag.SetInnerText(module.Name);
                     tag.InnerHtml += moduleNameTag;
                     if (!submitted)
                         tag.InnerHtml += ShowGlyphicon(html, "remove",
-                            "btn badge" + (count == module.TotalCount && deletable ? "" : " hide"));
+                            "btn badge" + (count == module.RequestCount && module.TotalCount != 1 && deletable ? "" : " hide"));
 
                     var moduleTag = new TagBuilder("ul");
                     moduleTag.AddCssClass("list-group" +
-                                          (count == module.TotalCount && deletable && !submitted ? " hide" : ""));
+                                          (count == module.RequestCount && module.TotalCount != 1 && deletable && !submitted ? " hide" : ""));
                     foreach (var partim in module.Partims)
                     {
                         var partimTag = new TagBuilder("li");
