@@ -103,6 +103,7 @@
     <Compile Include="Student\Models\Request.cs" />
     <Compile Include="Student\Models\Status.cs" />
     <Compile Include="Student\Models\PartimMode.cs" />
+    <Compile Include="Student\Models\Student.cs" />
     <Compile Include="Student\StudentFacade.cs" />
     <Compile Include="Admin\IAdminFacade.cs" />
     <Compile Include="Authentication\IAuthenticationFacade.cs" />

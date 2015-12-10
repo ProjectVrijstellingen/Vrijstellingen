@@ -18,6 +18,7 @@ namespace VTP2015.ServiceLayer.Synchronisation
         private readonly IRepository<Module> _moduleRepository;
         private readonly IRepository<Entities.Lecturer> _lectureRepository;
         private readonly IRepository<Route> _routeRepository;
+        private readonly IIdentityRepository _identityRepository;
 
         public BamaflexSynchroniser(IRepository<Entities.Student> studentRepository,
             IRepository<Education> educationRepository, IBamaflexRepository bamaflexRepository,
@@ -33,6 +34,7 @@ namespace VTP2015.ServiceLayer.Synchronisation
             _moduleRepository = moduleRepository;
             _lectureRepository = lectureRepository;
             _routeRepository = routeRepository;
+            _identityRepository = identityRepository;
         }
 
         public bool SyncStudentPartims(string email, string academicYear)
@@ -49,9 +51,11 @@ namespace VTP2015.ServiceLayer.Synchronisation
             var education = _bamaflexRepository
                 .GetEducation(student.Education);
 
-            foreach (var route in education.KeuzeTrajecten)
+            SyncEducations(education.Code, academicYear);
+
+            foreach (var route in education.KeuzeTrajecten.Where(route => !_routeRepository.Table.Any(x => x.Name == route.Naam)))
             {
-                if (!_routeRepository.Table.Any(x => x.Name == route.Naam)) _routeRepository.Insert(new Route
+                _routeRepository.Insert(new Route
                 {
                     Name = route.Naam,
                     Education = _educationRepository.GetById(student.Education.Id)
@@ -70,43 +74,78 @@ namespace VTP2015.ServiceLayer.Synchronisation
 
         }
 
-        private void StorePartimInfo(List<OpleidingsProgrammaOnderdeel> modules, int eductationId, string RouteName)
+        public Education SyncEducations(string educationCode, string academicYear)
+        {
+            var educations = _bamaflexRepository.GetEducations();
+
+            Education returnValue = null;
+
+            foreach (var model in educations)
+            {
+                var education = _educationRepository.Table.FirstOrDefault(x => x.Code == model.Code);
+                education.AcademicYear = academicYear;
+                education.Code = model.Code;
+                education.Name = model.Naam;
+                _educationRepository.Update(education);
+                if (education.Code == educationCode)
+                    returnValue = education;
+            }
+
+            return returnValue;
+        }
+
+        public void SyncStudentByUser(string email, string academicYear)
+        {
+            var user = _identityRepository.GetUserByEmail(email);
+            var opleiding = _bamaflexRepository.GetEducationByStudentCode(user.Id);
+
+            var student = _studentRepository.Table.FirstOrDefault(s => s.Email == email)
+                          ?? new Entities.Student { Code = user.Id };
+
+            var education = _educationRepository.Table.FirstOrDefault(e => e.Code == opleiding.Code && e.AcademicYear == academicYear)
+                            ?? SyncEducations(opleiding.Code, academicYear);
+
+            student.Name = user.Lastname;
+            student.FirstName = user.Firstname;
+            student.Email = user.Email;
+            student.PhoneNumber = "";
+            student.Education = education;
+            
+            _studentRepository.Update(student);
+        }
+
+        private void StorePartimInfo(List<OpleidingsProgrammaOnderdeel> modules, int eductationId, string routeName)
         {
             foreach (var module in modules)
             {
-                if (!_moduleRepository.Table.Any(x => x.Code == module.Code))
-                    _moduleRepository.Insert(new Module
-                    {
-                        Code = module.Code,
-                        Name = module.Naam
-                    });
                 var moduleClass = _moduleRepository
                         .Table
-                        .First(m => m.Code == module.Code);
+                        .FirstOrDefault(m => m.Code == module.Code);
+                moduleClass.Code = module.Code;
+                moduleClass.Name = module.Naam;
+                moduleClass.Semester = module.Semester;
+                _moduleRepository.Update(moduleClass);
+
                 foreach (var partim in module.Partims)
                 {
-                    if (!_partimRepository.Table.Any(x => x.Code == partim.Code))
-                        _partimRepository.Insert(new Partim
-                        {
-                            Code = partim.Code,
-                            Name = partim.Naam
-                        });
-                    var partimClass = _partimRepository
+                    var partimClass = new Partim();
+                    
+                    partimClass = _partimRepository
                         .Table
-                        .First(m => m.Code == partim.Code);
+                        .FirstOrDefault(m => m.Code == partim.Code);
+                    partimClass.Code = partim.Code;
+                    partimClass.Name = partim.Naam;
+                    _partimRepository.Update(partimClass);
 
-                    if (!_partimInformationRepository.Table.Any(x => x.SuperCode == partim.Supercode))
-                    {
-                        var partimInfo = new PartimInformation
-                        {
-                            SuperCode = partim.Supercode,
-                            Lecturer = _lectureRepository.Table.First(d => d.Email == "docent@howest.be"),
-                            Partim = partimClass,
-                            Module = moduleClass,
-                            Route = _routeRepository.Table.Where(x => x.EducationId == eductationId).First(x => x.Name == RouteName)
-                        };
-                        _partimInformationRepository.Insert(partimInfo);
-                    }
+                    var partimInfo =
+                        _partimInformationRepository.Table.FirstOrDefault(x => x.SuperCode == partim.Supercode);
+                    partimInfo.SuperCode = partim.Supercode;
+                    partimInfo.Lecturer = partimInfo.Lecturer ?? _lectureRepository.Table.First(d => d.Email == "docent@howest.be");
+                    partimInfo.Partim = partimClass;
+                    partimInfo.Module = moduleClass;
+                    partimInfo.Route =
+                        _routeRepository.Table.Where(x => x.EducationId == eductationId).First(x => x.Name == routeName);
+                    _partimInformationRepository.Update(partimInfo);
                 }
             }
         }

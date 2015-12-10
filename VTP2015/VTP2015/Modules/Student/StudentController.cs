@@ -6,6 +6,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.Web.Mvc;
 using VTP2015.Config;
 using VTP2015.Modules.Student.ViewModels;
+using VTP2015.Security;
 using VTP2015.ServiceLayer.Student;
 using VTP2015.ServiceLayer.Student.Models;
 
@@ -75,6 +76,15 @@ namespace VTP2015.Modules.Student
             return Content(!_studentFacade.DeleteEvidence(bewijsId, mapPath)
                 ? "gegeven bestand kon niet verwijdert worden!"
                 : "Voltooid!");
+        }
+
+        [Route("InfoWidget")]
+        [HttpGet]
+        public ActionResult InfoWidget()
+        {
+            var model = _studentFacade.GetStudent(User.Identity.Name).ProjectTo<StudentViewModel>().First();
+
+            return PartialView(model);
         }
 
         [Route("FileWidget")]
@@ -244,5 +254,14 @@ namespace VTP2015.Modules.Student
             return Content("Submitted!");
         }
         #endregion
+
+        [PreventSpam(DelayRequest = 3600)]
+        [Route("StudentSync")]
+        public ActionResult StudentSync()
+        {
+            var configFile = new ConfigFile();
+            if (ViewData.ModelState.IsValid) _studentFacade.SyncStudent(User.Identity.Name, configFile.AcademieJaar());
+            return RedirectToAction("Index");
+        }
     }
 }

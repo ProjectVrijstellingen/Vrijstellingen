@@ -44,7 +44,7 @@ namespace VTP2015.Config
             return CalcAcademieJaar(today.Year - 1);
         }
 
-        private static string CalcAcademieJaar(int year)
+        public string CalcAcademieJaar(int year)
         {
             return year + "-" + (year+1)%100;
         }

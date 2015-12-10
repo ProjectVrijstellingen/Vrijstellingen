@@ -11,45 +11,71 @@ namespace VTP2015.Helpers
         public static MvcHtmlString ShowPartimList(this HtmlHelper html, PartimViewModel[] viewModels, bool deletable)
         {
             var htmlString = "";
-            var moduleFactory = new ModuleFactory(viewModels);
-            var modules = moduleFactory.Modules;
+            var partimFactory = new PartimFactory(viewModels);
             var status = new string[] { "", " - onbehandeld", " - afgekeurd", " - goedgekeurd"};
-
-            foreach (var module in modules)
+            foreach (var semester in partimFactory.Semesters.OrderBy(x => x.Number))
             {
-                var count = module.Partims.Count;
-                var submitted = module.Partims.All(x => x.Status != 0);
-                var tag = new TagBuilder("div");
-                tag.Attributes.Add("data-moduleid",module.Code);
+                var semesterTag = new TagBuilder("div");
+                semesterTag.AddCssClass("semesterDiv");
+                semesterTag.Attributes.Add("data-semester", semester.Number.ToString());
 
-                var moduleNameTag = new TagBuilder("span");
-                moduleNameTag.AddCssClass("name h4" + (count == module.TotalCount && !submitted ? " module" : ""));
-                moduleNameTag.SetInnerText(module.Name);
-                tag.InnerHtml += moduleNameTag;
-                if (!submitted) tag.InnerHtml += ShowGlyphicon(html, "remove", "btn badge" + (count == module.TotalCount && deletable ? "" : " hide"));
+                var semesterNameTag = new TagBuilder("div");
+                semesterNameTag.InnerHtml += ShowGlyphicon(html, "triangle-right");
+                semesterNameTag.AddCssClass("semester");
 
-                var moduleTag = new TagBuilder("ul");
-                moduleTag.AddCssClass("list-group" + (count == module.TotalCount && deletable && !submitted ? " hide" : ""));
-                foreach (var partim in module.Partims)
+                var nameTag = new TagBuilder("span");
+                nameTag.AddCssClass("h3");
+                nameTag.SetInnerText("Semester " + semester.Number);
+                semesterNameTag.InnerHtml += nameTag;
+                semesterTag.InnerHtml += semesterNameTag;
+
+                var moduleListTag = new TagBuilder("div");
+                moduleListTag.AddCssClass("hide");
+
+
+                foreach (var module in semester.Modules)
                 {
-                    var partimTag = new TagBuilder("li");
-                    partimTag.Attributes.Add("data-SuperCode", partim.SuperCode);
-                    partimTag.AddCssClass("list-group-item" +  (partim.Status == 0 ? " partim" : ""));
-                    var partimNameTag = new TagBuilder("span");
-                    if (TextLimiter(partim.Name, 30).EndsWith("..."))
-                    {
-                        partimNameTag.MergeAttribute("data-toggle", "tooltip");
-                        partimNameTag.MergeAttribute("title", partim.Name);
+                    var count = module.Partims.Count;
+                    var submitted = module.Partims.All(x => x.Status != 0);
+                    var tag = new TagBuilder("div");
+                    tag.Attributes.Add("data-moduleid", module.Code);
 
+                    var moduleNameTag = new TagBuilder("span");
+                    moduleNameTag.AddCssClass("name h4" + (count == module.RequestCount && module.TotalCount != 1 && !submitted ? " module" : ""));
+                    moduleNameTag.SetInnerText(module.Name);
+                    tag.InnerHtml += moduleNameTag;
+                    if (!submitted)
+                        tag.InnerHtml += ShowGlyphicon(html, "remove",
+                            "btn badge" + (count == module.RequestCount && module.TotalCount != 1 && deletable ? "" : " hide"));
+
+                    var moduleTag = new TagBuilder("ul");
+                    moduleTag.AddCssClass("list-group" +
+                                          (count == module.RequestCount && module.TotalCount != 1 && deletable && !submitted ? " hide" : ""));
+                    foreach (var partim in module.Partims)
+                    {
+                        var partimTag = new TagBuilder("li");
+                        partimTag.Attributes.Add("data-SuperCode", partim.SuperCode);
+                        partimTag.AddCssClass("list-group-item" + (partim.Status == 0 ? " partim" : ""));
+                        var partimNameTag = new TagBuilder("span");
+                        if (TextLimiter(partim.Name, 30).EndsWith("..."))
+                        {
+                            partimNameTag.MergeAttribute("data-toggle", "tooltip");
+                            partimNameTag.MergeAttribute("title", partim.Name);
+
+                        }
+                        partimNameTag.AddCssClass("name");
+                        partimNameTag.SetInnerText(TextLimiter(partim.Name, 30) + status[partim.Status]);
+                        partimTag.InnerHtml += partimNameTag;
+                        if (partim.Status == 0)
+                            partimTag.InnerHtml += ShowGlyphicon(html, "remove",
+                                "btn badge" + (deletable ? "" : " hide"));
+                        moduleTag.InnerHtml += partimTag;
                     }
-                    partimNameTag.AddCssClass("name");
-                    partimNameTag.SetInnerText(TextLimiter(partim.Name, 30) + status[partim.Status]);
-                    partimTag.InnerHtml += partimNameTag;
-                    if (partim.Status == 0) partimTag.InnerHtml += ShowGlyphicon(html, "remove","btn badge" + (deletable ? "" : " hide"));
-                    moduleTag.InnerHtml += partimTag;
+                    tag.InnerHtml += moduleTag;
+                    moduleListTag.InnerHtml += tag;
                 }
-                tag.InnerHtml += moduleTag;
-                htmlString += tag.ToString();
+                semesterTag.InnerHtml += moduleListTag;
+                htmlString += semesterTag.ToString();
             }
             return new MvcHtmlString(htmlString);
         }

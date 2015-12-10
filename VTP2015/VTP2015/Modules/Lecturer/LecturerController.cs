@@ -54,7 +54,7 @@ namespace VTP2015.Modules.Lecturer
         public PartialViewResult RequestListWidget()
         {
             var viewModel = _lecturerFacade.GetRequests(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Untreated)
-                .ProjectTo<RequestListViewModel>().OrderBy(m => m.ModuleName).OrderBy(p => p.PartimName);
+                .ProjectTo<RequestListViewModel>().OrderBy(p => p.SuperCode);
 
             return PartialView(viewModel);
         }

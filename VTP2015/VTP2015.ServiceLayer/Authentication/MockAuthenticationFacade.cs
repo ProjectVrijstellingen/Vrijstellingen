@@ -18,7 +18,7 @@ namespace VTP2015.ServiceLayer.Authentication
             return true;
         }
 
-        public void SyncStudentByUser(string email)
+        public void SyncStudentByUser(string email, string academicYear)
         {
             
         }

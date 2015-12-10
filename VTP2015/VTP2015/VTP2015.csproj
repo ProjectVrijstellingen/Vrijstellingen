@@ -197,6 +197,7 @@
     <Compile Include="Infrastructure\Registries\ServiceLayerRegistry.cs" />
     <Compile Include="Infrastructure\ViewEngine\CustomViewEngine.cs" />
     <Compile Include="lib\Education.cs" />
+    <Compile Include="lib\Semester.cs" />
     <Compile Include="Modules\Admin\AdminController.cs" />
     <Compile Include="Modules\Authentication\AuthenticationController.cs" />
     <Compile Include="Modules\Counselor\CounselorController.cs" />
@@ -219,8 +220,9 @@
     <Compile Include="Modules\Student\StudentController.cs" />
     <Compile Include="Modules\Student\ViewModels\RequestPartimInformationViewModel.cs" />
     <Compile Include="Modules\Student\ViewModels\AddRequestViewModel.cs" />
-    <Compile Include="Validation\DayMonthValidation.cs" />
-    <Compile Include="Validation\FileValidation.cs" />
+    <Compile Include="Modules\Student\ViewModels\StudentViewModel.cs" />
+    <Compile Include="Security\DayMonthValidation.cs" />
+    <Compile Include="Security\FileValidation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -242,7 +244,7 @@
     <Compile Include="Infrastructure\Tasks\IRunOnEachRequest.cs" />
     <Compile Include="Infrastructure\Tasks\IRunOnError.cs" />
     <Compile Include="lib\Module.cs" />
-    <Compile Include="lib\ModuleFactory.cs" />
+    <Compile Include="lib\PartimFactory.cs" />
     <Compile Include="lib\Partim.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -251,6 +253,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Security\PreventSpamAttribute.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Modules\Admin\ViewModels\ConfigViewModel.cs" />
     <Compile Include="Modules\Admin\ViewModels\UserViewModel.cs" />
@@ -340,6 +343,7 @@
     <Content Include="Modules\Lecturer\Views\RejectedRequestListWidget.cshtml" />
     <Content Include="Modules\Counselor\Views\FileOverviewWidget.cshtml" />
     <Content Include="Modules\Lecturer\Views\ModuleListWidget.cshtml" />
+    <Content Include="Modules\Student\Views\InfoWidget.cshtml" />
     <None Include="Properties\PublishProfiles\Foundation.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

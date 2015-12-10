@@ -17,6 +17,7 @@ namespace VTP2015.Modules.Student.Mappings
             Mapper.CreateMap<PartimInformation, PartimViewModel>()
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => (int)x.Status));
             Mapper.CreateMap<Request, RequestDetailViewModel>();
+            Mapper.CreateMap<ServiceLayer.Student.Models.Student, StudentViewModel>();
         }
     }
 }

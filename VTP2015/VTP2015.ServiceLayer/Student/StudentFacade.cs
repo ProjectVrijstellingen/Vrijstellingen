@@ -27,11 +27,14 @@ namespace VTP2015.ServiceLayer.Student
         private readonly IRepository<Entities.Lecturer> _lectureRepository;
         private readonly IRepository<Partim> _partimRepository;
         private readonly IRepository<Module> _moduleRepository;
-        private readonly IRepository<RequestPartimInformation> _requestPartimInformationRepository; 
+        private readonly Repository<RequestPartimInformation> _requestPartimInformationRepository;
+        private readonly IIdentityRepository _identityRepository;
+        private readonly IBamaflexSynchroniser synchroniser;
 
-        public StudentFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository)
+        public StudentFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository, IIdentityRepository identityRepository)
         {
             _bamaflexRepository = bamaflexRepository;
+            _identityRepository = identityRepository;
 
             _studentRepository = unitOfWork.Repository<Entities.Student>();
             _evidenceRepository = unitOfWork.Repository<Evidence>();
@@ -45,6 +48,9 @@ namespace VTP2015.ServiceLayer.Student
             _moduleRepository = unitOfWork.Repository<Module>();
             _requestPartimInformationRepository = unitOfWork.Repository<RequestPartimInformation>();
 
+            synchroniser = new BamaflexSynchroniser(_studentRepository, _educationRepository,
+                _bamaflexRepository, _partimInformationRepository, _partimRepository, _moduleRepository,
+                _lectureRepository, _routeRepository, _identityRepository);
             var automapperConfig = new AutoMapperConfig();
             automapperConfig.Execute();
         }
@@ -164,11 +170,12 @@ namespace VTP2015.ServiceLayer.Student
 
         public bool SyncStudentPartims(string email, string academicYear)
         {
-            IBamaflexSynchroniser synchroniser = new BamaflexSynchroniser(_studentRepository, _educationRepository,
-                _bamaflexRepository, _partimInformationRepository, _partimRepository, _moduleRepository,
-                _lectureRepository, _routeRepository);
-
             return synchroniser.SyncStudentPartims(email, academicYear);
+        }
+
+        public void SyncStudent(string email, string academicYear)
+        {
+            synchroniser.SyncStudentByUser(email, academicYear);
         }
 
         public Models.Evidence GetEvidenceById(int evidenceId)
@@ -250,6 +257,11 @@ namespace VTP2015.ServiceLayer.Student
         public Models.FileStatus GetFileStatus(int fileId)
         {
             return (Models.FileStatus) (int) _fileRepository.GetById(fileId).FileStatus;
+        }
+
+        public IQueryable<Models.Student> GetStudent(string email)
+        {
+            return _studentRepository.Table.Where(x => x.Email == email).ProjectTo<Models.Student>();
         }
 
         public bool SyncRequestInFile(Models.Request requestModel)
