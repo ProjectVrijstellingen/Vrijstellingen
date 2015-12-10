@@ -16,13 +16,17 @@
 
                     @foreach (var aanvraag in Model.Where(m => m.PartimName.Equals(partim.PartimName)))
                     {
+                        <script>
+                            $("#Aantal_@partim.SuperCode").html(parseInt($("#Aantal_@partim.SuperCode").html()) + 1);
+                        </script>
+
                         <div id="aanvraag-@getoondeAanvraagId" class="aanvraag " data-studentid="@aanvraag.Student.Email" data-aanvraagid="@aanvraag.Id" data-module="@aanvraag.ModuleName">
-                            <div class="opinionButtons row">
+                            <p>Student: @aanvraag.Student.Email</p>
+                            <div class="opinionButtons row" style="padding-left:15px">
                                 <input type="button" class="btn btn-success approveButton" value="Accepteren">
                                 <input type="button" class="btn btn-danger dissapproveButton" value="Weigeren">
                             </div>
                             
-                            <p>Student: @aanvraag.Student.Email</p>
                             @if(aanvraag.Argumentation != null)
                             {
 
@@ -53,13 +57,16 @@
                                             }
                                         </div>
                                     </div>
+
+                                    <div class="opinionButtons row hide" id="optnion_@bewijs.Id">
+                                        <input type="button" class="btn btn-success approveButton" value="Accepteren">
+                                        <input type="button" class="btn btn-danger dissapproveButton" value="Weigeren">
+                                    </div>
+                                    <input class="btn argumentatie hide" value="@bewijs.Description" type="button" data-bewijsid="@bewijs.Id">
                                 </div>
                                 { getoondeAanvraagId++; }
                             }
-                            <div class="opinionButtons row">
-                                <input type="button" class="btn btn-success approveButton" value="Accepteren">
-                                <input type="button" class="btn btn-danger dissapproveButton" value="Weigeren">
-                            </div>
+                            <br />
                         </div>
                     }
 
