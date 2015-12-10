@@ -192,6 +192,7 @@
     <Compile Include="Config\DefaultConfig.cs" />
     <Compile Include="Config\IDefaultConfig.cs" />
     <Compile Include="Infrastructure\ContainerFactory.cs" />
+    <Compile Include="Infrastructure\Registries\MockRepositoryRegistry.cs" />
     <Compile Include="Infrastructure\Registries\MockServiceLayerRegistry.cs" />
     <Compile Include="Infrastructure\Registries\ServiceLayerRegistry.cs" />
     <Compile Include="Infrastructure\ViewEngine\CustomViewEngine.cs" />
@@ -199,6 +200,10 @@
     <Compile Include="Modules\Admin\AdminController.cs" />
     <Compile Include="Modules\Authentication\AuthenticationController.cs" />
     <Compile Include="Modules\Counselor\CounselorController.cs" />
+    <Compile Include="Modules\Counselor\DTOs\Evidence.cs" />
+    <Compile Include="Modules\Counselor\DTOs\File.cs" />
+    <Compile Include="Modules\Counselor\DTOs\Module.cs" />
+    <Compile Include="Modules\Counselor\DTOs\Partim.cs" />
     <Compile Include="Modules\Counselor\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Modules\Counselor\ViewModels\Models\Evidence.cs" />
     <Compile Include="Modules\Counselor\ViewModels\Models\Module.cs" />
@@ -406,7 +411,7 @@
     <Content Include="Modules\Student\Views\RequestDetailWidget.cshtml" />
     <Content Include="Modules\Lecturer\Views\StudentListWidget.cshtml" />
     <Content Include="Modules\Lecturer\Views\RequestListWidget.cshtml" />
-    <Content Include="Modules\Counselor\Views\RequestDetailWidget.cshtml" />
+    <Content Include="Modules\Counselor\Views\RequestDetailPartial.cshtml" />
     <Content Include="Modules\Admin\Views\index.cshtml" />
     <Content Include="Modules\Admin\Views\SettingsWidget.cshtml" />
     <Content Include="Modules\Admin\Views\UserTableWidget.cshtml" />

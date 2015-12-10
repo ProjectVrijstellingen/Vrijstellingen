@@ -1,18 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Linq.Dynamic;
 using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
 using VTP2015.ServiceLayer.Counselor.Mappings;
-using VTP2015.ServiceLayer.Counselor.Models;
 using VTP2015.ServiceLayer.Mail;
 using Education = VTP2015.Entities.Education;
 using Evidence = VTP2015.ServiceLayer.Counselor.Models.Evidence;
 using File = VTP2015.Entities.File;
 using Partim = VTP2015.ServiceLayer.Counselor.Models.Partim;
 using Request = VTP2015.Entities.Request;
-using Status = VTP2015.ServiceLayer.Counselor.Models.Status;
 
 namespace VTP2015.ServiceLayer.Counselor
 {
@@ -34,8 +33,22 @@ namespace VTP2015.ServiceLayer.Counselor
             autoMapperConfig.Execute();
         }
 
+        public Models.File GetFileByFileId(int fileId)
+        {
+            var result = _fileRepository.GetById(fileId);
+
+            return new Models.File
+            {
+                
+            };
+        } 
+
         public IQueryable<Models.Request> GetRequests()
         {
+            Debug.WriteLine("Started GetRequests");
+
+            var starttime = DateTime.Now;
+
             var requests = _requestRepository.Table;
 
             var result = new List<Models.Request>();
@@ -43,8 +56,9 @@ namespace VTP2015.ServiceLayer.Counselor
             foreach (var request in requests)
             {
                 var modules = new List<Models.Module>();
-                foreach (var partimInformation in request.RequestPartimInformations.Select(requestPartimInformation => requestPartimInformation.PartimInformation))
+                foreach (var requestPartimInformation in request.RequestPartimInformations)
                 {
+                    var partimInformation = requestPartimInformation.PartimInformation;
                     if (modules.All(module => module.Name != partimInformation.Module.Name))
                         modules.Add(new Models.Module {Name = partimInformation.Module.Name, Partims = new List<Partim>()});
 
@@ -58,14 +72,20 @@ namespace VTP2015.ServiceLayer.Counselor
                         Evidence = request.Evidence.Select(evidence => new Evidence
                         {
                             Description = evidence.Description,
-                            Path = evidence.Path
-                        })
+                            Path = evidence.Path,
+                        }),
+                        Status = (Models.Status) requestPartimInformation.Status
                     };
 
                     partims.Add(partim);
+
                 }
-                result.Add(new Models.Request { StudentName = request.File.Student.Name, Modules = modules});
+                result.Add(new Models.Request { StudentName = request.File.Student.Name });
             }
+
+            var endTime = DateTime.Now;
+
+            Debug.WriteLine("time to finish algorithm: " + (endTime.Millisecond - starttime.Millisecond));
 
             return result.AsQueryable();
         }
@@ -92,7 +112,7 @@ namespace VTP2015.ServiceLayer.Counselor
             _counselorRepository.Update(counselor);
         }
 
-        public IQueryable<Models.File> GetFileByCounselorEmail(string email, string academicYear)
+        public IQueryable<Models.File> GetFilesByCounselorEmail(string email, string academicYear)
         {
             if (!_counselorRepository.Table.Any())
                 return new List<Models.File>().AsQueryable();
@@ -101,8 +121,14 @@ namespace VTP2015.ServiceLayer.Counselor
                 .Table.First(t => t.Email == email)
                 .Education;
 
-            return _fileRepository.Table.Where(d => d.FileStatus != FileStatus.InProgress && d.AcademicYear == academicYear && d.Education.Id == education.Id)
-                .ProjectTo<Models.File>();
+            var files =
+                _fileRepository.Table.Where(
+                    d =>
+                        d.FileStatus != FileStatus.InProgress && d.AcademicYear == academicYear &&
+                        d.Education.Id == education.Id)
+                        .ProjectTo<Models.File>();
+
+            return files;
         }
 
         public void SendReminder(int aanvraagId)
@@ -112,7 +138,7 @@ namespace VTP2015.ServiceLayer.Counselor
 
             mail.To = _requestRepository.GetById(aanvraagId).File.Student.Email;
 
-            mail.Body = "this is the body of the mail, now fuck off";
+            mail.Body = "this is the body of the mail";
 
             mailer.SendMail(mail);
         }

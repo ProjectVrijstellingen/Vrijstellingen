@@ -5,7 +5,7 @@ namespace VTP2015.Modules.Counselor.ViewModels
 {
     public class RequestDetailViewModel
     {
-        public string Name { get; set; }
+        public string StudentName { get; set; }
         public IEnumerable<Module> Modules { get; set; }
     }
 }

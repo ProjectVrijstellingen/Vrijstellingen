@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using VTP2015.ServiceLayer.Counselor.Models;
 
@@ -11,95 +10,171 @@ namespace VTP2015.ServiceLayer.Counselor
         public IQueryable<Request> GetRequests()
         {
             return new List<Request>().AsQueryable();
-            //return new List<Request>
             //{
             //    new Request
             //    {
-            //        Argumentation = "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //        Status = Status.Untreated,
-            //        Evidence = new List<Evidence>
+            //        Argumentation =
+            //            "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
+            //        FileId = 1,
+            //        RequestId = 1,
+            //        Modules = new List<Module>
             //        {
-            //            new Evidence
+            //            new Module
             //            {
-            //                Description = "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //                EvidenceId = 1,
-            //                Path = "pdf-test.pdf",
-            //                StudentEmail = "test@student.howest.be"
+            //                Name = "Module1",
+            //                Partims = new List<Partim>
+            //                {
+            //                    new Partim
+            //                    {
+            //                        Name = "Partim1",
+            //                        Status = Status.Approved,
+            //                        Evidence = new List<Evidence>
+            //                        {
+            //                            new Evidence
+            //                            {
+            //                                Description =
+            //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
+            //                                EvidenceId = 1,
+            //                                Path = "pdf-test.pdf",
+            //                                StudentEmail = "test@student.howest.be"
+            //                            },
+            //                            new Evidence
+            //                            {
+            //                                Description =
+            //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
+            //                                EvidenceId = 1,
+            //                                Path = "pdf-test.pdf",
+            //                                StudentEmail = "test@student.howest.be"
+            //                            }
+            //                        },
+
+            //                    },
+            //                    new Partim
+            //                    {
+            //                        Name = "Partim1",
+            //                        Status = Status.Rejected,
+            //                        Evidence = new List<Evidence>
+            //                        {
+            //                            new Evidence
+            //                            {
+            //                                Description =
+            //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
+            //                                EvidenceId = 1,
+            //                                Path = "pdf-test.pdf",
+            //                                StudentEmail = "test@student.howest.be"
+            //                            },
+            //                            new Evidence
+            //                            {
+            //                                Description =
+            //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
+            //                                EvidenceId = 1,
+            //                                Path = "pdf-test.pdf",
+            //                                StudentEmail = "test@student.howest.be"
+            //                            }
+            //                        },
+
+            //                    },
+            //                    new Partim
+            //                    {
+            //                        Name = "Partim1",
+            //                        Status = Status.Untreated,
+            //                        Evidence = new List<Evidence>
+            //                        {
+            //                            new Evidence
+            //                            {
+            //                                Description =
+            //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
+            //                                EvidenceId = 1,
+            //                                Path = "pdf-test.pdf",
+            //                                StudentEmail = "test@student.howest.be"
+            //                            },
+            //                            new Evidence
+            //                            {
+            //                                Description =
+            //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
+            //                                EvidenceId = 1,
+            //                                Path = "pdf-test.pdf",
+            //                                StudentEmail = "test@student.howest.be"
+            //                            }
+            //                        },
+
+            //                    }
+            //                },
             //            },
-            //            new Evidence
+            //            new Module
             //            {
-            //                Description = "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //                EvidenceId = 1,
-            //                Path = "pdf-test.pdf",
-            //                StudentEmail = "test@student.howest.be"
-            //            },
-            //        }.AsQueryable(),
-            //        FileId = 1,
-            //        ModuleName = "Software Development",
-            //        PartimName = "c#",
-            //        RequestId = 1
+            //                Name = "Module 2",
+            //                Partims = new List<Partim>
+            //                {
+            //                    new Partim
+            //                    {
+            //                        Name = "Partim1",
+            //                        Status = Status.Approved,
+            //                        Evidence = new List<Evidence>
+            //                        {
+            //                            new Evidence
+            //                            {
+            //                                Description =
+            //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
+            //                                EvidenceId = 1,
+            //                                Path = "pdf-test.pdf",
+            //                                StudentEmail = "test@student.howest.be"
+            //                            },
+            //                            new Evidence
+            //                            {
+            //                                Description =
+            //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
+            //                                EvidenceId = 1,
+            //                                Path = "pdf-test.pdf",
+            //                                StudentEmail = "test@student.howest.be"
+            //                            }
+            //                        },
+            //                    }
+
+            //                }
+            //            }
+            //        }
             //    },
-            //    new Request
-            //    {
-            //        Argumentation = "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //        Status = Status.Untreated,
-            //        Evidence = new List<Evidence>().AsQueryable(),
-            //        FileId = 1,
-            //        ModuleName = "Software Development",
-            //        PartimName = "c#",
-            //        RequestId = 2
-            //    },
-            //    new Request
-            //    {
-            //        Argumentation = "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //        Status = Status.Untreated,
-            //        Evidence = new List<Evidence>().AsQueryable(),
-            //        FileId = 1,
-            //        ModuleName = "Software Development",
-            //        PartimName = "c#",
-            //        RequestId = 3
-            //    },
-            //    new Request
-            //    {
-            //        Argumentation = "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //        Status = Status.Untreated,
-            //        Evidence = new List<Evidence>().AsQueryable(),
-            //        FileId = 1,
-            //        ModuleName = "Software Development",
-            //        PartimName = "c#",
-            //        RequestId = 4
-            //    },
-            //    new Request
-            //    {
-            //        Argumentation = "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //        Status = Status.Rejected,
-            //        Evidence = new List<Evidence>().AsQueryable(),
-            //        FileId = 1,
-            //        ModuleName = "Software Development",
-            //        PartimName = "c#",
-            //        RequestId = 5
-            //    },
-            //    new Request
-            //    {
-            //        Argumentation = "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //        Status = Status.Approved,
-            //        Evidence = new List<Evidence>().AsQueryable(),
-            //        FileId = 1,
-            //        ModuleName = "Software Development",
-            //        PartimName = "c#",
-            //        RequestId = 5
-            //    },
-            //    new Request
-            //    {
-            //        Argumentation = "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //        Status = Status.Rejected,
-            //        Evidence = new List<Evidence>().AsQueryable(),
-            //        FileId = 1,
-            //        ModuleName = "Software Development",
-            //        PartimName = "c#",
-            //        RequestId = 5
-            //    },
+
             //}.AsQueryable();
+        }
+
+        public File GetFileByFileId(int fileId)
+        {
+            return new File
+            {
+                StudentName = "Sam",
+                Modules = new List<Module>
+                {                
+                    new Module { Name = "Module1", Partims = new List<Partim>
+                    {
+                        new Partim { Name = "Partim1", Evidence = new List<Evidence>
+                        {
+                            new Evidence { Description = "evidence1", Path = "/bewijzen/test/pdf-test.pdf"},
+                            new Evidence { Description = "evidence2", Path = "/bewijzen/test/pdf-test.pdf"},
+                        }, FileId = 1, RequestId = 1, Status = Status.Approved, Argumentation = "argumentation1"},
+                        new Partim { Name = "Partim2", Evidence = new List<Evidence>{
+                            new Evidence { Description = "evidence1", Path = "/bewijzen/test/pdf-test.pdf"},
+                            new Evidence { Description = "evidence2", Path = "/bewijzen/test/pdf-test.pdf"},
+                        }, FileId = 1, RequestId = 1, Status = Status.Rejected, Argumentation = "argumentation2"},
+                        new Partim { Name = "Partim3", Evidence = new List<Evidence>{
+                            new Evidence { Description = "evidence1", Path = "/bewijzen/test/pdf-test.pdf"},
+                            new Evidence { Description = "evidence2", Path = "/bewijzen/test/pdf-test.pdf"},
+                        }, FileId = 1, RequestId = 1, Status = Status.Untreated, Argumentation = "argumentation3"},
+                    }},
+                    new Module { Name = "Module2", Partims = new List<Partim>
+                    {
+                        new Partim { Name = "Partim4", Evidence = new List<Evidence>{
+                            new Evidence { Description = "evidence1", Path = "/bewijzen/test/pdf-test.pdf"},
+                            new Evidence { Description = "evidence2", Path = "path2"},
+                        }, FileId = 1, RequestId = 1, Status = Status.Approved, Argumentation = "argumentation4"},
+                        new Partim { Name = "Partim5", Evidence = new List<Evidence>{
+                            new Evidence { Description = "evidence1", Path = "path1"},
+                            new Evidence { Description = "evidence2", Path = "path2"},
+                        }, FileId = 1, RequestId = 1, Status = Status.Rejected, Argumentation = "argumentation5"},
+                    }},
+                }
+            };
         }
 
         public string GetEducationNameByCounselorEmail(string email)
@@ -119,7 +194,7 @@ namespace VTP2015.ServiceLayer.Counselor
         {
         }
 
-        public IQueryable<File> GetFileByCounselorEmail(string email, string academicYear)
+        public IQueryable<File> GetFilesByCounselorEmail(string email, string academicYear)
         {
             var files = new List<File>
             {

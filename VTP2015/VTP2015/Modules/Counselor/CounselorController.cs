@@ -1,13 +1,17 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
+using Microsoft.Ajax.Utilities;
 using RazorPDF;
 using VTP2015.Config;
+using VTP2015.Modules.Counselor.DTOs;
 using VTP2015.Modules.Counselor.ViewModels;
 using VTP2015.ServiceLayer.Counselor;
 
 namespace VTP2015.Modules.Counselor
 {
-    [Authorize(Roles = "Counselor")]
+    //[Authorize(Roles = "Counselor")]
     [RoutePrefix("Counselor")]
     public class CounselorController : Controller
     {
@@ -27,6 +31,38 @@ namespace VTP2015.Modules.Counselor
         public ViewResult Index()
         {
             return View();
+        }
+
+        [Route("GetFileDetailsById/{fileId}")]
+        [HttpGet]
+        public JsonResult GetFileDetailsById(int fileId)
+        {
+            var file = _counselorFacade.GetFileByFileId(fileId);
+
+            var dto = new File
+            {
+                StudentName = file.StudentName,
+                Modules = file.Modules.Select(m => new Module
+                {
+                    Name = m.Name,
+                    Partims = m.Partims.Select(p => new Partim
+                    {
+                        FileId = p.FileId,
+                        Name = p.Name,
+                        RequestId = p.RequestId,
+                        Status = p.Status.ToString(),
+                        Evidence = p.Evidence.Select(e => new Evidence
+                        {
+                            Path = e.Path,
+                            Argumentation = e.Description,
+                            Type = e.Path.Split('.').Last()
+                        }),
+                        Argumentation = p.Argumentation
+                    })
+                })
+            };
+
+            return Json(dto, JsonRequestBehavior.AllowGet);
         }
 
         [Route("EducationSelectWidget")]
@@ -55,21 +91,11 @@ namespace VTP2015.Modules.Counselor
         [HttpGet]
         public PartialViewResult FileOverviewWidget()
         {
-            var models = _counselorFacade.GetFileByCounselorEmail(User.Identity.Name, _configFile.AcademieJaar())
+            var models = _counselorFacade.GetFilesByCounselorEmail(User.Identity.Name, _configFile.AcademieJaar())
                 .ProjectTo<FileOverviewViewModel>();
 
             return PartialView(models);
 
-        }
-
-        [Route("RequestDetailWidget")]  
-        [HttpGet]
-        public PartialViewResult RequestDetailWidget()
-        {
-            var models = _counselorFacade.GetRequests()
-                .ProjectTo<RequestDetailViewModel>();
-
-            return PartialView(models);
         }
 
         [Route("SendReminder")]
@@ -83,9 +109,9 @@ namespace VTP2015.Modules.Counselor
             //if (_configFile.WarningMailTimeIsAllowed(passedTimeSinceLastEmail))
             //{
             //    string bodyText = "Geachte \r \r ";
-            //    string begeleider = User.Identity.Name;
+            //    string begeleider = User.Identity.StudentName;
             //    int aantalAanvragenWachtend = _aanvraagRepository.GetOnbehandeldeAanvragen(email).Count();
-            //    string dringendeAanvraagPartimNaam = _aanvraagRepository.GetAanvraagById(aanvraagId).PartimInformation.Partims.Name;
+            //    string dringendeAanvraagPartimNaam = _aanvraagRepository.GetAanvraagById(aanvraagId).PartimInformation.Partims.StudentName;
             //    string dringendeAanvraagAanvragerNaam = _aanvraagRepository.GetAanvraagById(aanvraagId).FileName.Student.Email;
 
             //    bodyText += begeleider + " Wenst u er van op de hoogte te brengen dat de aanvraag betreffende " +
@@ -106,6 +132,7 @@ namespace VTP2015.Modules.Counselor
         [HttpGet]
         public ActionResult PrintDossier()
         {
+
             var viewModel = new PdfViewModel
             {
                 Naam = "Bockland",

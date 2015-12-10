@@ -8,6 +8,5 @@ namespace VTP2015.ServiceLayer.Counselor.Models
     public class Request
     {
         public string StudentName { get; set; }
-        public IEnumerable<Module> Modules { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace VTP2015.ServiceLayer.Counselor.Models
 {
@@ -12,6 +13,6 @@ namespace VTP2015.ServiceLayer.Counselor.Models
         public string Route { get; set; }
         public string AcademicYear { get; set; }
         public DateTime DateCreated { get; set; }
-
+        public IEnumerable<Module> Modules { get; set; }
     }
 }
