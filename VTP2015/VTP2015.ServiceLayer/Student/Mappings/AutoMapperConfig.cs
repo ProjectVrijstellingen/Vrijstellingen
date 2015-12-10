@@ -18,6 +18,7 @@ namespace VTP2015.ServiceLayer.Student.Mappings
             Mapper.CreateMap<PartimInformation, Models.PartimInformation>()
                 .ForMember(x => x.Code, ops => ops.MapFrom(x => x.Module.Code))
                 .ForMember(x => x.RequestCount, ops => ops.MapFrom(x => x.Module.PartimInformation.Count))
+                .ForMember(x => x.TotalCount, opt => opt.MapFrom(x => x.Module.PartimInformation.Count))
                 .ForMember(x => x.Semester, opt => opt.MapFrom(x => x.Module.Semester))
                 .ForMember(x => x.Status, opt => opt.UseValue(Models.Status.Empty));
             Mapper.CreateMap<Evidence, Models.Evidence>();
