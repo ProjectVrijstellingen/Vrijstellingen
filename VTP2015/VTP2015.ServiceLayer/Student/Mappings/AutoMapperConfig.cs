@@ -32,7 +32,8 @@ namespace VTP2015.ServiceLayer.Student.Mappings
                 .ForMember(x => x.TotalCount, opt => opt.MapFrom(x => x.PartimInformation.Module.PartimInformation.Count))
                 .ForMember(x => x.Status,opt => opt.MapFrom(x => (Models.Status)(int)x.Status));
             Mapper.CreateMap<Entities.Student, Models.Student>()
-                .ForMember(x => x.Education, opt => opt.MapFrom(x => x.Education.Name));
+                .ForMember(x => x.Education, opt => opt.MapFrom(x => x.Education.Name))
+                .ForMember(x => x.Counselor, opt => opt.MapFrom(x => x.Education.Counselors.FirstOrDefault().Email ?? "geen"));
 
             Mapper.CreateMap<Models.Evidence, Evidence>();
             Mapper.CreateMap<Models.File, File>();

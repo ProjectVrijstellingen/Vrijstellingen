@@ -11,5 +11,7 @@ namespace VTP2015.Modules.Student.ViewModels
         public string Email { get; set; }
         
         public string Education { get; set; }
+
+        public string Counselor { get; set; }
     }
 }
