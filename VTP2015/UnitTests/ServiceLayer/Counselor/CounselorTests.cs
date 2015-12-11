@@ -29,7 +29,15 @@ namespace UnitTests.ServiceLayer.Counselor
                         } }},
                         new Request { RequestPartimInformations = new []{ new RequestPartimInformation
                         {
-                            PartimInformation = new PartimInformation { Module = new Module { Name = "m2"}, Partim = new Partim {Name = "p2"} },
+                            PartimInformation = new PartimInformation { Module = new Module { Name = "m1"}, Partim = new Partim {Name = "p2"} },
+                        } }},
+                        new Request { RequestPartimInformations = new []{ new RequestPartimInformation
+                        {
+                            PartimInformation = new PartimInformation { Module = new Module { Name = "m1"}, Partim = new Partim {Name = "p3"} },
+                        } }},
+                        new Request { RequestPartimInformations = new []{ new RequestPartimInformation
+                        {
+                            PartimInformation = new PartimInformation { Module = new Module { Name = "m2"}, Partim = new Partim {Name = "p3"} },
                         } }}
                     }
                 }
@@ -51,10 +59,10 @@ namespace UnitTests.ServiceLayer.Counselor
             var counselorFacade = new CounselorFacade(mockUnitOfWork);
 
             // Act
-            var result = counselorFacade.GetFilesByCounselorEmail("", "");
+            var result = counselorFacade.GetFileByFileId(1);
 
-            var amountOfModulesExpected = 1;
-            var amountOfModulesActual = result.First().Modules.Count();
+            var amountOfModulesExpected = 2;
+            var amountOfModulesActual = result.Modules.Count();
 
             // Assert
             Assert.AreEqual(amountOfModulesExpected, amountOfModulesActual);

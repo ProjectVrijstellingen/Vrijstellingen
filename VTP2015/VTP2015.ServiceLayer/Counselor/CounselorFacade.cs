@@ -35,12 +35,32 @@ namespace VTP2015.ServiceLayer.Counselor
 
         public Models.File GetFileByFileId(int fileId)
         {
-            var result = _fileRepository.GetById(fileId);
+            var file = _fileRepository.GetById(fileId);
 
-            return new Models.File
+            var serviceFile = new Models.File();
+
+            foreach (var request in file.Requests)
             {
-                
-            };
+                foreach (var partiminformation in request.RequestPartimInformations)
+                {
+                    var serviceModule = new Models.Module {Name = partiminformation.PartimInformation.Module.Name};
+                    var servicePartim = new Partim
+                    {
+                        Name = partiminformation.PartimInformation.Partim.Name,
+                        Evidence = request.Evidence.Select(e => new Evidence
+                        {
+                            Path = e.Path,
+                            Description = e.Description,
+                            EvidenceId = e.Id,
+                            StudentEmail = e.Student.Email
+                        })
+                    };
+                    serviceFile.InsertModule(serviceModule);
+                    serviceFile.InsertPartim(servicePartim, serviceModule.Name);
+                }
+            }
+
+            return serviceFile;
         } 
 
         public IQueryable<Models.Request> GetRequests()
