@@ -2,12 +2,13 @@
 
     $("#btnShowOverview").click(showFileOverview);
 
-    $(".nextEvidence").click(function (e) {
+    $("#files").on("click", ".nextEvidence", function (e) {
         e.preventDefault(); 
         switchEvidence(this, "next");
     });
-
-    $(".previousEvidence").click(function(e) {
+            
+    $("#files").on("click", ".previousEvidence", function (e) {
+        console.log("pas");
         e.preventDefault();
         switchEvidence(this, "previous");
     });
@@ -54,20 +55,19 @@ function isEven(number) {
     return number % 2 === 0;
 }
 
-function showEvidence(request, requestIndex) {
-    var evidence = $(request).find("[data-evidenceindex=" + requestIndex + "]");
+function showEvidence(partim, partimIndex) {
+    var evidence = $(partim).find("[data-index=" + partimIndex + "]");
     evidence.removeClass("hide");
 }
 
-function hideEvidence(request, requestIndex) {
-    var evidence = $(request).find("[data-evidenceindex=" + requestIndex + "]");
+function hideEvidence(partim, partimIndex) {
+    var evidence = $(partim).find("[data-index=" + partimIndex + "]");
     evidence.addClass("hide");
 }
 
 function switchEvidence(sender, direction) {
     var currentEvidenceIndexSpan = $(sender).parent().find(".currentEvidence");
     var amountOfEvidence = $(sender).parent().find(".amountOfEvidence").text();
-
     var currentEvidenceIndex = parseInt(currentEvidenceIndexSpan.text());
 
     var request = $(sender).parent().parent().parent().parent();
@@ -158,7 +158,7 @@ function loadFileById(fileId) {
 
                     var newEvidence = $("#dummyEvidence").clone();
                     newEvidence.removeAttr("id");
-                    newEvidence.attr("data-evidenceindex", evidenceIndex);
+                    newEvidence.attr("data-index", evidenceIndex + 1);
                     newEvidence.find(".argumentation").text(evidence.Argumentation);
 
                     newEvidence.find(".downloadLink").attr("href", evidence.Path);
@@ -192,6 +192,8 @@ function showPartimDetail(fileId, index) {
     var partim = file.find(".partimDetail[data-index='" + index + "']");
     file.removeClass("hide");
     partim.removeClass("hide");
+
+    showEvidence();
 }
 
 // "public" function for the fileoverview
@@ -220,12 +222,6 @@ function selectFileById(file) {
 
             $(value).removeClass("hide");
 
-            //if (isEven(selectedIndex)) {
-            //    $(value).addClass("evenRowColor");
-            //} else {
-            //    $(value).addClass("oddRowColor");
-            //}
-
             switch($(value).data("status")) {
                 case "Approved":
                     amountOfApprovedRequests++;
@@ -252,7 +248,7 @@ function selectFileById(file) {
     $("#spnAmountOfDeniedRequests").text(amountOfDeniedRequests);
     $("#spnAmountOfUntreatedRequests").text(amountOfUntreatedRequests);
 
-
+    showPartimDetail(file.fileId, "00");
 }
 
 function loadFiles(fileIds) {
