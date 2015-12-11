@@ -259,6 +259,11 @@ namespace VTP2015.ServiceLayer.Counselor
             return files;
         }
 
+        public FileView GetFile(int fileId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void SendReminder(int aanvraagId)
         {
         }

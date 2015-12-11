@@ -125,6 +125,10 @@
     <Reference Include="RazorPDF">
       <HintPath>..\packages\RazorPDF.1.0.0\lib\net45\RazorPDF.dll</HintPath>
     </Reference>
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.6.4\lib\net40\Rotativa.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>
     </Reference>
@@ -277,6 +281,7 @@
     <Compile Include="Modules\Counselor\ViewModels\PdfViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bewijzen\howest.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -344,12 +349,15 @@
     <Content Include="Modules\Counselor\Views\FileOverviewWidget.cshtml" />
     <Content Include="Modules\Lecturer\Views\ModuleListWidget.cshtml" />
     <Content Include="Modules\Student\Views\InfoWidget.cshtml" />
+    <Content Include="App_Browsers\qt.browser" />
+    <Content Include="Modules\Counselor\Views\File.cshtml" />
     <None Include="Properties\PublishProfiles\Foundation.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Content Include="Icon.png" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\App\Admin\adminPanel.js" />
     <Content Include="Scripts\App\Counselor\fileDetail.js" />
     <Content Include="Scripts\App\Counselor\fileOverview.js" />
@@ -425,7 +433,6 @@
     <Content Include="Modules\Student\Views\EvidenceListWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bewijzen\" />
     <Folder Include="Modules\Feedback\Scripts\" />
   </ItemGroup>
   <ItemGroup>

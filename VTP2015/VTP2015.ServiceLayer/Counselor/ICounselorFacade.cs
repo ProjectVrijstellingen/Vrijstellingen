@@ -11,6 +11,7 @@ namespace VTP2015.ServiceLayer.Counselor
         IQueryable<Education> GetEducations();
         void ChangeEducation(string email, string educationName);
         IQueryable<File> GetFilesByCounselorEmail(string email, string academicYear);
+        FileView GetFile(int fileId);
         void SendReminder(int aanvraagId);
     }
 }

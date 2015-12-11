@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Dynamic;
+using System.Security.Cryptography.X509Certificates;
 using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
 using VTP2015.ServiceLayer.Counselor.Mappings;
+using VTP2015.ServiceLayer.Counselor.Models;
 using VTP2015.ServiceLayer.Mail;
 using Education = VTP2015.Entities.Education;
 using Evidence = VTP2015.ServiceLayer.Counselor.Models.Evidence;
@@ -21,6 +24,8 @@ namespace VTP2015.ServiceLayer.Counselor
         private readonly IRepository<Education> _educationRepository;
         private readonly IRepository<Entities.Counselor> _counselorRepository;
         private readonly IRepository<File> _fileRepository;
+        private readonly Repository<RequestPartimInformation> _requestPartimInformationRepository;
+        private readonly Repository<Motivation> _motivationRepository; 
 
         public CounselorFacade(IUnitOfWork unitOfWork)
         {
@@ -28,6 +33,7 @@ namespace VTP2015.ServiceLayer.Counselor
             _educationRepository = unitOfWork.Repository<Education>();
             _counselorRepository = unitOfWork.Repository<Entities.Counselor>();
             _fileRepository = unitOfWork.Repository<File>();
+            _motivationRepository = unitOfWork.Repository<Motivation>();
 
             var autoMapperConfig = new AutoMapperConfig();
             autoMapperConfig.Execute();
@@ -147,8 +153,34 @@ namespace VTP2015.ServiceLayer.Counselor
                         d.FileStatus != FileStatus.InProgress && d.AcademicYear == academicYear &&
                         d.Education.Id == education.Id)
                         .ProjectTo<Models.File>();
+        }
 
-            return files;
+        public FileView GetFile(int fileId)
+        {
+            var file = _fileRepository.GetById(fileId);
+            var model = new FileView
+            {
+                MotivationList = _motivationRepository.Table,
+                Education = file.Education.Name,
+                Counselor = file.Education.Counselors.First().Email ?? "none",
+                DateCreated = file.DateCreated,
+                AcademicYear = file.AcademicYear,
+                Student = new StudentView { Email = file.Student.Email, Name = file.Student.Name, FirstName = file.Student.FirstName},
+                Requests = file.Requests.Select(x => new RequestView
+                {
+                    Module = x.RequestPartimInformations.First().PartimInformation.Module.Name,
+                    Partims = x.RequestPartimInformations.Select(r => new PartimView { Name = r.PartimInformation.Partim.Name, Status = (int)r.Status, Motivation = r.Motivation.Id}),
+                    Argumentation  = x.Argumentation ?? "",
+                    EvidenceIds = x.Evidence.Select(e => e.Id)
+                }),
+                Evidence = file.Requests.SelectMany(x => x.Evidence).Distinct().Select(x => new EvidenceView
+                {
+                    Id = x.Id,
+                    Path = x.Path,
+                    Description = x.Description
+                })
+            };
+            return model;
         }
 
         public void SendReminder(int aanvraagId)
