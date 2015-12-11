@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
-using RazorPDF;
+using Rotativa;
 using VTP2015.Config;
 using VTP2015.Modules.Counselor.ViewModels;
 using VTP2015.ServiceLayer.Counselor;
@@ -102,18 +102,19 @@ namespace VTP2015.Modules.Counselor
             //    "De administrator van dit platform verhindert dat u momenteel een email kunt sturen om spam tegen te gaan");
         }
 
-        [Route("PrintDossier")]
+        [OverrideAuthorization]
+        [Route("File/{fileId}")]
         [HttpGet]
-        public ActionResult PrintDossier()
+        public ActionResult File(int fileId)
         {
-            var viewModel = new PdfViewModel
-            {
-                Naam = "Bockland",
-                Voornaam = "Joachim",
-                Email = User.Identity.Name,
-                Tel = "null"
-            };
-            return new PdfResult(viewModel,"PrintDossier");
+            var model = _counselorFacade.GetFile(fileId);
+            return View(model);
+        }
+
+        [Route("PrintFile/{id}")]
+        public ActionResult PrintFile(int id)
+        {
+            return new ActionAsPdf("File",new {fileId = id}){FileName = "Dossier" + id + ".pdf"};
         }
     }
 }

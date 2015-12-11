@@ -70,11 +70,16 @@
     <Compile Include="Counselor\MockCounselorFacade.cs" />
     <Compile Include="Counselor\Models\Education.cs" />
     <Compile Include="Counselor\Models\Evidence.cs" />
+    <Compile Include="Counselor\Models\EvidenceView.cs" />
     <Compile Include="Counselor\Models\File.cs" />
+    <Compile Include="Counselor\Models\FileView.cs" />
     <Compile Include="Counselor\Models\Module.cs" />
     <Compile Include="Counselor\Models\Partim.cs" />
+    <Compile Include="Counselor\Models\PartimView.cs" />
     <Compile Include="Counselor\Models\RequestPartimInformation.cs" />
+    <Compile Include="Counselor\Models\RequestView.cs" />
     <Compile Include="Counselor\Models\Status.cs" />
+    <Compile Include="Counselor\Models\StudentView.cs" />
     <Compile Include="Feedback\FeedbackFacade.cs" />
     <Compile Include="Feedback\MockFeedbackFacade.cs" />
     <Compile Include="Feedback\Models\Feedback.cs" />

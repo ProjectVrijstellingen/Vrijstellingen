@@ -1,0 +1,140 @@
+﻿@using VTP2015.Entities
+@model VTP2015.ServiceLayer.Counselor.Models.FileView
+
+@{
+    Layout = null;
+    var status = new List<string> {"geen", "actualisatie", "afgekeurd", "goedgekeurd"};
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dossier - Vrijstellingen / Trajecten</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        <link type="text/css" href="~/Content/Stylesheet.css" rel="stylesheet" />
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        <style type="text/css"> .breakhere { page-break-after: always} .table > tbody > tr > td {padding: 3px}</style>
+    </head>
+    <body>
+        <div class="container">
+            <img src="~/bewijzen/howest.jpg" width="300"/>
+            <h1>EVK - aanvraagdossier</h1>
+            <p>
+                <b>Naam:&nbsp</b>@Model.Student.FirstName @Model.Student.Name<br/>
+                <b>E-mail:&nbsp</b>@Model.Student.Email
+            </p>
+            <p>
+                Ondergetekende,<br/>
+                Heeft een EVK-procedure gestart voor de aanvraag van vrijstellingen voor
+            </p>
+            <p>
+                <b>Opleiding:&nbsp</b>@Model.Education
+            </p>
+            <p>
+                en heeft hierbij de nodige bewijsstukken ingediend (puntenoverzicht en inhouden van betrokken opleidingsonderdelen);<br/>
+                verklaart hierbij op zijn erewoord dat de toegeleverde gegevens en documenten oprecht en echt zijn.<br/>
+                De instelling verbindt zich ertoe vertrouwelijk om te gaan met de haar toegeleverde gegevens.
+            </p>
+            <p>
+                <b>Naam trajectbegeleider:&nbsp</b>@Model.Counselor.Split('@')[0].Replace('.', ' ')<br/>
+                <b>Datum indienen van dossier:&nbsp</b>@Model.DateCreated.ToLongDateString()
+            </p>
+            <p>
+                <b style="padding-right: 300px">Handtekening student</b>
+                <b>Handtekening trajectbegeleider</b>
+            </p>
+            <br/><br/><br/><br/>
+            <h2>Inventaris van bewijsstukken</h2>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Nr.</th>
+                    <th>Bewijs</th>
+                    <th>Beschrijving</th>
+                </tr>
+                @foreach (var evidence in Model.Evidence)
+                {
+                    <tr>
+                        <td>B @evidence.Id</td>
+                        <td><a>@Server.MapPath("/bewijzen/" + Model.Student.Email.Split('@')[0] + "/" + evidence.Path)</a></td>
+                        <td>@evidence.Description</td>
+                    </tr>
+                }
+            </table>
+            <p>
+                <b>Motivatie:</b>
+                <ol type="0">
+                    @foreach (var motivation in Model.MotivationList)
+                    {
+                        <li>@motivation.Text</li>
+                    }
+                </ol> 
+            </p>
+
+            <p class="breakhere"></p>
+            <h2>Overzicht aangevraagde vrijstellingen</h2>
+            <table class="table table-bordered">
+                <tr>
+                    <th style="width: 40px">Nr.</th>
+                    <th>Module</th>
+                    <th>Partim</th>
+                    <th>Bewijzen</th>
+                    <th>Beslissing</th>
+                    <th>Motivatie</th>
+                </tr>
+                @{ var i = 0;}
+                @foreach (var request in Model.Requests)
+                {
+                    foreach (var partim in request.Partims)
+                    {
+                        i++;
+                        <tr>
+                            <td><b>V @i</b></td>
+                            <td>@request.Module</td>
+                            <td>@partim.Name</td>
+                            <td>
+                                @foreach (var id in request.EvidenceIds.Select(x => ("B" + x.ToString() + " ")))
+                                {
+                                    @id
+                                }
+                            </td>
+                            <td>@status[partim.Status]</td>
+                            <td>@partim.Motivation</td>
+                        </tr>
+                    }
+                }
+            </table>
+            @if (Model.Requests.Any(x => x.Argumentation != ""))
+            {
+                <p class="breakhere"></p>
+                <h2>Extra argumentatie</h2>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Argumentatie</th>
+                        <th>Vrijstellingen</th>
+                    </tr>
+                    @{ var j = 0; }
+                    @foreach (var request in Model.Requests.Where(x => x.Argumentation != ""))
+                    {
+                        <tr>
+                            <td>@request.Argumentation</td>
+                            <td>
+                                @{ var text = ""; }
+                                @foreach (var partim in request.Partims)
+                                {
+                                    j++;
+                                    text += "V" + j + " ";
+                                }
+                                @text
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+    </body>
+</html>

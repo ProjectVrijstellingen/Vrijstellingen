@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseEntity.cs" />
+    <Compile Include="Motivation.cs" />
     <Compile Include="FileStatus.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="Feedback.cs" />
