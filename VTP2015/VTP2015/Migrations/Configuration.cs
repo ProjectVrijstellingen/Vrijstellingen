@@ -11,26 +11,40 @@ namespace VTP2015.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationDataLossAllowed = false;
         }
 
         protected override void Seed(Context context)
         {
             //this.AddRoles();
-            //this.SetMotivationsDB();
+            this.SetMotivationsDb();
+            //this.UpdateChanges();
         }
 
-        private void SetMotivationsDB()
+        private void UpdateChanges()
         {
             var database = new Context();
-            database.Motivations.Add(new Motivation {Id = 0, Text = "geen"});
-            database.Motivations.Add(new Motivation { Id = 1, Text = "diploma vorige opleiding" });
-            database.Motivations.Add(new Motivation { Id = 2, Text = "studieomvang en inhoud stemmen overeen" });
-            database.Motivations.Add(new Motivation { Id = 3, Text = "studieomvang en inhoud stemmen niet overeen" });
-            database.Motivations.Add(new Motivation { Id = 4, Text = "studieomvang onvoldoende" });
-            database.Motivations.Add(new Motivation { Id = 5, Text = "inhoud stemt niet voldoende overeen" });
-            database.Motivations.Add(new Motivation { Id = 6, Text = "geen creditbewijs behaald" });
-            database.Motivations.Add(new Motivation { Id = 7, Text = "creditbewijs > 5 jaar" });
+            var motivation = database.Motivations.First(x => x.Text == "geen");
+            foreach (var request in database.RequestPartimInformations.Where(x => x.Motivation == null))
+            {
+                request.Motivation = motivation;
+            }
+            database.SaveChanges();
+        }
+
+        private void SetMotivationsDb()
+        {
+            var database = new Context();
+            database.Motivations.RemoveRange(database.Motivations);
+            database.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Motivations', RESEED, 0)");
+            database.Motivations.Add(new Motivation {Text = "geen"});
+            database.Motivations.Add(new Motivation {Text = "diploma vorige opleiding" });
+            database.Motivations.Add(new Motivation {Text = "studieomvang en inhoud stemmen overeen" });
+            database.Motivations.Add(new Motivation {Text = "studieomvang en inhoud stemmen niet overeen" });
+            database.Motivations.Add(new Motivation {Text = "studieomvang onvoldoende" });
+            database.Motivations.Add(new Motivation {Text = "inhoud stemt niet voldoende overeen" });
+            database.Motivations.Add(new Motivation {Text = "geen creditbewijs behaald" });
+            database.Motivations.Add(new Motivation {Text = "creditbewijs > 5 jaar" });
             database.SaveChanges();
         }
 

@@ -26,6 +26,7 @@ namespace VTP2015.DataAccess
         public DbSet<PartimInformation> PartimInformation { get; set; }
         public DbSet<Route> Routes { get; set; }
         public DbSet<Motivation> Motivations { get; set; } 
+        public DbSet<RequestPartimInformation> RequestPartimInformations { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -42,6 +43,7 @@ namespace VTP2015.DataAccess
             modelBuilder.Configurations.Add(new FeedbackConfig());
             modelBuilder.Configurations.Add(new RouteConfig());
             modelBuilder.Configurations.Add(new MotivationConfig());
+            modelBuilder.Configurations.Add(new RequestPartimInformationConfig());
         }
     }
 }
