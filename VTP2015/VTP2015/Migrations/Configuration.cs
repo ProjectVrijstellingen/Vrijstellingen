@@ -16,11 +16,12 @@ namespace VTP2015.Migrations
 
         protected override void Seed(Context context)
         {
-            //this.AddRoles();
+            this.AddRoles();
             this.SetMotivationsDb();
             //this.UpdateChanges();
         }
 
+        //function used to make db changes after update
         private void UpdateChanges()
         {
             var database = new Context();
@@ -35,6 +36,7 @@ namespace VTP2015.Migrations
         private void SetMotivationsDb()
         {
             var database = new Context();
+            if (database.Motivations.Any(x => x.Id == 1 && x.Text == "geen")) return;
             database.Motivations.RemoveRange(database.Motivations);
             database.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('Motivations', RESEED, 0)");
             database.Motivations.Add(new Motivation {Text = "geen"});
@@ -51,7 +53,8 @@ namespace VTP2015.Migrations
         bool AddRoles()
         {
             var im = new IdentityManager();
-            bool success = false;
+            if (im.UserExists("begeleider@howest.be")) return true;
+            var success = false;
             success = im.CreateRole("Student");
             if (!success) return success;
             success = im.CreateRole("Lecturer");
