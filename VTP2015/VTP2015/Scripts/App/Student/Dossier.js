@@ -150,17 +150,7 @@ $(document).on("click", ".partim", function () {
         addRequest(supercode);
         clon.appendTo("section");
     } else {
-        if ($(this).hasClass("active")) {
-            Return();
-            return;
-        } else {
-            hideShown();
-            var show = $("#aanvraagDetail").find("[data-code=\"" + supercode + "\"]");
-            $(this).addClass("active");
-            show.removeClass("hide");
-            show.addClass("nothidden");
-        }
-        if (!$(beschikbarePartims).hasClass("hide")) toSecondView();
+        selectDetail(supercode);
     }
     //($(".tooltip ").addClass("hide"));
     $(".tooltip ").remove();
@@ -198,17 +188,7 @@ $(document).on("click", ".module", function () {
         addRequest(moduleid);
         clon.appendTo("section");
     } else {
-        if ($(this).hasClass("active")) {
-            Return();
-            return;
-        } else {
-            hideShown();
-            var show = $("#aanvraagDetail").find("[data-code=\"" + moduleid + "\"]");
-            $(this).addClass("active");
-            show.removeClass("hide");
-            show.addClass("nothidden");
-        }
-        if (!$(beschikbarePartims).hasClass("hide")) toSecondView();
+        selectDetail(moduleid);
     }
 });
 
@@ -334,6 +314,25 @@ $(document).on("click", ".semester", function() {
         $(glyph).addClass("glyphicon-triangle-right");
     }
 });
+
+$(document).on("click", ".status", function() {
+    var supercode = $(this).data("supercode");
+    selectDetail(supercode);
+});
+
+function selectDetail(supercode) {
+    if ($(this).hasClass("active")) {
+        Return();
+        return;
+    } else {
+        hideShown();
+        var show = $("#aanvraagDetail").find("[data-code=\"" + supercode + "\"]");
+        $(this).addClass("active");
+        show.removeClass("hide");
+        show.addClass("nothidden");
+    }
+    if (!$(document.getElementById("beschikbarePartimsColumn")).hasClass("hide")) toSecondView();
+}
 
 function isIngediend() {
     var string = $("#aangevraagdePartimsColumn .panel .panel-heading").find("span").text();

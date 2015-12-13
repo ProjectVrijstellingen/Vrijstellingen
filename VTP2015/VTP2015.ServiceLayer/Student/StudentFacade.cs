@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AutoMapper;
@@ -147,27 +148,50 @@ namespace VTP2015.ServiceLayer.Student
 
         public IQueryable<Models.Request> GetRequestByFileId(int fileId)
         {
-            return _requestRepository.Table
-                .Where(request => request.FileId == fileId)
+            var requests = _requestRepository.Table.Where(request => request.FileId == fileId);
+            var requestList = requests.Where(request => request.RequestPartimInformations.All(x => x.Status == Status.Empty))
                 .Select(request => new Models.Request
                 {
                     FileId = request.FileId,
                     Id = request.Id,
                     ModuleName = request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Name,
                     PartimName =
-                        request.RequestPartimInformations.Count == request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.PartimInformation.Count
+                        request.RequestPartimInformations.Count ==
+                        request.RequestPartimInformations.FirstOrDefault()
+                            .PartimInformation.Module.PartimInformation.Count
                             ? ""
                             : request.RequestPartimInformations.FirstOrDefault().PartimInformation.Partim.Name,
                     Code =
-                        request.RequestPartimInformations.Count == request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.PartimInformation.Count
+                        request.RequestPartimInformations.Count ==
+                        request.RequestPartimInformations.FirstOrDefault()
+                            .PartimInformation.Module.PartimInformation.Count
                             ? request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Code
                             : request.RequestPartimInformations.FirstOrDefault().PartimInformation.SuperCode,
                     Argumentation = request.Argumentation,
                     Evidence =
                         request.Evidence.Select(
-                            x => new Models.Evidence {Id = x.Id, Description = x.Description, Path = x.Path}).AsQueryable(),
-                    Submitted = request.RequestPartimInformations.Any(r => r.Status != 0)
-                });
+                            x => new Models.Evidence {Id = x.Id, Description = x.Description, Path = x.Path})
+                            .AsQueryable(),
+                    Submitted = false,
+                    Motivation = request.RequestPartimInformations.FirstOrDefault().Motivation.Text
+                }).ToList();
+            requests.Where(request => request.RequestPartimInformations.All(x => x.Status != Status.Empty))
+                .Each(request => requestList.AddRange(request.RequestPartimInformations.Select(partiminfo => new Models.Request
+                {
+                    FileId = request.FileId,
+                    Id = request.Id,
+                    ModuleName = partiminfo.PartimInformation.Module.Name,
+                    PartimName = partiminfo.PartimInformation.Partim.Name,
+                    Code = partiminfo.PartimInformation.SuperCode,
+                    Argumentation = request.Argumentation,
+                    Evidence =
+                        request.Evidence.Select(
+                            x => new Models.Evidence { Id = x.Id, Description = x.Description, Path = x.Path })
+                            .AsQueryable(),
+                    Submitted = true,
+                    Motivation = partiminfo.Motivation.Text
+                })));
+            return requestList.AsQueryable();
         }
 
         public bool SyncStudentPartims(string email, string academicYear)
