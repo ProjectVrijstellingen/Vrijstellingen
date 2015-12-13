@@ -28,6 +28,7 @@ namespace VTP2015.ServiceLayer.Student
         private readonly Repository<Partim> _partimRepository;
         private readonly Repository<Module> _moduleRepository;
         private readonly Repository<RequestPartimInformation> _requestPartimInformationRepository;
+        private readonly Repository<Motivation> _motivationRepository; 
         private readonly IIdentityRepository _identityRepository;
         private readonly IBamaflexSynchroniser synchroniser;
 
@@ -47,6 +48,7 @@ namespace VTP2015.ServiceLayer.Student
             _partimRepository = unitOfWork.Repository<Partim>();
             _moduleRepository = unitOfWork.Repository<Module>();
             _requestPartimInformationRepository = unitOfWork.Repository<RequestPartimInformation>();
+            _motivationRepository = unitOfWork.Repository<Motivation>();
 
             synchroniser = new BamaflexSynchroniser(_studentRepository, _educationRepository,
                 _bamaflexRepository, _partimInformationRepository, _partimRepository, _moduleRepository,
@@ -225,6 +227,7 @@ namespace VTP2015.ServiceLayer.Student
                 _requestPartimInformationRepository.Insert(new RequestPartimInformation
                 {
                     Status = Status.Empty,
+                    Motivation = _motivationRepository.GetById(1),
                     PartimInformation = _partimInformationRepository.Table.First(x => x.SuperCode == code),
                     Request = newRequest
                 });
@@ -235,6 +238,7 @@ namespace VTP2015.ServiceLayer.Student
                     .ForEach(partimInfo => _requestPartimInformationRepository.Insert(new RequestPartimInformation
                     {
                         Status = Status.Empty,
+                        Motivation = _motivationRepository.GetById(1),
                         PartimInformation = partimInfo,
                         Request = newRequest
                     }));

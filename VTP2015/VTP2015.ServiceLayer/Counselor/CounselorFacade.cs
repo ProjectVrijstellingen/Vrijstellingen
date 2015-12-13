@@ -108,7 +108,7 @@ namespace VTP2015.ServiceLayer.Counselor
                 Requests = file.Requests.Select(x => new RequestView
                 {
                     Module = x.RequestPartimInformations.First().PartimInformation.Module.Name,
-                    //Partims = x.RequestPartimInformations.Select(r => new PartimView { Name = r.PartimInformation.Partim.Name, Status = (int)r.Status, Motivation = r.Motivation.Id}),
+                    Partims = x.RequestPartimInformations.Select(r => new PartimView { Name = r.PartimInformation.Partim.Name, Status = (int)r.Status, Motivation = r.MotivationId}),
                     Argumentation  = x.Argumentation ?? "",
                     EvidenceIds = x.Evidence.Select(e => e.Id)
                 }),

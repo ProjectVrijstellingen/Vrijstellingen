@@ -10,7 +10,7 @@
         public int RequestId { get; set; }
         public int PartimInformationId { get; set; }
         public Status Status { get; set; }
-        public int? MotivationId { get; set; }
+        public int MotivationId { get; set; }
 
         public virtual Motivation Motivation { get; set; }
         public virtual Request Request { get; set; }
