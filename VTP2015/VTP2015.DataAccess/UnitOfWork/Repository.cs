@@ -95,6 +95,12 @@ namespace VTP2015.DataAccess.UnitOfWork
             }
         }
 
+        public void Delete(int id)
+        {
+            var model = GetById(id);
+            Delete(model);
+        }
+
         public virtual IQueryable<T> Table => this.Entities;
 
         private IDbSet<T> Entities => _entities ?? (_entities = _context.Set<T>());
