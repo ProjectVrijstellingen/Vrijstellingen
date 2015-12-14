@@ -10,13 +10,14 @@ namespace VTP2015.ServiceLayer.Lecturer
 {
     public class LecturerFacade : ILecturerFacade
     {
-        private readonly IRepository<Entities.Lecturer> _lecturerRepository;
-        private readonly IRepository<Entities.RequestPartimInformation> _requestPartimInformationRepository; 
+        private readonly Repository<Entities.Lecturer> _lecturerRepository;
+        private readonly Repository<Entities.RequestPartimInformation> _requestPartimInformationRepository; 
 
         public LecturerFacade(IUnitOfWork unitOfWork)
         {
             _lecturerRepository = unitOfWork.Repository<Entities.Lecturer>();
             _requestPartimInformationRepository = unitOfWork.Repository<Entities.RequestPartimInformation>();
+            _motivationRepository = unitOfWork.Repository<Entities.Motivation>();
 
             var autoMaperConfig = new AutoMapperConfig();
             autoMaperConfig.Execute();
@@ -54,7 +55,8 @@ namespace VTP2015.ServiceLayer.Lecturer
                     Evidence = request.Request.Evidence.AsQueryable().ProjectTo<Evidence>(),
                     Status = (Status)(int)request.Status,
                     SuperCode = request.PartimInformation.SuperCode,
-                    Student = new Models.Student { Id=student.Id.ToString(), Name=student.Name, FirstName=student.FirstName, Email=student.Email}
+                    Student = new Models.Student { Id=student.Id.ToString(), Name=student.Name, FirstName=student.FirstName, Email=student.Email},
+                    Motivation = new Motivation { ID=request.Motivation.Id, Text = request.Motivation.Text}
                 });
             }
             return result.AsQueryable();
@@ -88,13 +90,13 @@ namespace VTP2015.ServiceLayer.Lecturer
 
         }
 
-        public bool Approve(int requestPartimInformationId, bool isApproved, string email)
+        public bool Approve(int requestPartimInformationId, bool isApproved, string email, int motivation)
         {
             var requestPartimInformation = _requestPartimInformationRepository.GetById(requestPartimInformationId);
 
             if (requestPartimInformation.Status != (Entities.Status)(int)Status.Untreated || requestPartimInformation.PartimInformation.Lecturer.Email != email)
                 return false;
-
+            requestPartimInformation.MotivationId = motivation;
             requestPartimInformation.Status = isApproved ? (Entities.Status)(int)Status.Approved : (Entities.Status)(int)Status.Rejected;
             _requestPartimInformationRepository.Update(requestPartimInformation);
             
@@ -108,6 +110,11 @@ namespace VTP2015.ServiceLayer.Lecturer
                 .SelectMany(p => p.RequestPartimInformations)
                 .Where(a => a.Status == (Entities.Status)(int)status)
                 .Any();
+        }
+
+        public IQueryable<Motivation> GetMotivations()
+        {
+            return _motivationRepository.Table.AsQueryable().ProjectTo<Motivation>();
         }
     }
 }

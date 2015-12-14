@@ -12,5 +12,6 @@ namespace VTP2015.Modules.Lecturer.ViewModels
         public IEnumerable<Evidence> Evidence { get; set; }
         public ServiceLayer.Lecturer.Models.Student Student { get; set; }
         public string SuperCode { get; set; }
+        public Motivation Motivation { get; set; }
     }
 }

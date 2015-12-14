@@ -83,21 +83,29 @@ $(document).ready(function () {
         scroll_to($(".aanvraagcontainer"));
     });
 
+    $($(".partimcontainer").children()[0]).click(function (event) {
+        if ($("#partimPointerDiv").hasClass("hide"))
+            $("#partimPointerDiv").removeClass("hide")
+        else
+            $("#partimPointerDiv").addClass("hide");
+    });
+    
 
-    //$("#filter").bind("keyup", function () {
-    //   for(i=0;i<$("#studentlist").children().length;i++)
-    //    {
-    //       if (!$($("#studentlist").children()[i]).data("studentid").substr(0, $($("#studentlist").children()[i]).data("studentid").indexOf('@')).contains($(this).val().replace(" ",".").toLowerCase()))
-    //        {
-    //           $($("#studentlist").children()[i]).addClass("hide");
-    //           $($("#studentlist").children()[i]).removeClass("active");
-    //        }
-    //        else
-    //        {
-    //            $($("#studentlist").children()[i]).removeClass("hide");
-    //        }
-    //    }
-    //});
+
+    $("#filter").bind("keyup", function () {
+       for(i=0;i<$("#studentlist").children().length;i++)
+        {
+           if (!$($("#studentlist").children()[i]).data("studentid").substr(0, $($("#studentlist").children()[i]).data("studentid").indexOf('@')).contains($(this).val().replace(" ",".").toLowerCase()))
+            {
+               $($("#studentlist").children()[i]).addClass("hide");
+               $($("#studentlist").children()[i]).removeClass("active");
+            }
+            else
+            {
+                $($("#studentlist").children()[i]).removeClass("hide");
+            }
+        }
+    });
 
 
     $(".argumentatie").click(function (event) {
@@ -155,11 +163,13 @@ $(document).ready(function () {
         //var aanvraagId = $(huidigeAanvragen[huidigeAanvraag]).data("aanvraagid");
         var aanvraagId = $(this).parent().parent().data("aanvraagid");
         var supercode = $(this).parent().parent().parent().parent().attr("id");
+        var motivationId = $("#aanvraagform-" + aanvraagId + " option:checked").val();
+
         $("#Aantal_" + supercode).html(parseInt($("#Aantal_" + supercode).html()) - 1);
 
         $.ajax({
             url: "Lecturer/ApproveAanvraag",
-            data: { aanvraagID: aanvraagId },
+            data: { aanvraagID: aanvraagId, motivationID: motivationId},
             type: "POST",
             success: function (data) {
                 //removeCurrentAanvraag();
@@ -173,11 +183,12 @@ $(document).ready(function () {
         //var aanvraagId = $(huidigeAanvragen[huidigeAanvraag]).data("aanvraagid");
         var aanvraagId = $(this).parent().parent().data("aanvraagid");
         var supercode = $(this).parent().parent().parent().parent().attr("id");
+        var motivationId = $("#aanvraagform-" + aanvraagId + " option:checked").val();
         $("#Aantal_" + supercode).html(parseInt($("#Aantal_" + supercode).html()) - 1);
 
         $.ajax({
             url: "Lecturer/DissapproveAanvraag",
-            data: { aanvraagID: aanvraagId },
+            data: { aanvraagID: aanvraagId, motivationID: motivationId },
             type: "POST",
             success: function (data) {
                 //removeCurrentAanvraag();

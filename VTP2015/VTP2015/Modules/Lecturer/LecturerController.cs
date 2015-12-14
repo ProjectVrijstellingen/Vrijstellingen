@@ -95,20 +95,31 @@ namespace VTP2015.Modules.Lecturer
 
         [Route("ApproveAanvraag")]
         [HttpPost]
-        public ActionResult ApproveAanvraag(int aanvraagId)
+        public ActionResult ApproveAanvraag(int aanvraagId, int motivationId)
         {
-            return Content(_lecturerFacade.Approve(aanvraagId, true, User.Identity.Name) 
+            return Content(_lecturerFacade.Approve(aanvraagId, true, User.Identity.Name, motivationId) 
                 ? "Voltooid!" 
                 : "De aanvraag mag niet beoordeeld worden door u!");
         }
 
         [Route("DissapproveAanvraag")]
         [HttpPost]
-        public ActionResult DissapproveAanvraag(int aanvraagId)
+        public ActionResult DissapproveAanvraag(int aanvraagId, int motivationId)
         {
-            return Content(_lecturerFacade.Approve(aanvraagId, false, User.Identity.Name) 
+            return Content(_lecturerFacade.Approve(aanvraagId, false, User.Identity.Name, motivationId) 
                 ? "Voltooid!" 
                 : "De aanvraag mag niet beoordeeld worden door u!");
+        }
+
+        [HttpGet]
+        [Route("MotivationListWidget")]
+        public PartialViewResult MotivationListWidget()
+        {
+
+            var viewModel = _lecturerFacade.GetMotivations()
+                .ProjectTo<MotivationListViewModel>();
+
+            return PartialView(viewModel);
         }
     }
 }

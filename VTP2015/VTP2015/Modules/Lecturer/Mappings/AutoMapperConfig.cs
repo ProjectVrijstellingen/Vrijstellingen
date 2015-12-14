@@ -38,7 +38,9 @@ namespace VTP2015.Modules.Lecturer.Mappings
                 .ForMember(m => m.Argumentation,
                     opt => opt.MapFrom(i => i.Argumentation))
                 .ForMember(m => m.Evidence,
-                    opt => opt.MapFrom(i => i.Evidence));
+                    opt => opt.MapFrom(i => i.Evidence))
+                .ForMember(m => m.Motivation,
+                    opt => opt.MapFrom(i => i.Motivation));
 
             Mapper.CreateMap<Evidence, EvidenceViewModel>();
             //    .ForMember(m => m.StudentEmail,
@@ -46,6 +48,7 @@ namespace VTP2015.Modules.Lecturer.Mappings
 
             Mapper.CreateMap<PartimInformation, PartimListViewModel>();
             Mapper.CreateMap<ServiceLayer.Lecturer.Models.Student, StudentListViewModel>();
+            Mapper.CreateMap<Motivation, MotivationListViewModel>();
         }
     }
 }
