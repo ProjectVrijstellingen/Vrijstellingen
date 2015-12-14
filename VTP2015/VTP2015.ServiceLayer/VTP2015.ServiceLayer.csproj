@@ -89,6 +89,7 @@
     <Compile Include="Lecturer\Models\Evidence.cs" />
     <Compile Include="Lecturer\Models\File.cs" />
     <Compile Include="Lecturer\Models\Module.cs" />
+    <Compile Include="Lecturer\Models\Motivation.cs" />
     <Compile Include="Lecturer\Models\Partim.cs" />
     <Compile Include="Lecturer\Models\PartimInformation.cs" />
     <Compile Include="Lecturer\Models\Request.cs" />

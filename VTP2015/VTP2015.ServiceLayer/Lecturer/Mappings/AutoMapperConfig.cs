@@ -34,6 +34,7 @@ namespace VTP2015.ServiceLayer.Lecturer.Mappings
                 .ForMember(x => x.PartimName,
                 opt => opt.MapFrom(x => x.Partim.Name));
 
+            Mapper.CreateMap<Entities.Motivation, Models.Motivation>();
         }
     }
 }
