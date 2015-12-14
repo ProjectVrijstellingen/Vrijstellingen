@@ -48,7 +48,6 @@
                     <tbody>
                     @foreach (var dossier in Model.OrderBy(m => m.DaysRemaining))
                     {
-                        var percentage = 100 - dossier.PercentageOfRequestsOpen;
 
                         <tr class="@dossier.Color dossier" data-name="@dossier.StudentName" data-firstname="@dossier.StudentFirstName">
                             <td>@dossier.StudentFirstName</td>
@@ -56,15 +55,15 @@
                             <td>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-striped active" role="progressbar"
-                                         aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100" style="width:@percentage%">
+                                         aria-valuenow="@dossier.PercentageOfRequestsDone" aria-valuemin="0" aria-valuemax="100" style="width:@dossier.PercentageOfRequestsDone%">
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <a href="#" id="links-list">
-                                    <span class="glyphicon glyphicon-list-alt dossierpointer" data-dossierid="@dossier.Id" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-list-alt btnShowOverview" data-dossierid="@dossier.Id" aria-hidden="true" data-fileid="@dossier.Id" data-name="@dossier.StudentFirstName @dossier.StudentName"></span>
                                 </a>
-                                <a href="#" id="midden-list">
+                                <a href="@Url.Action("PrintFile",new {id = dossier.Id})" id="midden-list">
                                     <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
                                 </a>
                             </td>
@@ -78,13 +77,13 @@
                 {
                     <div class="col-md-2 file" data-name="@file.StudentName" data-firstname="@file.StudentFirstName" >
                         @{
-                            var perc = 100 - (file.DaysRemaining * 100 / 21);
+                            var perc = 100 - ((double)(file.DaysRemaining * 100) / 21.0);
                         }
                         <div class="panel panel-text panel-@file.Color-vtp panel-default clearfix panel-body">
                             <p class="naam">@file.StudentFirstName @file.StudentName</p>
                             <div id="kader">
                                 <a href="#" id="links">
-                                    <span class="glyphicon glyphicon-list-alt white btnShowOverview" aria-hidden="true" data-fileid="@file.Id" data-name="@file.StudentFirstName @file.StudentName."></span>
+                                    <span class="glyphicon glyphicon-list-alt white btnShowOverview" aria-hidden="true" data-fileid="@file.Id" data-name="@file.StudentFirstName @file.StudentName"></span>
                                 </a>
                                 <span class="white percentage" id="middem">@file.AmountOfRequestsOpen</span>
                                 <span id="rechts" class="rechts chart" data-percent="@perc">

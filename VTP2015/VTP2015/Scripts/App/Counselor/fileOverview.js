@@ -43,6 +43,15 @@ $(document).ready(function () {
     );  
 
     $('[data-toggle="tooltip"]').tooltip();
+
+    console.log("filesId's:");
+    var fileIds = [];
+    $(files).find(".btnShowOverview").each(function (index, value) {
+        fileIds.push(parseInt($(value).data("fileid")));
+    });
+    console.log(fileIds);
+
+    loadFiles(fileIds);
 });
 
 function showFileDetails(sender) {

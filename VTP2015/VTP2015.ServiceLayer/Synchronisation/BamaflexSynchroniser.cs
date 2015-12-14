@@ -10,21 +10,21 @@ namespace VTP2015.ServiceLayer.Synchronisation
 {
     class BamaflexSynchroniser : IBamaflexSynchroniser
     {
-        private readonly Repository<Entities.Student> _studentRepository;
-        private readonly Repository<Education> _educationRepository;
+        private readonly IRepository<Entities.Student> _studentRepository;
+        private readonly IRepository<Education> _educationRepository;
         private readonly IBamaflexRepository _bamaflexRepository;
-        private readonly Repository<PartimInformation> _partimInformationRepository;
-        private readonly Repository<Partim> _partimRepository;
-        private readonly Repository<Module> _moduleRepository;
-        private readonly Repository<Entities.Lecturer> _lectureRepository;
-        private readonly Repository<Route> _routeRepository;
+        private readonly IRepository<PartimInformation> _partimInformationRepository;
+        private readonly IRepository<Partim> _partimRepository;
+        private readonly IRepository<Module> _moduleRepository;
+        private readonly IRepository<Entities.Lecturer> _lectureRepository;
+        private readonly IRepository<Route> _routeRepository;
         private readonly IIdentityRepository _identityRepository;
 
-        public BamaflexSynchroniser(Repository<Entities.Student> studentRepository,
-            Repository<Education> educationRepository, IBamaflexRepository bamaflexRepository,
-            Repository<PartimInformation> partimInformationRepository, Repository<Partim> partimRepository,
-            Repository<Module> moduleRepository, Repository<Entities.Lecturer> lectureRepository,
-            Repository<Route> routeRepository, IIdentityRepository identityRepository)
+        public BamaflexSynchroniser(IRepository<Entities.Student> studentRepository,
+            IRepository<Education> educationRepository, IBamaflexRepository bamaflexRepository,
+            IRepository<PartimInformation> partimInformationRepository, IRepository<Partim> partimRepository,
+            IRepository<Module> moduleRepository, IRepository<Entities.Lecturer> lectureRepository,
+            IRepository<Route> routeRepository, IIdentityRepository identityRepository)
         {
             _studentRepository = studentRepository;
             _educationRepository = educationRepository;

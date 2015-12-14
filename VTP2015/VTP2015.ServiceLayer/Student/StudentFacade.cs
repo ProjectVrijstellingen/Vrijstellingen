@@ -17,43 +17,34 @@ namespace VTP2015.ServiceLayer.Student
 {
     public class StudentFacade : IStudentFacade
     {
-        private readonly IBamaflexRepository _bamaflexRepository;
-        private readonly Repository<Entities.Student> _studentRepository;
-        private readonly Repository<Evidence> _evidenceRepository;
-        private readonly Repository<File> _fileRepository;
-        private readonly Repository<Request> _requestRepository; 
-        private readonly Repository<PartimInformation> _partimInformationRepository;
-        private readonly Repository<Education> _educationRepository;
-        private readonly Repository<Route> _routeRepository;
-        private readonly Repository<Entities.Lecturer> _lectureRepository;
-        private readonly Repository<Partim> _partimRepository;
-        private readonly Repository<Module> _moduleRepository;
-        private readonly Repository<RequestPartimInformation> _requestPartimInformationRepository;
-        private readonly Repository<Motivation> _motivationRepository; 
-        private readonly IIdentityRepository _identityRepository;
-        private readonly IBamaflexSynchroniser synchroniser;
+        private readonly IRepository<Entities.Student> _studentRepository;
+        private readonly IRepository<Evidence> _evidenceRepository;
+        private readonly IRepository<File> _fileRepository;
+        private readonly IRepository<Request> _requestRepository; 
+        private readonly IRepository<PartimInformation> _partimInformationRepository;
+        private readonly IRepository<Education> _educationRepository;
+        private readonly IRepository<RequestPartimInformation> _requestPartimInformationRepository;
+        private readonly IBamaflexSynchroniser _synchroniser;
+        private readonly IRepository<Motivation> _motivationRepository; 
 
         public StudentFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository, IIdentityRepository identityRepository)
         {
-            _bamaflexRepository = bamaflexRepository;
-            _identityRepository = identityRepository;
-
             _studentRepository = unitOfWork.Repository<Entities.Student>();
             _evidenceRepository = unitOfWork.Repository<Evidence>();
             _fileRepository = unitOfWork.Repository<File>();
             _partimInformationRepository = unitOfWork.Repository<PartimInformation>();
             _requestRepository = unitOfWork.Repository<Request>();
             _educationRepository = unitOfWork.Repository<Education>();
-            _routeRepository = unitOfWork.Repository<Route>();
-            _lectureRepository = unitOfWork.Repository<Entities.Lecturer>();
-            _partimRepository = unitOfWork.Repository<Partim>();
-            _moduleRepository = unitOfWork.Repository<Module>();
+            var routeRepository = unitOfWork.Repository<Route>();
+            var lectureRepository = unitOfWork.Repository<Entities.Lecturer>();
+            var partimRepository = unitOfWork.Repository<Partim>();
+            var moduleRepository = unitOfWork.Repository<Module>();
             _requestPartimInformationRepository = unitOfWork.Repository<RequestPartimInformation>();
             _motivationRepository = unitOfWork.Repository<Motivation>();
 
-            synchroniser = new BamaflexSynchroniser(_studentRepository, _educationRepository,
-                _bamaflexRepository, _partimInformationRepository, _partimRepository, _moduleRepository,
-                _lectureRepository, _routeRepository, _identityRepository);
+            _synchroniser = new BamaflexSynchroniser(_studentRepository, _educationRepository,
+                bamaflexRepository, _partimInformationRepository, partimRepository, moduleRepository,
+                lectureRepository, routeRepository, identityRepository);
             var automapperConfig = new AutoMapperConfig();
             automapperConfig.Execute();
         }
@@ -196,12 +187,12 @@ namespace VTP2015.ServiceLayer.Student
 
         public bool SyncStudentPartims(string email, string academicYear)
         {
-            return synchroniser.SyncStudentPartims(email, academicYear);
+            return _synchroniser.SyncStudentPartims(email, academicYear);
         }
 
         public void SyncStudent(string email, string academicYear)
         {
-            synchroniser.SyncStudentByUser(email, academicYear);
+            _synchroniser.SyncStudentByUser(email, academicYear);
         }
 
         public Models.Evidence GetEvidenceById(int evidenceId)
@@ -275,9 +266,17 @@ namespace VTP2015.ServiceLayer.Student
             var file = _fileRepository.GetById(fileId);
             if(file.FileStatus == FileStatus.InProgress) file.DateCreated = DateTime.Now;
             file.FileStatus = FileStatus.Submitted;
-            foreach (var request in file.Requests)
+            foreach (var partiminfo in file.Requests.SelectMany(request => request.RequestPartimInformations.Where(x => x.Status == Status.Empty)))
             {
-                request.RequestPartimInformations.Where(x => x.Status == Status.Empty).Each(x => x.Status = (request.Evidence.Count > 0 ? Status.Untreated : Status.Rejected));
+                if (partiminfo.Request.Evidence.Count < 1)
+                {
+                    partiminfo.Status = Status.Rejected;
+                    partiminfo.Motivation = _motivationRepository.GetById(6);
+                }
+                else
+                {
+                    partiminfo.Status = Status.Untreated;
+                }
             }
             _fileRepository.Update(file);
         }

@@ -43,7 +43,7 @@ namespace VTP2015.DataAccess.UnitOfWork
             _disposed = true;
         }
 
-        public Repository<T> Repository<T>() where T : BaseEntity
+        public IRepository<T> Repository<T>() where T : BaseEntity
         {
             if (_repositories == null)
             {

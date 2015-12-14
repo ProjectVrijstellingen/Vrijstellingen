@@ -76,7 +76,7 @@
     <Compile Include="Counselor\Models\Module.cs" />
     <Compile Include="Counselor\Models\Partim.cs" />
     <Compile Include="Counselor\Models\PartimView.cs" />
-    <Compile Include="Counselor\Models\RequestPartimInformation.cs" />
+    <Compile Include="Counselor\Models\Request.cs" />
     <Compile Include="Counselor\Models\RequestView.cs" />
     <Compile Include="Counselor\Models\Status.cs" />
     <Compile Include="Counselor\Models\StudentView.cs" />

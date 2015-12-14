@@ -25,12 +25,12 @@ namespace VTP2015.Helpers
 
                 var nameTag = new TagBuilder("span");
                 nameTag.AddCssClass("h3");
-                nameTag.SetInnerText("Semester " + semester.Number);
+                nameTag.SetInnerText(" Semester " + semester.Number);
                 semesterNameTag.InnerHtml += nameTag;
                 semesterTag.InnerHtml += semesterNameTag;
 
                 var moduleListTag = new TagBuilder("div");
-                moduleListTag.AddCssClass("hide");
+                moduleListTag.AddCssClass("hide partimList");
 
 
                 foreach (var module in semester.Modules)
@@ -46,7 +46,7 @@ namespace VTP2015.Helpers
                     tag.InnerHtml += moduleNameTag;
                     if (!submitted)
                         tag.InnerHtml += ShowGlyphicon(html, "remove",
-                            "btn badge" + (count == module.RequestCount && count == module.TotalCount && module.TotalCount != 1 && deletable ? "" : " hide"));
+                            "btn crossModule" + (count == module.RequestCount && count == module.TotalCount && module.TotalCount != 1 && deletable ? "" : " hide"));
 
                     var moduleTag = new TagBuilder("ul");
                     moduleTag.AddCssClass("list-group" +
@@ -68,7 +68,7 @@ namespace VTP2015.Helpers
                         partimTag.InnerHtml += partimNameTag;
                         if (partim.Status == 0)
                             partimTag.InnerHtml += ShowGlyphicon(html, "remove",
-                                "btn badge" + (deletable ? "" : " hide"));
+                                "btn crossPartim" + (deletable ? "" : " hide"));
                         moduleTag.InnerHtml += partimTag;
                     }
                     tag.InnerHtml += moduleTag;

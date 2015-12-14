@@ -1,7 +1,7 @@
 ﻿@using System.Web.Mvc.Html
 @model VTP2015.Modules.Student.ViewModels.IndexViewModel
 
-@*@using (Ajax.BeginForm("AddFileName", "Student", new AjaxOptions{HttpMethod = "Post", OnSuccess = "BewijsSuccess"} ,new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
+@*@using (Ajax.BeginForm("AddFileStudentName", "Student", new AjaxOptions{HttpMethod = "Post", OnSuccess = "BewijsSuccess"} ,new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
 {*@
 <form id="addBewijs-form" class="form-horizontal" data-url="@Url.Action("AddFile","Student")">
     <div class="input-group">
@@ -9,12 +9,12 @@
         <div class="input-group">
             <span class="input-group-btn">
                 <span class="btn btn-success btn-file">
-                    Browse&hellip; <input id="File" type="file" name="FileName">
+                    Browse&hellip; <input id="File" type="file" name="FileStudentName">
                 </span>
             </span>
             <input type="text" class="form-control" readonly>
         </div>
-@*        <input id="File" type="file" name="FileName">*@
+@*        <input id="File" type="file" name="FileStudentName">*@
     </div>
     <br />
     <div class="input-group">

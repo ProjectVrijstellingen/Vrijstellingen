@@ -1,6 +1,6 @@
-﻿namespace VTP2015.Modules.Counselor.ViewModels
+﻿namespace VTP2015.Modules.Counselor.ViewModels.Models
 {
-    public class EvidenceViewModel
+    public class Evidence
     {
         public int EvidenceId { get; set; }
         public string Description { get; set; }

@@ -8,9 +8,7 @@ namespace VTP2015.Modules.Counselor.ViewModels
         public string StudentFirstName { get; set; }
         public string StudentName { get; set; }
         public int AmountOfRequestsOpen { get; set; }
-        public int PercentageOfRequestsOpen { get; set; }
-        public string Route { get; set; }
-        public string AcademicYear { get; set; }
+        public int PercentageOfRequestsDone { get; set; }
         public DateTime DateCreated { get; set; }
 
         public int DaysRemaining
@@ -27,8 +25,8 @@ namespace VTP2015.Modules.Counselor.ViewModels
             get
             {
                 var color = "warning";
-                if (PercentageOfRequestsOpen == 100) { color = "danger"; }
-                else if (PercentageOfRequestsOpen == 0) { color = "success"; }
+                if (PercentageOfRequestsDone == 100) { color = "danger"; }
+                else if (PercentageOfRequestsDone == 0) { color = "success"; }
                 return color;
             }
         }

@@ -5,8 +5,8 @@ namespace VTP2015.ServiceLayer.Feedback
 {
     public class FeedbackFacade : IFeedbackFacade
     {
-        private readonly Repository<Entities.Student> _studentRepository;
-        private readonly Repository<Entities.Feedback> _feedbackRepository;
+        private readonly IRepository<Entities.Student> _studentRepository;
+        private readonly IRepository<Entities.Feedback> _feedbackRepository;
 
         public FeedbackFacade(IUnitOfWork unitOfWork)
         {
