@@ -65,6 +65,9 @@ namespace VTP2015.ServiceLayer.Counselor
             var file = _fileRepository.GetById(fileId);
 
             var serviceFile = new Models.File();
+            serviceFile.StudentFirstName = file.Student.FirstName;
+            serviceFile.StudentName = file.Student.Name;
+            serviceFile.StudentMail = file.Student.Email;
 
             foreach (var request in file.Requests)
             {
