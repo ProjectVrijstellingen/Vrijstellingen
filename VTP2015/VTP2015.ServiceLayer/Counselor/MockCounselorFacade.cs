@@ -277,6 +277,11 @@ namespace VTP2015.ServiceLayer.Counselor
             
         }
 
+        public bool IsFileAvailable(int fileId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemovePartimFromFile(int partimInformationId)
         {
         }
