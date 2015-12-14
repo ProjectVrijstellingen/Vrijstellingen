@@ -25,7 +25,7 @@ namespace VTP2015.ServiceLayer.Student
         private readonly IRepository<Education> _educationRepository;
         private readonly IRepository<RequestPartimInformation> _requestPartimInformationRepository;
         private readonly IBamaflexSynchroniser _synchroniser;
-        private readonly Repository<Motivation> _motivationRepository; 
+        private readonly IRepository<Motivation> _motivationRepository; 
 
         public StudentFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository, IIdentityRepository identityRepository)
         {

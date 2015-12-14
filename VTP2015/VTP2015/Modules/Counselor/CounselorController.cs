@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
 using Microsoft.Ajax.Utilities;
 using RazorPDF;
+using Rotativa;
 using VTP2015.Config;
 using VTP2015.Modules.Counselor.DTOs;
 using VTP2015.Modules.Counselor.ViewModels;

@@ -24,8 +24,8 @@ namespace VTP2015.ServiceLayer.Counselor
         private readonly IRepository<Education> _educationRepository;
         private readonly IRepository<Entities.Counselor> _counselorRepository;
         private readonly IRepository<File> _fileRepository;
-        private readonly Repository<RequestPartimInformation> _requestPartimInformationRepository;
-        private readonly Repository<Motivation> _motivationRepository; 
+        private readonly IRepository<RequestPartimInformation> _requestPartimInformationRepository;
+        private readonly IRepository<Motivation> _motivationRepository; 
 
         public CounselorFacade(IUnitOfWork unitOfWork)
         {
@@ -59,7 +59,11 @@ namespace VTP2015.ServiceLayer.Counselor
                             Description = e.Description,
                             EvidenceId = e.Id,
                             StudentEmail = e.Student.Email
-                        })
+                        }),
+                        Argumentation = request.Argumentation,
+                        FileId = request.FileId,
+                        RequestId = request.Id,
+                        Status = (Models.Status)partiminformation.Status
                     };
                     serviceFile.InsertModule(serviceModule);
                     serviceFile.InsertPartim(servicePartim, serviceModule.Name);
@@ -147,7 +151,7 @@ namespace VTP2015.ServiceLayer.Counselor
                 .Table.First(t => t.Email == email)
                 .Education;
 
-            var files =
+            return 
                 _fileRepository.Table.Where(
                     d =>
                         d.FileStatus != FileStatus.InProgress && d.AcademicYear == academicYear &&

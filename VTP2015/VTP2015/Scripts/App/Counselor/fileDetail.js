@@ -127,20 +127,20 @@ function loadFileById(fileId) {
         var partimList = newFile.find(".partimList");
 
         $(data.Modules).each(function (moduleIndex, module) {
-            console.log("current module: " + moduleIndex);
-
             var newModule = $("#dummyModule").clone();
             newModule.removeAttr("id");
             newModule.find(".moduleName").text(module.Name);
             partimList.append(newModule);
 
             $(module.Partims).each(function (partimIndex, partim) {
-                console.log("current partim: " + partimIndex);
                 var index = "" + moduleIndex + partimIndex;
+                console.log("current partim: " + index);
 
                 var newPartim = $("#dummyPartim").clone();
                 newPartim.removeAttr("id"); 
                 newPartim.find(".partimName").text(partim.Name);
+                console.log("current partim: ");
+                console.log(partim);
                 newPartim.attr("data-fileid", partim.FileId);
                 newPartim.attr("data-requestId", partim.RequestId);
                 newPartim.attr("data-status", partim.Status);
