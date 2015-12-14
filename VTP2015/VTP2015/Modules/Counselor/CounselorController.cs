@@ -63,11 +63,11 @@ namespace VTP2015.Modules.Counselor
             return Json(dto, JsonRequestBehavior.AllowGet);
         }
 
-        [Route("ChangeFileStatus")]
+        [Route("SetFileStatusOpen")]
         [HttpPost]
-        public void ChangeFileStatus(int fileId, int status)
+        public void ChangeFileStatus(int fileId)
         {
-            _counselorFacade.ChangeFileStatus(fileId, status);
+            _counselorFacade.SetFileStatusOpen(fileId);
         }
 
         [Route("RemovePartimFromFile")]
@@ -75,6 +75,13 @@ namespace VTP2015.Modules.Counselor
         public void RemovePartimFromFile(int partimInformationId)
         {
             _counselorFacade.RemovePartimFromFile(partimInformationId);
+        }
+
+        [Route("DeleteFile")]
+        [HttpPost]
+        public void DeleteFile(int fileId)
+        {
+            _counselorFacade.DeleteFile(fileId);
         }
 
         [Route("EducationSelectWidget")]

@@ -52,10 +52,15 @@ namespace VTP2015.ServiceLayer.Counselor
                 _requestRepository.Delete(request);
         }
 
-        public void ChangeFileStatus(int fileId, int status)
+        public void SetFileStatusOpen(int fileId)
         {
-            _fileRepository.GetById(fileId).FileStatus = (FileStatus) status;
-        }   
+            _fileRepository.GetById(fileId).FileStatus = FileStatus.InProgress;
+        }
+
+        public void DeleteFile(int fileId)
+        {
+            _fileRepository.Delete(fileId);
+        }
 
         public Models.File GetFileByFileId(int fileId)
         {

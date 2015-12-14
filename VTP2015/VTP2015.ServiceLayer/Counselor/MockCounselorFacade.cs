@@ -268,7 +268,11 @@ namespace VTP2015.ServiceLayer.Counselor
         {
         }
 
-        public void ChangeFileStatus(int fileId, int status)
+        public void SetFileStatusOpen(int fileId)
+        {
+        }
+
+        public void DeleteFile(int fileId)
         {
             
         }
