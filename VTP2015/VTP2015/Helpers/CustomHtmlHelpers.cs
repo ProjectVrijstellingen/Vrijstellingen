@@ -111,9 +111,9 @@ namespace VTP2015.Helpers
                 descriptionTag.MergeAttribute("data-toggle", "tooltip");
                 descriptionTag.MergeAttribute("title", evidence.Path);
             }
-            descriptionTag.SetInnerText(TextLimiter(evidence.Path,20) + " - " + evidence.Description);
+            descriptionTag.SetInnerText(" " + TextLimiter(evidence.Path,20) + " - " + evidence.Description);
             itemTag.InnerHtml += descriptionTag;
-            if (!submitted) itemTag.InnerHtml += ShowGlyphicon(html, "minus","btn badge" + (movable? " hide":""));
+            if (!submitted) itemTag.InnerHtml += ShowGlyphicon(html, "remove","btn crossPartim" + (movable? " hide":""));
             if (movable) itemTag.InnerHtml += ShowGlyphicon(html, "plus","btn badge");
             return new MvcHtmlString(itemTag.ToString());
         }
