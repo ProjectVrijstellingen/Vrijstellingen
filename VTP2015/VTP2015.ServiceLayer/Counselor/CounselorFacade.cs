@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Linq.Dynamic;
-using System.Security.Cryptography.X509Certificates;
 using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
@@ -67,6 +65,9 @@ namespace VTP2015.ServiceLayer.Counselor
             var file = _fileRepository.GetById(fileId);
 
             var serviceFile = new Models.File();
+            serviceFile.StudentFirstName = file.Student.FirstName;
+            serviceFile.StudentName = file.Student.Name;
+            serviceFile.StudentMail = file.Student.Email;
 
             foreach (var request in file.Requests)
             {
@@ -86,7 +87,8 @@ namespace VTP2015.ServiceLayer.Counselor
                         Argumentation = request.Argumentation,
                         FileId = request.FileId,
                         RequestId = request.Id,
-                        Status = (Models.Status)partiminformation.Status
+                        Status = (Models.Status)partiminformation.Status,
+                        PartimInformationId = partiminformation.Id
                     };
                     serviceFile.InsertModule(serviceModule);
                     serviceFile.InsertPartim(servicePartim, serviceModule.Name);
