@@ -39,6 +39,7 @@ namespace VTP2015.Helpers
                     var submitted = module.Partims.All(x => x.Status != 0);
                     var tag = new TagBuilder("div");
                     tag.Attributes.Add("data-moduleid", module.Code);
+                    tag.AddCssClass("moduleSpace");
 
                     var moduleNameTag = new TagBuilder("span");
                     moduleNameTag.AddCssClass("name h4" + (count == module.RequestCount && count == module.TotalCount && module.TotalCount != 1 && !submitted ? " module" : ""));
