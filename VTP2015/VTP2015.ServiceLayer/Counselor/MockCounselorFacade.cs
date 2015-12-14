@@ -267,5 +267,18 @@ namespace VTP2015.ServiceLayer.Counselor
         public void SendReminder(int aanvraagId)
         {
         }
+
+        public void SetFileStatusOpen(int fileId)
+        {
+        }
+
+        public void DeleteFile(int fileId)
+        {
+            
+        }
+
+        public void RemovePartimFromFile(int partimInformationId)
+        {
+        }
     }
 }
