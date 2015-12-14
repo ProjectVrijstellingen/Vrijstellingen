@@ -9,6 +9,7 @@ namespace VTP2015.DataAccess.UnitOfWork
         void Insert(T entity);
         void Update(T entity);
         void Delete(T entity);
+        void Delete(int id);
         IQueryable<T> Table { get; }
     }
 }

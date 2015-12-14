@@ -38,6 +38,11 @@ namespace UnitTests.Mock
             throw new System.NotImplementedException();
         }
 
+        public void Delete(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IQueryable Table { get; }
 
         IQueryable<T> IRepository<T>.Table => _result.AsQueryable();

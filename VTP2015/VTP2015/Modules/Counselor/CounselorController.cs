@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
-using Microsoft.Ajax.Utilities;
-using RazorPDF;
 using Rotativa;
 using VTP2015.Config;
 using VTP2015.Modules.Counselor.DTOs;
@@ -64,6 +61,27 @@ namespace VTP2015.Modules.Counselor
             };
 
             return Json(dto, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("SetFileStatusOpen")]
+        [HttpPost]
+        public void SetFileStatusOpen(int fileId)
+        {
+            _counselorFacade.SetFileStatusOpen(fileId);
+        }
+
+        [Route("RemovePartimFromFile")]
+        [HttpPost]
+        public void RemovePartimFromFile(int partimInformationId)
+        {
+            _counselorFacade.RemovePartimFromFile(partimInformationId);
+        }
+
+        [Route("DeleteFile")]
+        [HttpPost]
+        public void DeleteFile(int fileId)
+        {
+            _counselorFacade.DeleteFile(fileId);
         }
 
         [Route("EducationSelectWidget")]
