@@ -8,7 +8,7 @@
         @Html.LabelFor(m => m.File, new { @class = "form-label" })
         <div class="input-group">
             <span class="input-group-btn">
-                <span class="btn btn-success btn-file">
+                <span class="btn btn-default btn-file">
                     Browse&hellip; <input id="File" type="file" name="FileStudentName">
                 </span>
             </span>
@@ -23,6 +23,6 @@
     </div>
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     <div class="input-group">
-        <button type="button" class="btn btn-success">Toevoegen</button>
+        <button type="button" class="btn btn-default">Toevoegen</button>
     </div>
 </form>

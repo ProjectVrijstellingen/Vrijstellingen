@@ -17,6 +17,6 @@
         </ul>
         if (Model.All(x => configFile.CalcAcademieJaar(x.DateCreated.Year) != configFile.AcademieJaar()))
          {
-             @Html.ActionLink("Nieuw dossier aanmaken", "NewFile", "Student", new {@class = "btn btn-success"})
+             @Html.ActionLink("Nieuw dossier aanmaken", "NewFile", "Student", new {@class = "btn btn-default" })
          }
     }
