@@ -24,7 +24,8 @@ namespace VTP2015.DataAccess.Config
                 .HasForeignKey(r => r.PartimInformationId);
 
             HasRequired(r => r.Motivation)
-                .WithMany(r => r.RequestPartimInformations);
+                .WithMany(r => r.RequestPartimInformations)
+                .HasForeignKey(r => r.MotivationId);
         }
     }
 }
