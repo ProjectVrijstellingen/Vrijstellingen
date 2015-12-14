@@ -90,7 +90,11 @@ function switchEvidence(sender, direction) {
     switch(direction) {
         case "next":
         {
-            newCurrentEvidenceIndex = currentEvidenceIndex % (amountOfEvidence - 1) + 1;
+            if (currentEvidenceIndex < amountOfEvidence)
+                newCurrentEvidenceIndex = currentEvidenceIndex + 1;
+            else {
+                newCurrentEvidenceIndex = 1;
+            }
             break;
         }
         case "previous":
