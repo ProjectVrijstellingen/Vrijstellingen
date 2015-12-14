@@ -65,7 +65,7 @@ namespace VTP2015.Modules.Counselor
 
         [Route("SetFileStatusOpen")]
         [HttpPost]
-        public void ChangeFileStatus(int fileId)
+        public void SetFileStatusOpen(int fileId)
         {
             _counselorFacade.SetFileStatusOpen(fileId);
         }
