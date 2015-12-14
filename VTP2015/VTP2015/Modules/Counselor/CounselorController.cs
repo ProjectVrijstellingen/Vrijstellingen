@@ -6,6 +6,11 @@ using VTP2015.Config;
 using VTP2015.Modules.Counselor.DTOs;
 using VTP2015.Modules.Counselor.ViewModels;
 using VTP2015.ServiceLayer.Counselor;
+using VTP2015.ServiceLayer.Counselor.Models;
+using Evidence = VTP2015.Modules.Counselor.DTOs.Evidence;
+using File = VTP2015.Modules.Counselor.DTOs.File;
+using Module = VTP2015.Modules.Counselor.DTOs.Module;
+using Partim = VTP2015.Modules.Counselor.DTOs.Partim;
 
 namespace VTP2015.Modules.Counselor
 {
@@ -35,11 +40,15 @@ namespace VTP2015.Modules.Counselor
         [HttpGet]
         public JsonResult GetFileDetailsById(int fileId)
         {
+            if (!_counselorFacade.IsFileAvailable(fileId)) return Json(null);
             var file = _counselorFacade.GetFileByFileId(fileId);
 
             var dto = new File
             {
                 StudentName = file.StudentFirstName + " " + file.StudentName,
+                AmountOfUntreatedRequests = file.Modules.SelectMany(x => x.Partims).Count(x => x.Status == Status.Untreated),
+                AmountOfApprovedRequests = file.Modules.SelectMany(x => x.Partims).Count(x => x.Status == Status.Approved),
+                AmountOfDeniedRequests = file.Modules.SelectMany(x => x.Partims).Count(x => x.Status == Status.Rejected),
                 Modules = file.Modules.Select(m => new Module
                 {
                     Name = m.Name,

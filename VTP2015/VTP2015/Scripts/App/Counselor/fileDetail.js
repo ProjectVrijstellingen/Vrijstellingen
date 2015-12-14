@@ -123,7 +123,9 @@ function loadFileById(fileId) {
         newFile.removeAttr("id");
         newFile.attr("data-fileid", fileId);
         newFile.find(".studentName").text(data.StudentName);
-
+        newFile.find("#spnAmountOfUntreatedRequests").text(data.AmountOfUntreatedRequests);
+        newFile.find("#spnAmountOfDeniedRequests").text(data.AmountOfDeniedRequests);
+        newFile.find("#AmountOfUntreatedRequests").text(data.AmountOfUntreatedRequests);
         var partimList = newFile.find(".partimList");
 
         $(data.Modules).each(function (moduleIndex, module) {
