@@ -64,7 +64,7 @@
                                 <a href="#" id="links-list">
                                     <span class="glyphicon glyphicon-list-alt btnShowOverview" data-dossierid="@dossier.Id" aria-hidden="true" data-fileid="@dossier.Id" data-name="@dossier.StudentFirstName @dossier.StudentName"></span>
                                 </a>
-                                <a href="#" id="midden-list">
+                                <a href="@Url.Action("PrintFile",new {id = dossier.Id})" id="midden-list">
                                     <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
                                 </a>
                             </td>
