@@ -23,7 +23,7 @@ namespace VTP2015.ServiceLayer.Counselor
         private readonly IRepository<Entities.Counselor> _counselorRepository;
         private readonly IRepository<File> _fileRepository;
         private readonly IRepository<RequestPartimInformation> _requestPartimInformationRepository;
-        private readonly IRepository<Motivation> _motivationRepository; 
+        private readonly IRepository<Motivation> _motivationRepository;
 
         public CounselorFacade(IUnitOfWork unitOfWork)
         {
@@ -32,6 +32,7 @@ namespace VTP2015.ServiceLayer.Counselor
             _counselorRepository = unitOfWork.Repository<Entities.Counselor>();
             _fileRepository = unitOfWork.Repository<File>();
             _motivationRepository = unitOfWork.Repository<Motivation>();
+            _requestPartimInformationRepository = unitOfWork.Repository<RequestPartimInformation>();
 
             var autoMapperConfig = new AutoMapperConfig();
             autoMapperConfig.Execute();
