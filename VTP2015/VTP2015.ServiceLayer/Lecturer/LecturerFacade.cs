@@ -11,7 +11,8 @@ namespace VTP2015.ServiceLayer.Lecturer
     public class LecturerFacade : ILecturerFacade
     {
         private readonly Repository<Entities.Lecturer> _lecturerRepository;
-        private readonly Repository<Entities.RequestPartimInformation> _requestPartimInformationRepository; 
+        private readonly Repository<Entities.RequestPartimInformation> _requestPartimInformationRepository;
+        private readonly Repository<Entities.Motivation> _motivationRepository;
 
         public LecturerFacade(IUnitOfWork unitOfWork)
         {
