@@ -39,7 +39,7 @@ namespace VTP2015.Modules.Counselor
 
             var dto = new File
             {
-                StudentName = file.StudentName,
+                StudentName = file.StudentFirstName + " " + file.StudentName,
                 Modules = file.Modules.Select(m => new Module
                 {
                     Name = m.Name,
@@ -51,7 +51,7 @@ namespace VTP2015.Modules.Counselor
                         Status = p.Status.ToString(),
                         Evidence = p.Evidence.Select(e => new Evidence
                         {
-                            Path = e.Path,
+                            Path = Server.MapPath("/bewijzen/" + file.StudentMail.Split('@')[0] + "/" + e.Path),
                             Argumentation = e.Description,
                             Type = e.Path.Split('.').Last()
                         }),
