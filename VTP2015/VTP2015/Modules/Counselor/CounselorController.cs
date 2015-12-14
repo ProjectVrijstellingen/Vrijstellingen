@@ -82,9 +82,9 @@ namespace VTP2015.Modules.Counselor
 
         [Route("RemovePartimFromFile")]
         [HttpPost]
-        public void RemovePartimFromFile(int partimInformationId)
+        public void RemovePartimFromFile(int partimInformationId, int fileId)
         {
-            _counselorFacade.RemovePartimFromFile(partimInformationId);
+            _counselorFacade.RemovePartimFromFile(partimInformationId, fileId);
         }
 
         [Route("DeleteFile")]

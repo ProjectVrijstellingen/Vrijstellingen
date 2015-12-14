@@ -38,11 +38,11 @@ namespace VTP2015.ServiceLayer.Counselor
             autoMapperConfig.Execute();
         }
 
-        public void RemovePartimFromFile(int partimInformationId)
+        public void RemovePartimFromFile(int partimInformationId, int fileId)
         {
             var requestPartimInformation =
                 _requestPartimInformationRepository.Table
-                .First(r => r.PartimInformationId == partimInformationId);
+                .First(r => r.PartimInformationId == partimInformationId && r.Request.FileId == fileId);
 
             var request = requestPartimInformation.Request;
             _requestPartimInformationRepository.Delete(requestPartimInformation);
@@ -71,19 +71,21 @@ namespace VTP2015.ServiceLayer.Counselor
         {
             var file = _fileRepository.GetById(fileId);
 
-            var serviceFile = new Models.File();
-            serviceFile.StudentFirstName = file.Student.FirstName;
-            serviceFile.StudentName = file.Student.Name;
-            serviceFile.StudentMail = file.Student.Email;
+            var serviceFile = new Models.File
+            {
+                StudentFirstName = file.Student.FirstName,
+                StudentName = file.Student.Name,
+                StudentMail = file.Student.Email
+            };
 
             foreach (var request in file.Requests)
             {
-                foreach (var partiminformation in request.RequestPartimInformations)
+                foreach (var requestPartimInformation in request.RequestPartimInformations)
                 {
-                    var serviceModule = new Models.Module {Name = partiminformation.PartimInformation.Module.Name};
+                    var serviceModule = new Models.Module {Name = requestPartimInformation.PartimInformation.Module.Name};
                     var servicePartim = new Partim
                     {
-                        Name = partiminformation.PartimInformation.Partim.Name,
+                        Name = requestPartimInformation.PartimInformation.Partim.Name,
                         Evidence = request.Evidence.Select(e => new Evidence
                         {
                             Path = e.Path,
@@ -94,8 +96,8 @@ namespace VTP2015.ServiceLayer.Counselor
                         Argumentation = request.Argumentation,
                         FileId = request.FileId,
                         RequestId = request.Id,
-                        Status = (Models.Status)partiminformation.Status,
-                        PartimInformationId = partiminformation.Id
+                        Status = (Models.Status)requestPartimInformation.Status,
+                        PartimInformationId = requestPartimInformation.PartimInformationId
                     };
                     serviceFile.InsertModule(serviceModule);
                     serviceFile.InsertPartim(servicePartim, serviceModule.Name);

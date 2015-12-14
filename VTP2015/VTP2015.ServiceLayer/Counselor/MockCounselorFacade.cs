@@ -285,5 +285,10 @@ namespace VTP2015.ServiceLayer.Counselor
         public void RemovePartimFromFile(int partimInformationId)
         {
         }
+
+        public void RemovePartimFromFile(int partimInformationId, int fileId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

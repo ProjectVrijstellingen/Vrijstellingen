@@ -42,19 +42,30 @@
         showPartimDetail(fileId, index);
     });
 
-    $("#files").on("click", ".btnRemoveFile", function (e) {
+    $("#files").on("click", ".btnRemovePartim", function (e) {
         var partimInformationId = $(e.currentTarget).data("partiminformationid");
+        var fileId = $(e.currentTarget).data("fileid");
 
-        removeFile(partimInformationId);
+        removePartim(partimInformationId, fileId);
     });
 
 });
 
-function removeFile(partimInformationId) {
+function removePartim(partimInformationId, fileId) {
     $.ajax({
         url: "/Counselor/RemovePartimFromFile",
-        data: { partimInformationId: partimInformationId },
-        method: 'post'
+        data: {
+            partimInformationId: partimInformationId,
+            fileId: fileId
+        },
+        method: "post"
+    }).done(function () {
+        var partimsToBeDeleted = $("[data-partiminformationid='" + partimInformationId + "']");
+        var moduleGroup = partimsToBeDeleted.closest(".moduleGroup");
+        partimsToBeDeleted.remove();
+
+        if (moduleGroup.find("li").length < 2) 
+            moduleGroup.parent().remove();
     });
 }
 
@@ -163,14 +174,17 @@ function loadFileById(fileId) {
                 newPartim.attr("data-requestId", partim.RequestId);
                 newPartim.attr("data-status", partim.Status);
                 newPartim.attr("data-index", index);
+                newPartim.attr("data-partiminformationid", partim.PartimInformationId);
                 $(newModule).find("ul").append(newPartim);
 
                 var newPartimDetail = $("#dummyRequestDetail").clone();
                 newPartimDetail.removeAttr("id");
+                newPartimDetail.attr("data-partiminformationid", partim.PartimInformationId);
                 newPartimDetail.attr("data-index", index);
                 newPartimDetail.find(".argumentation").text(partim.Argumentation);
                 newPartimDetail.find(".amountOfEvidence").text(partim.Evidence.length);
-                newPartimDetail.find(".btnRemoveFile").attr("data-partiminformationid", partim.PartimInformationId);
+                newPartimDetail.find(".btnRemovePartim").attr("data-partiminformationid", partim.PartimInformationId);
+                newPartimDetail.find(".btnRemovePartim").attr("data-fileid", partim.FileId);
 
                 $(partim.Evidence).each(function (evidenceIndex, evidence) {
                     console.log("current evidence: " + evidenceIndex);
