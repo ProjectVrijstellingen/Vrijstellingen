@@ -32,6 +32,7 @@ namespace VTP2015.ServiceLayer.Counselor
             _counselorRepository = unitOfWork.Repository<Entities.Counselor>();
             _fileRepository = unitOfWork.Repository<File>();
             _motivationRepository = unitOfWork.Repository<Motivation>();
+            _requestPartimInformationRepository = unitOfWork.Repository<RequestPartimInformation>();
 
             var autoMapperConfig = new AutoMapperConfig();
             autoMapperConfig.Execute();
