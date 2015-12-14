@@ -4,6 +4,7 @@ using System.Linq;
 using VTP2015.DataAccess.ServiceRepositories;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
+using VTP2015.ServiceLayer.Synchronisation;
 
 namespace VTP2015.ServiceLayer.Authentication
 {
@@ -11,10 +12,14 @@ namespace VTP2015.ServiceLayer.Authentication
     {
         private readonly IIdentityRepository _identityRepository;
         private readonly IBamaflexRepository _bamaflexRepository;
-        private readonly Repository<Entities.Counselor> _counselorRepository;
-        private readonly Repository<Entities.Student> _studentRepository;
-        private readonly Repository<Education> _educationRepository;
-        private readonly Repository<Entities.Lecturer> _lecturerRepository;
+        private readonly IRepository<Entities.Counselor> _counselorRepository;
+        private readonly IRepository<Entities.Student> _studentRepository;
+        private readonly IRepository<PartimInformation> _partimInformationRepository;
+        private readonly IRepository<Entities.Lecturer> _lectureRepository;
+        private readonly IRepository<Partim> _partimRepository;
+        private readonly IRepository<Module> _moduleRepository;
+        private readonly IRepository<Education> _educationRepository;
+        private readonly IRepository<Route> _routeRepository;  
 
         public AuthenticationFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository,
             IIdentityRepository identityRepository)
@@ -24,7 +29,11 @@ namespace VTP2015.ServiceLayer.Authentication
             _educationRepository = unitOfWork.Repository<Education>();
             _bamaflexRepository = bamaflexRepository;
             _identityRepository = identityRepository;
-            _lecturerRepository = unitOfWork.Repository<Entities.Lecturer>();
+            _lectureRepository = unitOfWork.Repository<Entities.Lecturer>();
+            _partimInformationRepository = unitOfWork.Repository<PartimInformation>();
+            _routeRepository = unitOfWork.Repository<Route>();
+            _partimRepository = unitOfWork.Repository<Partim>();
+            _moduleRepository = unitOfWork.Repository<Module>();
         }
 
         public bool IsCounselor(string email)
@@ -39,57 +48,23 @@ namespace VTP2015.ServiceLayer.Authentication
 
         public void SyncStudentByUser(string email, string academicYear)
         {
-            var user = _identityRepository.GetUserByEmail(email);
-            var opleiding = _bamaflexRepository.GetEducationByStudentCode(user.Id);
-                
-            var student = _studentRepository.Table.FirstOrDefault(s => s.Email == email)
-                          ?? new Entities.Student {Code = user.Id};
+            IBamaflexSynchroniser synchroniser = new BamaflexSynchroniser(_studentRepository, _educationRepository,
+                _bamaflexRepository, _partimInformationRepository, _partimRepository, _moduleRepository,
+                _lectureRepository, _routeRepository, _identityRepository);
 
-            var education = _educationRepository.Table.FirstOrDefault(e => e.Code == opleiding.Code && e.AcademicYear == academicYear)
-                            ?? SyncEducations(opleiding.Code, academicYear);
-
-            student.Name = user.Lastname;
-            student.FirstName = user.Firstname;
-            student.Email = user.Email;
-            student.PhoneNumber = user.ExtraInfo1;
-            student.Education = education;
-
-            if (student.Id > 0)
-                _studentRepository.Update(student);
-            else
-                _studentRepository.Insert(student);
-        }
-
-        private Education SyncEducations(string educationCode, string academicYear)
-        {
-            var educations = _bamaflexRepository.GetEducations();
-
-            Education returnValue = null;
-
-            foreach (var model in educations)
-            {
-                var education = _educationRepository.Table.FirstOrDefault(x => x.Code == model.Code);
-                education.AcademicYear = academicYear;
-                education.Code = model.Code;
-                education.Name = model.Naam;
-                _educationRepository.Update(education);
-                if (education.Code == educationCode)
-                    returnValue = education;
-            }
-
-            return returnValue;
+            synchroniser.SyncStudentByUser(email, academicYear);
         }
 
         public void SyncLecturer(string email)
         {
-            if (_lecturerRepository.Table.Any(x => x.Email == email)) return;
+            if (_lectureRepository.Table.Any(x => x.Email == email)) return;
             var lecturer = new Entities.Lecturer
             {
                 Email = email,
                 InfoMail = DateTime.Now,
                 WarningMail = DateTime.Now
             };
-            _lecturerRepository.Insert(lecturer);
+            _lectureRepository.Insert(lecturer);
         }
     }
 }

@@ -118,16 +118,16 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RazorPDF">
       <HintPath>..\packages\RazorPDF.1.0.0\lib\net45\RazorPDF.dll</HintPath>
+    </Reference>
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.6.4\lib\net40\Rotativa.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>
@@ -196,6 +196,7 @@
     <Compile Include="Config\DefaultConfig.cs" />
     <Compile Include="Config\IDefaultConfig.cs" />
     <Compile Include="Infrastructure\ContainerFactory.cs" />
+    <Compile Include="Infrastructure\Registries\MockRepositoryRegistry.cs" />
     <Compile Include="Infrastructure\Registries\MockServiceLayerRegistry.cs" />
     <Compile Include="Infrastructure\Registries\ServiceLayerRegistry.cs" />
     <Compile Include="Infrastructure\ViewEngine\CustomViewEngine.cs" />
@@ -204,8 +205,14 @@
     <Compile Include="Modules\Admin\AdminController.cs" />
     <Compile Include="Modules\Authentication\AuthenticationController.cs" />
     <Compile Include="Modules\Counselor\CounselorController.cs" />
+    <Compile Include="Modules\Counselor\DTOs\Evidence.cs" />
+    <Compile Include="Modules\Counselor\DTOs\File.cs" />
+    <Compile Include="Modules\Counselor\DTOs\Module.cs" />
+    <Compile Include="Modules\Counselor\DTOs\Partim.cs" />
     <Compile Include="Modules\Counselor\Mappings\AutoMapperConfig.cs" />
-    <Compile Include="Modules\Counselor\ViewModels\EvidenceViewModel.cs" />
+    <Compile Include="Modules\Counselor\ViewModels\Models\Evidence.cs" />
+    <Compile Include="Modules\Counselor\ViewModels\Models\Module.cs" />
+    <Compile Include="Modules\Counselor\ViewModels\Models\Partim.cs" />
     <Compile Include="Modules\Counselor\ViewModels\PartimInformationViewModel.cs" />
     <Compile Include="Modules\Counselor\ViewModels\StatusViewModel.cs" />
     <Compile Include="Modules\Feedback\FeedbackController.cs" />
@@ -217,8 +224,9 @@
     <Compile Include="Modules\Student\StudentController.cs" />
     <Compile Include="Modules\Student\ViewModels\RequestPartimInformationViewModel.cs" />
     <Compile Include="Modules\Student\ViewModels\AddRequestViewModel.cs" />
-    <Compile Include="Validation\DayMonthValidation.cs" />
-    <Compile Include="Validation\FileValidation.cs" />
+    <Compile Include="Modules\Student\ViewModels\StudentViewModel.cs" />
+    <Compile Include="Security\DayMonthValidation.cs" />
+    <Compile Include="Security\FileValidation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -249,6 +257,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Security\PreventSpamAttribute.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Modules\Admin\ViewModels\ConfigViewModel.cs" />
     <Compile Include="Modules\Admin\ViewModels\UserViewModel.cs" />
@@ -272,6 +281,7 @@
     <Compile Include="Modules\Counselor\ViewModels\PdfViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bewijzen\howest.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -338,12 +348,16 @@
     <Content Include="Modules\Lecturer\Views\RejectedRequestListWidget.cshtml" />
     <Content Include="Modules\Counselor\Views\FileOverviewWidget.cshtml" />
     <Content Include="Modules\Lecturer\Views\ModuleListWidget.cshtml" />
+    <Content Include="Modules\Student\Views\InfoWidget.cshtml" />
+    <Content Include="App_Browsers\qt.browser" />
+    <Content Include="Modules\Counselor\Views\File.cshtml" />
     <None Include="Properties\PublishProfiles\Foundation.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Content Include="Icon.png" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\App\Admin\adminPanel.js" />
     <Content Include="Scripts\App\Counselor\fileDetail.js" />
     <Content Include="Scripts\App\Counselor\fileOverview.js" />
@@ -409,8 +423,7 @@
     <Content Include="Modules\Student\Views\RequestDetailWidget.cshtml" />
     <Content Include="Modules\Lecturer\Views\StudentListWidget.cshtml" />
     <Content Include="Modules\Lecturer\Views\RequestListWidget.cshtml" />
-    <Content Include="Modules\Counselor\Views\RequestDetailWidget.cshtml" />
-    <Content Include="Modules\Counselor\Views\FileDetailsPartial.cshtml" />
+    <Content Include="Modules\Counselor\Views\RequestDetailPartial.cshtml" />
     <Content Include="Modules\Admin\Views\index.cshtml" />
     <Content Include="Modules\Admin\Views\SettingsWidget.cshtml" />
     <Content Include="Modules\Admin\Views\UserTableWidget.cshtml" />
@@ -420,7 +433,6 @@
     <Content Include="Modules\Student\Views\EvidenceListWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bewijzen\" />
     <Folder Include="Modules\Feedback\Scripts\" />
   </ItemGroup>
   <ItemGroup>

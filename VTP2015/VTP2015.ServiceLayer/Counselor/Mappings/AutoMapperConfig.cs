@@ -17,12 +17,11 @@ namespace VTP2015.ServiceLayer.Counselor.Mappings
                             i =>
                                 i.Requests.Count != 0
                                     ? (int)
-                                        ((i.Requests.Count(request => request.RequestPartimInformations.Count != 0)/
-                                          (i.Requests.Count*1.0))*100)
+                                        ((i.Requests.Count(request => request.RequestPartimInformations.Count != 0) /
+                                          (i.Requests.Count * 1.0)) * 100)
                                     : 0))
-                .ForMember(r => r.Route, 
+                .ForMember(r => r.Route,
                     opt => opt.MapFrom(r => r.Requests.FirstOrDefault().Name));
-
             Mapper.CreateMap<Education, Models.Education>();
 
             Mapper.CreateMap<Evidence, Models.Evidence>()

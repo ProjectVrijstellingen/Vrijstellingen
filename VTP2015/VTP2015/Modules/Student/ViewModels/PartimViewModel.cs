@@ -9,5 +9,6 @@
         public string ModuleName { get; set; }
         public int TotalCount { get; set; }
         public int Status { get; set; }
+        public int RequestCount { get; set; }
     }
 }

@@ -10,20 +10,21 @@ namespace VTP2015.ServiceLayer.Synchronisation
 {
     class BamaflexSynchroniser : IBamaflexSynchroniser
     {
-        private readonly Repository<Entities.Student> _studentRepository;
-        private readonly Repository<Education> _educationRepository;
+        private readonly IRepository<Entities.Student> _studentRepository;
+        private readonly IRepository<Education> _educationRepository;
         private readonly IBamaflexRepository _bamaflexRepository;
-        private readonly Repository<PartimInformation> _partimInformationRepository;
-        private readonly Repository<Partim> _partimRepository;
-        private readonly Repository<Module> _moduleRepository;
-        private readonly Repository<Entities.Lecturer> _lectureRepository;
-        private readonly Repository<Route> _routeRepository;
+        private readonly IRepository<PartimInformation> _partimInformationRepository;
+        private readonly IRepository<Partim> _partimRepository;
+        private readonly IRepository<Module> _moduleRepository;
+        private readonly IRepository<Entities.Lecturer> _lectureRepository;
+        private readonly IRepository<Route> _routeRepository;
+        private readonly IIdentityRepository _identityRepository;
 
-        public BamaflexSynchroniser(Repository<Entities.Student> studentRepository,
-            Repository<Education> educationRepository, IBamaflexRepository bamaflexRepository,
-            Repository<PartimInformation> partimInformationRepository, Repository<Partim> partimRepository,
-            Repository<Module> moduleRepository, Repository<Entities.Lecturer> lectureRepository,
-            Repository<Route> routeRepository)
+        public BamaflexSynchroniser(IRepository<Entities.Student> studentRepository,
+            IRepository<Education> educationRepository, IBamaflexRepository bamaflexRepository,
+            IRepository<PartimInformation> partimInformationRepository, IRepository<Partim> partimRepository,
+            IRepository<Module> moduleRepository, IRepository<Entities.Lecturer> lectureRepository,
+            IRepository<Route> routeRepository, IIdentityRepository identityRepository)
         {
             _studentRepository = studentRepository;
             _educationRepository = educationRepository;
@@ -33,6 +34,7 @@ namespace VTP2015.ServiceLayer.Synchronisation
             _moduleRepository = moduleRepository;
             _lectureRepository = lectureRepository;
             _routeRepository = routeRepository;
+            _identityRepository = identityRepository;
         }
 
         public bool SyncStudentPartims(string email, string academicYear)
@@ -48,6 +50,8 @@ namespace VTP2015.ServiceLayer.Synchronisation
 
             var education = _bamaflexRepository
                 .GetEducation(student.Education);
+
+            SyncEducations(education.Code, academicYear);
 
             foreach (var route in education.KeuzeTrajecten.Where(route => !_routeRepository.Table.Any(x => x.Name == route.Naam)))
             {
@@ -70,7 +74,47 @@ namespace VTP2015.ServiceLayer.Synchronisation
 
         }
 
-        private void StorePartimInfo(List<OpleidingsProgrammaOnderdeel> modules, int eductationId, string RouteName)
+        public Education SyncEducations(string educationCode, string academicYear)
+        {
+            var educations = _bamaflexRepository.GetEducations();
+
+            Education returnValue = null;
+
+            foreach (var model in educations)
+            {
+                var education = _educationRepository.Table.FirstOrDefault(x => x.Code == model.Code);
+                education.AcademicYear = academicYear;
+                education.Code = model.Code;
+                education.Name = model.Naam;
+                _educationRepository.Update(education);
+                if (education.Code == educationCode)
+                    returnValue = education;
+            }
+
+            return returnValue;
+        }
+
+        public void SyncStudentByUser(string email, string academicYear)
+        {
+            var user = _identityRepository.GetUserByEmail(email);
+            var opleiding = _bamaflexRepository.GetEducationByStudentCode(user.Id);
+
+            var student = _studentRepository.Table.FirstOrDefault(s => s.Email == email)
+                          ?? new Entities.Student { Code = user.Id };
+
+            var education = _educationRepository.Table.FirstOrDefault(e => e.Code == opleiding.Code && e.AcademicYear == academicYear)
+                            ?? SyncEducations(opleiding.Code, academicYear);
+
+            student.Name = user.Lastname;
+            student.FirstName = user.Firstname;
+            student.Email = user.Email;
+            student.PhoneNumber = "";
+            student.Education = education;
+            
+            _studentRepository.Update(student);
+        }
+
+        private void StorePartimInfo(List<OpleidingsProgrammaOnderdeel> modules, int eductationId, string routeName)
         {
             foreach (var module in modules)
             {
@@ -100,7 +144,7 @@ namespace VTP2015.ServiceLayer.Synchronisation
                     partimInfo.Partim = partimClass;
                     partimInfo.Module = moduleClass;
                     partimInfo.Route =
-                        _routeRepository.Table.Where(x => x.EducationId == eductationId).First(x => x.Name == RouteName);
+                        _routeRepository.Table.Where(x => x.EducationId == eductationId).First(x => x.Name == routeName);
                     _partimInformationRepository.Update(partimInfo);
                 }
             }

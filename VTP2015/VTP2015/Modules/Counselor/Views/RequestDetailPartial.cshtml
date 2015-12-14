@@ -1,0 +1,77 @@
+﻿
+
+<div id="files">
+
+    <div id="dummyFile" class="row hide fileDetail" data-fileid="">
+        <div class="col-md-2">
+            <table class="table partimList">
+                <tr class="" id="dummyModule"><td><span class="moduleName"></span></td></tr>
+                <tr class="request btnSelectPartim" id="dummyPartim" data-fileid="" data-RequestId="" data-status="" data-index=""><td><span class="partimName"></span></td></tr>
+            </table>
+        </div>
+
+
+        <div class="col-md-10">
+            <div class="row">
+                <p>Student name: <span class="studentName"></span></p>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-7">
+                    <div class="btn-group" data-toggle="buttons">
+                        <span class="button-checkbox">
+                            <button id="btnApprovedRequests" type="button" class="btn" data-color="success">Goedgekeurd<span id="spnAmountOfApprovedRequests" class="badge badge-success" style="margin-left: 1em">0</span></button>
+                            <input id="chApprovedRequests" type="checkbox" class="hidden" checked />
+                        </span>
+                        <span class="button-checkbox">
+                            <button id="btnDeniedRequests" type="button" class="btn" data-color="danger">Afgekeurd<span id="spnAmountOfDeniedRequests" class="badge badge-danger" style="margin-left: 1em">0</span></button>
+                            <input id="chDeniedRequests" type="checkbox" class="hidden" checked />
+                        </span>
+                        <span class="button-checkbox">
+                            <button id="btnUntreatedRequests" type="button" class="btn" data-color="warning">Onbeslist<span id="spnAmountOfUntreatedRequests" class="badge badge-warning" style="margin-left: 1em">0</span></button>
+                            <input id="chUntreatedRequests" type="checkbox" class="hidden" checked />
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="partimDetails">
+                <div class="row partimDetail hide" Id="dummyRequestDetail" data-index="">
+                    <h3>argumentatie:</h3>
+                    <p class="argumentation"></p>
+                    <label class="control-label" data-requestid="">
+                        Evidence:
+                        <a href="#" class="previousEvidence"><<</a>
+                        <span class="currentEvidence">1</span>/
+                        <span class="amountOfEvidence"></span>
+                        <a href="#" class="nextEvidence">>></a>
+                    </label>
+
+                    <div class="evidenceContainer">
+                        <div id="dummyEvidence" data-index="" class="inheritWidth evidence hide">
+
+                            <div class="inheritWidth bewijspointer" data-RequestPartimInformationPartimInformationid="RequestPartimInformationPartimInformation_ //TODO: right value">
+                                <h3>omschrijving:</h3>
+                                <p class="argumentation" readonly=""></p>
+
+                                <a class="downloadLink" href="" download>
+                                    Als onderstaande voorstelling niet werkt kunt u op deze link klikken om het bewijs te downloaden
+                                </a>
+
+                                <div class="evidence">
+                                    <embed src="" class="inheritWidth pdf" />
+                                    <img src="" class="inheritWidth image" alt="evidence" />
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+
+        </div>
+
+
+    </div>
+</div>

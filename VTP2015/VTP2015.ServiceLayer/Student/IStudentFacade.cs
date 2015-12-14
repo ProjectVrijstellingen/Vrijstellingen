@@ -30,5 +30,7 @@ namespace VTP2015.ServiceLayer.Student
         string AddRequestInFile(int fileId, string code);
         void SumbitFile(int fileId);
         FileStatus GetFileStatus(int fileId);
+        IQueryable<Models.Student> GetStudent(string email);
+        void SyncStudent(string email, string academicYear);
     }
 }

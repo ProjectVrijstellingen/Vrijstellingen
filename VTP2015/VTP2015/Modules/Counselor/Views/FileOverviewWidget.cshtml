@@ -62,7 +62,7 @@
                             </td>
                             <td>
                                 <a href="#" id="links-list">
-                                    <span class="glyphicon glyphicon-list-alt dossierpointer" data-dossierid="@dossier.Id" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-list-alt btnShowOverview" data-dossierid="@dossier.Id" aria-hidden="true" data-fileid="@dossier.Id" data-name="@dossier.StudentFirstName @dossier.StudentName"></span>
                                 </a>
                                 <a href="#" id="midden-list">
                                     <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
@@ -84,7 +84,7 @@
                             <p class="naam">@file.StudentFirstName @file.StudentName</p>
                             <div id="kader">
                                 <a href="#" id="links">
-                                    <span class="glyphicon glyphicon-list-alt white btnShowOverview" aria-hidden="true" data-fileid="@file.Id" data-name="@file.StudentFirstName @file.StudentName."></span>
+                                    <span class="glyphicon glyphicon-list-alt white btnShowOverview" aria-hidden="true" data-fileid="@file.Id" data-name="@file.StudentFirstName @file.StudentName"></span>
                                 </a>
                                 <span class="white percentage" id="middem">@file.AmountOfRequestsOpen</span>
                                 <span id="rechts" class="rechts chart" data-percent="@perc">

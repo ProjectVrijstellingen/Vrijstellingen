@@ -41,21 +41,21 @@ namespace VTP2015.Helpers
                     tag.Attributes.Add("data-moduleid", module.Code);
 
                     var moduleNameTag = new TagBuilder("span");
-                    moduleNameTag.AddCssClass("name h4" + (count == module.TotalCount && !submitted ? " module" : ""));
+                    moduleNameTag.AddCssClass("name h4" + (count == module.RequestCount && count == module.TotalCount && module.TotalCount != 1 && !submitted ? " module" : ""));
                     moduleNameTag.SetInnerText(module.Name);
                     tag.InnerHtml += moduleNameTag;
                     if (!submitted)
                         tag.InnerHtml += ShowGlyphicon(html, "remove",
-                            "btn badge" + (count == module.TotalCount && deletable ? "" : " hide"));
+                            "btn badge" + (count == module.RequestCount && count == module.TotalCount && module.TotalCount != 1 && deletable ? "" : " hide"));
 
                     var moduleTag = new TagBuilder("ul");
                     moduleTag.AddCssClass("list-group" +
-                                          (count == module.TotalCount && deletable && !submitted ? " hide" : ""));
+                                          (count == module.RequestCount && count == module.TotalCount && module.TotalCount != 1 && deletable && !submitted ? " hide" : ""));
                     foreach (var partim in module.Partims)
                     {
                         var partimTag = new TagBuilder("li");
                         partimTag.Attributes.Add("data-SuperCode", partim.SuperCode);
-                        partimTag.AddCssClass("list-group-item" + (partim.Status == 0 ? " partim" : ""));
+                        partimTag.AddCssClass("list-group-item" + (partim.Status == 0 ? " partim" : " status"));
                         var partimNameTag = new TagBuilder("span");
                         if (TextLimiter(partim.Name, 30).EndsWith("..."))
                         {
@@ -80,21 +80,21 @@ namespace VTP2015.Helpers
             return new MvcHtmlString(htmlString);
         }
 
-        public static MvcHtmlString ShowBewijzenList(this HtmlHelper html, EvidenceListViewModel[] bewijzen, bool moveable)
+        public static MvcHtmlString ShowBewijzenList(this HtmlHelper html, EvidenceListViewModel[] bewijzen, bool movable)
+        {
+            return ShowBewijzenList(html, bewijzen, movable, false);
+        }
+
+        public static MvcHtmlString ShowBewijzenList(this HtmlHelper html, EvidenceListViewModel[] bewijzen, bool movable, bool submitted)
         {
             var tag = new TagBuilder("ul");
             tag.AddCssClass("list-group");
-            tag.Attributes.Add("id", moveable ? "draggableList" : "bewijzenList");
+            tag.Attributes.Add("id", movable ? "draggableList" : "bewijzenList");
             foreach (var bewijs in bewijzen)
             {
-                tag.InnerHtml += ShowBewijsLi(html, bewijs,moveable);
+                tag.InnerHtml += ShowBewijsLi(html, bewijs, movable, submitted);
             }
             return new MvcHtmlString(tag.ToString());
-        }
-
-        public static MvcHtmlString ShowBewijsLi(this HtmlHelper html, EvidenceListViewModel evidence, bool movable)
-        {
-            return ShowBewijsLi(html,evidence,movable,false);
         }
 
         public static MvcHtmlString ShowBewijsLi(this HtmlHelper html, EvidenceListViewModel evidence, bool movable, bool submitted)
@@ -133,6 +133,14 @@ namespace VTP2015.Helpers
                 var partimTag = new TagBuilder("h4");
                 partimTag.SetInnerText(aanvraag.PartimName);
                 articleTag.InnerHtml += partimTag;
+                if (aanvraag.Submitted)
+                {
+                    var motivatieTag = new TagBuilder("p");
+                    var headTag = new TagBuilder("b");
+                    headTag.SetInnerText("Motivatie voor status: ");
+                    motivatieTag.InnerHtml += headTag + "<br/>" + aanvraag.Motivation;
+                    articleTag.InnerHtml += motivatieTag;
+                }
                 var argumentatieLabelTag = new TagBuilder("label");
                 argumentatieLabelTag.Attributes.Add("for","argumentatie");
                 argumentatieLabelTag.AddCssClass("control-label");

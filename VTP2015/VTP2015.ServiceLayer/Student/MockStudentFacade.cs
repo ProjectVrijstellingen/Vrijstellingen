@@ -171,5 +171,15 @@ namespace VTP2015.ServiceLayer.Student
         {
             throw new NotImplementedException();
         }
+
+        public IQueryable<Models.Student> GetStudent(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SyncStudent(string email, string academicYear)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

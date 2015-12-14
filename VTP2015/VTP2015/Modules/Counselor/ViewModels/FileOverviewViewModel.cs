@@ -9,8 +9,6 @@ namespace VTP2015.Modules.Counselor.ViewModels
         public string StudentName { get; set; }
         public int AmountOfRequestsOpen { get; set; }
         public int PercentageOfRequestsOpen { get; set; }
-        public string Route { get; set; }
-        public string AcademicYear { get; set; }
         public DateTime DateCreated { get; set; }
 
         public int DaysRemaining

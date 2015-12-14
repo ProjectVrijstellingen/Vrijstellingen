@@ -10,8 +10,8 @@ namespace VTP2015.ServiceLayer.Lecturer
 {
     public class LecturerFacade : ILecturerFacade
     {
-        private readonly Repository<Entities.Lecturer> _lecturerRepository;
-        private readonly Repository<Entities.RequestPartimInformation> _requestPartimInformationRepository; 
+        private readonly IRepository<Entities.Lecturer> _lecturerRepository;
+        private readonly IRepository<Entities.RequestPartimInformation> _requestPartimInformationRepository; 
 
         public LecturerFacade(IUnitOfWork unitOfWork)
         {

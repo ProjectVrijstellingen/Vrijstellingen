@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AutoMapper;
@@ -16,35 +17,34 @@ namespace VTP2015.ServiceLayer.Student
 {
     public class StudentFacade : IStudentFacade
     {
-        private readonly IBamaflexRepository _bamaflexRepository;
-        private readonly Repository<Entities.Student> _studentRepository;
-        private readonly Repository<Evidence> _evidenceRepository;
-        private readonly Repository<File> _fileRepository;
-        private readonly Repository<Request> _requestRepository; 
-        private readonly Repository<PartimInformation> _partimInformationRepository;
-        private readonly Repository<Education> _educationRepository;
-        private readonly Repository<Route> _routeRepository;
-        private readonly Repository<Entities.Lecturer> _lectureRepository;
-        private readonly Repository<Partim> _partimRepository;
-        private readonly Repository<Module> _moduleRepository;
-        private readonly Repository<RequestPartimInformation> _requestPartimInformationRepository; 
+        private readonly IRepository<Entities.Student> _studentRepository;
+        private readonly IRepository<Evidence> _evidenceRepository;
+        private readonly IRepository<File> _fileRepository;
+        private readonly IRepository<Request> _requestRepository; 
+        private readonly IRepository<PartimInformation> _partimInformationRepository;
+        private readonly IRepository<Education> _educationRepository;
+        private readonly IRepository<RequestPartimInformation> _requestPartimInformationRepository;
+        private readonly IBamaflexSynchroniser _synchroniser;
+        private readonly IRepository<Motivation> _motivationRepository; 
 
-        public StudentFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository)
+        public StudentFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository, IIdentityRepository identityRepository)
         {
-            _bamaflexRepository = bamaflexRepository;
-
             _studentRepository = unitOfWork.Repository<Entities.Student>();
             _evidenceRepository = unitOfWork.Repository<Evidence>();
             _fileRepository = unitOfWork.Repository<File>();
             _partimInformationRepository = unitOfWork.Repository<PartimInformation>();
             _requestRepository = unitOfWork.Repository<Request>();
             _educationRepository = unitOfWork.Repository<Education>();
-            _routeRepository = unitOfWork.Repository<Route>();
-            _lectureRepository = unitOfWork.Repository<Entities.Lecturer>();
-            _partimRepository = unitOfWork.Repository<Partim>();
-            _moduleRepository = unitOfWork.Repository<Module>();
+            var routeRepository = unitOfWork.Repository<Route>();
+            var lectureRepository = unitOfWork.Repository<Entities.Lecturer>();
+            var partimRepository = unitOfWork.Repository<Partim>();
+            var moduleRepository = unitOfWork.Repository<Module>();
             _requestPartimInformationRepository = unitOfWork.Repository<RequestPartimInformation>();
+            _motivationRepository = unitOfWork.Repository<Motivation>();
 
+            _synchroniser = new BamaflexSynchroniser(_studentRepository, _educationRepository,
+                bamaflexRepository, _partimInformationRepository, partimRepository, moduleRepository,
+                lectureRepository, routeRepository, identityRepository);
             var automapperConfig = new AutoMapperConfig();
             automapperConfig.Execute();
         }
@@ -139,36 +139,60 @@ namespace VTP2015.ServiceLayer.Student
 
         public IQueryable<Models.Request> GetRequestByFileId(int fileId)
         {
-            return _requestRepository.Table
-                .Where(request => request.FileId == fileId)
+            var requests = _requestRepository.Table.Where(request => request.FileId == fileId);
+            var requestList = requests.Where(request => request.RequestPartimInformations.All(x => x.Status == Status.Empty))
                 .Select(request => new Models.Request
                 {
                     FileId = request.FileId,
                     Id = request.Id,
                     ModuleName = request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Name,
                     PartimName =
-                        request.RequestPartimInformations.Count == request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.PartimInformation.Count
+                        request.RequestPartimInformations.Count ==
+                        request.RequestPartimInformations.FirstOrDefault()
+                            .PartimInformation.Module.PartimInformation.Count
                             ? ""
                             : request.RequestPartimInformations.FirstOrDefault().PartimInformation.Partim.Name,
                     Code =
-                        request.RequestPartimInformations.Count == request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.PartimInformation.Count
+                        request.RequestPartimInformations.Count ==
+                        request.RequestPartimInformations.FirstOrDefault()
+                            .PartimInformation.Module.PartimInformation.Count
                             ? request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Code
                             : request.RequestPartimInformations.FirstOrDefault().PartimInformation.SuperCode,
                     Argumentation = request.Argumentation,
                     Evidence =
                         request.Evidence.Select(
-                            x => new Models.Evidence {Id = x.Id, Description = x.Description, Path = x.Path}).AsQueryable(),
-                    Submitted = request.RequestPartimInformations.Any(r => r.Status != 0)
-                });
+                            x => new Models.Evidence {Id = x.Id, Description = x.Description, Path = x.Path})
+                            .AsQueryable(),
+                    Submitted = false,
+                    Motivation = request.RequestPartimInformations.FirstOrDefault().Motivation.Text
+                }).ToList();
+            requests.Where(request => request.RequestPartimInformations.All(x => x.Status != Status.Empty))
+                .Each(request => requestList.AddRange(request.RequestPartimInformations.Select(partiminfo => new Models.Request
+                {
+                    FileId = request.FileId,
+                    Id = request.Id,
+                    ModuleName = partiminfo.PartimInformation.Module.Name,
+                    PartimName = partiminfo.PartimInformation.Partim.Name,
+                    Code = partiminfo.PartimInformation.SuperCode,
+                    Argumentation = request.Argumentation,
+                    Evidence =
+                        request.Evidence.Select(
+                            x => new Models.Evidence { Id = x.Id, Description = x.Description, Path = x.Path })
+                            .AsQueryable(),
+                    Submitted = true,
+                    Motivation = partiminfo.Motivation.Text
+                })));
+            return requestList.AsQueryable();
         }
 
         public bool SyncStudentPartims(string email, string academicYear)
         {
-            IBamaflexSynchroniser synchroniser = new BamaflexSynchroniser(_studentRepository, _educationRepository,
-                _bamaflexRepository, _partimInformationRepository, _partimRepository, _moduleRepository,
-                _lectureRepository, _routeRepository);
+            return _synchroniser.SyncStudentPartims(email, academicYear);
+        }
 
-            return synchroniser.SyncStudentPartims(email, academicYear);
+        public void SyncStudent(string email, string academicYear)
+        {
+            _synchroniser.SyncStudentByUser(email, academicYear);
         }
 
         public Models.Evidence GetEvidenceById(int evidenceId)
@@ -218,6 +242,7 @@ namespace VTP2015.ServiceLayer.Student
                 _requestPartimInformationRepository.Insert(new RequestPartimInformation
                 {
                     Status = Status.Empty,
+                    Motivation = _motivationRepository.GetById(1),
                     PartimInformation = _partimInformationRepository.Table.First(x => x.SuperCode == code),
                     Request = newRequest
                 });
@@ -228,6 +253,7 @@ namespace VTP2015.ServiceLayer.Student
                     .ForEach(partimInfo => _requestPartimInformationRepository.Insert(new RequestPartimInformation
                     {
                         Status = Status.Empty,
+                        Motivation = _motivationRepository.GetById(1),
                         PartimInformation = partimInfo,
                         Request = newRequest
                     }));
@@ -240,9 +266,17 @@ namespace VTP2015.ServiceLayer.Student
             var file = _fileRepository.GetById(fileId);
             if(file.FileStatus == FileStatus.InProgress) file.DateCreated = DateTime.Now;
             file.FileStatus = FileStatus.Submitted;
-            foreach (var request in file.Requests)
+            foreach (var partiminfo in file.Requests.SelectMany(request => request.RequestPartimInformations.Where(x => x.Status == Status.Empty)))
             {
-                request.RequestPartimInformations.Where(x => x.Status == Status.Empty).Each(x => x.Status = (request.Evidence.Count > 0 ? Status.Untreated : Status.Rejected));
+                if (partiminfo.Request.Evidence.Count < 1)
+                {
+                    partiminfo.Status = Status.Rejected;
+                    partiminfo.Motivation = _motivationRepository.GetById(6);
+                }
+                else
+                {
+                    partiminfo.Status = Status.Untreated;
+                }
             }
             _fileRepository.Update(file);
         }
@@ -250,6 +284,11 @@ namespace VTP2015.ServiceLayer.Student
         public Models.FileStatus GetFileStatus(int fileId)
         {
             return (Models.FileStatus) (int) _fileRepository.GetById(fileId).FileStatus;
+        }
+
+        public IQueryable<Models.Student> GetStudent(string email)
+        {
+            return _studentRepository.Table.Where(x => x.Email == email).ProjectTo<Models.Student>();
         }
 
         public bool SyncRequestInFile(Models.Request requestModel)

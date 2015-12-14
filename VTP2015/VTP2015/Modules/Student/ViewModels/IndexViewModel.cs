@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web;
 using VTP2015.Modules.Shared;
-using VTP2015.Validation;
+using VTP2015.Security;
 
 namespace VTP2015.Modules.Student.ViewModels
 {

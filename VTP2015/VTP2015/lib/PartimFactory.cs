@@ -34,6 +34,7 @@ namespace VTP2015.lib
                 {
                     Code = viewModel.Code,
                     Name = viewModel.ModuleName,
+                    RequestCount = viewModel.RequestCount,
                     TotalCount = viewModel.TotalCount
                 });
             semester.Modules.First(m => m.Code == viewModel.Code).Partims.Add(partim);
