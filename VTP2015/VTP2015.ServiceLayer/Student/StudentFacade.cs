@@ -264,6 +264,7 @@ namespace VTP2015.ServiceLayer.Student
         public void SumbitFile(int fileId)
         {
             var file = _fileRepository.GetById(fileId);
+            if (file.Requests.Count < 1) return;
             if(file.FileStatus == FileStatus.InProgress) file.DateCreated = DateTime.Now;
             file.FileStatus = FileStatus.Submitted;
             foreach (var partiminfo in file.Requests.SelectMany(request => request.RequestPartimInformations.Where(x => x.Status == Status.Empty)))
