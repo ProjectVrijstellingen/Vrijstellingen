@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using VTP2015.Config;
 using VTP2015.Identity;
 using VTP2015.Modules.Authentication.ViewModels;
 using VTP2015.ServiceLayer.Authentication;
@@ -62,7 +63,7 @@ namespace VTP2015.Modules.Authentication
                 }
                 if (GetRole(model.Email) == "Student")
                 {
-                    _authenticationFacade.SyncStudentByUser(model.Email);
+                    _authenticationFacade.SyncStudentByUser(model.Email, new ConfigFile().AcademieJaar());
                     var name = model.Email.Split('@')[0];
                     var path = Server.MapPath("/bewijzen/" + name);
                     Directory.CreateDirectory(path);

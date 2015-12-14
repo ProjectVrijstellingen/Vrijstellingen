@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -24,6 +25,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
+    <TypeScriptToolsVersion>1.6</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,6 +52,14 @@
     </Reference>
     <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Elmah, Version=1.2.13605.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\elmah.corelibrary.1.2\lib\Elmah.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Elmah.Mvc, Version=2.1.2.1389, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Elmah.Mvc.2.1.2\lib\net40\Elmah.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -108,16 +118,16 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RazorPDF">
       <HintPath>..\packages\RazorPDF.1.0.0\lib\net45\RazorPDF.dll</HintPath>
+    </Reference>
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.6.4\lib\net40\Rotativa.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>
@@ -186,27 +196,37 @@
     <Compile Include="Config\DefaultConfig.cs" />
     <Compile Include="Config\IDefaultConfig.cs" />
     <Compile Include="Infrastructure\ContainerFactory.cs" />
+    <Compile Include="Infrastructure\Registries\MockRepositoryRegistry.cs" />
     <Compile Include="Infrastructure\Registries\MockServiceLayerRegistry.cs" />
     <Compile Include="Infrastructure\Registries\ServiceLayerRegistry.cs" />
     <Compile Include="Infrastructure\ViewEngine\CustomViewEngine.cs" />
-    <Compile Include="lib\Education.cs" />
+    <Compile Include="lib\Semester.cs" />
     <Compile Include="Modules\Admin\AdminController.cs" />
     <Compile Include="Modules\Authentication\AuthenticationController.cs" />
     <Compile Include="Modules\Counselor\CounselorController.cs" />
+    <Compile Include="Modules\Counselor\DTOs\Evidence.cs" />
+    <Compile Include="Modules\Counselor\DTOs\File.cs" />
+    <Compile Include="Modules\Counselor\DTOs\Module.cs" />
+    <Compile Include="Modules\Counselor\DTOs\Partim.cs" />
     <Compile Include="Modules\Counselor\Mappings\AutoMapperConfig.cs" />
-    <Compile Include="Modules\Counselor\ViewModels\EvidenceViewModel.cs" />
+    <Compile Include="Modules\Counselor\ViewModels\Models\Evidence.cs" />
+    <Compile Include="Modules\Counselor\ViewModels\Models\Module.cs" />
+    <Compile Include="Modules\Counselor\ViewModels\Models\Partim.cs" />
     <Compile Include="Modules\Counselor\ViewModels\PartimInformationViewModel.cs" />
     <Compile Include="Modules\Counselor\ViewModels\StatusViewModel.cs" />
     <Compile Include="Modules\Feedback\FeedbackController.cs" />
     <Compile Include="Modules\Feedback\ViewModels\IndexViewModel.cs" />
     <Compile Include="Modules\Lecturer\LecturerController.cs" />
     <Compile Include="Modules\Lecturer\Mappings\AutoMapperConfig.cs" />
+    <Compile Include="Modules\Lecturer\ViewModels\ModuleListViewModel.cs" />
+    <Compile Include="Modules\Lecturer\ViewModels\MotivationListViewModel.cs" />
     <Compile Include="Modules\Student\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Modules\Student\StudentController.cs" />
     <Compile Include="Modules\Student\ViewModels\RequestPartimInformationViewModel.cs" />
     <Compile Include="Modules\Student\ViewModels\AddRequestViewModel.cs" />
-    <Compile Include="Validation\DayMonthValidation.cs" />
-    <Compile Include="Validation\FileValidation.cs" />
+    <Compile Include="Modules\Student\ViewModels\StudentViewModel.cs" />
+    <Compile Include="Security\DayMonthValidation.cs" />
+    <Compile Include="Security\FileValidation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -228,7 +248,7 @@
     <Compile Include="Infrastructure\Tasks\IRunOnEachRequest.cs" />
     <Compile Include="Infrastructure\Tasks\IRunOnError.cs" />
     <Compile Include="lib\Module.cs" />
-    <Compile Include="lib\ModuleFactory.cs" />
+    <Compile Include="lib\PartimFactory.cs" />
     <Compile Include="lib\Partim.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -237,6 +257,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Security\PreventSpamAttribute.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Modules\Admin\ViewModels\ConfigViewModel.cs" />
     <Compile Include="Modules\Admin\ViewModels\UserViewModel.cs" />
@@ -260,6 +281,7 @@
     <Compile Include="Modules\Counselor\ViewModels\PdfViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bewijzen\howest.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -321,17 +343,30 @@
     </Content>
     <Content Include="packages.config" />
     <Content Include="Modules\Feedback\Views\Index.cshtml" />
+    <Content Include="Modules\Lecturer\Views\ApprovedRequestListWidget.cshtml" />
+    <Content Include="Modules\Lecturer\Views\Archive.cshtml" />
+    <Content Include="Modules\Lecturer\Views\RejectedRequestListWidget.cshtml" />
+    <Content Include="Modules\Counselor\Views\FileOverviewWidget.cshtml" />
+    <Content Include="Modules\Lecturer\Views\ModuleListWidget.cshtml" />
+    <Content Include="Modules\Student\Views\InfoWidget.cshtml" />
+    <Content Include="App_Browsers\qt.browser" />
+    <Content Include="Modules\Counselor\Views\File.cshtml" />
+    <Content Include="Modules\Lecturer\Views\MotivationListWidget.cshtml" />
     <None Include="Properties\PublishProfiles\Foundation.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Content Include="Icon.png" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\App\Admin\adminPanel.js" />
-    <Content Include="Scripts\App\Counselor\CounselorSelect.js" />
-    <Content Include="Scripts\App\Counselor\CounselorView.js" />
+    <Content Include="Scripts\App\Counselor\fileDetail.js" />
+    <Content Include="Scripts\App\Counselor\fileOverview.js" />
+    <Content Include="Scripts\App\Counselor\garbage\CounselorSelect.js" />
+    <Content Include="Scripts\App\Counselor\garbage\CounselorView.js" />
     <Content Include="Scripts\App\Counselor\Countdown.js" />
     <Content Include="Scripts\App\Counselor\CustomCheckBox.js" />
+    <Content Include="Scripts\App\Lecturer\ArchiveScripts.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\App\Lecturer\DocentBewijsViewScript.js" />
@@ -360,9 +395,9 @@
     <Content Include="Scripts\App\Student\Dossier.js" />
     <Content Include="Scripts\App\Student\StudentIndex.js" />
     <Content Include="Scripts\App\Student\toDictionary.js" />
-    <Content Include="Scripts\App\Counselor\DocentBewijsViewScript.js" />
-    <Content Include="Scripts\App\Counselor\Dossierscherm.js" />
-    <Content Include="Scripts\App\Counselor\script.js" />
+    <Content Include="Scripts\App\Counselor\garbage\DocentBewijsViewScript.js" />
+    <Content Include="Scripts\App\Counselor\garbage\Dossierscherm.js" />
+    <Content Include="Scripts\App\Counselor\garbage\script.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -390,9 +425,7 @@
     <Content Include="Modules\Student\Views\RequestDetailWidget.cshtml" />
     <Content Include="Modules\Lecturer\Views\StudentListWidget.cshtml" />
     <Content Include="Modules\Lecturer\Views\RequestListWidget.cshtml" />
-    <Content Include="Modules\Counselor\Views\RequestDetailWidget.cshtml" />
-    <Content Include="Modules\Counselor\Views\FileOverviewWidget.cshtml" />
-    <None Include="Modules\Counselor\Views\FileDetailsPartial.cshtml" />
+    <Content Include="Modules\Counselor\Views\RequestDetailPartial.cshtml" />
     <Content Include="Modules\Admin\Views\index.cshtml" />
     <Content Include="Modules\Admin\Views\SettingsWidget.cshtml" />
     <Content Include="Modules\Admin\Views\UserTableWidget.cshtml" />
@@ -402,7 +435,6 @@
     <Content Include="Modules\Student\Views\EvidenceListWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bewijzen\" />
     <Folder Include="Modules\Feedback\Scripts\" />
   </ItemGroup>
   <ItemGroup>
@@ -419,11 +451,15 @@
       <Name>VTP2015.ServiceLayer</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using VTP2015.Entities;
-using Evidence = System.Security.Policy.Evidence;
+using System.Linq;
 
 namespace VTP2015.ServiceLayer.Lecturer.Mappings
 {
@@ -8,21 +8,33 @@ namespace VTP2015.ServiceLayer.Lecturer.Mappings
     {
         public void Execute()
         {
-            Mapper.CreateMap<RequestPartimInformation, Models.RequestPartimInformation>()
-                .ForMember(x => x.Module,
-                opt => opt.MapFrom(x => x.PartimInformation.Module))
-                .ForMember(x => x.Partim,
-                opt => opt.MapFrom(x => x.PartimInformation.Partim))
-                .ForMember(x => x.Argumentation,
-                opt => opt.MapFrom(x => x.Request.Argumentation))
-                .ForMember(x => x.File,
-                opt => opt.MapFrom(x => x.Request.File));
+            //Mapper.CreateMap<RequestPartimInformation, Models.RequestPartimInformation>()
+            //    .ForMember(x => x.Module,
+            //    opt => opt.MapFrom(x => x.PartimInformation.Module))
+            //    .ForMember(x => x.Partim,
+            //    opt => opt.MapFrom(x => x.PartimInformation.Partim))
+            //    .ForMember(x => x.Argumentation,
+            //    opt => opt.MapFrom(x => x.Request.Argumentation))
+            //    .ForMember(x => x.Evidence,
+            //    opt => opt.MapFrom(x => x.Request.Evidence.AsQueryable()))
+            //    .ForMember(x => x.Student,
+            //    opt => opt.MapFrom(x => x.Request.File.Student))
+            //    .ForMember(x => x.Status,
+            //    opt => opt.MapFrom(x => (Models.Status)(int)x.Status));
 
-
-            Mapper.CreateMap<Evidence, Models.Evidence>();
+            Mapper.CreateMap<Entities.Evidence, Models.Evidence>();
             Mapper.CreateMap<File, Models.File>();
             Mapper.CreateMap<Partim, Models.Partim>();
             Mapper.CreateMap<Module, Models.Module>();
+            Mapper.CreateMap<Entities.Student, Models.Student>();
+            
+            Mapper.CreateMap<PartimInformation, Models.PartimInformation>()
+                .ForMember(x => x.ModuleName,
+                opt => opt.MapFrom(x => x.Module.Name))
+                .ForMember(x => x.PartimName,
+                opt => opt.MapFrom(x => x.Partim.Name));
+
+            Mapper.CreateMap<Entities.Motivation, Models.Motivation>();
         }
     }
 }

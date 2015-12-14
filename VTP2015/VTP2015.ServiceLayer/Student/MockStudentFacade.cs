@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using VTP2015.Entities;
+using PartimMode = VTP2015.ServiceLayer.Student.Models.PartimMode;
 using Evidence = VTP2015.ServiceLayer.Student.Models.Evidence;
 using File = VTP2015.ServiceLayer.Student.Models.File;
+using FileStatus = VTP2015.ServiceLayer.Student.Models.FileStatus;
 using PartimInformation = VTP2015.ServiceLayer.Student.Models.PartimInformation;
 using Request = VTP2015.ServiceLayer.Student.Models.Request;
 using Status = VTP2015.ServiceLayer.Student.Models.Status;
@@ -45,7 +47,7 @@ namespace VTP2015.ServiceLayer.Student
                 {
                     AcademicYear = "2015-16",
                     DateCreated = DateTime.Now,
-                    Editable = true,
+                    FileStatus = FileStatus.InProgress,
                     Id = 1,
                     Education = "Toegepaste Informatica",
                     StudentMail = "sam.de.creus@student.howest.be"
@@ -54,7 +56,7 @@ namespace VTP2015.ServiceLayer.Student
                 {
                     AcademicYear = "2015-16",
                     DateCreated = DateTime.Now,
-                    Editable = true,
+                    FileStatus = FileStatus.InProgress,
                     Id = 1,
                     Education = "Toegepaste Informatica",
                     StudentMail = "sam.de.creus@student.howest.be"
@@ -79,7 +81,7 @@ namespace VTP2015.ServiceLayer.Student
             return true;
         }
 
-        public IQueryable<PartimInformation> GetPartims(string email, int fileId, PartimMode partimMode)
+        public IQueryable<PartimInformation> GetPartims(int fileId, PartimMode partimMode)
         {
             var partimInformation = new List<PartimInformation>
             {
@@ -156,6 +158,26 @@ namespace VTP2015.ServiceLayer.Student
         }
 
         public string AddRequestInFile(int fileId, string code)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SumbitFile(int fileId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public FileStatus GetFileStatus(int fileId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Models.Student> GetStudent(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SyncStudent(string email, string academicYear)
         {
             throw new NotImplementedException();
         }

@@ -1,22 +1,22 @@
-﻿@using VTP2015.Helpers
+﻿@using VTP2015.Config
+@using VTP2015.Helpers
+@using VTP2015.ServiceLayer.Student.Models
 @model VTP2015.Modules.Student.ViewModels.FileListViewModel[]
-
+@{
+    var configFile = new ConfigFile();
+}
     @using (Html.BeginPanel("Mijn dossiers"))
     {
         <ul class="list-group">
             @foreach (var file in Model)
             {
                 <li class="list-group-item">
-                    @if (file.Editable)
-                    {
-                        @Html.RouteLink(file.Description, new { controller = "Student", action = "File", fileId = file.Id })
-                    }
-                    else
-                    {
-                        @file.Description
-                    }
+                    @Html.RouteLink(file.Description, new {controller = "Student", action = "File", fileId = file.Id})
                 </li>
             }
         </ul>
-        @Html.ActionLink("Nieuw dossier aanmaken", "NewFile", "Student", new { @class = "btn btn-success" })
+        if (Model.All(x => configFile.CalcAcademieJaar(x.DateCreated.Year) != configFile.AcademieJaar()))
+         {
+             @Html.ActionLink("Nieuw dossier aanmaken", "NewFile", "Student", new {@class = "btn btn-info" })
+         }
     }

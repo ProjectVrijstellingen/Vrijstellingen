@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using VTP2015.Config;
-using VTP2015.Validation;
+using VTP2015.Security;
 
 namespace VTP2015.Modules.Admin.ViewModels
 {

@@ -2,8 +2,8 @@
 
 <div>
     <div class="row">
-        <div class="form-group col-md-3">
-            <input type="text" class="form-control" id="searchQuery" placeholder="Zoek op naam">
+        <div class="form-group col-md-2">
+            <input type="text" class="form-control" id="nameSearchQuery" placeholder="Zoek op naam">
         </div>
         <div class="form-group col-md-2">
             <div class="btn-group" data-toggle="buttons">
@@ -15,18 +15,18 @@
                 </label>
             </div>
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-5">
             <div class="btn-group" data-toggle="buttons">
                 <span class="button-checkbox">
-                    <button id="btnGreen" type="button" class="btn" data-color="success" onclick="toggleGreen()">Afgewerkt</button>
+                    <button id="btnGreen" type="button" class="btn" data-color="success" onclick="toggleGreen()">Afgewerkt<span id="spnFinishedFiles" class="badge badge-success" style="margin-left:1em">0</span></button>
                     <input id="chGreen" type="checkbox" class="hidden"/>
                 </span>
                 <span class="button-checkbox">
-                    <button id="btnOrange" type="button" class="btn" data-color="warning" onclick="toggleOrange()">Bezig</button>
+                    <button id="btnOrange" type="button" class="btn" data-color="warning" onclick="toggleOrange()">Bezig<span id="spnBusyFiles" class="badge badge-warning" style="margin-left:1em">0</span></button>
                     <input id="chOrange" type="checkbox" class="hidden" checked/>
                 </span>
                 <span class="button-checkbox">
-                    <button id="btnRed" type="button" class="btn" data-color="danger" onclick="toggleRed()">Nieuw</button>
+                    <button id="btnRed" type="button" class="btn" data-color="danger" onclick="toggleRed()">Nieuw<span id="spnNewFiles" class="badge badge-danger" style="margin-left:1em">0</span></button>
                     <input id="chRed" type="checkbox" class="hidden" checked/>
                 </span>
             </div>
@@ -35,7 +35,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <div id="lijst" class="hidden">
+            <div id="overviewList" class="hidden">
                 <table class="table">
                     <thead>
                     <tr>
@@ -46,31 +46,24 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach (var dossier in Model.OrderBy(m => m.PercentageOfRequestsOpen))
+                    @foreach (var dossier in Model.OrderBy(m => m.DaysRemaining))
                     {
-                        var percentage = dossier.PercentageOfRequestsOpen;
 
-                        var kleur = "warning";
-                        if (percentage == 100) { kleur = "danger"; }
-                        else if (percentage == 0) { kleur = "success"; }
-
-                        percentage = 100 - percentage;
-
-                        <tr class="@kleur dossier" data-name="@dossier.StudentName" data-prename="@dossier.StudentFirstName">
+                        <tr class="@dossier.Color dossier" data-name="@dossier.StudentName" data-firstname="@dossier.StudentFirstName">
                             <td>@dossier.StudentFirstName</td>
                             <td>@dossier.StudentName</td>
                             <td>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-striped active" role="progressbar"
-                                         aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100" style="width:@percentage%">
+                                         aria-valuenow="@dossier.PercentageOfRequestsDone" aria-valuemin="0" aria-valuemax="100" style="width:@dossier.PercentageOfRequestsDone%">
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <a href="#" id="links-list">
-                                    <span class="glyphicon glyphicon-list-alt dossierpointer" data-dossierid="@dossier.Id" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-list-alt btnShowOverview" data-dossierid="@dossier.Id" aria-hidden="true" data-fileid="@dossier.Id" data-name="@dossier.StudentFirstName @dossier.StudentName"></span>
                                 </a>
-                                <a href="#" id="midden-list">
+                                <a href="@Url.Action("PrintFile",new {id = dossier.Id})" id="midden-list">
                                     <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
                                 </a>
                             </td>
@@ -79,30 +72,23 @@
                     </tbody>
                 </table>
             </div>
-            <div id="blok">
-                @foreach (var dossier in Model.OrderBy(m => m.PercentageOfRequestsOpen))
+            <div id="overviewBlok">
+                @foreach (var file in Model.OrderBy(d => d.DaysRemaining))
                 {
-                    <div class="col-md-2 dossier" data-name="@dossier.StudentName" data-prename="@dossier.StudentFirstName">
+                    <div class="col-md-2 file" data-name="@file.StudentName" data-firstname="@file.StudentFirstName" >
                         @{
-                            var percentage = dossier.PercentageOfRequestsOpen;
-
-                            var kleur = "oranje";
-                            if (percentage == 100 ) { kleur = "rood"; }
-                            else if (percentage == 0) { kleur = "groen"; }
+                            var perc = 100 - ((double)(file.DaysRemaining * 100) / 21.0);
                         }
-                        <div class="panel panel-text panel-@kleur panel-default clearfix panel-body">
-                            <p class="naam">@dossier.StudentFirstName @dossier.StudentName</p>
+                        <div class="panel panel-text panel-@file.Color-vtp panel-default clearfix panel-body">
+                            <p class="naam">@file.StudentFirstName @file.StudentName</p>
                             <div id="kader">
                                 <a href="#" id="links">
-                                    <span class="glyphicon glyphicon-list-alt white dossierpointer" data-dossierid="@dossier.Id" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-list-alt white btnShowOverview" aria-hidden="true" data-fileid="@file.Id" data-name="@file.StudentFirstName @file.StudentName"></span>
                                 </a>
-                                <span class="white percentage" id="middem">@dossier.AmountOfRequestsOpen</span>
-                                <a href="#" id="rechts">
-                                    @*<span class="glyphicon glyphicon-print white" aria-hidden="true"></span>*@
-                                    <div class="chart" data-percent="66"><span>14</span></div>
-                                </a>
-                                <span class="hide academiejaar">@dossier.AcademicYear</span>
-                                <span class="hide afstudeerrichting">@dossier.Route</span>
+                                <span class="white percentage" id="middem">@file.AmountOfRequestsOpen</span>
+                                <span id="rechts" class="rechts chart" data-percent="@perc">
+                                    <span id="cirlceNumber" class="cirlceNumber">@file.DaysRemaining</span>
+                                </span>
                             </div>
                         </div>
                     </div>

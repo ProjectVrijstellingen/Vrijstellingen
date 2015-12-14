@@ -7933,7 +7933,7 @@ jQuery.extend({
 			// Deferreds
 			deferred = jQuery.Deferred(),
 			completeDeferred = jQuery.Callbacks("once memory"),
-			// StatusViewModel-dependent callbacks
+			// Status-dependent callbacks
 			statusCode = s.statusCode || {},
 			// Headers (they are sent all at once)
 			requestHeaders = {},
@@ -7984,7 +7984,7 @@ jQuery.extend({
 					return this;
 				},
 
-				// StatusViewModel-dependent callbacks
+				// Status-dependent callbacks
 				statusCode: function( map ) {
 					var code;
 					if ( map ) {
@@ -8261,7 +8261,7 @@ jQuery.extend({
 				deferred.rejectWith( callbackContext, [ jqXHR, statusText, error ] );
 			}
 
-			// StatusViewModel-dependent callbacks
+			// Status-dependent callbacks
 			jqXHR.statusCode( statusCode );
 			statusCode = undefined;
 

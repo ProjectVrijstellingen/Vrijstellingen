@@ -8,7 +8,9 @@ namespace VTP2015
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery-{version}.js"));
+                "~/Scripts/jquery-{version}.js",
+                "~/Scripts/jquery.unobstrusive.js",
+                "~/Scripts/jquery.unobstrusive.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                 "~/Scripts/jquery.validate*"));
@@ -34,17 +36,15 @@ namespace VTP2015
 
             bundles.Add(new ScriptBundle("~/bundles/student").Include(
                 "~/Scripts/App/Student/Dossier.js",
+                "~/Scripts/App/Student/FileBrowser.js",
                 "~/Scripts/App/Student/StudentIndex.js",
                 "~/Scripts/App/Student/toDictionary.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/counselor").Include(
-                "~/Scripts/App/Counselor/DocentBewijsViewScript.js",
-                "~/Scripts/App/Counselor/DossierScherm.js",
-                "~/Scripts/App/Counselor/CounselorView.js",
+                "~/Scripts/App/Counselor/fileOverview.js",
+                "~/Scripts/App/Counselor/CountDown.js",
                 "~/Scripts/App/Counselor/CustomCheckBox.js",
-                "~/Scripts/App/Counselor/CounselorSelect.js",
-                "~/Scripts/App/Counselor/Countdown.js",
-                "~/Scripts/App/Counselor/script.js"));
+                "~/Scripts/App/Counselor/fileDetail.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/lecturer").Include(
                 "~/Scripts/App/Lecturer/DocentBewijsViewScript.js"));

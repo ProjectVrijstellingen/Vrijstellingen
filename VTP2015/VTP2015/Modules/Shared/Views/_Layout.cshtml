@@ -40,7 +40,13 @@
                     <li>
                         @if (im.HasRole(User.Identity.Name, "Lecturer"))
                         {
-                            @Html.RouteLink("Lecturer panel", new { controller = "Lecturer", action = "Index" })
+                            @Html.RouteLink("Openstaande aanvragen", new { controller = "Lecturer", action = "Index" })
+                        }
+                    </li>
+                    <li>
+                        @if (im.HasRole(User.Identity.Name, "Lecturer"))
+                        {
+                            @Html.RouteLink("Aanvraag archief", new { controller = "Lecturer", action = "Archive" })
                         }
                     </li>
                     <li>
@@ -60,18 +66,18 @@
             </div>
         </div>
     </div>
-}
+    }
     <div class="container body-content">
         @RenderBody()
-
-        @if (Request.IsAuthenticated) {
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - Vrijstellingen / Trajecten tool Howest</p>
-                <p>By Joachim, Sam, Tiem, Toon & Dries</p>
-            </footer>
-        }
     </div>
+    @if (Request.IsAuthenticated)
+    {
+        <hr/>
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Vrijstellingen / Trajecten tool Howest</p>
+            <p>By Joachim, Sam, Tiem, Toon & Dries</p>
+        </footer>
+    }
     @RenderSection("scripts", required: false)
     @RenderSection("css", required: false)
 </body>

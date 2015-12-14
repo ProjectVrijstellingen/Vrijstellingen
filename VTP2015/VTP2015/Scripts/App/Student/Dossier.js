@@ -35,10 +35,9 @@ function hideShown() {
 
 function changed(partimdetail) {
     clearTimeout(timer);
-    $(partimdetail).find("#status").text("wachten...");
     var cons = false;
     $.each(partimdetails, function() {
-        if ($(this).attr("id") === $(partimdetail).attr("id")) cons = true;
+        if ($(this).data("code") === $(partimdetail).data("code")) cons = true;
     });
     if (!cons) partimdetails.push($(partimdetail));
     timer = setTimeout(savePartimdetails, saveTime);
@@ -55,7 +54,9 @@ function addRequest(code) {
         data: $.toDictionary(viewModel),
         type: "POST",
         success: function (data) {
-            return data;
+            if (data === "Fake!") location.reload();
+            $("#aanvraagDetail").find("[data-code=\"" + code + "\"]").attr("data-requestid", data);
+            $("#aanvraagDetail").find("[data-code=\"" + code + "\"]").attr("id", data);
         }
     });
 }
@@ -67,6 +68,7 @@ function savePartimdetails() {
     $.each(partimdetails, function () {
         var that = this;
         var requestid = $(this).data("requestid");
+        console.log(requestid);
         var argumentatie = $(this).find("#argumentatie").val();
         $(this).find("li").each(function () {
             bewijzen.push($(this).data("bewijsid"));
@@ -83,7 +85,6 @@ function savePartimdetails() {
             data: $.toDictionary(viewModel),
             type: "POST",
             success: function (data) {
-                $(that).find("#status").text(data);
             }
         });
     });
@@ -91,7 +92,7 @@ function savePartimdetails() {
 }
 
 function addBewijs(that) {
-    var newParent = $("#aanvraagDetail").find(".nothidden").find("ul");
+    var newParent = $("#aanvraagDetail").find(".nothidden").find("#bewijzen");
 
     var clon = $(that).clone();
     clon.removeAttr("id");
@@ -107,24 +108,31 @@ $(document).on("click", ".glyphicon-minus", function () {
     changed($("#aanvraagDetail").find(".nothidden"));
 });
 
-$(document).on("keyup", ".form-control", function() {
+$(document).on("keyup", "#argumentatie", function() {
     changed($("#aanvraagDetail").find(".nothidden"));
 });
 
 $(document).on("click", ".partim", function () {
     console.log("partim clicked");
+    if (isIngediend()) return;
     var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
-    var aanvraagDetail = document.getElementById("aanvraagDetail");
     var parentDiv = $(this).parent().parent()[0];
     var moduleid = $(parentDiv).data("moduleid");
     var supercode = $(this).data("supercode");
     var moduleNaam = $(parentDiv).find(".h4").text();
+    var semesterDiv = $(this).closest(".semesterDiv");
     var newParent;
 
     if ($.contains(beschikbarePartims, this)) {
-        if ($("#aangevraagdePartimsColumn div[data-moduleid=" + moduleid + "]").length === 0) $("#aangevraagdePartimsColumn .panel-body").html($("#aangevraagdePartimsColumn .panel-body").html() + "<div data-moduleid=\"" + moduleid + "\"><h4>" + moduleNaam + "</h4><ul class=\"list-group\"></ul></div>");
+        var semester = $(semesterDiv).data("semester");
+        if($("#aangevraagdePartimsColumn div[data-semester=\"" + semester + "\"]").length === 0)
+            $("#aangevraagdePartimsColumn .panel-body").html($("#aangevraagdePartimsColumn .panel-body").html() + "<div class=\"semesterDiv\" data-semester=\"" + semester + "\"><div class=\"semester\">" + $(semesterDiv).find(".semester").html() + "</div><div class=\"nohide partimList\"></div></div>");
+        var newSemesterDiv = $("#aangevraagdePartimsColumn div[data-semester=\"" + semester + "\"]");
+        if ($(newSemesterDiv).find("div[data-moduleid=\"" + moduleid + "\"]").length === 0) {
+            $(newSemesterDiv).children("div:last").html($(newSemesterDiv).children("div:last").html() + "<div data-moduleid=\"" + moduleid + "\"><span class=\"h4 partimList\">" + moduleNaam + "</span><ul class=\"list-group\"></ul></div>");
+        }
 
-        newParent = $("#aangevraagdePartimsColumn div[data-moduleid=" + moduleid + "] ul");
+        newParent = $(newSemesterDiv).children("div:last").find("div[data-moduleid=\"" + moduleid + "\"] ul");
         $(this).detach();
         $(newParent).parent().removeClass("hide");
         $(this).appendTo($(newParent));
@@ -132,26 +140,17 @@ $(document).on("click", ".partim", function () {
 
         $(parentDiv).children("span:first").removeClass("module");
         if ($(parentDiv).find("ul").children().length === 0) $(parentDiv).remove();
+        if ($(semesterDiv).children("div:last").children().length === 0) $(semesterDiv).remove();
 
         var clon = $("#dummy").clone();
         clon.find("h3").text(moduleNaam);
         clon.find("h4").text("");
         clon.find("h4").append($(this).children("span:first").clone());
-        clon.attr("id", supercode);
-        clon.data("requestid", addRequest(supercode));
+        clon.attr("data-code", supercode);
+        addRequest(supercode);
         clon.appendTo("section");
-    }
-        if ($(this).hasClass("active")) {
-            Return();
-            return;
-        } else {
-            hideShown();
-            var show = $(aanvraagDetail).find("#" + $(this).data("supercode"));
-            $(this).addClass("active");
-            show.removeClass("hide");
-            show.addClass("nothidden");
-        }
-        if (!$(beschikbarePartims).hasClass("hide")) toSecondView();
+    } else {
+        selectDetail(supercode);
     }
     //($(".tooltip ").addClass("hide"));
     $(".tooltip ").remove();
@@ -160,37 +159,36 @@ $(document).on("click", ".partim", function () {
 
 $(document).on("click", ".module", function () {
     console.log("module clicked");
+    if (isIngediend()) return;
+    var semesterDiv = $(this).closest(".semesterDiv");
     var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
-    var aanvraagDetail = document.getElementById("aanvraagDetail");
     var parentDiv = $(this).parent()[0];
     var moduleid = $(parentDiv).data("moduleid");
+    console.log(moduleid);
     var moduleNaam = $(parentDiv).find(".h4").text();
 
     if ($.contains(beschikbarePartims, this)) {
+        var semester = $(semesterDiv).data("semester");
+        if ($("#aangevraagdePartimsColumn div[data-semester=\"" + semester + "\"]").length === 0)
+            $("#aangevraagdePartimsColumn .panel-body").html($("#aangevraagdePartimsColumn .panel-body").html() + "<div class=\"semesterDiv\" data-semester=\"" + semester + "\"><div class=\"semester\">" + $(semesterDiv).find(".semester").html() + "</div><div class=\"nohide\"></div></div>");
+        var newSemesterDiv = $("#aangevraagdePartimsColumn div[data-semester=\"" + semester + "\"]");
+
         $(parentDiv).find("ul").addClass("hide");
 
         $(parentDiv).detach();
-        $("#aangevraagdePartimsColumn").find(".panel-body").append($(parentDiv));
+        $(newSemesterDiv).children("div:last").append($(parentDiv));
         $(parentDiv).find(".btn").removeClass("hide");
+
+        if ($(semesterDiv).children("div:last").children().length === 0) $(semesterDiv).remove();
 
         var clon = $("#dummy").clone();
         clon.find("h3").text(moduleNaam);
         clon.find("h4").text("");
-        clon.attr("id", moduleid);
-        clon.data("requestid",addRequest(moduleid));
+        clon.attr("data-code", moduleid);
+        addRequest(moduleid);
         clon.appendTo("section");
     } else {
-        if ($(this).hasClass("active")) {
-            Return();
-            return;
-        } else {
-            hideShown();
-            var show = $(aanvraagDetail).find("#" + moduleid);
-            $(this).addClass("active");
-            show.removeClass("hide");
-            show.addClass("nothidden");
-        }
-        if (!$(beschikbarePartims).hasClass("hide")) toSecondView();
+        selectDetail(moduleid);
     }
 });
 
@@ -202,21 +200,27 @@ $(document).on("click", ".glyphicon-plus", function () {
 $(document).on("click", ".glyphicon-remove", function (e) {
     console.log("remove Request");
     e.stopPropagation();
+    savePartimdetails();
     var that = $(this).parent();
-    var aanvraagId;
-    var moduleid;
-    var moduleNaam;
-    var newParent;
-    var aanvraag;
-    var parentDiv;
+    var semesterDiv = $(that).closest(".semesterDiv");
+    var aanvraagId, moduleid, moduleNaam, aanvraag, parentDiv, semester, newSemesterDiv;
     if ($(that).is("li")) {
         console.log("partim...");
         parentDiv = $(that).parent().parent()[0];
         moduleid = $(parentDiv).data("moduleid");
         moduleNaam = $(parentDiv).find(".h4").text();
-        if ($("#beschikbarePartimsColumn div[data-moduleid=" + moduleid + "]").length === 0) $("#beschikbarePartimsColumn .panel-body").append("<div data-moduleid=\"" + moduleid + "\"><span class=\"name h4 module\">" + moduleNaam + "</span><span class=\"glyphicon glyphicon-remove btn badge hide\"> </span><ul class=\"list-group\"></ul></div>");
-        newParent = $("#beschikbarePartimsColumn").find("div[data-moduleid=" + moduleid + "] ul");
-        aanvraag = $("#aanvraagDetail").find("#" + $(that).data("supercode"));
+        var supercode = $(that).data("supercode");
+        console.log(moduleNaam);
+        semester = $(semesterDiv).data("semester");
+        if ($("#beschikbarePartimsColumn div[data-semester=\"" + semester + "\"]").length === 0)
+            $("#beschikbarePartimsColumn .panel-body").html($("#beschikbarePartimsColumn .panel-body").html() + "<div class=\"semesterDiv\" data-semester=\"" + semester + "\"><div class=\"semester\">" + $(semesterDiv).find(".semester").html() + "</div><div class=\"nohide\"></div></div>");
+        newSemesterDiv = $("#beschikbarePartimsColumn div[data-semester=\"" + semester + "\"]");
+        if ($(newSemesterDiv).find("div[data-moduleid=\"" + moduleid + "\"]").length === 0) {
+            $(newSemesterDiv).children("div:last").html($(newSemesterDiv).children("div:last").html() + "<div data-moduleid=\"" + moduleid + "\"><span class=\"h4\">" + moduleNaam + "</span><ul class=\"list-group\"></ul></div>");
+        }
+
+        var newParent = $(newSemesterDiv).children("div:last").find("div[data-moduleid=\"" + moduleid + "\"] ul");
+        aanvraag = $("#aanvraagDetail").find("[data-code=\"" + supercode + "\"]");
         aanvraagId = $(aanvraag).data("requestid");
 
         $(that).detach();
@@ -226,33 +230,37 @@ $(document).on("click", ".glyphicon-remove", function (e) {
 
         if ($(parentDiv).find("ul").children().length === 0) {
             parentDiv.remove();
-            $("#beschikbarePartimsColumn").find("div[data-moduleid=" + moduleid + "]").children("span:first").addClass("module");
+            $(newSemesterDiv).find("div[data-moduleid=\"" + moduleid + "\"]").children("span:first").addClass("module");
         }
+        if ($(semesterDiv).children("div:last").children().length === 0) $(semesterDiv).remove();
         if ($(aanvraag).hasClass("nothidden")) toFirstView();
 
         aanvraag.remove();
     } else {
         console.log("module...");
-        var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
-        newParent = $(beschikbarePartims).find(".panel-body");
+        semester = $(semesterDiv).data("semester");
+        if ($("#beschikbarePartimsColumn div[data-semester=\"" + semester + "\"]").length === 0)
+            $("#beschikbarePartimsColumn .panel-body").html($("#beschikbarePartimsColumn .panel-body").html() + "<div class=\"semesterDiv\" data-semester=\"" + semester + "\"><div class=\"semester\">" + $(semesterDiv).find(".semester").html() + "</div><div class=\"nohide\"></div></div>");
+        newSemesterDiv = $("#beschikbarePartimsColumn div[data-semester=\"" + semester + "\"]");
         parentDiv = $(that).parent()[0];
-        moduleid = $(parentDiv).data("moduleid");
+        moduleid = $(that).data("moduleid");
         moduleNaam = $(parentDiv).find(".h4").text();
-        aanvraag = $("#aanvraagDetail").find("#" + moduleid);
+        aanvraag = $("#aanvraagDetail").find("[data-code=\"" + moduleid + "\"]");
         aanvraagId = $(aanvraag).data("requestid");
-
         $(parentDiv).find("ul").removeClass("hide");
+
 
         $(that).detach();
         $(that).removeClass("active");
-        $(that).appendTo($(newParent));
+        $(that).appendTo($(newSemesterDiv).children("div:last"));
         $(that).find(".btn").addClass("hide");
+
+        if ($(semesterDiv).children("div:last").children().length === 0) $(semesterDiv).remove();
 
         if ($(aanvraag).hasClass("nothidden")) toFirstView();
         aanvraag.remove();
     }
     var fileId = document.URL.split("/")[document.URL.split("/").length - 1];
-    savePartimdetails();
     $.ajax({
         url: $("#aangevraagdePartimsColumn").data("url"),
         data: {
@@ -272,9 +280,61 @@ $(document).on("click", ".glyphicon-remove", function (e) {
 
 $(document).ready(function () {
     $("bewijzenColumn").addClass("hide");
-    $('[data-toggle="tooltip"]').tooltip();
+    $("[data-toggle=\"tooltip\"]").tooltip();
 });
 
-//$(document).on("hover", '[data-toggle="tooltip"]', function () {
-//    $(this).tooltip();
-//});
+$(document).on("click", "#btnIndienen", function () {
+    console.log("Dossier indienen");
+    savePartimdetails();
+    var fileId = document.URL.split("/")[document.URL.split("/").length - 1];
+    $.ajax({
+        url: $("#beschikbarePartimsColumn").data("url"),
+        data: {
+            fileId: fileId
+        },
+        type: "POST",
+        success: function (data) {
+            if(data === "Submitted!") location.reload();
+        }
+    });
+});
+
+$(document).on("click", ".semester", function() {
+    var list = $(this).parent().children()[1];
+    var glyph = $(this).children()[0];
+    if ($(list).hasClass("hide")) {
+        $(list).removeClass("hide");
+        $(list).addClass("nohide");
+        $(glyph).removeClass("glyphicon-triangle-right");
+        $(glyph).addClass("glyphicon-triangle-bottom");
+    } else {
+        $(list).removeClass("nohide");
+        $(list).addClass("hide");
+        $(glyph).removeClass("glyphicon-triangle-bottom");
+        $(glyph).addClass("glyphicon-triangle-right");
+    }
+});
+
+$(document).on("click", ".status", function() {
+    var supercode = $(this).data("supercode");
+    selectDetail(supercode);
+});
+
+function selectDetail(supercode) {
+    if ($(this).hasClass("active")) {
+        Return();
+        return;
+    } else {
+        hideShown();
+        var show = $("#aanvraagDetail").find("[data-code=\"" + supercode + "\"]");
+        $(this).addClass("active");
+        show.removeClass("hide");
+        show.addClass("nothidden");
+    }
+    if (!$(document.getElementById("beschikbarePartimsColumn")).hasClass("hide")) toSecondView();
+}
+
+function isIngediend() {
+    var string = $("#aangevraagdePartimsColumn .panel .panel-heading").find("span").text();
+    return string === "Ingediend";
+}

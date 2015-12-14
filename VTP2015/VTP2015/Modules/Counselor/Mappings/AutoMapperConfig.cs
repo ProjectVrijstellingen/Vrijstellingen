@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using VTP2015.Infrastructure.Tasks;
 using VTP2015.Modules.Counselor.ViewModels;
-using VTP2015.ServiceLayer.Counselor.Models;
-using Evidence = VTP2015.ServiceLayer.Counselor.Models.Evidence;
-using File = VTP2015.ServiceLayer.Counselor.Models.File;
+using BusinessModels = VTP2015.ServiceLayer.Counselor.Models;
 
 namespace VTP2015.Modules.Counselor.Mappings
 {
@@ -11,10 +9,15 @@ namespace VTP2015.Modules.Counselor.Mappings
     {
         public void Execute()
         {
-            Mapper.CreateMap<File, FileOverviewViewModel>();
-            Mapper.CreateMap<Request, RequestDetailViewModel>();
-            Mapper.CreateMap<Education, EducationViewModel>();
-            Mapper.CreateMap<Evidence, EvidenceViewModel>();
+            Mapper.CreateMap<BusinessModels.File, ViewModels.FileOverviewViewModel>();
+            Mapper.CreateMap<BusinessModels.Request, ViewModels.RequestDetailViewModel>();
+            Mapper.CreateMap<BusinessModels.Module, ViewModels.Models.Module>();
+            Mapper.CreateMap<BusinessModels.Partim, ViewModels.Models.Partim>()
+                .ForMember(opt => opt.Status,
+                    src => src.MapFrom(r => (StatusViewModel)r.Status));
+
+            Mapper.CreateMap<BusinessModels.Education, ViewModels.EducationViewModel>();
+            Mapper.CreateMap<BusinessModels.Evidence, ViewModels.Models.Evidence>();
         }
     }
 }

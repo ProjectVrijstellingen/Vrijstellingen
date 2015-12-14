@@ -6,9 +6,9 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.Web.Mvc;
 using VTP2015.Config;
 using VTP2015.Modules.Student.ViewModels;
+using VTP2015.Security;
 using VTP2015.ServiceLayer.Student;
 using VTP2015.ServiceLayer.Student.Models;
-using File = VTP2015.ServiceLayer.Student.Models.File;
 
 namespace VTP2015.Modules.Student
 {
@@ -78,6 +78,15 @@ namespace VTP2015.Modules.Student
                 : "Voltooid!");
         }
 
+        [Route("InfoWidget")]
+        [HttpGet]
+        public ActionResult InfoWidget()
+        {
+            var model = _studentFacade.GetStudent(User.Identity.Name).ProjectTo<StudentViewModel>().First();
+
+            return PartialView(model);
+        }
+
         [Route("FileWidget")]
         [HttpGet]
         public PartialViewResult FileWidget()
@@ -125,9 +134,9 @@ namespace VTP2015.Modules.Student
             if (!_studentFacade.IsFileFromStudent(User.Identity.Name, fileId))
                 return RedirectToAction("Index");
 
-            var models = _studentFacade.GetPartims(User.Identity.Name, fileId, PartimMode.Requested)
+            var models = _studentFacade.GetPartims(fileId, PartimMode.Requested)
                 .ProjectTo<PartimViewModel>();
-
+            
             return PartialView(models.ToArray());
         }
 
@@ -138,7 +147,7 @@ namespace VTP2015.Modules.Student
             if (!_studentFacade.IsFileFromStudent(User.Identity.Name, fileId))
                 return RedirectToAction("Index");
 
-            var models = _studentFacade.GetPartims(User.Identity.Name, fileId, PartimMode.Available)
+            var models = _studentFacade.GetPartims(fileId, PartimMode.Available)
                 .ProjectTo<PartimViewModel>();
 
             return PartialView(models.ToArray());
@@ -146,10 +155,12 @@ namespace VTP2015.Modules.Student
 
         [Route("SelectEvidenceWidget")]
         [HttpGet]
-        public PartialViewResult SelectEvidenceWidget()
+        public PartialViewResult SelectEvidenceWidget(int fileId)
         {
             var models = _studentFacade.GetEvidenceByStudentEmail(User.Identity.Name)
                 .ProjectTo<EvidenceListViewModel>();
+
+            ViewBag.FileStatus = _studentFacade.GetFileStatus(fileId);
 
             return PartialView(models.ToArray());
         }
@@ -175,12 +186,11 @@ namespace VTP2015.Modules.Student
                 return RedirectToAction("Index");
 
             var education = _studentFacade.GetEducation(User.Identity.Name);
-            var dossier = new File
+            var dossier = new ServiceLayer.Student.Models.File
             {
                 StudentMail = User.Identity.Name,
                 DateCreated = DateTime.Now,
                 Education = education.Name,
-                Editable = true,
                 AcademicYear = academieJaar
             };
 
@@ -190,6 +200,7 @@ namespace VTP2015.Modules.Student
         }
 
         [Route("AddAanvraag")]
+        [HttpPost]
         public ActionResult AddAanvraag(AddRequestViewModel viewModel)
         {
             if (_studentFacade.IsFileFromStudent(User.Identity.Name, viewModel.FileId)) Content("Don't cheat!");
@@ -197,6 +208,7 @@ namespace VTP2015.Modules.Student
         }
 
         [Route("SaveAanvraag")]
+        [HttpPost]
         public ActionResult SaveAanvraag(RequestViewModel viewModel)
         {
             var requestId = int.Parse(viewModel.RequestId);
@@ -233,6 +245,23 @@ namespace VTP2015.Modules.Student
                     : "Voltooid!");
         }
 
+        [Route("Submit")]
+        [HttpPost]
+        public ActionResult SubmitFile(int fileId)
+        {
+            _studentFacade.IsFileFromStudent(User.Identity.Name, fileId);
+            _studentFacade.SumbitFile(fileId);
+            return Content("Submitted!");
+        }
         #endregion
+
+        [PreventSpam(DelayRequest = 3600)]
+        [Route("StudentSync")]
+        public ActionResult StudentSync()
+        {
+            var configFile = new ConfigFile();
+            if (ViewData.ModelState.IsValid) _studentFacade.SyncStudent(User.Identity.Name, configFile.AcademieJaar());
+            return RedirectToAction("Index");
+        }
     }
 }

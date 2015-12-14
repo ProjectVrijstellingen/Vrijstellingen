@@ -2,6 +2,6 @@
 {
     public enum StatusViewModel
     {
-        Untreated, Rejected, Approved
+        Empty, Untreated, Rejected, Approved
     }
 }

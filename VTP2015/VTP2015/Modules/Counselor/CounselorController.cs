@@ -1,9 +1,16 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
-using RazorPDF;
+using Rotativa;
 using VTP2015.Config;
+using VTP2015.Modules.Counselor.DTOs;
 using VTP2015.Modules.Counselor.ViewModels;
 using VTP2015.ServiceLayer.Counselor;
+using VTP2015.ServiceLayer.Counselor.Models;
+using Evidence = VTP2015.Modules.Counselor.DTOs.Evidence;
+using File = VTP2015.Modules.Counselor.DTOs.File;
+using Module = VTP2015.Modules.Counselor.DTOs.Module;
+using Partim = VTP2015.Modules.Counselor.DTOs.Partim;
 
 namespace VTP2015.Modules.Counselor
 {
@@ -27,6 +34,64 @@ namespace VTP2015.Modules.Counselor
         public ViewResult Index()
         {
             return View();
+        }
+
+        [Route("GetFileDetailsById/{fileId}")]
+        [HttpGet]
+        public JsonResult GetFileDetailsById(int fileId)
+        {
+            if (!_counselorFacade.IsFileAvailable(fileId)) return Json(null);
+            var file = _counselorFacade.GetFileByFileId(fileId);
+
+            var dto = new File
+            {
+                StudentName = file.StudentFirstName + " " + file.StudentName,
+                AmountOfUntreatedRequests = file.Modules.SelectMany(x => x.Partims).Count(x => x.Status == Status.Untreated),
+                AmountOfApprovedRequests = file.Modules.SelectMany(x => x.Partims).Count(x => x.Status == Status.Approved),
+                AmountOfDeniedRequests = file.Modules.SelectMany(x => x.Partims).Count(x => x.Status == Status.Rejected),
+                Modules = file.Modules.Select(m => new Module
+                {
+                    Name = m.Name,
+                    Partims = m.Partims.Select(p => new Partim
+                    {
+                        FileId = p.FileId,
+                        Name = p.Name,
+                        RequestId = p.RequestId,
+                        Status = p.Status.ToString(),
+                        Evidence = p.Evidence.Select(e => new Evidence
+                        {
+                            Path = Server.MapPath("/bewijzen/" + file.StudentMail.Split('@')[0] + "/" + e.Path),
+                            Argumentation = e.Description,
+                            Type = e.Path.Split('.').Last()
+                        }),
+                        Argumentation = p.Argumentation,
+                        PartimInformationId = p.PartimInformationId
+                    })
+                })
+            };
+
+            return Json(dto, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("SetFileStatusOpen")]
+        [HttpPost]
+        public void SetFileStatusOpen(int fileId)
+        {
+            _counselorFacade.SetFileStatusOpen(fileId);
+        }
+
+        [Route("RemovePartimFromFile")]
+        [HttpPost]
+        public void RemovePartimFromFile(int partimInformationId, int fileId)
+        {
+            _counselorFacade.RemovePartimFromFile(partimInformationId, fileId);
+        }
+
+        [Route("DeleteFile")]
+        [HttpPost]
+        public void DeleteFile(int fileId)
+        {
+            _counselorFacade.DeleteFile(fileId);
         }
 
         [Route("EducationSelectWidget")]
@@ -55,21 +120,11 @@ namespace VTP2015.Modules.Counselor
         [HttpGet]
         public PartialViewResult FileOverviewWidget()
         {
-            var models = _counselorFacade.GetFileByCounselorEmail(User.Identity.Name, _configFile.AcademieJaar())
+            var models = _counselorFacade.GetFilesByCounselorEmail(User.Identity.Name, _configFile.AcademieJaar())
                 .ProjectTo<FileOverviewViewModel>();
 
             return PartialView(models);
 
-        }
-
-        [Route("RequestDetailWidget")]  
-        [HttpGet]
-        public PartialViewResult RequestDetailWidget()
-        {
-            var models = _counselorFacade.GetRequests()
-                .ProjectTo<RequestDetailViewModel>();
-
-            return PartialView(models);
         }
 
         [Route("SendReminder")]
@@ -83,9 +138,9 @@ namespace VTP2015.Modules.Counselor
             //if (_configFile.WarningMailTimeIsAllowed(passedTimeSinceLastEmail))
             //{
             //    string bodyText = "Geachte \r \r ";
-            //    string begeleider = User.Identity.Name;
+            //    string begeleider = User.Identity.StudentName;
             //    int aantalAanvragenWachtend = _aanvraagRepository.GetOnbehandeldeAanvragen(email).Count();
-            //    string dringendeAanvraagPartimNaam = _aanvraagRepository.GetAanvraagById(aanvraagId).PartimInformation.Partims.Name;
+            //    string dringendeAanvraagPartimNaam = _aanvraagRepository.GetAanvraagById(aanvraagId).PartimInformation.Partims.StudentName;
             //    string dringendeAanvraagAanvragerNaam = _aanvraagRepository.GetAanvraagById(aanvraagId).FileName.Student.Email;
 
             //    bodyText += begeleider + " Wenst u er van op de hoogte te brengen dat de aanvraag betreffende " +
@@ -102,18 +157,19 @@ namespace VTP2015.Modules.Counselor
             //    "De administrator van dit platform verhindert dat u momenteel een email kunt sturen om spam tegen te gaan");
         }
 
-        [Route("PrintDossier")]
+        [OverrideAuthorization]
+        [Route("File/{fileId}")]
         [HttpGet]
-        public ActionResult PrintDossier()
+        public ActionResult File(int fileId)
         {
-            var viewModel = new PdfViewModel
-            {
-                Naam = "Bockland",
-                Voornaam = "Joachim",
-                Email = User.Identity.Name,
-                Tel = "null"
-            };
-            return new PdfResult(viewModel,"PrintDossier");
+            var model = _counselorFacade.GetFile(fileId);
+            return View(model);
+        }
+
+        [Route("PrintFile/{id}")]
+        public ActionResult PrintFile(int id)
+        {
+            return new ActionAsPdf("File",new {fileId = id}){FileName = "Dossier" + id + ".pdf"};
         }
     }
 }

@@ -2,7 +2,7 @@
 
 @model IQueryable<VTP2015.Modules.Lecturer.ViewModels.StudentListViewModel>
 @{
-    ViewBag.Title = "Lecturer";
+    ViewBag.Title = "Docent - Openstaande aanvragen";
 }
 
 <br/>
@@ -13,22 +13,19 @@
             @if (ViewBag.DocentHeeftAanvragen)
             {
                 <div class="col-md-4">
+                    @Html.Action("ModuleListWidget")
                     @Html.Action("StudentListWidget")
                 </div>
                 
                 <div class="col-md-8">
                     @Html.Action("RequestListWidget")
                 </div>
-                
-                <div class="opinionButtons row">
-                    <input onclick="hideRequestList()" class="btn hideRequest" value="Hide requests" type="button">
-                    <input onclick="hideStudentList()" class="btn hideStudent" value="Hide students" type="button">
-                </div>
             }
             else
             {
                 <h2 class="page-header">Er zijn geen openstaande aanvragen</h2>
             }
+
         </div>
     </div>
 </div>

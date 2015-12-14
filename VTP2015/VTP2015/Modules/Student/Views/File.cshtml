@@ -1,8 +1,6 @@
 ﻿@using VTP2015.Helpers
-@model VTP2015.Modules.Student.ViewModels.FileViewModel
-
 @{
-    ViewBag.Title = "Student - FileName";
+    ViewBag.Title = "Student - FileStudentName";
 }
 
 
@@ -29,8 +27,11 @@
 @Scripts.Render("~/bundles/student")
 @section css{
     <style>
-        #draggablePanelList li {
-        cursor: move;
-    }
+        .list-group-item {
+            cursor: default;
+        }
+         .partim, .module, .semester, .status {
+             cursor: pointer;
+         }
     </style>
 }

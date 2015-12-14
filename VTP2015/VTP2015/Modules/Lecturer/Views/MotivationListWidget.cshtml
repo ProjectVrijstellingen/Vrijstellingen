@@ -1,0 +1,5 @@
+﻿@model IEnumerable<VTP2015.Modules.Lecturer.ViewModels.MotivationListViewModel>
+    @foreach (var motivation in Model)
+    {
+        <option value="@motivation.ID">@motivation.Text</option>
+    }

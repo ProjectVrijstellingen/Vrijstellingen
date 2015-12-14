@@ -4,6 +4,6 @@ namespace VTP2015.DataAccess.UnitOfWork
 {
     public interface IUnitOfWork
     {
-        Repository<T> Repository<T>() where T : BaseEntity;
+        IRepository<T> Repository<T>() where T : BaseEntity;
     }
 }

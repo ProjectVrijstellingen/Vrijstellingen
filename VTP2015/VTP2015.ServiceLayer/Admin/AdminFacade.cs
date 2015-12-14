@@ -1,12 +1,11 @@
 ﻿using System.Linq;
-using System.Linq.Dynamic;
 using VTP2015.DataAccess.UnitOfWork;
 
 namespace VTP2015.ServiceLayer.Admin
 {
     public class AdminFacade : IAdminFacade
     {
-        private readonly Repository<Entities.Counselor> _counselorRepository;
+        private readonly IRepository<Entities.Counselor> _counselorRepository;
 
         public AdminFacade(IUnitOfWork unitOfWork)
         {

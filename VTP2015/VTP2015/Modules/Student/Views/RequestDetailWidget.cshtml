@@ -1,18 +1,18 @@
 ﻿@using VTP2015.Helpers
+@using VTP2015.ServiceLayer.Student.Models
 @model VTP2015.Modules.Student.ViewModels.RequestDetailViewModel[]
 <div id="aanvraagDetail" data-url="@Url.Action("SaveAanvraag", "Student")" data-url2="@Url.Action("AddAanvraag","Student")" class="col-md-4 hide">
-    @using (Html.BeginPanel("RequestPartimInformation details"))
+    @using (Html.BeginPanel("Aanvraag details"))
     {
         <section>
             <article id="dummy" class="hide">
-                <h3>ModuleName</h3>
-                <h4>PartimName</h4>
-                <label class="control-label" for="argumentatie">Argumentation:</label>
+                <h3>ModuleStudentName</h3>
+                <h4>PartimStudentName</h4>
+                <label class="control-label" for="argumentatie">Argumentatie:</label>
                 <textarea class="form-control" id="argumentatie"></textarea>
-                <label class="control-label">bewijzen:</label>
-                <ul class="list-group"></ul>
-                <button type="button" onclick=" Return() " class="btn btn-success">Terug</button>
-                <label id="status">opgeslaan!</label>
+                <label class="control-label">Bewijzen:</label>
+                <ul id="bewijzen" class="list-group"></ul>
+                <button type="button" onclick=" Return() " class="btn btn-info">Terug</button>
             </article>
             @Html.ShowAanvraagDetails(Model)
         </section>

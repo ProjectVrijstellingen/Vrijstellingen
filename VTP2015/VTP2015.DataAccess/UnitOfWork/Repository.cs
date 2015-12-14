@@ -6,7 +6,7 @@ using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.UnitOfWork
 {
-    public class Repository<T> where T : BaseEntity
+    public class Repository<T> : IRepository<T> where T : BaseEntity 
     {
         private readonly Context _context;
         private IDbSet<T> _entities;
@@ -93,6 +93,12 @@ namespace VTP2015.DataAccess.UnitOfWork
                 }
                 throw new Exception(_errorMessage, dbEx);
             }
+        }
+
+        public void Delete(int id)
+        {
+            var model = GetById(id);
+            Delete(model);
         }
 
         public virtual IQueryable<T> Table => this.Entities;

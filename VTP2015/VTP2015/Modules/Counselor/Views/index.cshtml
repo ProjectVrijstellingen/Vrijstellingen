@@ -6,13 +6,17 @@
             @Html.Action("FileOverviewWidget")
         </div>
         <div class="row hide" id="details">
-            <div class="col-md-3">
-                @Html.Partial("FileDetailsPartial")
-            </div>
-            <div class="col-md-9">
-                @Html.Action("RequestDetailWidget")
+            <div>
+                @Html.Partial("RequestDetailPartial")
             </div>
         </div>
 </div>
 
 @Scripts.Render("~/bundles/counselor")
+@section css{
+    <style>
+        .previousEvidence, .nextEvidence {
+            cursor: pointer;
+        }
+    </style>
+}

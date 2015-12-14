@@ -1,0 +1,15 @@
+﻿@model IEnumerable<VTP2015.Modules.Lecturer.ViewModels.PartimListViewModel>
+
+<div class="panel panel-info clearfix partimcontainer">
+    <div class="panel-heading">
+        <h3 class="panel-title">Partims</h3>
+    </div>
+    <div class="panel-body" id="partimPointerDiv">
+        <ul class="list-group">
+            @foreach (var partim in Model)
+            {
+                <li class="list-group-item partimpointer" data-supercode="@partim.SuperCode"><span class="name">@partim.PartimName - @partim.ModuleName</span><span id="Aantal_@partim.SuperCode" class="aantal" style="float: right;">0</span></li>
+            }
+        </ul>
+    </div>
+</div>

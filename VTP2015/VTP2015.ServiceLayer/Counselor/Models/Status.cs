@@ -2,6 +2,6 @@
 {
     public enum Status
     {
-        Untreated, Rejected, Approved
+        Empty, Untreated, Rejected, Approved
     }
 }
