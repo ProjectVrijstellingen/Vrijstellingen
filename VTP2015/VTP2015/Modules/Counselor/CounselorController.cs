@@ -55,7 +55,8 @@ namespace VTP2015.Modules.Counselor
                             Argumentation = e.Description,
                             Type = e.Path.Split('.').Last()
                         }),
-                        Argumentation = p.Argumentation
+                        Argumentation = p.Argumentation,
+                        PartimInformationId = p.PartimInformationId
                     })
                 })
             };

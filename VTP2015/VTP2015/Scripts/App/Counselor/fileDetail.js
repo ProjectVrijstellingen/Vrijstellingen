@@ -42,7 +42,21 @@
         showPartimDetail(fileId, index);
     });
 
+    $("#files").on("click", ".btnRemoveFile", function (e) {
+        var partimInformationId = $(e.currentTarget).data("partiminformationid");
+
+        removeFile(partimInformationId);
+    });
+
 });
+
+function removeFile(partimInformationId) {
+    $.ajax({
+        url: "/Counselor/RemovePartimFromFile",
+        data: { partimInformationId: partimInformationId },
+        method: 'post'
+    });
+}
 
 function showFileOverview() {
 
@@ -154,6 +168,7 @@ function loadFileById(fileId) {
                 newPartimDetail.attr("data-index", index);
                 newPartimDetail.find(".argumentation").text(partim.Argumentation);
                 newPartimDetail.find(".amountOfEvidence").text(partim.Evidence.length);
+                newPartimDetail.find(".btnRemoveFile").attr("data-partiminformationid", partim.PartimInformationId);
 
                 $(partim.Evidence).each(function (evidenceIndex, evidence) {
                     console.log("current evidence: " + evidenceIndex);
