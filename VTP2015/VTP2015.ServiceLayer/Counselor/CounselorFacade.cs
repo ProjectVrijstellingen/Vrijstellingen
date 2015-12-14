@@ -49,6 +49,8 @@ namespace VTP2015.ServiceLayer.Counselor
 
             if (request.RequestPartimInformations.Count < 1)
                 _requestRepository.Delete(request);
+            if(_fileRepository.GetById(fileId).Requests.Count < 1)
+                _fileRepository.Delete(fileId);
         }
 
         public void SetFileStatusOpen(int fileId)
