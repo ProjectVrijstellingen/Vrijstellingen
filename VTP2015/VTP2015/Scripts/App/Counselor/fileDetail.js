@@ -169,29 +169,32 @@ function loadFileById(fileId) {
                 newPartimDetail.removeAttr("id");
                 newPartimDetail.attr("data-index", index);
                 newPartimDetail.find(".argumentation").text(partim.Argumentation);
-                newPartimDetail.find(".amountOfEvidence").text(partim.Evidence.length);
                 newPartimDetail.find(".btnRemoveFile").attr("data-partiminformationid", partim.PartimInformationId);
 
-                $(partim.Evidence).each(function (evidenceIndex, evidence) {
-                    console.log("current evidence: " + evidenceIndex);
+                if (partim.Evidence.length > 0) {
+                    newPartimDetail.find(".amountOfEvidence").text(partim.Evidence.length);
+                    $(partim.Evidence).each(function(evidenceIndex, evidence) {
+                        console.log("current evidence: " + evidenceIndex);
 
-                    var newEvidence = $("#dummyEvidence").clone();
-                    newEvidence.removeAttr("id");
-                    newEvidence.attr("data-index", evidenceIndex + 1);
-                    newEvidence.find(".argumentation").text(evidence.Argumentation);
+                        var newEvidence = $("#dummyEvidence").clone();
+                        newEvidence.removeAttr("id");
+                        newEvidence.attr("data-index", evidenceIndex + 1);
+                        newEvidence.find(".argumentation").text(evidence.Argumentation);
 
-                    newEvidence.find(".downloadLink").attr("href", evidence.Path);
-                    if(evidence.Type === "pdf")
-                        newEvidence.find(".pdf").attr("src", evidence.Path);
-                    else
-                        newEvidence.find(".image").attr("src", evidence.Path);
+                        newEvidence.find(".downloadLink").attr("href", evidence.Path);
+                        if (evidence.Type === "pdf")
+                            newEvidence.find(".pdf").attr("src", evidence.Path);
+                        else
+                            newEvidence.find(".image").attr("src", evidence.Path);
 
-                    console.log(evidence.Path);
-                    newPartimDetail.find(".evidenceContainer").append(newEvidence);
-                    //console.log("new evidence: ");
-                    //console.log(newEvidence);
-                });
-
+                        console.log(evidence.Path);
+                        newPartimDetail.find(".evidenceContainer").append(newEvidence);
+                        //console.log("new evidence: ");
+                        //console.log(newEvidence);
+                    });
+                } else {
+                    newPartimDetail.find(".evidencePanel").remove();
+                }
                 newFile.find(".partimDetails").append(newPartimDetail);
 
             });
