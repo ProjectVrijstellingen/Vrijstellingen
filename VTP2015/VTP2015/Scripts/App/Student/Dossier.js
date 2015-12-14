@@ -126,10 +126,10 @@ $(document).on("click", ".partim", function () {
     if ($.contains(beschikbarePartims, this)) {
         var semester = $(semesterDiv).data("semester");
         if($("#aangevraagdePartimsColumn div[data-semester=\"" + semester + "\"]").length === 0)
-            $("#aangevraagdePartimsColumn .panel-body").html($("#aangevraagdePartimsColumn .panel-body").html() + "<div class=\"semesterDiv\" data-semester=\"" + semester + "\"><div class=\"semester\">" + $(semesterDiv).find(".semester").html() + "</div><div class=\"nohide\"></div></div>");
+            $("#aangevraagdePartimsColumn .panel-body").html($("#aangevraagdePartimsColumn .panel-body").html() + "<div class=\"semesterDiv\" data-semester=\"" + semester + "\"><div class=\"semester\">" + $(semesterDiv).find(".semester").html() + "</div><div class=\"nohide partimList\"></div></div>");
         var newSemesterDiv = $("#aangevraagdePartimsColumn div[data-semester=\"" + semester + "\"]");
         if ($(newSemesterDiv).find("div[data-moduleid=\"" + moduleid + "\"]").length === 0) {
-            $(newSemesterDiv).children("div:last").html($(newSemesterDiv).children("div:last").html() + "<div data-moduleid=\"" + moduleid + "\"><span class=\"h4\">" + moduleNaam + "</span><ul class=\"list-group\"></ul></div>");
+            $(newSemesterDiv).children("div:last").html($(newSemesterDiv).children("div:last").html() + "<div data-moduleid=\"" + moduleid + "\"><span class=\"h4 partimList\">" + moduleNaam + "</span><ul class=\"list-group\"></ul></div>");
         }
 
         newParent = $(newSemesterDiv).children("div:last").find("div[data-moduleid=\"" + moduleid + "\"] ul");

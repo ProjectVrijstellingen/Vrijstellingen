@@ -240,3 +240,18 @@ h4, h3 {
     padding: 0px 18px;
     padding-top: 10px;
 }
+
+.crossModule {
+    float: right;
+    top: -5px;
+    left: -15px;
+}
+
+.crossPartim {
+    float: right;
+    top: -10px;
+}
+
+.list-group-item {
+    margin-bottom: 0px !important;
+}
