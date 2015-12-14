@@ -39,6 +39,24 @@ namespace VTP2015.ServiceLayer.Counselor
             autoMapperConfig.Execute();
         }
 
+        public void RemovePartimFromFile(int partimInformationId)
+        {
+            var requestPartimInformation =
+                _requestPartimInformationRepository.Table
+                .First(r => r.PartimInformationId == partimInformationId);
+
+            var request = requestPartimInformation.Request;
+            _requestPartimInformationRepository.Delete(requestPartimInformation);
+
+            if (request.RequestPartimInformations.Count < 1)
+                _requestRepository.Delete(request);
+        }
+
+        public void ChangeFileStatus(int fileId, int status)
+        {
+            _fileRepository.GetById(fileId).FileStatus = (FileStatus) status;
+        }   
+
         public Models.File GetFileByFileId(int fileId)
         {
             var file = _fileRepository.GetById(fileId);

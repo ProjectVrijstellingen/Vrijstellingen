@@ -13,6 +13,8 @@ namespace VTP2015.ServiceLayer.Counselor
         IQueryable<File> GetFilesByCounselorEmail(string email, string academicYear);
         FileView GetFile(int fileId);
         void SendReminder(int aanvraagId);
+        void ChangeFileStatus(int fileId, int status);
+        void RemovePartimFromFile(int partimInformationId);
     }
 }
 
