@@ -25,12 +25,12 @@ namespace VTP2015.Helpers
 
                 var nameTag = new TagBuilder("span");
                 nameTag.AddCssClass("h3");
-                nameTag.SetInnerText("Semester " + semester.Number);
+                nameTag.SetInnerText(" Semester " + semester.Number);
                 semesterNameTag.InnerHtml += nameTag;
                 semesterTag.InnerHtml += semesterNameTag;
 
                 var moduleListTag = new TagBuilder("div");
-                moduleListTag.AddCssClass("hide");
+                moduleListTag.AddCssClass("hide partimList");
 
 
                 foreach (var module in semester.Modules)
