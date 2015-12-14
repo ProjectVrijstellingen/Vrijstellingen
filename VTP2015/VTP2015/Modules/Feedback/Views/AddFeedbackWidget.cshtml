@@ -1,6 +1,6 @@
 ﻿@model VTP2015.Modules.Feedback.ViewModels.AddFeedbackViewModel
 
-<div class="panel panel-success clearfix inheritWidth" id="feedback">
+<div class="panel panel-default clearfix inheritWidth" id="feedback">
     <div class="panel-heading ">
         <h3 class="panel-title">Feedback</h3>
     </div>
@@ -15,7 +15,7 @@
         {
             @Html.TextAreaFor(m => m.Text, new { @class = "form-control"} );
             <br />
-            <input type="submit" value="verstuur" class="btn btn-success"/>
+            <input type="submit" value="verstuur" class="btn btn-default"/>
         }
         <div id="response">
 

@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<VTP2015.Modules.Lecturer.ViewModels.RequestListViewModel>
 
-<div class="panel panel-success clearfix inheritWidth aanvraagcontainer">
+<div class="panel panel-default clearfix inheritWidth aanvraagcontainer">
     <div class="panel-heading ">
         @*<h3 class="panel-title">Aanvragen <span id="vorigeAanvraag"><<</span><span id="huidigeAanvraag">1</span>/<span id="aantalAanvragen"></span><span id="volgendeAanvraag">>></span></h3>*@
         <h3 class="panel-title">Aanvragen</h3>
@@ -10,7 +10,7 @@
         
         @foreach (var partim in Model.GroupBy(g => g.SuperCode).Select(grp => grp.First()))
         {
-            <div id="@partim.SuperCode" class="panel panel-success clearfix inheritWidth modulecontainer">
+            <div id="@partim.SuperCode" class="panel panel-default clearfix inheritWidth modulecontainer">
                 <h3 class="panel-title">@partim.PartimName - @partim.ModuleName</h3>
                 <div class="panel-body">
 

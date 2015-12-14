@@ -23,7 +23,7 @@
                 <div class="form-group col-md-12">
                     <div class="btn-group" data-toggle="buttons">
                         <span class="button-checkbox">
-                            <button id="btnApprovedRequests" type="button" class="btn" data-color="success">Goedgekeurd<span id="spnAmountOfApprovedRequests" class="badge badge-success" style="margin-left: 1em">0</span></button>
+                            <button id="btnApprovedRequests" type="button" class="btn" data-color="success">Goedgekeurd<span id="spnAmountOfApprovedRequests" class="badge badge-default" style="margin-left: 1em">0</span></button>
                             <input id="chApprovedRequests" type="checkbox" class="hidden" checked />
                         </span>
                         <span class="button-checkbox">
@@ -41,30 +41,31 @@
                         <button class="btn btn-danger btnRemoveFile" data-partiminformationid="" >remove partim</button>
                         <h3>argumentatie:</h3>
                         <p class="argumentation"></p>
-                        <label class="control-label" data-requestid="">
-                            Evidence:
-                            <a href="#" class="previousEvidence"><<</a>
-                            <span class="currentEvidence">1</span>/
-                            <span class="amountOfEvidence"></span>
-                            <a href="#" class="nextEvidence">>></a>
-                        </label>
+                        <div class="panel panel-default">
+                            <div class="panel-heading control-label" data-requestid="">
+                                Evidence:
+                                <a href="#" class="previousEvidence"><<</a>
+                                <span class="currentEvidence">1</span>/
+                                <span class="amountOfEvidence"></span>
+                                <a href="#" class="nextEvidence">>></a>
+                            </div>
+                            <div class=" panel-body evidenceContainer">
+                                <div id="dummyEvidence" data-index="" class="inheritWidth evidence hide">
 
-                        <div class="evidenceContainer">
-                            <div id="dummyEvidence" data-index="" class="inheritWidth evidence hide">
+                                    <div class="inheritWidth bewijspointer" data-RequestPartimInformationPartimInformationid="RequestPartimInformationPartimInformation_ //TODO: right value">
+                                        <p>
+                                            <b>Beschrijving:&nbsp</b>
+                                            <span class="argumentation"></span>
+                                        </p>
 
-                                <div class="inheritWidth bewijspointer" data-RequestPartimInformationPartimInformationid="RequestPartimInformationPartimInformation_ //TODO: right value">
-                                    <p>
-                                        <b>Beschrijving:&nbsp</b>
-                                        <span class="argumentation"></span>
-                                    </p>
+                                        <a class="downloadLink" href="" download>
+                                            Als onderstaande voorstelling niet werkt kunt u op deze link klikken om het bewijs te downloaden
+                                        </a>
 
-                                    <a class="downloadLink" href="" download>
-                                        Als onderstaande voorstelling niet werkt kunt u op deze link klikken om het bewijs te downloaden
-                                    </a>
-
-                                    <div class="evidence">
-                                        <embed src="" class="inheritWidth pdf"/>
-                                        <img src="" class="inheritWidth image" alt="evidence"/>
+                                        <div class="evidence">
+                                            <embed src="" class="inheritWidth pdf" />
+                                            <img src="" class="inheritWidth image" alt="evidence" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
