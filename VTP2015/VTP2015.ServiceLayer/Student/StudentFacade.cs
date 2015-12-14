@@ -275,9 +275,17 @@ namespace VTP2015.ServiceLayer.Student
             var file = _fileRepository.GetById(fileId);
             if(file.FileStatus == FileStatus.InProgress) file.DateCreated = DateTime.Now;
             file.FileStatus = FileStatus.Submitted;
-            foreach (var request in file.Requests)
+            foreach (var partiminfo in file.Requests.SelectMany(request => request.RequestPartimInformations.Where(x => x.Status == Status.Empty)))
             {
-                request.RequestPartimInformations.Where(x => x.Status == Status.Empty).Each(x => x.Status = (request.Evidence.Count > 0 ? Status.Untreated : Status.Rejected));
+                if (partiminfo.Request.Evidence.Count < 1)
+                {
+                    partiminfo.Status = Status.Rejected;
+                    partiminfo.Motivation = _motivationRepository.GetById(6);
+                }
+                else
+                {
+                    partiminfo.Status = Status.Untreated;
+                }
             }
             _fileRepository.Update(file);
         }
