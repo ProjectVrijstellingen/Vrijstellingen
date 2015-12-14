@@ -14,7 +14,7 @@ namespace VTP2015.ServiceLayer.Counselor.Mappings
                 .ForMember(r => r.PercentageOfRequestsDone,
                     opt =>
                         opt.MapFrom(
-                            i => (int) (((double)i.Requests.SelectMany(x => x.RequestPartimInformations).Count(x => x.Status != Status.Untreated) / (double)i.Requests.SelectMany(x => x.RequestPartimInformations).Count())*100.0)))
+                            i => (int)(i.Requests.SelectMany(x => x.RequestPartimInformations).Count(x => x.Status != Status.Untreated) / (double)i.Requests.SelectMany(x => x.RequestPartimInformations).Count() * 100.0)))
                 .ForMember(r => r.Route,
                     opt => opt.MapFrom(r => r.Requests.FirstOrDefault().Name));
             Mapper.CreateMap<Education, Models.Education>();

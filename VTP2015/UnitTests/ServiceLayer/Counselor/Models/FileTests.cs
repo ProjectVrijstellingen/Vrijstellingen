@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using NUnit.Framework;
-using VTP2015.ServiceLayer.Counselor.Models;
+﻿using NUnit.Framework;
 
 namespace UnitTests.ServiceLayer.Counselor.Models
 {
