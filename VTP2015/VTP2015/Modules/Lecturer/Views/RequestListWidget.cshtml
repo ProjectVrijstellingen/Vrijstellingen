@@ -22,18 +22,14 @@
 
                         <div id="aanvraag-@getoondeAanvraagId" class="aanvraag " data-studentid="@aanvraag.Student.Email" data-aanvraagid="@aanvraag.Id" data-module="@aanvraag.ModuleName">
                             <p>Student: @aanvraag.Student.Email</p>
-                            <div class="opinionButtons row" style="padding-left:15px">
-                                <input type="button" class="btn btn-success approveButton" value="Accepteren">
-                                <input type="button" class="btn btn-danger dissapproveButton" value="Weigeren">
-                            </div>
                             
-                            @if(aanvraag.Argumentation != null)
+                            @if (aanvraag.Argumentation != null)
                             {
 
-                            <p>
-                                <label for="argumentatie" class="control-label">Extra argumentatie:</label>
-                                <label class="control-label">@aanvraag.Argumentation</label>
-                            </p>
+                                <p>
+                                    <label for="argumentatie" class="control-label">Extra argumentatie:</label>
+                                    <label class="control-label">@aanvraag.Argumentation</label>
+                                </p>
                             }
 
                             @*<label class="control-label">Bewijzen: <a href="#" class="vorigBewijs"><<</a><span class="huidigBewijs">1</span>/@aanvraag.Evidence.Count()<a href="#" class="volgendBewijs">>></a></label>*@
@@ -58,22 +54,33 @@
                                         </div>
                                     </div>
 
-                                    <div class="opinionButtons row hide" id="optnion_@bewijs.Id">
+                                    @*<div class="opinionButtons row hide" id="optnion_@bewijs.Id">
                                         <input type="button" class="btn btn-success approveButton" value="Accepteren">
                                         <input type="button" class="btn btn-danger dissapproveButton" value="Weigeren">
-                                    </div>
+                                    </div>*@
                                     <input class="btn argumentatie hide" value="@bewijs.Description" type="button" data-bewijsid="@bewijs.Id">
                                 </div>
                                 { getoondeAanvraagId++; }
                             }
                             <br />
+
+                            <div class="panel-body">
+                                <select id="aanvraagform-@aanvraag.Id">
+                                    @Html.Action("MotivationListWidget")
+                                </select>
+                            </div>
+                            <div class="opinionButtons row" style="padding-left:15px">
+                                <input type="button" class="btn btn-success approveButton" value="Accepteren">
+                                <input type="button" class="btn btn-danger dissapproveButton" value="Weigeren">
+                            </div>
+
                         </div>
                     }
 
 
 
 
-                </div>
+                        </div>
             </div>
         }
 

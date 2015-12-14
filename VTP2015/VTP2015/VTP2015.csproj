@@ -219,6 +219,7 @@
     <Compile Include="Modules\Lecturer\LecturerController.cs" />
     <Compile Include="Modules\Lecturer\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Modules\Lecturer\ViewModels\ModuleListViewModel.cs" />
+    <Compile Include="Modules\Lecturer\ViewModels\MotivationListViewModel.cs" />
     <Compile Include="Modules\Student\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Modules\Student\StudentController.cs" />
     <Compile Include="Modules\Student\ViewModels\RequestPartimInformationViewModel.cs" />
@@ -350,6 +351,7 @@
     <Content Include="Modules\Student\Views\InfoWidget.cshtml" />
     <Content Include="App_Browsers\qt.browser" />
     <Content Include="Modules\Counselor\Views\File.cshtml" />
+    <Content Include="Modules\Lecturer\Views\MotivationListWidget.cshtml" />
     <None Include="Properties\PublishProfiles\Foundation.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -364,6 +366,7 @@
     <Content Include="Scripts\App\Counselor\garbage\CounselorView.js" />
     <Content Include="Scripts\App\Counselor\Countdown.js" />
     <Content Include="Scripts\App\Counselor\CustomCheckBox.js" />
+    <Content Include="Scripts\App\Lecturer\ArchiveScripts.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\App\Lecturer\DocentBewijsViewScript.js" />

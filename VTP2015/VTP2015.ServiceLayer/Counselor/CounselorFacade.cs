@@ -60,6 +60,12 @@ namespace VTP2015.ServiceLayer.Counselor
             _fileRepository.Delete(fileId);
         }
 
+        public bool IsFileAvailable(int fileId)
+        {
+            if (!_fileRepository.Table.Any(x => x.Id == fileId)) return false;
+            return _fileRepository.GetById(fileId).FileStatus != FileStatus.InProgress;
+        }
+
         public Models.File GetFileByFileId(int fileId)
         {
             var file = _fileRepository.GetById(fileId);

@@ -87,7 +87,7 @@ namespace VTP2015.ServiceLayer.Lecturer
             return null; // mockdata.Where(x => x.Status == Status.Untreated).GroupBy(s => s.Student.Id).Select(grp => grp.First());
         }
 
-        public bool Approve(int requestId, bool isApproved, string email)
+        public bool Approve(int requestId, bool isApproved, string email, int motivationId)
         {
             var requestPartimInformation = mockdata.Where(x => x.Id == requestId);
             Status s = requestPartimInformation.Select(x => x.Status).FirstOrDefault();
@@ -109,6 +109,11 @@ namespace VTP2015.ServiceLayer.Lecturer
         public IQueryable<PartimInformation> GetPartims(string email)
         {
             return null; //mockdata.GroupBy(s => s.Partim).Select(grp => grp.First());
+        }
+
+        public IQueryable<Motivation> GetMotivations()
+        {
+            throw new NotImplementedException();
         }
     }
 }

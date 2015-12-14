@@ -16,6 +16,7 @@ namespace VTP2015.ServiceLayer.Counselor
         void RemovePartimFromFile(int partimInformationId);
         void SetFileStatusOpen(int fileId);
         void DeleteFile(int fileId);
+        bool IsFileAvailable(int fileId);
     }
 }
 

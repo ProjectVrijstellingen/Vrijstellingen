@@ -8,7 +8,8 @@ namespace VTP2015.ServiceLayer.Lecturer
         IQueryable<RequestPartimInformation> GetRequests(string email, Status status);
         IQueryable<Models.Student> GetUntreadedStudent(string email);
         IQueryable<PartimInformation> GetPartims(string email);
-        bool Approve(int requestId, bool isApproved, string email);
+        bool Approve(int requestId, bool isApproved, string email, int motivation);
         bool hasAny(string email, Status status);
+        IQueryable<Motivation> GetMotivations();
     }
 }

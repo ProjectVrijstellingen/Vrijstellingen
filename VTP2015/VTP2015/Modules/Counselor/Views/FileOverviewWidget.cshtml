@@ -48,7 +48,6 @@
                     <tbody>
                     @foreach (var dossier in Model.OrderBy(m => m.DaysRemaining))
                     {
-                        var percentage = 100 - dossier.PercentageOfRequestsOpen;
 
                         <tr class="@dossier.Color dossier" data-name="@dossier.StudentName" data-firstname="@dossier.StudentFirstName">
                             <td>@dossier.StudentFirstName</td>
@@ -56,7 +55,7 @@
                             <td>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-striped active" role="progressbar"
-                                         aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100" style="width:@percentage%">
+                                         aria-valuenow="@dossier.PercentageOfRequestsDone" aria-valuemin="0" aria-valuemax="100" style="width:@dossier.PercentageOfRequestsDone%">
                                     </div>
                                 </div>
                             </td>
@@ -78,7 +77,7 @@
                 {
                     <div class="col-md-2 file" data-name="@file.StudentName" data-firstname="@file.StudentFirstName" >
                         @{
-                            var perc = 100 - (file.DaysRemaining * 100 / 21);
+                            var perc = 100 - ((double)(file.DaysRemaining * 100) / 21.0);
                         }
                         <div class="panel panel-text panel-@file.Color-vtp panel-default clearfix panel-body">
                             <p class="naam">@file.StudentFirstName @file.StudentName</p>
