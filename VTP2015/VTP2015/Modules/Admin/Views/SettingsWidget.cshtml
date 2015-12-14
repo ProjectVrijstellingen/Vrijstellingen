@@ -1,13 +1,24 @@
 ﻿@model VTP2015.Modules.Admin.ViewModels.ConfigViewModel
 
 <div class="col-md-6">
-    <div class="panel panel-default clearfix">
+    <div class="panel panel-info clearfix">
         <div class="panel-body">
             <form id="config-form">
-                @Html.EditorForModel()
+                <p>Info email frequentie (dd:uu:mm)</p>
+                @Html.TextBoxFor(m => m.InfoMailFrequency, new {@class = "form-control" })
+                <br/>
+                <p>Waarschuwing email frequentie (dd:uu:mm)</p>
+                @Html.TextBoxFor(m => m.WarningMailFrequency, new { @class = "form-control" })
+                <br/>
+                <p>Start vrijstellingen</p>
+                @Html.TextBoxFor(m => m.StartVrijstellingDayMonth, new { @class = "form-control" })
+                <br/>
+                <p>Einde vrijstellingen</p>
+                @Html.TextBoxFor(m => m.EindeVrijstellingDayMonth, new { @class = "form-control" })
+                <br/>
                 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                 <div class="input-group">
-                    <button type="button" class="btn btn-default">Wijzig</button>
+                    <button type="button" class="btn btn-info">Wijzig</button>
                 </div>
             </form>
         </div>

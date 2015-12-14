@@ -164,7 +164,7 @@ namespace VTP2015.Helpers
                 }
                 articleTag.InnerHtml += bewijzenTag;
                 var buttonTag = new TagBuilder("button");
-                buttonTag.AddCssClass("btn btn-default");
+                buttonTag.AddCssClass("btn btn-info");
                 buttonTag.Attributes.Add("onclick", "Return()");
                 buttonTag.Attributes.Add("type","button");
                 buttonTag.SetInnerText("Terug");

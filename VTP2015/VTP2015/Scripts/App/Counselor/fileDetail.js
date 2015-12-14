@@ -103,8 +103,9 @@ function switchEvidence(sender, direction) {
         {
             if (currentEvidenceIndex < amountOfEvidence)
                 newCurrentEvidenceIndex = currentEvidenceIndex + 1;
-            else
+            else {
                 newCurrentEvidenceIndex = 1;
+            }
             break;
         }
         case "previous":
@@ -186,7 +187,9 @@ function loadFileById(fileId) {
                 newPartimDetail.find(".btnRemovePartim").attr("data-partiminformationid", partim.PartimInformationId);
                 newPartimDetail.find(".btnRemovePartim").attr("data-fileid", partim.FileId);
 
-                $(partim.Evidence).each(function (evidenceIndex, evidence) {
+                if (partim.Evidence.length > 0) {
+                    newPartimDetail.find(".amountOfEvidence").text(partim.Evidence.length);
+                    $(partim.Evidence).each(function(evidenceIndex, evidence) {
                     console.log("current evidence: " + evidenceIndex);
 
                     var newEvidence = $("#dummyEvidence").clone();
@@ -195,7 +198,7 @@ function loadFileById(fileId) {
                     newEvidence.find(".argumentation").text(evidence.Argumentation);
 
                     newEvidence.find(".downloadLink").attr("href", evidence.Path);
-                    if(evidence.Type === "pdf")
+                        if (evidence.Type === "pdf")
                         newEvidence.find(".pdf").attr("src", evidence.Path);
                     else
                         newEvidence.find(".image").attr("src", evidence.Path);
@@ -205,7 +208,9 @@ function loadFileById(fileId) {
                     //console.log("new evidence: ");
                     //console.log(newEvidence);
                 });
-
+                } else {
+                    newPartimDetail.find(".evidencePanel").remove();
+                }
                 newFile.find(".partimDetails").append(newPartimDetail);
 
             });

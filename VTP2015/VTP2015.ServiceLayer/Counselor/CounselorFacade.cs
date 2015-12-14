@@ -23,7 +23,7 @@ namespace VTP2015.ServiceLayer.Counselor
         private readonly IRepository<Entities.Counselor> _counselorRepository;
         private readonly IRepository<File> _fileRepository;
         private readonly IRepository<RequestPartimInformation> _requestPartimInformationRepository;
-        private readonly IRepository<Motivation> _motivationRepository; 
+        private readonly IRepository<Motivation> _motivationRepository;
 
         public CounselorFacade(IUnitOfWork unitOfWork)
         {
