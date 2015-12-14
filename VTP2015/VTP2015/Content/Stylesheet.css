@@ -245,19 +245,23 @@ h4, h3 {
 
 .crossModule {
     float: right;
-    top: -5px;
     left: -15px;
+    padding: 0px;
 }
 
 .crossPartim {
     float: right;
-    top: -10px;
+    padding: 0px;
 }
 
-.list-group-item {
+/*.list-group-item {
     margin-bottom: 0px !important;
-}
+}*/
 
 footer {
     padding-left: 50px;
+}
+
+.moduleSpace {
+    margin: 10px 0;
 }
