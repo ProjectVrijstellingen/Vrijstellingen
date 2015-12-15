@@ -55,12 +55,12 @@
                                 { getoondeAanvraagId++; }
                             }
                             <br />
-
-                            <div class="panel-body">
+                            <p>
+                                <label for="motivatie" class="control-label">Motivatie:</label>
                                 <select id="aanvraagform-@aanvraag.Id">
                                     @Html.Action("MotivationListWidget")
                                 </select>
-                            </div>
+                            </p>
                             <div class="opinionButtons row" style="padding-left:15px">
                                 <input type="button" class="btn btn-success approveButton" value="Accepteren">
                                 <input type="button" class="btn btn-danger dissapproveButton" value="Weigeren">

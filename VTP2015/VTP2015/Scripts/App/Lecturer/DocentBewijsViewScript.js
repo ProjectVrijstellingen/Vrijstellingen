@@ -106,35 +106,45 @@ $(document).ready(function () {
         var supercode = $(this).parent().parent().parent().parent().attr("id");
         var motivationId = $("#aanvraagform-" + aanvraagId + " option:checked").val();
 
-        $("#Aantal_" + supercode).html(parseInt($("#Aantal_" + supercode).html()) - 1);
+        if (motivationId > 1)
+        {
+            $("#Aantal_" + supercode).html(parseInt($("#Aantal_" + supercode).html()) - 1);
 
-        $.ajax({
-            url: "Lecturer/ApproveAanvraag",
-            data: { aanvraagID: aanvraagId, motivationID: motivationId},
-            type: "POST",
-            success: function (data) {
-                $('[data-aanvraagid="' + aanvraagId + '"]').addClass("hide");
-                console.log(data)
-            }
-        });
+            $.ajax({
+                url: "Lecturer/ApproveAanvraag",
+                data: { aanvraagID: aanvraagId, motivationID: motivationId },
+                type: "POST",
+                success: function (data) {
+                    $('[data-aanvraagid="' + aanvraagId + '"]').addClass("hide");
+                    console.log(data)
+                }
+            });
+        }
+        else
+        {
+            alert("Het is verplicht om een motivatie mee te geven");
+        }
     });
 
     $(".dissapproveButton").click(function (event) {
         var aanvraagId = $(this).parent().parent().data("aanvraagid");
         var supercode = $(this).parent().parent().parent().parent().attr("id");
         var motivationId = $("#aanvraagform-" + aanvraagId + " option:checked").val();
-        $("#Aantal_" + supercode).html(parseInt($("#Aantal_" + supercode).html()) - 1);
-
-        $.ajax({
-            url: "Lecturer/DissapproveAanvraag",
-            data: { aanvraagID: aanvraagId, motivationID: motivationId },
-            type: "POST",
-            success: function (data) {
-                $('[data-aanvraagid="' + aanvraagId + '"]').addClass("hide");
-                console.log(data);
-            }
-
-        });
+        if (motivationId > 1) {
+            $("#Aantal_" + supercode).html(parseInt($("#Aantal_" + supercode).html()) - 1);
+            $.ajax({
+                url: "Lecturer/DissapproveAanvraag",
+                data: { aanvraagID: aanvraagId, motivationID: motivationId },
+                type: "POST",
+                success: function (data) {
+                    $('[data-aanvraagid="' + aanvraagId + '"]').addClass("hide");
+                    console.log(data);
+                }
+            });
+        }
+        else {
+            alert("Het is verplicht om een motivatie mee te geven");
+        }
     });
 
     $('[data-toggle="tooltip"]').tooltip();
