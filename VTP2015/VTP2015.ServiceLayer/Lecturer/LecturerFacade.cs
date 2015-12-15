@@ -52,14 +52,15 @@ namespace VTP2015.ServiceLayer.Lecturer
                 var student = request.Request.File.Student;
                 result.Add(new RequestPartimInformation {
                     Id = request.Id,
-                    Partim = new Partim {Code=request.PartimInformation.Partim.Code, Name=request.PartimInformation.Partim.Name },
-                    Module = new Module { Code=request.PartimInformation.Module.Code, Name=request.PartimInformation.Module.Name, Semester=request.PartimInformation.Module.Semester},
+                    Partim = new Partim { Code = request.PartimInformation.Partim.Code, Name = request.PartimInformation.Partim.Name },
+                    Module = new Module { Code = request.PartimInformation.Module.Code, Name = request.PartimInformation.Module.Name, Semester = request.PartimInformation.Module.Semester },
                     Argumentation = request.Request.Argumentation,
                     Evidence = request.Request.Evidence.AsQueryable().ProjectTo<Evidence>(),
                     Status = (Status)(int)request.Status,
                     SuperCode = request.PartimInformation.SuperCode,
-                    Student = new Models.Student { Id=student.Id.ToString(), Name=student.Name, FirstName=student.FirstName, Email=student.Email},
-                    Motivation = new Motivation { ID=request.Motivation.Id, Text = request.Motivation.Text}
+                    Student = new Models.Student { Id = student.Id.ToString(), Name = student.Name, FirstName = student.FirstName, Email = student.Email },
+                    Motivation = new Motivation { ID = request.Motivation.Id, Text = request.Motivation.Text },
+                    PrevEducation = request.Request.PrevEducations.AsQueryable().ProjectTo<PrevEducation>()
                 });
             }
             return result.AsQueryable();
