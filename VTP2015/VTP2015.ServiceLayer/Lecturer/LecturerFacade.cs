@@ -128,5 +128,14 @@ namespace VTP2015.ServiceLayer.Lecturer
         {
             return _motivationRepository.Table.AsQueryable().ProjectTo<Motivation>();
         }
+
+        public IQueryable<Models.Student> GetTreadedStudent(string email)
+        {
+            var result = _lecturerRepository.Table.Where(b => b.Email == email)
+                .SelectMany(p => p.PartimInformation).SelectMany(x => x.RequestPartimInformations)
+                .Where(e => e.Status == Entities.Status.Approved || e.Status == Entities.Status.Rejected).Select(x => x.Request)
+                .Select(f => f.File).Select(s => s.Student).Distinct().AsQueryable();
+            return result.ProjectTo<Models.Student>();
+        }
     }
 }

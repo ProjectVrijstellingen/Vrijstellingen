@@ -41,15 +41,27 @@ namespace VTP2015.Modules.Lecturer
         {
             return View();
         }
-
+        
         [HttpGet]
-        [Route("StudentListWidget")]
-        public PartialViewResult StudentListWidget()
+        [Route("StudentListWidget/{view}")]
+        public PartialViewResult StudentListWidget(string view)
         {
-            var viewModel = _lecturerFacade.GetUntreadedStudent(User.Identity.Name)
-                .ProjectTo<StudentListViewModel>();
+            switch (view)
+            {
+                case "Archive":
+                    var viewModelA = _lecturerFacade.GetTreadedStudent(User.Identity.Name)
+                    .ProjectTo<StudentListViewModel>();
 
-            return PartialView(viewModel);
+                    return PartialView(viewModelA);
+
+                default:
+                    var viewModel = _lecturerFacade.GetUntreadedStudent(User.Identity.Name)
+                    .ProjectTo<StudentListViewModel>();
+
+                    return PartialView(viewModel);
+            }
+
+
         }
 
         [HttpGet]

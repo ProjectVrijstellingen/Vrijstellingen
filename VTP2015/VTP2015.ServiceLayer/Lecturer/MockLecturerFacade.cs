@@ -120,5 +120,10 @@ namespace VTP2015.ServiceLayer.Lecturer
         {
             throw new NotImplementedException();
         }
+
+        public IQueryable<Models.Student> GetTreadedStudent(string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
