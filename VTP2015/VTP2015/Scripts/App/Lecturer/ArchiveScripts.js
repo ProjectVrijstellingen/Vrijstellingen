@@ -36,21 +36,21 @@
 
         if (!active) {
             $(this).addClass("active");
-            $(".modulecontainer").addClass("hide");
+            $(".modulecontainer").parent().addClass("hide");
             if ($('.partimpointer.active').length > 0) {
-                $("[data-super=" + $(".partimpointer.active").data("supercode") + "][data-studentid='" + $(".studentpointer.active").data("studentid") + "']").removeClass("hide");
+                $("[data-super=" + $(".partimpointer.active").data("supercode") + "][data-studentid='" + $(".studentpointer.active").data("studentid") + "']").parent().removeClass("hide");
             }
             else {
-                $("[data-studentid='" + $(".studentpointer.active").data("studentid") + "']").removeClass("hide");
+                $("[data-studentid='" + $(".studentpointer.active").data("studentid") + "']").parent().removeClass("hide");
             }
         }
         else {
             if ($('.partimpointer.active').length > 0) {
                 $(".modulecontainer").addClass("hide");
-                $("[data-super=" + $(".studentpointer.active").data("supercode") + "]").removeClass("hide");
+                $("[data-super=" + $(".studentpointer.active").data("supercode") + "]").parent().removeClass("hide");
             }
             else {
-                $(".modulecontainer").removeClass("hide");
+                $(".modulecontainer").parent().removeClass("hide");
             }
         }
         scroll_to($(".aanvraagcontainer"));
@@ -62,22 +62,22 @@
 
         if (!active) {
             $(this).addClass("active");
-            $(".modulecontainer").addClass("hide");
+            $(".modulecontainer").parent().addClass("hide");
             if ($('.studentpointer.active').length > 0) {
-                $("[data-super=" + $(this).data("supercode") + "][data-studentid='" + $(".studentpointer.active").data("studentid") + "']").removeClass("hide");
+                $("[data-super=" + $(this).data("supercode") + "][data-studentid='" + $(".studentpointer.active").data("studentid") + "']").parent().removeClass("hide");
 
             }
             else {
-                $("[data-super=" + $(this).data("supercode") + "]").removeClass("hide");
+                $("[data-super=" + $(this).data("supercode") + "]").parent().removeClass("hide");
             }
         }
         else {
             if ($('.studentpointer.active').length > 0) {
                 $(".modulecontainer").addClass("hide");
-                $("[data-studentid='" + $(".studentpointer.active").data("studentid") + "']").removeClass("hide");
+                $("[data-studentid='" + $(".studentpointer.active").data("studentid") + "']").parent().removeClass("hide");
             }
             else {
-                $(".modulecontainer").removeClass("hide");
+                $(".modulecontainer").parent().removeClass("hide");
             }
         }
         scroll_to($(".aanvraagcontainer"));
