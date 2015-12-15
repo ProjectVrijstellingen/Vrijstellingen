@@ -14,6 +14,7 @@ namespace VTP2015.ServiceLayer.Counselor.Models
         public string AcademicYear { get; set; }
         public StudentView Student { get; set; }
         public IEnumerable<RequestView> Requests { get; set; }
-        public IEnumerable<EvidenceView> Evidence { get; set; } 
+        public IEnumerable<EvidenceView> Evidence { get; set; }
+        public IEnumerable<PrevEducationView> PrevEducations { get; set; } 
     }
 }

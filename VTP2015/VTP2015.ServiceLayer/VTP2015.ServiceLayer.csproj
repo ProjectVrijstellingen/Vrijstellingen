@@ -70,6 +70,7 @@
     <Compile Include="Counselor\MockCounselorFacade.cs" />
     <Compile Include="Counselor\Models\Education.cs" />
     <Compile Include="Counselor\Models\Evidence.cs" />
+    <Compile Include="Counselor\Models\PrevEducationView.cs" />
     <Compile Include="Counselor\Models\EvidenceView.cs" />
     <Compile Include="Counselor\Models\File.cs" />
     <Compile Include="Counselor\Models\FileView.cs" />
