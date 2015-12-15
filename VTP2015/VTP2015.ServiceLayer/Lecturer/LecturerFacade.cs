@@ -13,12 +13,14 @@ namespace VTP2015.ServiceLayer.Lecturer
         private readonly IRepository<Entities.Lecturer> _lecturerRepository;
         private readonly IRepository<Entities.RequestPartimInformation> _requestPartimInformationRepository;
         private readonly IRepository<Entities.Motivation> _motivationRepository;
+        private readonly IRepository<Entities.PartimInformation> _partimRepository;
 
         public LecturerFacade(IUnitOfWork unitOfWork)
         {
             _lecturerRepository = unitOfWork.Repository<Entities.Lecturer>();
             _requestPartimInformationRepository = unitOfWork.Repository<Entities.RequestPartimInformation>();
             _motivationRepository = unitOfWork.Repository<Entities.Motivation>();
+            _partimRepository = unitOfWork.Repository<Entities.PartimInformation>();
 
             var autoMaperConfig = new AutoMapperConfig();
             autoMaperConfig.Execute();
@@ -89,6 +91,14 @@ namespace VTP2015.ServiceLayer.Lecturer
             var result = _lecturerRepository.Table.Where(b => b.Email == email).SelectMany(p => p.PartimInformation).AsQueryable();
             return result.ProjectTo<PartimInformation>();
 
+        }
+
+        public bool RemovePartimLecturer(string supercode)
+        {
+            var partim = _partimRepository.Table.Where(p => p.SuperCode == supercode).First();
+            partim.LecturerId = 1;
+            _partimRepository.Update(partim);
+            return true;
         }
 
         public bool Approve(int requestPartimInformationId, bool isApproved, string email, int motivation)

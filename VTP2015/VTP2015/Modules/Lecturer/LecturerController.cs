@@ -125,6 +125,13 @@ namespace VTP2015.Modules.Lecturer
                 : "De aanvraag mag niet beoordeeld worden door u!");
         }
 
+        [Route("RemovePartimLecturer")]
+        [HttpPost]
+        public ActionResult RemovePartimLecturer(string supercodeId)
+        {
+            return Content(_lecturerFacade.RemovePartimLecturer(supercodeId)?"Voltooid!":"Error");
+        }
+
         [HttpGet]
         [Route("MotivationListWidget")]
         public PartialViewResult MotivationListWidget()

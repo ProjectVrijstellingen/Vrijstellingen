@@ -115,5 +115,10 @@ namespace VTP2015.ServiceLayer.Lecturer
         {
             throw new NotImplementedException();
         }
+
+        public bool RemovePartimLecturer(string supercode)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
