@@ -144,12 +144,12 @@ namespace VTP2015.Helpers
             if (movable) itemTag.Attributes.Add("id", "education-" + education.Id);
             var descriptionTag = new TagBuilder("span");
             descriptionTag.AddCssClass("glyphicon-class");
-            if (TextLimiter(education.Education, 20).EndsWith("..."))
+            if (TextLimiter(education.Education, 100).EndsWith("..."))
             {
                 descriptionTag.MergeAttribute("data-toggle", "tooltip");
                 descriptionTag.MergeAttribute("title", education.Education);
             }
-            descriptionTag.SetInnerText(" " + TextLimiter(education.Education, 20));
+            descriptionTag.SetInnerText(" " + TextLimiter(education.Education, 100));
             itemTag.InnerHtml += descriptionTag;
             if (!submitted) itemTag.InnerHtml += ShowGlyphicon(html, "remove", "btn crossPartim" + (movable ? " hide" : ""));
             if (movable) itemTag.InnerHtml += ShowGlyphicon(html, "plus", "btn badge");
