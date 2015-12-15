@@ -21,6 +21,7 @@ namespace VTP2015.ServiceLayer.Lecturer.Mappings
                 opt => opt.MapFrom(x => x.Partim.Name));
 
             Mapper.CreateMap<Entities.Motivation, Models.Motivation>();
+            Mapper.CreateMap<Entities.PrevEducation, Models.PrevEducation>();
         }
     }
 }

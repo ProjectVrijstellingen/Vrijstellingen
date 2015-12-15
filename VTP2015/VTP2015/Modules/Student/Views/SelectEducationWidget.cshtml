@@ -1,0 +1,9 @@
+﻿@using VTP2015.Entities
+@using VTP2015.Helpers
+@model VTP2015.Modules.Student.ViewModels.EducationListViewModel[]
+
+    @using (Html.BeginPanel("Vorige opleidingen"))
+    {
+        var submitted = (FileStatus) ViewBag.FileStatus == FileStatus.Submitted;
+        @Html.ShowEducationList(Model,!submitted,submitted)
+    }

@@ -165,6 +165,25 @@ $(document).ready(function () {
             $($(".aanvraagcontainer").children()[1]).addClass("hide")
     });
 
+    $(".remove").click(function (event) {
+        var supercode = $(this).attr("Id");
+        supercode = supercode.substr(supercode.indexOf("_")+1, supercode.length);
+        
+        $.ajax({
+            url: "RemovePartimLecturer",
+            data: { supercodeID: supercode },
+            type: "POST",
+            success: function (data) {
+                $("#Verwijder_"+supercode).parent().addClass("hide");
+                console.log(data);
+            }
+        }).fail(function (data) {
+            console.log("Error");
+            console.log(data);
+        });
+    });
+
+
 });
 
 

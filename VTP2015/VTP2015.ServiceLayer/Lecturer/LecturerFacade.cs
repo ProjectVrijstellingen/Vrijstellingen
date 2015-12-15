@@ -13,12 +13,14 @@ namespace VTP2015.ServiceLayer.Lecturer
         private readonly IRepository<Entities.Lecturer> _lecturerRepository;
         private readonly IRepository<Entities.RequestPartimInformation> _requestPartimInformationRepository;
         private readonly IRepository<Entities.Motivation> _motivationRepository;
+        private readonly IRepository<Entities.PartimInformation> _partimRepository;
 
         public LecturerFacade(IUnitOfWork unitOfWork)
         {
             _lecturerRepository = unitOfWork.Repository<Entities.Lecturer>();
             _requestPartimInformationRepository = unitOfWork.Repository<Entities.RequestPartimInformation>();
             _motivationRepository = unitOfWork.Repository<Entities.Motivation>();
+            _partimRepository = unitOfWork.Repository<Entities.PartimInformation>();
 
             var autoMaperConfig = new AutoMapperConfig();
             autoMaperConfig.Execute();
@@ -50,14 +52,15 @@ namespace VTP2015.ServiceLayer.Lecturer
                 var student = request.Request.File.Student;
                 result.Add(new RequestPartimInformation {
                     Id = request.Id,
-                    Partim = new Partim {Code=request.PartimInformation.Partim.Code, Name=request.PartimInformation.Partim.Name },
-                    Module = new Module { Code=request.PartimInformation.Module.Code, Name=request.PartimInformation.Module.Name, Semester=request.PartimInformation.Module.Semester},
+                    Partim = new Partim { Code = request.PartimInformation.Partim.Code, Name = request.PartimInformation.Partim.Name },
+                    Module = new Module { Code = request.PartimInformation.Module.Code, Name = request.PartimInformation.Module.Name, Semester = request.PartimInformation.Module.Semester },
                     Argumentation = request.Request.Argumentation,
                     Evidence = request.Request.Evidence.AsQueryable().ProjectTo<Evidence>(),
                     Status = (Status)(int)request.Status,
                     SuperCode = request.PartimInformation.SuperCode,
-                    Student = new Models.Student { Id=student.Id.ToString(), Name=student.Name, FirstName=student.FirstName, Email=student.Email},
-                    Motivation = new Motivation { ID=request.Motivation.Id, Text = request.Motivation.Text}
+                    Student = new Models.Student { Id = student.Id.ToString(), Name = student.Name, FirstName = student.FirstName, Email = student.Email },
+                    Motivation = new Motivation { ID = request.Motivation.Id, Text = request.Motivation.Text },
+                    PrevEducation = request.Request.PrevEducations.AsQueryable().ProjectTo<PrevEducation>()
                 });
             }
             return result.AsQueryable();
@@ -89,6 +92,14 @@ namespace VTP2015.ServiceLayer.Lecturer
             var result = _lecturerRepository.Table.Where(b => b.Email == email).SelectMany(p => p.PartimInformation).AsQueryable();
             return result.ProjectTo<PartimInformation>();
 
+        }
+
+        public bool RemovePartimLecturer(string supercode)
+        {
+            var partim = _partimRepository.Table.Where(p => p.SuperCode == supercode).First();
+            partim.LecturerId = 1;
+            _partimRepository.Update(partim);
+            return true;
         }
 
         public bool Approve(int requestPartimInformationId, bool isApproved, string email, int motivation)

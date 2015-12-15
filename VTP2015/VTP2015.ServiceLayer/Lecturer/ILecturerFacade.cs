@@ -11,5 +11,6 @@ namespace VTP2015.ServiceLayer.Lecturer
         bool Approve(int requestId, bool isApproved, string email, int motivation);
         bool hasAny(string email, Status status);
         IQueryable<Motivation> GetMotivations();
+        bool RemovePartimLecturer(string supercode);
     }
 }

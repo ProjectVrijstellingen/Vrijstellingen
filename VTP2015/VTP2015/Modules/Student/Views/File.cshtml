@@ -12,14 +12,16 @@
     <form role="form">
         <div class="container-fix">
             <div class="row">
-                @Html.Action("SelectEvidenceWidget")
+                <div id="bewijzenColumn" class="col-md-4 hide">
+                    @Html.Action("SelectEvidenceWidget")
+                    @Html.Action("SelectEducationWidget")
+                </div>
 
                 @Html.Action("AvailablePartimsWidget")
 
                 @Html.Action("RequestDetailWidget")
 
                 @Html.Action("RequestedPartimsWidget")
-
             </div>
         </div>
     </form>
