@@ -162,6 +162,7 @@ namespace VTP2015.Helpers
             foreach (var aanvraag in aanvragen)
             {
                 var articleTag = new TagBuilder("article");
+                articleTag.Attributes.Add("id",aanvraag.Id.ToString());
                 articleTag.Attributes.Add("data-code",aanvraag.Code);
                 articleTag.Attributes.Add("data-requestId",aanvraag.Id.ToString());
                 articleTag.AddCssClass("hide");
