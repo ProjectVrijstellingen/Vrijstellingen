@@ -107,11 +107,62 @@ namespace VTP2015.Modules.Student
             return PartialView(models.ToArray());
         }
 
+        [Route("EducationListWidget")]
+        [HttpGet]
+        public PartialViewResult EducationListWidget()
+        {
+            var models = _studentFacade.GetPrevEducationsByStudentEmail(User.Identity.Name)
+                .ProjectTo<EducationListViewModel>();
+
+            return PartialView(models.ToArray());
+        }
+
         [Route("AddFileWidget")]
         [HttpGet]
         public PartialViewResult AddFileWidget()
         {
             return PartialView();
+        }
+
+        [Route("AddEducationWidget")]
+        [HttpGet]
+        public PartialViewResult AddEducationWidget()
+        {
+            return PartialView();
+        }
+
+        [Route("AddEducation")]
+        [HttpPost]
+        public ActionResult AddEducation(AddEducationViewModel viewModel)
+        {
+
+            ModelState.Clear();
+            var validation = TryValidateModel(viewModel);
+            var errors = (from modelstate in ModelState.Values from error in modelstate.Errors select error.ErrorMessage).ToList();
+
+            if (!validation) return Json(errors.ToArray());
+
+            _studentFacade.InsertPrevEducation(viewModel.Education, User.Identity.Name);
+            errors.Add("Finish");
+            return Json(errors.ToArray());
+        }
+
+        [Route("DeleteEducation")]
+        [HttpPost]
+        public ActionResult DeleteEducation(int educationId)
+        {
+            return Content(!_studentFacade.DeleteEducation(educationId)
+                ? "gegeven opleiding kon niet verwijdert worden!"
+                : "Voltooid!");
+        }
+
+        [PreventSpam(DelayRequest = 3600)]
+        [Route("StudentSync")]
+        public ActionResult StudentSync()
+        {
+            var configFile = new ConfigFile();
+            if (ViewData.ModelState.IsValid) _studentFacade.SyncStudent(User.Identity.Name, configFile.AcademieJaar());
+            return RedirectToAction("Index");
         }
 
         #endregion
@@ -190,7 +241,7 @@ namespace VTP2015.Modules.Student
             {
                 StudentMail = User.Identity.Name,
                 DateCreated = DateTime.Now,
-                Education = education.Name,
+                Education = education,
                 AcademicYear = academieJaar
             };
 
@@ -254,14 +305,5 @@ namespace VTP2015.Modules.Student
             return Content("Submitted!");
         }
         #endregion
-
-        [PreventSpam(DelayRequest = 3600)]
-        [Route("StudentSync")]
-        public ActionResult StudentSync()
-        {
-            var configFile = new ConfigFile();
-            if (ViewData.ModelState.IsValid) _studentFacade.SyncStudent(User.Identity.Name, configFile.AcademieJaar());
-            return RedirectToAction("Index");
-        }
     }
 }

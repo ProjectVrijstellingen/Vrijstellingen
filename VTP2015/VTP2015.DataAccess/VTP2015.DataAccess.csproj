@@ -67,6 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\PrevEducationConfig.cs" />
     <Compile Include="Config\Motivationconfig.cs" />
     <Compile Include="Config\RequestPartimInformationConfig.cs" />
     <Compile Include="Config\RequestConfig.cs" />

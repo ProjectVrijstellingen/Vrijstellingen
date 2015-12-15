@@ -198,7 +198,7 @@ $(document).on("click", ".glyphicon-plus", function () {
     addBewijs(that);
 });
 
-$(document).on("click", ".glyphicon-remove", function (e) {
+$(document).find("#aangevraagdePartimsColumn").on("click", ".glyphicon-remove", function (e) {
     console.log("remove Request");
     e.stopPropagation();
     savePartimdetails();

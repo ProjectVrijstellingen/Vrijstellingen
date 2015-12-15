@@ -90,7 +90,7 @@ namespace VTP2015.Helpers
         {
             var tag = new TagBuilder("ul");
             tag.AddCssClass("list-group");
-            tag.Attributes.Add("id", movable ? "draggableList" : "bewijzenList");
+            tag.Attributes.Add("id", movable ? "dragBewijzenList" : "bewijzenList");
             foreach (var bewijs in bewijzen)
             {
                 tag.InnerHtml += ShowBewijsLi(html, bewijs, movable, submitted);
@@ -116,6 +116,43 @@ namespace VTP2015.Helpers
             itemTag.InnerHtml += descriptionTag;
             if (!submitted) itemTag.InnerHtml += ShowGlyphicon(html, "remove","btn crossPartim" + (movable? " hide":""));
             if (movable) itemTag.InnerHtml += ShowGlyphicon(html, "plus","btn badge");
+            return new MvcHtmlString(itemTag.ToString());
+        }
+
+        public static MvcHtmlString ShowEducationList(this HtmlHelper html, EducationListViewModel[] educationList, bool movable)
+        {
+            return ShowEducationList(html, educationList, movable, false);
+        }
+
+        public static MvcHtmlString ShowEducationList(this HtmlHelper html, EducationListViewModel[] educationList, bool movable, bool submitted)
+        {
+            var tag = new TagBuilder("ul");
+            tag.AddCssClass("list-group");
+            tag.Attributes.Add("id", movable ? "dragEducationList" : "educationList");
+            foreach (var bewijs in educationList)
+            {
+                tag.InnerHtml += ShowEducationLi(html, bewijs, movable, submitted);
+            }
+            return new MvcHtmlString(tag.ToString());
+        }
+
+        public static MvcHtmlString ShowEducationLi(this HtmlHelper html, EducationListViewModel education, bool movable, bool submitted)
+        {
+            var itemTag = new TagBuilder("li");
+            itemTag.AddCssClass("list-group-item");
+            itemTag.Attributes.Add("data-educationid", education.Id.ToString());
+            if (movable) itemTag.Attributes.Add("id", "education-" + education.Id);
+            var descriptionTag = new TagBuilder("span");
+            descriptionTag.AddCssClass("glyphicon-class");
+            if (TextLimiter(education.Education, 20).EndsWith("..."))
+            {
+                descriptionTag.MergeAttribute("data-toggle", "tooltip");
+                descriptionTag.MergeAttribute("title", education.Education);
+            }
+            descriptionTag.SetInnerText(" " + TextLimiter(education.Education, 20));
+            itemTag.InnerHtml += descriptionTag;
+            if (!submitted) itemTag.InnerHtml += ShowGlyphicon(html, "remove", "btn crossPartim" + (movable ? " hide" : ""));
+            if (movable) itemTag.InnerHtml += ShowGlyphicon(html, "plus", "btn badge");
             return new MvcHtmlString(itemTag.ToString());
         }
 

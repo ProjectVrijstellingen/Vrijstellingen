@@ -2,7 +2,7 @@
 {
     public class Evidence
     {
-        public int EvidenceId { get; set; }
+        public int Id { get; set; }
         public string Description { get; set; }
         public string StudentEmail { get; set; }
         public string Path { get; set; }

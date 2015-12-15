@@ -122,9 +122,6 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RazorPDF">
-      <HintPath>..\packages\RazorPDF.1.0.0\lib\net45\RazorPDF.dll</HintPath>
-    </Reference>
     <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rotativa.1.6.4\lib\net40\Rotativa.dll</HintPath>
       <Private>True</Private>
@@ -222,9 +219,11 @@
     <Compile Include="Modules\Lecturer\ViewModels\MotivationListViewModel.cs" />
     <Compile Include="Modules\Student\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Modules\Student\StudentController.cs" />
+    <Compile Include="Modules\Student\ViewModels\EducationListViewModel.cs" />
     <Compile Include="Modules\Student\ViewModels\RequestPartimInformationViewModel.cs" />
     <Compile Include="Modules\Student\ViewModels\AddRequestViewModel.cs" />
     <Compile Include="Modules\Student\ViewModels\StudentViewModel.cs" />
+    <Compile Include="Modules\Student\ViewModels\AddEducationViewModel.cs" />
     <Compile Include="Security\DayMonthValidation.cs" />
     <Compile Include="Security\FileValidation.cs" />
     <Compile Include="Global.asax.cs">
@@ -352,6 +351,8 @@
     <Content Include="App_Browsers\qt.browser" />
     <Content Include="Modules\Counselor\Views\File.cshtml" />
     <Content Include="Modules\Lecturer\Views\MotivationListWidget.cshtml" />
+    <Content Include="Modules\Student\Views\AddEducationWidget.cshtml" />
+    <Content Include="Modules\Student\Views\EducationListWidget.cshtml" />
     <None Include="Properties\PublishProfiles\Foundation.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

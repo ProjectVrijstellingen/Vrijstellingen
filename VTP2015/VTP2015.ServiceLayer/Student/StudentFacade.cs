@@ -25,7 +25,8 @@ namespace VTP2015.ServiceLayer.Student
         private readonly IRepository<Education> _educationRepository;
         private readonly IRepository<RequestPartimInformation> _requestPartimInformationRepository;
         private readonly IBamaflexSynchroniser _synchroniser;
-        private readonly IRepository<Motivation> _motivationRepository; 
+        private readonly IRepository<Motivation> _motivationRepository;
+        private readonly IRepository<PrevEducation> _prevEducationRepository; 
 
         public StudentFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository, IIdentityRepository identityRepository)
         {
@@ -41,6 +42,7 @@ namespace VTP2015.ServiceLayer.Student
             var moduleRepository = unitOfWork.Repository<Module>();
             _requestPartimInformationRepository = unitOfWork.Repository<RequestPartimInformation>();
             _motivationRepository = unitOfWork.Repository<Motivation>();
+            _prevEducationRepository = unitOfWork.Repository<PrevEducation>();
 
             _synchroniser = new BamaflexSynchroniser(_studentRepository, _educationRepository,
                 bamaflexRepository, _partimInformationRepository, partimRepository, moduleRepository,
@@ -195,6 +197,28 @@ namespace VTP2015.ServiceLayer.Student
             _synchroniser.SyncStudentByUser(email, academicYear);
         }
 
+        public IQueryable<Models.PrevEducation> GetPrevEducationsByStudentEmail(string email)
+        {
+            return _prevEducationRepository.Table.Where(x => x.Student.Email == email).ProjectTo<Models.PrevEducation>();
+        }
+
+        public void InsertPrevEducation(string education, string email)
+        {
+            _prevEducationRepository.Insert(new PrevEducation
+            {
+                Education = education,
+                Student = _studentRepository.Table.First(x => x.Email == email)
+            });
+        }
+
+        public bool DeleteEducation(int educationId)
+        {
+            if (!_prevEducationRepository.Table.Any(x => x.Id == educationId)) return false;
+
+            _prevEducationRepository.Delete(educationId);
+            return true;
+        }
+
         public Models.Evidence GetEvidenceById(int evidenceId)
         {
             var entity = _evidenceRepository.Table.First(e => e.Id == evidenceId);
@@ -322,9 +346,9 @@ namespace VTP2015.ServiceLayer.Student
             return true;
         }
 
-        public Education GetEducation(string studentMail)
+        public string GetEducation(string studentMail)
         {
-            return _studentRepository.Table.First(s => s.Email == studentMail).Education;
+            return _studentRepository.Table.First(s => s.Email == studentMail).Education.Name;
         }
     }
 }

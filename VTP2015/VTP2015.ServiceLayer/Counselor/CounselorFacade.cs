@@ -92,7 +92,7 @@ namespace VTP2015.ServiceLayer.Counselor
                         {
                             Path = e.Path,
                             Description = e.Description,
-                            EvidenceId = e.Id,
+                            Id = e.Id,
                             StudentEmail = e.Student.Email
                         }),
                         Argumentation = request.Argumentation,
