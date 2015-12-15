@@ -3,6 +3,7 @@
 
 @*@using (Ajax.BeginForm("AddFileStudentName", "Student", new AjaxOptions{HttpMethod = "Post", OnSuccess = "BewijsSuccess"} ,new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
 {*@
+<br/>
 <form id="addBewijs-form" class="form-horizontal" data-url="@Url.Action("AddFile","Student")">
     <div class="input-group">
         @Html.LabelFor(m => m.File, new { @class = "form-label" })
@@ -14,7 +15,6 @@
             </span>
             <input type="text" class="form-control" readonly>
         </div>
-@*        <input id="File" type="file" name="FileStudentName">*@
     </div>
     <br />
     <div class="input-group">
