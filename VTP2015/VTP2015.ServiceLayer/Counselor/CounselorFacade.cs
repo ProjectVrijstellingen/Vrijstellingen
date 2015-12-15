@@ -155,7 +155,7 @@ namespace VTP2015.ServiceLayer.Counselor
             var file = _fileRepository.GetById(fileId);
             var model = new FileView
             {
-                MotivationList = _motivationRepository.Table,
+                MotivationList = _motivationRepository.Table.Where(x => x.Text != "geen"),
                 Education = file.Education.Name,
                 Counselor = file.Education.Counselors.First().Email ?? "none",
                 DateCreated = file.DateCreated,
@@ -165,7 +165,7 @@ namespace VTP2015.ServiceLayer.Counselor
                 {
                     Module = x.RequestPartimInformations.First().PartimInformation.Module.Name,
                     Partims = x.RequestPartimInformations.Select(r => new PartimView { Name = r.PartimInformation.Partim.Name, Status = (int)r.Status, Motivation = r.MotivationId}),
-                    Argumentation  = x.Argumentation ?? "",
+                    PrevEducationId  = x.PrevEducations.Select(e => e.Id),
                     EvidenceIds = x.Evidence.Select(e => e.Id)
                 }),
                 Evidence = file.Requests.SelectMany(x => x.Evidence).Distinct().Select(x => new EvidenceView
@@ -173,6 +173,11 @@ namespace VTP2015.ServiceLayer.Counselor
                     Id = x.Id,
                     Path = x.Path,
                     Description = x.Description
+                }),
+                PrevEducations = file.Requests.SelectMany(x => x.PrevEducations).Distinct().Select(x => new PrevEducationView
+                {
+                    Id = x.Id,
+                    Education = x.Education
                 })
             };
             return model;

@@ -277,7 +277,6 @@
     <Compile Include="Modules\Counselor\ViewModels\FileOverviewViewModel.cs" />
     <Compile Include="Modules\Counselor\ViewModels\EducationSelectViewModel.cs" />
     <Compile Include="Modules\Counselor\ViewModels\EducationViewModel.cs" />
-    <Compile Include="Modules\Counselor\ViewModels\PdfViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bewijzen\howest.jpg" />
@@ -434,7 +433,6 @@
     <Content Include="Modules\Admin\Views\SettingsWidget.cshtml" />
     <Content Include="Modules\Admin\Views\UserTableWidget.cshtml" />
     <Content Include="Modules\Counselor\Views\EducationSelectWidget.cshtml" />
-    <Content Include="Modules\Counselor\Views\PrintFile.cshtml" />
     <Content Include="Modules\Feedback\Views\AddFeedbackWidget.cshtml" />
     <Content Include="Modules\Student\Views\EvidenceListWidget.cshtml" />
   </ItemGroup>

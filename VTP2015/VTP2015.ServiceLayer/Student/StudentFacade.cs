@@ -300,7 +300,7 @@ namespace VTP2015.ServiceLayer.Student
             file.FileStatus = FileStatus.Submitted;
             foreach (var partiminfo in file.Requests.SelectMany(request => request.RequestPartimInformations.Where(x => x.Status == Status.Empty)))
             {
-                if (partiminfo.Request.Evidence.Count < 1)
+                if (partiminfo.Request.Evidence.Count < 1 && partiminfo.Request.PrevEducations.Count < 1)
                 {
                     partiminfo.Status = Status.Rejected;
                     partiminfo.Motivation = _motivationRepository.GetById(6);
