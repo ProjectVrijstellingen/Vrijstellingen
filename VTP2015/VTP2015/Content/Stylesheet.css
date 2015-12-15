@@ -252,14 +252,20 @@ h3 {
 }
 
 .crossModule {
-    float: right;
     left: -15px;
+}
+
+.crossPartim, .crossModule, .vinkje, .ban {
+    float: right;
     padding: 0px;
 }
 
-.crossPartim {
-    float: right;
-    padding: 0px;
+.vinkje {
+    color: #18bc9c;
+}
+
+.ban {
+    color: #e74c3c;
 }
 
 .list-group {
@@ -271,7 +277,7 @@ footer {
 }
 
 .moduleSpace {
-    margin: 0px 0px 10px 0px;
+    margin: 0px 0px 20px 0px;
 }
 
 .name {

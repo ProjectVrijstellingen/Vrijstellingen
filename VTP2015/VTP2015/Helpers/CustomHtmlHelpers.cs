@@ -65,11 +65,15 @@ namespace VTP2015.Helpers
 
                         }
                         partimNameTag.AddCssClass("name");
-                        partimNameTag.SetInnerText(TextLimiter(partim.Name, 100) + status[partim.Status]);
+                        //partimNameTag.SetInnerText(TextLimiter(partim.Name, 100) + status[partim.Status]);
+                        partimNameTag.SetInnerText(TextLimiter(partim.Name, 100));
                         partimTag.InnerHtml += partimNameTag;
                         if (partim.Status == 0)
-                            partimTag.InnerHtml += ShowGlyphicon(html, "remove",
-                                "btn crossPartim" + (deletable ? "" : " hide"));
+                            partimTag.InnerHtml += ShowGlyphicon(html, "remove", "btn crossPartim" + (deletable ? "" : " hide"));
+                        else if (partim.Status == 2)
+                            partimTag.InnerHtml += ShowGlyphicon(html, "ban-cirkle", "ban");
+                        else if (partim.Status == 3)
+                            partimTag.InnerHtml += ShowGlyphicon(html, "ok", "vinkje");
                         moduleTag.InnerHtml += partimTag;
                     }
                     tag.InnerHtml += moduleTag;
@@ -115,7 +119,7 @@ namespace VTP2015.Helpers
             descriptionTag.SetInnerText(" " + TextLimiter(evidence.Path,20) + " - " + evidence.Description);
             itemTag.InnerHtml += descriptionTag;
             if (!submitted) itemTag.InnerHtml += ShowGlyphicon(html, "remove","btn crossPartim" + (movable? " hide":""));
-            if (movable) itemTag.InnerHtml += ShowGlyphicon(html, "plus","btn badge");
+            if (movable) itemTag.InnerHtml += ShowGlyphicon(html, "plus","btn crossPartim");
             return new MvcHtmlString(itemTag.ToString());
         }
 
@@ -152,7 +156,7 @@ namespace VTP2015.Helpers
             descriptionTag.SetInnerText(" " + TextLimiter(education.Education, 100));
             itemTag.InnerHtml += descriptionTag;
             if (!submitted) itemTag.InnerHtml += ShowGlyphicon(html, "remove", "btn crossPartim" + (movable ? " hide" : ""));
-            if (movable) itemTag.InnerHtml += ShowGlyphicon(html, "plus", "btn badge");
+            if (movable) itemTag.InnerHtml += ShowGlyphicon(html, "plus", "btn crossPartim");
             return new MvcHtmlString(itemTag.ToString());
         }
 
@@ -184,6 +188,8 @@ namespace VTP2015.Helpers
                 educationLabelTag.AddCssClass("control-label");
                 educationLabelTag.SetInnerText("Vorige opleidingen:");
                 articleTag.InnerHtml += educationLabelTag;
+                articleTag.InnerHtml += "<br />";
+
                 var educationTag = new TagBuilder("ul");
                 if (!aanvraag.Submitted) educationTag.Attributes.Add("id", "opleidingen");
                 educationTag.AddCssClass("list-group");
@@ -192,10 +198,13 @@ namespace VTP2015.Helpers
                     educationTag.InnerHtml += ShowEducationLi(html, opleiding, false, aanvraag.Submitted);
                 }
                 articleTag.InnerHtml += educationTag;
+                articleTag.InnerHtml += "<br />";
+
                 var bewijzenLabelTag = new TagBuilder("label");
                 bewijzenLabelTag.AddCssClass("control-label");
                 bewijzenLabelTag.SetInnerText("Bewijzen:");
                 articleTag.InnerHtml += bewijzenLabelTag;
+
                 var bewijzenTag = new TagBuilder("ul");
                 if(!aanvraag.Submitted) bewijzenTag.Attributes.Add("id","bewijzen");
                 bewijzenTag.AddCssClass("list-group");
@@ -204,6 +213,8 @@ namespace VTP2015.Helpers
                     bewijzenTag.InnerHtml += ShowBewijsLi(html, bewijs, false, aanvraag.Submitted);
                 }
                 articleTag.InnerHtml += bewijzenTag;
+                articleTag.InnerHtml += "<br />";
+
                 var buttonTag = new TagBuilder("button");
                 buttonTag.AddCssClass("btn btn-info");
                 buttonTag.Attributes.Add("onclick", "Return()");
