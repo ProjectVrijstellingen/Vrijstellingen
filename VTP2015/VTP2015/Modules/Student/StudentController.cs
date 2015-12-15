@@ -131,6 +131,7 @@ namespace VTP2015.Modules.Student
             return PartialView();
         }
 
+        [PreventSpam]
         [Route("AddEducation")]
         [HttpPost]
         public ActionResult AddEducation(AddEducationViewModel viewModel)
@@ -163,6 +164,14 @@ namespace VTP2015.Modules.Student
             var configFile = new ConfigFile();
             if (ViewData.ModelState.IsValid) _studentFacade.SyncStudent(User.Identity.Name, configFile.AcademieJaar());
             return RedirectToAction("Index");
+        }
+
+        [Route("Submit")]
+        [HttpPost]
+        public ActionResult SubmitFile()
+        {
+            var configFile = new ConfigFile();
+            return Json(_studentFacade.SumbitFile(User.Identity.Name, configFile.AcademieJaar()));
         }
 
         #endregion
@@ -313,15 +322,6 @@ namespace VTP2015.Modules.Student
                 : Content(!_studentFacade.DeleteRequest(fileId, aanvraagId)
                     ? "RequestPartimInformation bestaat niet!"
                     : "Voltooid!");
-        }
-
-        [Route("Submit")]
-        [HttpPost]
-        public ActionResult SubmitFile(int fileId)
-        {
-            _studentFacade.IsFileFromStudent(User.Identity.Name, fileId);
-            _studentFacade.SumbitFile(fileId);
-            return Content("Submitted!");
         }
         #endregion
     }

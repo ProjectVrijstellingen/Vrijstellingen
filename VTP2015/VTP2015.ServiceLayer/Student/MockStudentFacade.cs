@@ -163,11 +163,6 @@ namespace VTP2015.ServiceLayer.Student
             throw new NotImplementedException();
         }
 
-        public void SumbitFile(int fileId)
-        {
-            throw new NotImplementedException();
-        }
-
         public FileStatus GetFileStatus(int fileId)
         {
             throw new NotImplementedException();
@@ -194,6 +189,11 @@ namespace VTP2015.ServiceLayer.Student
         }
 
         public bool DeleteEducation(int educationId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] SumbitFile(string email, string academicYear)
         {
             throw new NotImplementedException();
         }

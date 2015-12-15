@@ -152,26 +152,26 @@ namespace VTP2015.ServiceLayer.Counselor
                         {
                             new Evidence { Description = "evidence1", Path = "/bewijzen/test/pdf-test.pdf"},
                             new Evidence { Description = "evidence2", Path = "/bewijzen/test/pdf-test.pdf"},
-                        }, FileId = 1, RequestId = 1, Status = Status.Approved, Argumentation = "argumentation1"},
+                        }, FileId = 1, RequestId = 1, Status = Status.Approved, PrevEducations = new List<PrevEducation>{ new PrevEducation {Education = "education1"}}},
                         new Partim { Name = "Partim2", Evidence = new List<Evidence>{
                             new Evidence { Description = "evidence1", Path = "/bewijzen/test/pdf-test.pdf"},
                             new Evidence { Description = "evidence2", Path = "/bewijzen/test/pdf-test.pdf"},
-                        }, FileId = 1, RequestId = 1, Status = Status.Rejected, Argumentation = "argumentation2"},
+                        }, FileId = 1, RequestId = 1, Status = Status.Rejected, PrevEducations = new List<PrevEducation>{ new PrevEducation {Education = "education2"}}},
                         new Partim { Name = "Partim3", Evidence = new List<Evidence>{
                             new Evidence { Description = "evidence1", Path = "/bewijzen/test/pdf-test.pdf"},
                             new Evidence { Description = "evidence2", Path = "/bewijzen/test/pdf-test.pdf"},
-                        }, FileId = 1, RequestId = 1, Status = Status.Untreated, Argumentation = "argumentation3"},
+                        }, FileId = 1, RequestId = 1, Status = Status.Untreated, PrevEducations = new List<PrevEducation>{ new PrevEducation {Education = "education3"}}},
                     }},
                     new Module { Name = "Module2", Partims = new List<Partim>
                     {
                         new Partim { Name = "Partim4", Evidence = new List<Evidence>{
                             new Evidence { Description = "evidence1", Path = "/bewijzen/test/pdf-test.pdf"},
                             new Evidence { Description = "evidence2", Path = "path2"},
-                        }, FileId = 1, RequestId = 1, Status = Status.Approved, Argumentation = "argumentation4"},
+                        }, FileId = 1, RequestId = 1, Status = Status.Approved, PrevEducations = new List<PrevEducation>{ new PrevEducation {Education = "education4"}}},
                         new Partim { Name = "Partim5", Evidence = new List<Evidence>{
                             new Evidence { Description = "evidence1", Path = "path1"},
                             new Evidence { Description = "evidence2", Path = "path2"},
-                        }, FileId = 1, RequestId = 1, Status = Status.Rejected, Argumentation = "argumentation5"},
+                        }, FileId = 1, RequestId = 1, Status = Status.Rejected, PrevEducations = new List<PrevEducation>{ new PrevEducation {Education = "education5"}}},
                     }},
                 }
             };

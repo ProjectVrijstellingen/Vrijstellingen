@@ -201,10 +201,24 @@ function loadFileById(fileId) {
                 newPartimDetail.removeAttr("id");
                 newPartimDetail.attr("data-partiminformationid", partim.PartimInformationId);
                 newPartimDetail.attr("data-index", index);
-                newPartimDetail.find(".argumentation").text(partim.Argumentation);
-                newPartimDetail.find(".amountOfEvidence").text(partim.Evidence.length);
                 newPartimDetail.find(".btnRemovePartim").attr("data-partiminformationid", partim.PartimInformationId);
                 newPartimDetail.find(".btnRemovePartim").attr("data-fileid", partim.FileId);
+
+                if (partim.PrevEducations.length > 0) {
+                    $(partim.PrevEducations).each(function (educationIndex, education) {
+                        console.log("current education: " + educationIndex);
+
+                        var newEvidence = $("#educationDummy").clone();
+                        newEvidence.removeClass("hide");
+                        newEvidence.attr("data-index", educationIndex + 1);
+                        newEvidence.text(education.Education);
+
+                        console.log(education.Path);
+                        newPartimDetail.find(".opleidingen").append(newEvidence);
+                    });
+                } else {
+                    newPartimDetail.find(".opleidingenDiv").remove();
+                }
 
                 if (partim.Evidence.length > 0) {
                     newPartimDetail.find(".amountOfEvidence").text(partim.Evidence.length);

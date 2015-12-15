@@ -22,12 +22,12 @@ namespace VTP2015.ServiceLayer.Student
         bool DeleteRequest(int fileId, int requestId);
         string GetEducation(string studentMail);
         string AddRequestInFile(int fileId, string code);
-        void SumbitFile(int fileId);
         FileStatus GetFileStatus(int fileId);
         IQueryable<Models.Student> GetStudent(string email);
         void SyncStudent(string email, string academicYear);
         IQueryable<PrevEducation> GetPrevEducationsByStudentEmail(string email);
         void InsertPrevEducation(string education, string email);
         bool DeleteEducation(int educationId);
+        string[] SumbitFile(string email, string academicYear);
     }
 }

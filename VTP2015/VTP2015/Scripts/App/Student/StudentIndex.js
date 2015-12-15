@@ -92,3 +92,25 @@
         });
     });
 });
+
+$(document).on("click", "#btnIndienen", function () {
+    console.log("Dossier indienen");
+    savePartimdetails();
+    $.ajax({
+        url: $("#infoSide").data("url"),
+        data: {},
+        type: "POST",
+        success: function (data) {
+            if (data[0] === "Done!") {
+                location.reload();
+            }
+            else {
+                var errorList = $(document.getElementById("indienErrors"));
+                errorList.empty();
+                data.forEach(function (error) {
+                    errorList.append("<li>" + error + "</li>");
+                });
+            }
+        }
+    });
+});

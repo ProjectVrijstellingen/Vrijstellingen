@@ -11,6 +11,7 @@ using Evidence = VTP2015.Modules.Counselor.DTOs.Evidence;
 using File = VTP2015.Modules.Counselor.DTOs.File;
 using Module = VTP2015.Modules.Counselor.DTOs.Module;
 using Partim = VTP2015.Modules.Counselor.DTOs.Partim;
+using PrevEducation = VTP2015.Modules.Counselor.DTOs.PrevEducation;
 
 namespace VTP2015.Modules.Counselor
 {
@@ -64,7 +65,10 @@ namespace VTP2015.Modules.Counselor
                             Argumentation = e.Description,
                             Type = e.Path.Split('.').Last()
                         }),
-                        Argumentation = p.Argumentation,
+                        PrevEducations = p.PrevEducations.Select(e => new PrevEducation
+                        {
+                            Education = e.Education
+                        }),
                         PartimInformationId = p.PartimInformationId
                     })
                 })

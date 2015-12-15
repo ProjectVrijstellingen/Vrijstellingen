@@ -7,5 +7,5 @@
     <p>@Model.Email</p>
     <p><b>@Model.Education</b><br/>Begeleider: @Model.Counselor</p>
     <br/>
-    @Ajax.ActionLink("Sync", "StudentSync", "Student", new AjaxOptions {HttpMethod = "POST"}, new { @class = "btn btn-info" })
+    @Ajax.ActionLink("Account Synchonisatie", "StudentSync", "Student", new AjaxOptions {HttpMethod = "POST"}, new { @class = "btn btn-info" })
 }

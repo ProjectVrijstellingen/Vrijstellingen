@@ -176,7 +176,7 @@ namespace VTP2015.Helpers
                 var partimTag = new TagBuilder("h4");
                 partimTag.SetInnerText(aanvraag.PartimName);
                 articleTag.InnerHtml += partimTag;
-                if (aanvraag.Submitted)
+                if (aanvraag.Submitted && aanvraag.Motivation != "geen")
                 {
                     var motivatieTag = new TagBuilder("p");
                     var headTag = new TagBuilder("b");

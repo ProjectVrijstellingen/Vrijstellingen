@@ -25,13 +25,10 @@
         {
             <br/>
 
-            if (submitted)
-            {
-                <span>Ingediend</span>
-            }
-            else
+            if (!submitted)
             {
                 <span id="btnIndienen" class="btn btn-info">Indienen</span>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger", @id = "indienErrors" })
             }
         }
     }

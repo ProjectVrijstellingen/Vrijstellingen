@@ -205,6 +205,7 @@
     <Compile Include="Modules\Counselor\DTOs\File.cs" />
     <Compile Include="Modules\Counselor\DTOs\Module.cs" />
     <Compile Include="Modules\Counselor\DTOs\Partim.cs" />
+    <Compile Include="Modules\Counselor\DTOs\PrevEducation.cs" />
     <Compile Include="Modules\Counselor\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Modules\Counselor\ViewModels\Models\Evidence.cs" />
     <Compile Include="Modules\Counselor\ViewModels\Models\Module.cs" />

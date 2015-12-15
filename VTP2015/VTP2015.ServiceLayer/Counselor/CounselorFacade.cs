@@ -12,6 +12,7 @@ using Education = VTP2015.Entities.Education;
 using Evidence = VTP2015.ServiceLayer.Counselor.Models.Evidence;
 using File = VTP2015.Entities.File;
 using Partim = VTP2015.ServiceLayer.Counselor.Models.Partim;
+using PrevEducation = VTP2015.ServiceLayer.Counselor.Models.PrevEducation;
 using Request = VTP2015.Entities.Request;
 
 namespace VTP2015.ServiceLayer.Counselor
@@ -95,7 +96,11 @@ namespace VTP2015.ServiceLayer.Counselor
                             Id = e.Id,
                             StudentEmail = e.Student.Email
                         }),
-                        Argumentation = request.Argumentation,
+                        PrevEducations = request.PrevEducations.Select(e => new PrevEducation
+                        {
+                            Id = e.Id,
+                            Education = e.Education
+                        }),
                         FileId = request.FileId,
                         RequestId = request.Id,
                         Status = (Models.Status)requestPartimInformation.Status,

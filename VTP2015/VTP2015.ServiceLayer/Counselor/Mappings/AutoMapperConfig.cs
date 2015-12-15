@@ -22,9 +22,7 @@ namespace VTP2015.ServiceLayer.Counselor.Mappings
             Mapper.CreateMap<Evidence, Models.Evidence>()
                 .ForMember(r => r.StudentEmail,
                     opt => opt.MapFrom(r => r.Student.Email));
-            Mapper.CreateMap<PrevEducation, Models.PrevEducation>()
-                 .ForMember(r => r.StudentEmail,
-                     opt => opt.MapFrom(r => r.Student.Email));
+            Mapper.CreateMap<PrevEducation, Models.PrevEducation>();
         }
     }
 }

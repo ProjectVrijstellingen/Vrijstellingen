@@ -111,7 +111,6 @@ $(document).find("#aanvraagDetail").on("click", ".glyphicon-remove", function ()
 
 $(document).on("click", ".partim", function () {
     console.log("partim clicked");
-    if (isIngediend()) return;
     var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
     var parentDiv = $(this).parent().parent()[0];
     var moduleid = $(parentDiv).data("moduleid");
@@ -156,7 +155,6 @@ $(document).on("click", ".partim", function () {
 
 $(document).on("click", ".module", function () {
     console.log("module clicked");
-    if (isIngediend()) return;
     var semesterDiv = $(this).closest(".semesterDiv");
     var beschikbarePartims = document.getElementById("beschikbarePartimsColumn");
     var parentDiv = $(this).parent()[0];
@@ -288,22 +286,6 @@ $(document).ready(function () {
     $("[data-toggle=\"tooltip\"]").tooltip();
 });
 
-$(document).on("click", "#btnIndienen", function () {
-    console.log("Dossier indienen");
-    savePartimdetails();
-    var fileId = document.URL.split("/")[document.URL.split("/").length - 1];
-    $.ajax({
-        url: $("#beschikbarePartimsColumn").data("url"),
-        data: {
-            fileId: fileId
-        },
-        type: "POST",
-        success: function (data) {
-            if(data === "Submitted!") location.reload();
-        }
-    });
-});
-
 $(document).on("click", ".semester", function() {
     var list = $(this).parent().children()[1];
     var glyph = $(this).children()[0];
@@ -337,11 +319,6 @@ function selectDetail(supercode) {
         show.addClass("nothidden");
     }
     if (!$(document.getElementById("beschikbarePartimsColumn")).hasClass("hide")) toSecondView();
-}
-
-function isIngediend() {
-    var string = $("#aangevraagdePartimsColumn .panel .panel-heading").find("span").text();
-    return string === "Ingediend";
 }
 
 $(document).ready(function () {

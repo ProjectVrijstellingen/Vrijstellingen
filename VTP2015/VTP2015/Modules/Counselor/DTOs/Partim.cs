@@ -9,7 +9,7 @@ namespace VTP2015.Modules.Counselor.DTOs
         public int FileId { get; set; }
         public string Status { get; set; }
         public int PartimInformationId { get; set; }
-        public string Argumentation { get; set; }
+        public IEnumerable<PrevEducation> PrevEducations { get; set; }
         public IEnumerable<Evidence> Evidence { get; set; }
     }
 }

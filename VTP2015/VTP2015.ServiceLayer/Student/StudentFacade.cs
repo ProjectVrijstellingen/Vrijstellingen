@@ -125,7 +125,7 @@ namespace VTP2015.ServiceLayer.Student
             switch (partimMode)
             { 
                 case PartimMode.Requested:
-                    return requestedPartims.ProjectTo<Models.PartimInformation>();
+                    return requestedPartims.Where(x => x.PartimInformation.Module.Semester != 0).ProjectTo<Models.PartimInformation>();
                 case PartimMode.Available:
                     return
                         _fileRepository.Table.Where(s => s.Id == fileId)
@@ -133,6 +133,7 @@ namespace VTP2015.ServiceLayer.Student
                             .SelectMany(e => e.Routes)
                             .SelectMany(r => r.PartimInformation)
                             .Except(requestedPartims.Select(x => x.PartimInformation))
+                            .Where(x => x.Module.Semester != 0)
                             .ProjectTo<Models.PartimInformation>();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(partimMode), partimMode, null);
@@ -292,25 +293,31 @@ namespace VTP2015.ServiceLayer.Student
             return newRequest.Id.ToString();
         }
 
-        public void SumbitFile(int fileId)
+        public string[] SumbitFile(string email, string academicYear)
         {
-            var file = _fileRepository.GetById(fileId);
-            if (file.Requests.Count < 1) return;
+            var file = _fileRepository.Table.First(x => x.Student.Email == email && x.AcademicYear == academicYear);
+            if (file.Requests.Count < 1) return new [] {"Dossier bevat geen aanvragen"};
             if(file.FileStatus == FileStatus.InProgress) file.DateCreated = DateTime.Now;
             file.FileStatus = FileStatus.Submitted;
+            var errorList = new List<string>();
             foreach (var partiminfo in file.Requests.SelectMany(request => request.RequestPartimInformations.Where(x => x.Status == Status.Empty)))
             {
                 if (partiminfo.Request.Evidence.Count < 1 && partiminfo.Request.PrevEducations.Count < 1)
                 {
-                    partiminfo.Status = Status.Rejected;
-                    partiminfo.Motivation = _motivationRepository.GetById(6);
+                    var name = partiminfo.Request.RequestPartimInformations.Count > 1
+                        ? partiminfo.PartimInformation.Module.Name
+                        : partiminfo.PartimInformation.Partim.Name;
+                    errorList.Add(name + " ontbreekt argumentatie!");
                 }
                 else
                 {
                     partiminfo.Status = Status.Untreated;
                 }
             }
+            if (errorList.Count > 0) return errorList.Distinct().ToArray();
             _fileRepository.Update(file);
+            errorList.Add("Done!");
+            return errorList.ToArray();
         }
 
         public Models.FileStatus GetFileStatus(int fileId)
