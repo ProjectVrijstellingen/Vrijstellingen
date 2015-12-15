@@ -13,5 +13,6 @@ namespace VTP2015.Modules.Lecturer.ViewModels
         public ServiceLayer.Lecturer.Models.Student Student { get; set; }
         public string SuperCode { get; set; }
         public Motivation Motivation { get; set; }
+        public int Semester { get; set; }
     }
 }

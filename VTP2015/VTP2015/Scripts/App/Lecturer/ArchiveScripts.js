@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $(".aantal").addClass("hide");
+    //$(".aantal").addClass("hide");
 
     $($(".approvedaanvraagcontainer").children()[0]).click(function (event) {
         if ($($(".approvedaanvraagcontainer").children()[1]).hasClass("hide"))

@@ -40,13 +40,7 @@
                     <li>
                         @if (im.HasRole(User.Identity.Name, "Lecturer"))
                         {
-                            @Html.RouteLink("Openstaande aanvragen", new { controller = "Lecturer", action = "Index" })
-                        }
-                    </li>
-                    <li>
-                        @if (im.HasRole(User.Identity.Name, "Lecturer"))
-                        {
-                            @Html.RouteLink("Aanvraag archief", new { controller = "Lecturer", action = "Archive" })
+                            @Html.RouteLink("Docent", new { controller = "Lecturer", action = "Index" })
                         }
                     </li>
                     <li>

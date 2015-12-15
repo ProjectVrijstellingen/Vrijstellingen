@@ -8,20 +8,6 @@ namespace VTP2015.ServiceLayer.Lecturer.Mappings
     {
         public void Execute()
         {
-            //Mapper.CreateMap<RequestPartimInformation, Models.RequestPartimInformation>()
-            //    .ForMember(x => x.Module,
-            //    opt => opt.MapFrom(x => x.PartimInformation.Module))
-            //    .ForMember(x => x.Partim,
-            //    opt => opt.MapFrom(x => x.PartimInformation.Partim))
-            //    .ForMember(x => x.Argumentation,
-            //    opt => opt.MapFrom(x => x.Request.Argumentation))
-            //    .ForMember(x => x.Evidence,
-            //    opt => opt.MapFrom(x => x.Request.Evidence.AsQueryable()))
-            //    .ForMember(x => x.Student,
-            //    opt => opt.MapFrom(x => x.Request.File.Student))
-            //    .ForMember(x => x.Status,
-            //    opt => opt.MapFrom(x => (Models.Status)(int)x.Status));
-
             Mapper.CreateMap<Entities.Evidence, Models.Evidence>();
             Mapper.CreateMap<File, Models.File>();
             Mapper.CreateMap<Partim, Models.Partim>();
