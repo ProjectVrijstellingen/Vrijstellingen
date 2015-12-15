@@ -46,9 +46,9 @@ namespace VTP2015.Modules.Counselor
             var dto = new File
             {
                 StudentName = file.StudentFirstName + " " + file.StudentName,
-                AmountOfUntreatedRequests = file.Modules.SelectMany(x => x.Partims).Count(x => x.Status == Status.Untreated),
-                AmountOfApprovedRequests = file.Modules.SelectMany(x => x.Partims).Count(x => x.Status == Status.Approved),
-                AmountOfDeniedRequests = file.Modules.SelectMany(x => x.Partims).Count(x => x.Status == Status.Rejected),
+                AmountOfUntreatedRequests = file.AmountOfUntreatedRequests,
+                AmountOfApprovedRequests = file.AmountOfApprovedRequests,
+                AmountOfDeniedRequests = file.AmountOfDeniedRequests,
                 Modules = file.Modules.Select(m => new Module
                 {
                     Name = m.Name,

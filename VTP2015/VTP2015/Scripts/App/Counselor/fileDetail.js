@@ -49,6 +49,12 @@
         removePartim(partimInformationId, fileId);
     });
 
+    $("#files").on("click", ".btnRemoveFile", function(e) {
+        var fileId = $(e.currentTarget).data("fileid");
+
+        removeFile(fileId);
+    });
+
 });
 
 function removePartim(partimInformationId, fileId) {
@@ -66,6 +72,18 @@ function removePartim(partimInformationId, fileId) {
 
         if (moduleGroup.find("li").length < 2) 
             moduleGroup.parent().remove();
+    });
+}
+
+function removeFile(fileId) {
+    $.ajax({
+        url: "/Counselor/DeleteFile",
+        data: {
+            fileId: fileId
+        },
+        method: "post"
+    }).success(function(data) {
+        showFileOverview();
     });
 }
 
@@ -152,6 +170,7 @@ function loadFileById(fileId) {
         newFile.find("#spnAmountOfUntreatedRequests").text(data.AmountOfUntreatedRequests);
         newFile.find("#spnAmountOfDeniedRequests").text(data.AmountOfDeniedRequests);
         newFile.find("#AmountOfUntreatedRequests").text(data.AmountOfUntreatedRequests);
+        newFile.find(".btnRemoveFile").attr("data-fileid", fileId);
         var partimList = newFile.find(".partimList");
 
         $(data.Modules).each(function (moduleIndex, module) {

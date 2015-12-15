@@ -25,8 +25,14 @@ namespace VTP2015.Modules.Counselor.ViewModels
             get
             {
                 var color = "warning";
-                if (PercentageOfRequestsDone == 100) { color = "danger"; }
-                else if (PercentageOfRequestsDone == 0) { color = "success"; }
+                if (PercentageOfRequestsDone == 0)
+                {
+                    color = "danger";
+                }
+                else if (PercentageOfRequestsDone == 100)
+                {
+                    color = "success";
+                }
                 return color;
             }
         }
