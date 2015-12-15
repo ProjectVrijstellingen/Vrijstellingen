@@ -29,7 +29,6 @@
                         <div data-evidenceid="@bewijs.Id" class="inheritWidth bewijs">
                             <input class="btn argumentatie" value="@bewijs.Description" type="button" data-bewijsid="@bewijs.Id">
                             <div class="inheritWidth bewijspointer hide" data-RequestPartimInformationid="RequestPartimInformation_@aanvraag.Id">
-                                @*<textarea id="argumentatie" class="form-control" readonly="">@bewijs.Description</textarea>*@
                                 <a href="~/bewijzen/@bewijs.Student.Email.Split(new Char[] {'@'}).First()/@bewijs.Path" download>
                                     Als onderstaande voorstelling niet werkt kunt u op deze link klikken om het evidence te downloaden
                                 </a>

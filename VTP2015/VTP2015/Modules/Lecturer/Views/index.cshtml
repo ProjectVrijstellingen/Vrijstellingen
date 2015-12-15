@@ -1,32 +1,24 @@
-﻿@using System.Linq;
-
-@model IQueryable<VTP2015.Modules.Lecturer.ViewModels.StudentListViewModel>
-@{
-    ViewBag.Title = "Docent - Openstaande aanvragen";
+﻿@{
+    ViewBag.Title = "Docent";
 }
 
 <br/>
 
-<div class="container">
-    <div class="container">
-        <div class="row" id="dossiers">
-            @if (ViewBag.DocentHeeftAanvragen)
-            {
-                <div class="col-md-4">
-                    @Html.Action("ModuleListWidget")
-                    @Html.Action("StudentListWidget")
-                </div>
-                
-                <div class="col-md-8">
-                    @Html.Action("RequestListWidget")
-                </div>
-            }
-            else
-            {
-                <h2 class="page-header">Er zijn geen openstaande aanvragen</h2>
-            }
+<div class="container body-content">
+    <div class="container-fix">
 
+        <div class="panel panel-info clearfix">
+            <div class="panel-heading">
+                <h3 class="panel-title">Docent</h3>
+            </div>
+            <div class="panel-body">
+                <a class="btn btn-info" href="/Lecturer/OpenRequests">Openstaande aanvragen</a>
+                <a class="btn btn-info" href="/Lecturer/Archive">Aanvraag archief</a>
+                <a class="btn btn-info" href="/Lecturer/Partim">Partims verwijderen</a>
+
+            </div>
         </div>
+
     </div>
 </div>
 
