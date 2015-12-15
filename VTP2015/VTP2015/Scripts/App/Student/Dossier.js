@@ -63,7 +63,8 @@ function addRequest(code) {
 
 function savePartimdetails() {
     clearTimeout(timer);
-    var opleidingen, bewijzen = [];
+    var opleidingen = [];
+    var bewijzen = [];
     var dossierId = document.URL.split("/")[document.URL.split("/").length - 1];
     $.each(partimdetails, function () {
         var that = this;

@@ -142,34 +142,37 @@ namespace VTP2015.ServiceLayer.Student
         public IQueryable<Models.Request> GetRequestByFileId(int fileId)
         {
             var requests = _requestRepository.Table.Where(request => request.FileId == fileId);
-            var requestList = requests.Where(request => request.RequestPartimInformations.All(x => x.Status == Status.Empty))
-                .Select(request => new Models.Request
-                {
-                    FileId = request.FileId,
-                    Id = request.Id,
-                    ModuleName = request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Name,
-                    PartimName =
-                        request.RequestPartimInformations.Count ==
-                        request.RequestPartimInformations.FirstOrDefault()
-                            .PartimInformation.Module.PartimInformation.Count
-                            ? ""
-                            : request.RequestPartimInformations.FirstOrDefault().PartimInformation.Partim.Name,
-                    Code =
-                        request.RequestPartimInformations.Count ==
-                        request.RequestPartimInformations.FirstOrDefault()
-                            .PartimInformation.Module.PartimInformation.Count
-                            ? request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Code
-                            : request.RequestPartimInformations.FirstOrDefault().PartimInformation.SuperCode,
-                    Educations = request.PrevEducations.Select(
-                            x => new Models.PrevEducation { Id = x.Id, Education = x.Education })
+            var requestList =
+                requests.Where(request => request.RequestPartimInformations.All(x => x.Status == Status.Empty))
+                    .Select(request => new Models.Request
+                    {
+                        FileId = request.FileId,
+                        Id = request.Id,
+                        ModuleName = request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Name,
+                        PartimName =
+                            request.RequestPartimInformations.Count ==
+                            request.RequestPartimInformations.FirstOrDefault()
+                                .PartimInformation.Module.PartimInformation.Count
+                                ? ""
+                                : request.RequestPartimInformations.FirstOrDefault().PartimInformation.Partim.Name,
+                        Code =
+                            (request.RequestPartimInformations.Count ==
+                             request.RequestPartimInformations.FirstOrDefault()
+                                 .PartimInformation.Module.PartimInformation.Count &&
+                             request.RequestPartimInformations.FirstOrDefault()
+                                 .PartimInformation.Module.PartimInformation.Count > 1)
+                                ? request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Code
+                                : request.RequestPartimInformations.FirstOrDefault().PartimInformation.SuperCode,
+                        Educations = request.PrevEducations.Select(
+                            x => new Models.PrevEducation {Id = x.Id, Education = x.Education})
                             .AsQueryable(),
-                    Evidence =
-                        request.Evidence.Select(
-                            x => new Models.Evidence {Id = x.Id, Description = x.Description, Path = x.Path})
-                            .AsQueryable(),
-                    Submitted = false,
-                    Motivation = request.RequestPartimInformations.FirstOrDefault().Motivation.Text
-                }).ToList();
+                        Evidence =
+                            request.Evidence.Select(
+                                x => new Models.Evidence {Id = x.Id, Description = x.Description, Path = x.Path})
+                                .AsQueryable(),
+                        Submitted = false,
+                        Motivation = request.RequestPartimInformations.FirstOrDefault().Motivation.Text
+                    }).ToList();
             requests.Where(request => request.RequestPartimInformations.All(x => x.Status != Status.Empty))
                 .Each(request => requestList.AddRange(request.RequestPartimInformations.Select(partiminfo => new Models.Request
                 {
