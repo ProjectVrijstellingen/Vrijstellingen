@@ -39,6 +39,8 @@ namespace VTP2015.Modules.Lecturer.Mappings
                     opt => opt.MapFrom(i => i.Argumentation))
                 .ForMember(m => m.Evidence,
                     opt => opt.MapFrom(i => i.Evidence))
+                .ForMember(m => m.Semester,
+                    opt => opt.MapFrom(i => i.Module.Semester))
                 .ForMember(m => m.Motivation,
                     opt => opt.MapFrom(i => i.Motivation));
 

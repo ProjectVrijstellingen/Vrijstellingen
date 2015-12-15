@@ -351,6 +351,8 @@
     <Content Include="App_Browsers\qt.browser" />
     <Content Include="Modules\Counselor\Views\File.cshtml" />
     <Content Include="Modules\Lecturer\Views\MotivationListWidget.cshtml" />
+    <Content Include="Modules\Lecturer\Views\OpenRequests.cshtml" />
+    <Content Include="Modules\Lecturer\Views\Partim.cshtml" />
     <Content Include="Modules\Student\Views\AddEducationWidget.cshtml" />
     <Content Include="Modules\Student\Views\EducationListWidget.cshtml" />
     <None Include="Properties\PublishProfiles\Foundation.pubxml" />

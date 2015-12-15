@@ -65,7 +65,7 @@ namespace VTP2015.Helpers
 
                         }
                         partimNameTag.AddCssClass("name");
-                        partimNameTag.SetInnerText(TextLimiter(partim.Name, 30) + status[partim.Status]);
+                        partimNameTag.SetInnerText(TextLimiter(partim.Name, 100) + status[partim.Status]);
                         partimTag.InnerHtml += partimNameTag;
                         if (partim.Status == 0)
                             partimTag.InnerHtml += ShowGlyphicon(html, "remove",

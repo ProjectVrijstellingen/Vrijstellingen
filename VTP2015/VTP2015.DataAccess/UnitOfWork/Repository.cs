@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Data.Entity.Validation;
 using System.Linq;
 using VTP2015.Entities;
@@ -54,6 +55,7 @@ namespace VTP2015.DataAccess.UnitOfWork
                 {
                     throw new ArgumentNullException(nameof(entity));
                 }
+                Entities.AddOrUpdate(entity);
                 _context.SaveChanges();
             }
             catch (DbEntityValidationException dbEx)

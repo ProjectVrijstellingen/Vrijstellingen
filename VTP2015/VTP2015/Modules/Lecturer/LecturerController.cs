@@ -22,9 +22,23 @@ namespace VTP2015.Modules.Lecturer
         [HttpGet]
         [Route("")]
         public ViewResult Index()
+        {  
+            return View();
+        }
+
+        [HttpGet]
+        [Route("OpenRequests")]
+        public ViewResult OpenRequests()
         {
             ViewBag.DocentHeeftAanvragen = _lecturerFacade.hasAny(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Untreated);
-              
+
+            return View();
+        }
+
+        [HttpGet]
+        [Route("Partim")]
+        public ViewResult Partim()
+        {
             return View();
         }
 

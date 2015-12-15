@@ -8,7 +8,23 @@
         <ul class="list-group">
             @foreach (var partim in Model)
             {
-                <li class="list-group-item partimpointer" data-supercode="@partim.SuperCode"><span class="name">@partim.PartimName - @partim.ModuleName</span><span id="Aantal_@partim.SuperCode" class="aantal" style="float: right;">0</span></li>
+                <li class="list-group-item partimpointer" data-supercode="@partim.SuperCode">
+                    <span class="name">@partim.PartimName - @partim.ModuleName</span>
+                    @{
+                        string url = HttpContext.Current.Request.Url.AbsolutePath;
+                        if (url.Equals("/Lecturer/OpenRequests"))
+                        {
+                            <span id="Aantal_@partim.SuperCode" class="aantal" style="float: right;">0</span>
+                        }
+                        else
+                        if (url.Equals("/Lecturer/Partim"))
+                        { 
+                            <span id="Verwijder_@partim.SuperCode" class="" style="float: right;">X</span>
+                        }
+
+                    }
+
+                </li>
             }
         </ul>
     </div>

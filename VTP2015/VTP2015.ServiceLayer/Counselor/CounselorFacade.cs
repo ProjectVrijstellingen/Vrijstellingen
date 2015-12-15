@@ -106,55 +106,10 @@ namespace VTP2015.ServiceLayer.Counselor
                 }
             }
 
+            
+
             return serviceFile;
         } 
-
-        public IQueryable<Models.Request> GetRequests()
-        {
-            Debug.WriteLine("Started GetRequests");
-
-            var starttime = DateTime.Now;
-
-            var requests = _requestRepository.Table;
-
-            var result = new List<Models.Request>();
-
-            foreach (var request in requests)
-            {
-                var modules = new List<Models.Module>();
-                foreach (var requestPartimInformation in request.RequestPartimInformations)
-                {
-                    var partimInformation = requestPartimInformation.PartimInformation;
-                    if (modules.All(module => module.Name != partimInformation.Module.Name))
-                        modules.Add(new Models.Module {Name = partimInformation.Module.Name, Partims = new List<Partim>()});
-
-                    var partims = (List<Partim>) modules
-                        .First(module => module.Name == partimInformation.Module.Name)
-                        .Partims;
-
-                    var partim = new Partim
-                    {
-                        Name = partimInformation.Partim.Name,
-                        Evidence = request.Evidence.Select(evidence => new Evidence
-                        {
-                            Description = evidence.Description,
-                            Path = evidence.Path,
-                        }),
-                        Status = (Models.Status) requestPartimInformation.Status
-                    };
-
-                    partims.Add(partim);
-
-                }
-                result.Add(new Models.Request { StudentName = request.File.Student.Name });
-            }
-
-            var endTime = DateTime.Now;
-
-            Debug.WriteLine("time to finish algorithm: " + (endTime.Millisecond - starttime.Millisecond));
-
-            return result.AsQueryable();
-        }
 
         public string GetEducationNameByCounselorEmail(string email)
         {
