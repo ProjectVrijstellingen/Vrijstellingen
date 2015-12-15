@@ -17,6 +17,7 @@
 .container {
     padding-left: 0 !important;
     padding-right: 0 !important;
+    width: 1400px;
 }
 
 .white {
@@ -226,12 +227,17 @@ fieldset[disabled] .btn-default.active {
     padding-right: 15px;
 }
 
-h4, h3 {
+h4 {
     color: #2c3e50;
+}
+
+h3 {
+    color: #18bc9c;
 }
 
 .h3 {
     font-size: 21px !important;
+    color: #18bc9c;
 }
 
 .semesterDiv {
@@ -254,14 +260,19 @@ h4, h3 {
     padding: 0px;
 }
 
-/*.list-group-item {
+.list-group {
     margin-bottom: 0px !important;
-}*/
+}
 
 footer {
     padding-left: 50px;
 }
 
 .moduleSpace {
-    margin: 10px 0;
+    margin: 0px 0px 10px 0px;
 }
+
+.name {
+    margin: 0px;
+}
+
