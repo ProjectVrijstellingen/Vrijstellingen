@@ -17,5 +17,6 @@ namespace VTP2015.Entities
         public virtual ICollection<Feedback> Feedback { get; set; }
         public virtual ICollection<File> Files { get; set; }
         public virtual ICollection<Evidence> Evidence { get; set; }
+        public virtual ICollection<PrevEducation> PrevEducations { get; set; } 
     }
 }

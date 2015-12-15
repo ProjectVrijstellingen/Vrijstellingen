@@ -3,22 +3,23 @@ using VTP2015.Entities;
 
 namespace VTP2015.DataAccess.Config
 {
-    class EvidenceConfig : EntityTypeConfiguration<Evidence>
+    class PrevEducationConfig : EntityTypeConfiguration<PrevEducation>
     {
-        public EvidenceConfig()
+        public PrevEducationConfig()
         {
             // Primary Key
             HasKey(t => t.Id);
 
             // Properties
-            ToTable("Evidence");
-            Property(t => t.Path).IsRequired();
+            ToTable("PrevEducations");
+            Property(t => t.Education).IsRequired();
 
             // Relationships
             HasRequired(t => t.Student)
-                .WithMany(t => t.Evidence)
+                .WithMany(t => t.PrevEducations)
                 .HasForeignKey(d => d.StudentId)
                 .WillCascadeOnDelete(false);
+
         }
     }
 }

@@ -19,5 +19,6 @@ namespace VTP2015.Entities
         public virtual ICollection<RequestPartimInformation> RequestPartimInformations { get; set; }
         public virtual File File { get; set; }
         public virtual ICollection<Evidence> Evidence { get; set; }
+        public virtual ICollection<PrevEducation> PrevEducations { get; set; } 
     }
 }

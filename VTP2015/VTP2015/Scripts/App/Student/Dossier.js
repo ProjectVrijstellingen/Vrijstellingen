@@ -129,7 +129,7 @@ $(document).on("click", ".partim", function () {
             $("#aangevraagdePartimsColumn .panel-body").html($("#aangevraagdePartimsColumn .panel-body").html() + "<div class=\"semesterDiv\" data-semester=\"" + semester + "\"><div class=\"semester\">" + $(semesterDiv).find(".semester").html() + "</div><div class=\"nohide partimList\"></div></div>");
         var newSemesterDiv = $("#aangevraagdePartimsColumn div[data-semester=\"" + semester + "\"]");
         if ($(newSemesterDiv).find("div[data-moduleid=\"" + moduleid + "\"]").length === 0) {
-            $(newSemesterDiv).children("div:last").html($(newSemesterDiv).children("div:last").html() + "<div data-moduleid=\"" + moduleid + "\"><span class=\"h4\">" + moduleNaam + "</span><ul class=\"list-group\"></ul></div>");
+            $(newSemesterDiv).children("div:last").html($(newSemesterDiv).children("div:last").html() + "<div class=\"moduleSpace\" data-moduleid=\"" + moduleid + "\"><span class=\"h4\">" + moduleNaam + "</span><ul class=\"list-group\"></ul></div>");
         }
 
         newParent = $(newSemesterDiv).children("div:last").find("div[data-moduleid=\"" + moduleid + "\"] ul");
@@ -137,7 +137,7 @@ $(document).on("click", ".partim", function () {
         $(newParent).parent().removeClass("hide");
         $(this).appendTo($(newParent));
         $(this).find(".btn").removeClass("hide");
-
+        console.log($(this));
         $(parentDiv).children("span:first").removeClass("module");
         if ($(parentDiv).find("ul").children().length === 0) $(parentDiv).remove();
         if ($(semesterDiv).children("div:last").children().length === 0) $(semesterDiv).remove();
@@ -198,7 +198,7 @@ $(document).on("click", ".glyphicon-plus", function () {
     addBewijs(that);
 });
 
-$(document).on("click", ".glyphicon-remove", function (e) {
+$(document).find("#aangevraagdePartimsColumn").on("click", ".glyphicon-remove", function (e) {
     console.log("remove Request");
     e.stopPropagation();
     savePartimdetails();
@@ -217,7 +217,7 @@ $(document).on("click", ".glyphicon-remove", function (e) {
             $("#beschikbarePartimsColumn .panel-body").html($("#beschikbarePartimsColumn .panel-body").html() + "<div class=\"semesterDiv\" data-semester=\"" + semester + "\"><div class=\"semester\">" + $(semesterDiv).find(".semester").html() + "</div><div class=\"nohide\"></div></div>");
         newSemesterDiv = $("#beschikbarePartimsColumn div[data-semester=\"" + semester + "\"]");
         if ($(newSemesterDiv).find("div[data-moduleid=\"" + moduleid + "\"]").length === 0) {
-            $(newSemesterDiv).children("div:last").html($(newSemesterDiv).children("div:last").html() + "<div data-moduleid=\"" + moduleid + "\"><span class=\"h4\">" + moduleNaam + "</span><ul class=\"list-group\"></ul></div>");
+            $(newSemesterDiv).children("div:last").html($(newSemesterDiv).children("div:last").html() + "<div class=\"moduleSpace\" data-moduleid=\"" + moduleid + "\"><span class=\"h4\">" + moduleNaam + "</span><ul class=\"list-group\"></ul></div>");
         }
 
         var newParent = $(newSemesterDiv).children("div:last").find("div[data-moduleid=\"" + moduleid + "\"] ul");

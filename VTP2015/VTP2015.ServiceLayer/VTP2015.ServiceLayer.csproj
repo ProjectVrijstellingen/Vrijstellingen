@@ -76,6 +76,7 @@
     <Compile Include="Counselor\Models\Module.cs" />
     <Compile Include="Counselor\Models\Partim.cs" />
     <Compile Include="Counselor\Models\PartimView.cs" />
+    <Compile Include="Counselor\Models\PrevEducation.cs" />
     <Compile Include="Counselor\Models\Request.cs" />
     <Compile Include="Counselor\Models\RequestView.cs" />
     <Compile Include="Counselor\Models\Status.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Mail\Mailer.cs" />
     <Compile Include="Student\Mappings\AutoMapperConfig.cs" />
     <Compile Include="Student\MockStudentFacade.cs" />
+    <Compile Include="Student\Models\PrevEducation.cs" />
     <Compile Include="Student\Models\Evidence.cs" />
     <Compile Include="Student\Models\File.cs" />
     <Compile Include="Student\Models\FileStatus.cs" />

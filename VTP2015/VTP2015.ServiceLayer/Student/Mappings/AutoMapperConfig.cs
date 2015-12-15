@@ -22,6 +22,7 @@ namespace VTP2015.ServiceLayer.Student.Mappings
                 .ForMember(x => x.Semester, opt => opt.MapFrom(x => x.Module.Semester))
                 .ForMember(x => x.Status, opt => opt.UseValue(Models.Status.Empty));
             Mapper.CreateMap<Evidence, Models.Evidence>();
+            Mapper.CreateMap<PrevEducation, Models.PrevEducation>();
             Mapper.CreateMap<RequestPartimInformation, Models.PartimInformation>()
                 .ForMember(x => x.SuperCode, opt => opt.MapFrom(x => x.PartimInformation.SuperCode))
                 .ForMember(x => x.Code, opt => opt.MapFrom(x => x.PartimInformation.Module.Code))
@@ -39,6 +40,7 @@ namespace VTP2015.ServiceLayer.Student.Mappings
             Mapper.CreateMap<Models.File, File>();
             Mapper.CreateMap<Models.PartimInformation, PartimInformation>();
             Mapper.CreateMap<Models.Request, Request>();
+            Mapper.CreateMap<Models.PrevEducation, PrevEducation>();
         }
 
     }
