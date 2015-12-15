@@ -19,7 +19,6 @@ namespace VTP2015.DataAccess.Config
                 .WithMany(t => t.Evidence)
                 .HasForeignKey(d => d.StudentId)
                 .WillCascadeOnDelete(false);
-
         }
     }
 }

@@ -196,7 +196,7 @@ namespace VTP2015.Modules.Student
 
             var newId = _studentFacade.InsertFile(dossier);
 
-            return this.RedirectToAction(c => c.File(newId));
+            return RedirectToAction("Index");
         }
 
         [Route("AddAanvraag")]
