@@ -179,16 +179,18 @@ namespace VTP2015.Helpers
                     motivatieTag.InnerHtml += headTag + "<br/>" + aanvraag.Motivation;
                     articleTag.InnerHtml += motivatieTag;
                 }
-                var argumentatieLabelTag = new TagBuilder("label");
-                argumentatieLabelTag.Attributes.Add("for","argumentatie");
-                argumentatieLabelTag.AddCssClass("control-label");
-                argumentatieLabelTag.SetInnerText("Argumentatie:");
-                articleTag.InnerHtml += argumentatieLabelTag;
-                var argumentatieTag = new TagBuilder("textarea");
-                if(!aanvraag.Submitted) argumentatieTag.Attributes.Add("id","argumentatie");
-                argumentatieTag.AddCssClass("form-control");
-                argumentatieTag.SetInnerText(aanvraag.Argumentation);
-                articleTag.InnerHtml += argumentatieTag;
+                var educationLabelTag = new TagBuilder("label");
+                educationLabelTag.AddCssClass("control-label");
+                educationLabelTag.SetInnerText("Vorige opleidingen:");
+                articleTag.InnerHtml += educationLabelTag;
+                var educationTag = new TagBuilder("ul");
+                if (!aanvraag.Submitted) educationTag.Attributes.Add("id", "opleidingen");
+                educationTag.AddCssClass("list-group");
+                foreach (var opleiding in aanvraag.Educations)
+                {
+                    educationTag.InnerHtml += ShowEducationLi(html, opleiding, false, aanvraag.Submitted);
+                }
+                articleTag.InnerHtml += educationTag;
                 var bewijzenLabelTag = new TagBuilder("label");
                 bewijzenLabelTag.AddCssClass("control-label");
                 bewijzenLabelTag.SetInnerText("Bewijzen:");

@@ -355,6 +355,7 @@
     <Content Include="Modules\Lecturer\Views\Partim.cshtml" />
     <Content Include="Modules\Student\Views\AddEducationWidget.cshtml" />
     <Content Include="Modules\Student\Views\EducationListWidget.cshtml" />
+    <Content Include="Modules\Student\Views\SelectEducationWidget.cshtml" />
     <None Include="Properties\PublishProfiles\Foundation.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

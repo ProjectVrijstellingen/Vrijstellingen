@@ -160,7 +160,9 @@ namespace VTP2015.ServiceLayer.Student
                             .PartimInformation.Module.PartimInformation.Count
                             ? request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Code
                             : request.RequestPartimInformations.FirstOrDefault().PartimInformation.SuperCode,
-                    Argumentation = request.Argumentation,
+                    Educations = request.PrevEducations.Select(
+                            x => new Models.PrevEducation { Id = x.Id, Education = x.Education })
+                            .AsQueryable(),
                     Evidence =
                         request.Evidence.Select(
                             x => new Models.Evidence {Id = x.Id, Description = x.Description, Path = x.Path})
@@ -176,7 +178,9 @@ namespace VTP2015.ServiceLayer.Student
                     ModuleName = partiminfo.PartimInformation.Module.Name,
                     PartimName = partiminfo.PartimInformation.Partim.Name,
                     Code = partiminfo.PartimInformation.SuperCode,
-                    Argumentation = request.Argumentation,
+                    Educations = request.PrevEducations.Select(
+                            x => new Models.PrevEducation { Id = x.Id, Education = x.Education })
+                            .AsQueryable(),
                     Evidence =
                         request.Evidence.Select(
                             x => new Models.Evidence { Id = x.Id, Description = x.Description, Path = x.Path })
@@ -320,7 +324,6 @@ namespace VTP2015.ServiceLayer.Student
         {
             var request = _requestRepository.GetById(requestModel.Id);
             if (request.RequestPartimInformations.Any(x => x.Status != Status.Empty)) return false;
-            request.Argumentation = requestModel.Argumentation;
             request.LastChanged = DateTime.Now;
             _requestRepository.Update(request);
             if (requestModel.Evidence != null)
@@ -330,6 +333,14 @@ namespace VTP2015.ServiceLayer.Student
 
                 request.Evidence.Except(evidence).ToList().ForEach(e => request.Evidence.Remove(e));
                 evidence.Except(request.Evidence).ToList().ForEach(e => request.Evidence.Add(e));
+            }
+            if (requestModel.Educations != null)
+            {
+                var educations = requestModel.Educations.Select(e => _prevEducationRepository.GetById(e.Id))
+                    .Where(e => e.Student.Files.Last().Id == requestModel.FileId);
+
+                request.PrevEducations.Except(educations).ToList().ForEach(e => request.PrevEducations.Remove(e));
+                educations.Except(request.PrevEducations).ToList().ForEach(e => request.PrevEducations.Add(e));
             }
             _requestRepository.Update(request);
             return true;

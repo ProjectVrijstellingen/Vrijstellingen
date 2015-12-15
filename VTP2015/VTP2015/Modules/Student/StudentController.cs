@@ -216,6 +216,18 @@ namespace VTP2015.Modules.Student
             return PartialView(models.ToArray());
         }
 
+        [Route("SelectEducationWidget")]
+        [HttpGet]
+        public PartialViewResult SelectEducationWidget(int fileId)
+        {
+            var models =
+                _studentFacade.GetPrevEducationsByStudentEmail(User.Identity.Name).ProjectTo<EducationListViewModel>();
+
+            ViewBag.FileStatus = _studentFacade.GetFileStatus(fileId);
+
+            return PartialView(models.ToArray());
+        }
+
         [Route("RequestDetailWidget")]
         [HttpGet]
         public PartialViewResult RequestDetailWidget(int fileId)
@@ -268,8 +280,7 @@ namespace VTP2015.Modules.Student
             var request = new Request
             {
                 Id = requestId,
-                FileId = viewModel.FileId,
-                Argumentation = viewModel.Argumentation
+                FileId = viewModel.FileId
             }; ;
             if (viewModel.Evidence != null)
             {
@@ -278,6 +289,14 @@ namespace VTP2015.Modules.Student
                 {
                     Id = evidenceId
                     }).AsQueryable();
+            }
+            if (viewModel.Educations != null)
+            {
+                viewModel.Educations = viewModel.Educations.Distinct().ToArray();
+                request.Educations = viewModel.Educations.Select(educationId => new PrevEducation
+                {
+                    Id = educationId
+                }).AsQueryable();
             }
 
 

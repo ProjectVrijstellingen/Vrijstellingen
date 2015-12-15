@@ -63,21 +63,23 @@ function addRequest(code) {
 
 function savePartimdetails() {
     clearTimeout(timer);
-    var bewijzen = [];
+    var opleidingen, bewijzen = [];
     var dossierId = document.URL.split("/")[document.URL.split("/").length - 1];
     $.each(partimdetails, function () {
         var that = this;
         var requestid = $(this).data("requestid");
         console.log(requestid);
-        var argumentatie = $(this).find("#argumentatie").val();
-        $(this).find("li").each(function () {
+        $(this).find("#opleidingen").find("li").each(function () {
+            opleidingen.push($(this).data("educationid"));
+        });
+        $(this).find("#bewijzen").find("li").each(function () {
             bewijzen.push($(this).data("bewijsid"));
         });
 
         var viewModel = {
             FileId: dossierId,
             RequestId: requestid,
-            Argumentation: argumentatie,
+            Educations: opleidingen,
             Evidence: bewijzen
         };
         $.ajax({
@@ -91,9 +93,7 @@ function savePartimdetails() {
     partimdetails = [];
 }
 
-function addBewijs(that) {
-    var newParent = $("#aanvraagDetail").find(".nothidden").find("#bewijzen");
-
+function Add(that, newParent) {
     var clon = $(that).clone();
     clon.removeAttr("id");
     clon.attr("draggable", "false");
@@ -103,12 +103,8 @@ function addBewijs(that) {
     changed($("#aanvraagDetail").find(".nothidden"));
 }
 
-$(document).on("click", ".glyphicon-minus", function () {
+$(document).find("#aanvraagDetail").on("click", ".glyphicon-remove", function () {
     $(this).parent().remove();
-    changed($("#aanvraagDetail").find(".nothidden"));
-});
-
-$(document).on("keyup", "#argumentatie", function() {
     changed($("#aanvraagDetail").find(".nothidden"));
 });
 
@@ -193,9 +189,16 @@ $(document).on("click", ".module", function () {
     }
 });
 
-$(document).on("click", ".glyphicon-plus", function () {
+$(document).find("#dragBewijzenList").on("click", ".glyphicon-plus", function () {
     var that = $(this).parent();
-    addBewijs(that);
+    var newParent = $("#aanvraagDetail").find(".nothidden").find("#bewijzen");
+    Add(that,newParent);
+});
+
+$(document).find("#dragEducationList").on("click", ".glyphicon-plus", function () {
+    var that = $(this).parent();
+    var newParent = $("#aanvraagDetail").find(".nothidden").find("#opleidingen");
+    Add(that, newParent);
 });
 
 $(document).find("#aangevraagdePartimsColumn").on("click", ".glyphicon-remove", function (e) {
