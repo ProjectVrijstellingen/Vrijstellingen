@@ -352,6 +352,8 @@
     <Content Include="App_Browsers\qt.browser" />
     <Content Include="Modules\Counselor\Views\File.cshtml" />
     <Content Include="Modules\Lecturer\Views\MotivationListWidget.cshtml" />
+    <Content Include="Modules\Lecturer\Views\OpenRequests.cshtml" />
+    <Content Include="Modules\Lecturer\Views\Partim.cshtml" />
     <None Include="Properties\PublishProfiles\Foundation.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
