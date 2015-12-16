@@ -5,7 +5,7 @@
     </div>
     <div class="panel-body">
         @{ var getoondeAanvraagId = 1; }
-        @foreach (var aanvraag in Model)
+        @foreach (var aanvraag in Model.OrderBy(o => o.SuperCode).OrderBy(o => o.Student.Name).OrderBy(o => o.Student.FirstName))
         {
             <div class="panel clearfix inheritWidth">
                 <div id="rejectedaanvraag-@getoondeAanvraagId" class="aanvraag modulecontainer" data-studentid="@aanvraag.Student.Email" data-aanvraagid="@aanvraag.Id" data-module="@aanvraag.ModuleName"  data-super="@aanvraag.SuperCode">

@@ -13,6 +13,8 @@ $(document).ready(function () {
             if ($('.partimpointer.active').length > 0)
             {
                 $("#" + $(".partimpointer.active").data("supercode")).find('[data-studentid="' + $(this).data("studentid") + '"]').parent().parent().removeClass("hide");
+                $(".aanvraag").addClass("hide");
+                $(".aanvraag").parent().find('[data-studentid="' + $(".studentpointer.active").data("studentid") + '"]').removeClass("hide");
             }
             else
             {
@@ -23,9 +25,11 @@ $(document).ready(function () {
             if ($('.partimpointer.active').length > 0) {
                 $(".modulecontainer").addClass("hide");
                 $("#" + $(".partimpointer.active").data("supercode")).find(".aanvraag").parent().parent().removeClass("hide");
+                $(".aanvraag").removeClass("hide");
             }
             else {
                 $(".modulecontainer").removeClass("hide");
+                $(".aanvraag").removeClass("hide");
             }
         }
     });
@@ -38,8 +42,11 @@ $(document).ready(function () {
         {
             $(this).addClass("active");
             $(".modulecontainer").addClass("hide");
+            
             if ($('.studentpointer.active').length > 0) {
                 $("#" + $(this).data("supercode")).find('[data-studentid="' + $(".studentpointer.active").data("studentid") + '"]').parent().parent().removeClass("hide");
+                $(".aanvraag").addClass("hide");
+                $(".aanvraag").parent().find('[data-studentid="' + $(".studentpointer.active").data("studentid") + '"]').removeClass("hide");
             }
             else {
                 $("#" + $(this).data("supercode")).find(".aanvraag").parent().parent().removeClass("hide");
@@ -53,6 +60,7 @@ $(document).ready(function () {
             }
             else {
                 $(".modulecontainer").removeClass("hide");
+                $(".aanvraag").removeClass("hide");
             }
         }
     });
