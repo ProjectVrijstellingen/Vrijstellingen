@@ -36,10 +36,12 @@
                                 {
                                     <p>
                                         <label for="argumentatie" class="control-label">Vorige opleidingen:</label>
-                                        @foreach (var prev in aanvraag.PrevEducation)
-                                        {
-                                            <label class="control-label">@aanvraag.Argumentation</label>
-                                        }
+                                        <ul class="list-group">
+                                            @foreach (var prev in aanvraag.PrevEducation)
+                                            {
+                                                <li class="list-group-item">@prev.Education</li>
+                                            }
+                                        </ul>
                                     </p>
                                 }
                             }
