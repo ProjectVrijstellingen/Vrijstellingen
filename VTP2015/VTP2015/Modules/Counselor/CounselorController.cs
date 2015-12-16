@@ -126,9 +126,18 @@ namespace VTP2015.Modules.Counselor
         {
             var models = _counselorFacade.GetFilesByCounselorEmail(User.Identity.Name, _configFile.AcademieJaar())
                 .ProjectTo<FileOverviewViewModel>();
+            ViewBag.Lecturers = _counselorFacade.GetNrNoLecturersPartims(User.Identity.Name);
 
             return PartialView(models);
 
+        }
+
+        [Route("AssignLecturers")]
+        [HttpGet]
+        public ActionResult AssignLecturers()
+        {
+            var models = _counselorFacade.GetPartimsNoLecturer(User.Identity.Name).ProjectTo<PartimInformationViewModel>();
+            return View(models.ToArray());
         }
 
         [Route("SendReminder")]

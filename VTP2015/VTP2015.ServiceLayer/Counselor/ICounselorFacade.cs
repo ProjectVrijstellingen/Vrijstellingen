@@ -16,6 +16,8 @@ namespace VTP2015.ServiceLayer.Counselor
         void SetFileStatusOpen(int fileId);
         void DeleteFile(int fileId);
         bool IsFileAvailable(int fileId);
+        int GetNrNoLecturersPartims(string email);
+        IQueryable<PartimInformation> GetPartimsNoLecturer(string email);
     }
 }
 

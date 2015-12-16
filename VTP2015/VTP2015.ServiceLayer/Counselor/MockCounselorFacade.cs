@@ -282,6 +282,16 @@ namespace VTP2015.ServiceLayer.Counselor
             throw new NotImplementedException();
         }
 
+        public int GetNrNoLecturersPartims(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<PartimInformation> GetPartimsNoLecturer(string email)
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemovePartimFromFile(int partimInformationId)
         {
         }

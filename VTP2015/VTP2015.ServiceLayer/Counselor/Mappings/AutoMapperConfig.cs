@@ -23,6 +23,9 @@ namespace VTP2015.ServiceLayer.Counselor.Mappings
                 .ForMember(r => r.StudentEmail,
                     opt => opt.MapFrom(r => r.Student.Email));
             Mapper.CreateMap<PrevEducation, Models.PrevEducation>();
+            Mapper.CreateMap<PartimInformation, Models.PartimInformation>()
+                .ForMember(p => p.ModuleName, opt => opt.MapFrom(x => x.Module.Name))
+                .ForMember(p => p.PartimName, opt => opt.MapFrom(x => x.Partim.Name));
         }
     }
 }
