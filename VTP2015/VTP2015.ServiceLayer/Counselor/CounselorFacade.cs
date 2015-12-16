@@ -12,6 +12,7 @@ using Education = VTP2015.Entities.Education;
 using Evidence = VTP2015.ServiceLayer.Counselor.Models.Evidence;
 using File = VTP2015.Entities.File;
 using Partim = VTP2015.ServiceLayer.Counselor.Models.Partim;
+using PartimInformation = VTP2015.ServiceLayer.Counselor.Models.PartimInformation;
 using PrevEducation = VTP2015.ServiceLayer.Counselor.Models.PrevEducation;
 using Request = VTP2015.Entities.Request;
 
@@ -25,6 +26,7 @@ namespace VTP2015.ServiceLayer.Counselor
         private readonly IRepository<File> _fileRepository;
         private readonly IRepository<RequestPartimInformation> _requestPartimInformationRepository;
         private readonly IRepository<Motivation> _motivationRepository;
+        private readonly IRepository<Entities.PartimInformation> _partimInformationRepository; 
 
         public CounselorFacade(IUnitOfWork unitOfWork)
         {
@@ -34,6 +36,7 @@ namespace VTP2015.ServiceLayer.Counselor
             _fileRepository = unitOfWork.Repository<File>();
             _motivationRepository = unitOfWork.Repository<Motivation>();
             _requestPartimInformationRepository = unitOfWork.Repository<RequestPartimInformation>();
+            _partimInformationRepository = unitOfWork.Repository<Entities.PartimInformation>();
 
             var autoMapperConfig = new AutoMapperConfig();
             autoMapperConfig.Execute();
@@ -68,6 +71,25 @@ namespace VTP2015.ServiceLayer.Counselor
         {
             if (!_fileRepository.Table.Any(x => x.Id == fileId)) return false;
             return _fileRepository.GetById(fileId).FileStatus != FileStatus.InProgress;
+        }
+
+        public int GetNrNoLecturersPartims(string email)
+        {
+            return
+                _counselorRepository.Table
+                    .Where(x => x.Email == email)
+                    .Select(x => x.Education)
+                    .SelectMany(x => x.Routes)
+                    .SelectMany(x => x.PartimInformation)
+                    .Count(x => x.Lecturer.Email == "docent@howest.be");
+        }
+
+        public IQueryable<PartimInformation> GetPartimsNoLecturer(string email)
+        {
+            return
+                _partimInformationRepository.Table.Where(
+                    x =>
+                        x.Lecturer.Email == "docent@howest.be").ProjectTo<PartimInformation>();
         }
 
         public Models.File GetFileByFileId(int fileId)
