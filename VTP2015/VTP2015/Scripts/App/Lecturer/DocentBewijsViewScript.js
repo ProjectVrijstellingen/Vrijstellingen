@@ -111,7 +111,7 @@ $(document).ready(function () {
             $("#Aantal_" + supercode).html(parseInt($("#Aantal_" + supercode).html()) - 1);
 
             $.ajax({
-                url: "Lecturer/ApproveAanvraag",
+                url: "ApproveAanvraag",
                 data: { aanvraagID: aanvraagId, motivationID: motivationId },
                 type: "POST",
                 success: function (data) {
@@ -133,7 +133,7 @@ $(document).ready(function () {
         if (motivationId > 1) {
             $("#Aantal_" + supercode).html(parseInt($("#Aantal_" + supercode).html()) - 1);
             $.ajax({
-                url: "Lecturer/DissapproveAanvraag",
+                url: "DissapproveAanvraag",
                 data: { aanvraagID: aanvraagId, motivationID: motivationId },
                 type: "POST",
                 success: function (data) {
