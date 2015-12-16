@@ -184,5 +184,16 @@ namespace VTP2015.Modules.Counselor
         {
             return new ActionAsPdf("File",new {fileId = id}){FileName = "Dossier" + id + ".pdf"};
         }
+
+        [Route("AssignLecturer")]
+        public ActionResult AssignLecturer(AssignLectorViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return
+                    Json(
+                        (from modelstate in ModelState.Values from error in modelstate.Errors select error.ErrorMessage)
+                            .ToArray());
+            return Json(_counselorFacade.AssignLector(viewModel.Email, viewModel.SuperCode));
+        }
     }
 }

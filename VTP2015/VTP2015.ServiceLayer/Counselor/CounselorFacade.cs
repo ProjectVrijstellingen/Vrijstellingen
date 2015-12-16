@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using AutoMapper.Internal;
 using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
@@ -26,7 +27,8 @@ namespace VTP2015.ServiceLayer.Counselor
         private readonly IRepository<File> _fileRepository;
         private readonly IRepository<RequestPartimInformation> _requestPartimInformationRepository;
         private readonly IRepository<Motivation> _motivationRepository;
-        private readonly IRepository<Entities.PartimInformation> _partimInformationRepository; 
+        private readonly IRepository<Entities.PartimInformation> _partimInformationRepository;
+        private readonly IRepository<Entities.Lecturer> _lecturerRepository; 
 
         public CounselorFacade(IUnitOfWork unitOfWork)
         {
@@ -37,6 +39,7 @@ namespace VTP2015.ServiceLayer.Counselor
             _motivationRepository = unitOfWork.Repository<Motivation>();
             _requestPartimInformationRepository = unitOfWork.Repository<RequestPartimInformation>();
             _partimInformationRepository = unitOfWork.Repository<Entities.PartimInformation>();
+            _lecturerRepository = unitOfWork.Repository<Entities.Lecturer>();
 
             var autoMapperConfig = new AutoMapperConfig();
             autoMapperConfig.Execute();
@@ -86,10 +89,30 @@ namespace VTP2015.ServiceLayer.Counselor
 
         public IQueryable<PartimInformation> GetPartimsNoLecturer(string email)
         {
-            return
-                _partimInformationRepository.Table.Where(
-                    x =>
-                        x.Lecturer.Email == "docent@howest.be").ProjectTo<PartimInformation>();
+            return _counselorRepository.Table
+                .Where(x => x.Email == email)
+                .Select(x => x.Education)
+                .SelectMany(x => x.Routes)
+                .SelectMany(x => x.PartimInformation)
+                .Where(x => x.Lecturer.Email == "docent@howest.be")
+                .ProjectTo<PartimInformation>();
+        }
+
+        public string[] AssignLector(string email, string superCode)
+        {
+            var errors = new List<string>();
+            if(!email.Contains("@howest.be")) errors.Add("Emailadres niet van Howest");
+            if(!_partimInformationRepository.Table.Any(x => x.SuperCode == superCode)) errors.Add("Verkeerde partim");
+            if (errors.Count > 0) return errors.ToArray();
+            
+            _partimInformationRepository.Table.Where(x => x.SuperCode == superCode).Each(x => x.Lecturer = _lecturerRepository.Table.FirstOrDefault(l => l.Email == email) ?? new Entities.Lecturer
+            {
+                Email = email,
+                InfoMail = DateTime.Now,
+                WarningMail = DateTime.Now
+            });
+            errors.Add("Finish");
+            return errors.ToArray();
         }
 
         public Models.File GetFileByFileId(int fileId)

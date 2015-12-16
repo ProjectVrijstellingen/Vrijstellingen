@@ -207,6 +207,7 @@
     <Compile Include="Modules\Counselor\DTOs\Partim.cs" />
     <Compile Include="Modules\Counselor\DTOs\PrevEducation.cs" />
     <Compile Include="Modules\Counselor\Mappings\AutoMapperConfig.cs" />
+    <Compile Include="Modules\Counselor\ViewModels\AssignLectorViewModel.cs" />
     <Compile Include="Modules\Counselor\ViewModels\Models\Evidence.cs" />
     <Compile Include="Modules\Counselor\ViewModels\Models\Module.cs" />
     <Compile Include="Modules\Counselor\ViewModels\Models\Partim.cs" />
@@ -365,6 +366,7 @@
     <Content Include="Icon.png" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\App\Admin\adminPanel.js" />
+    <Content Include="Scripts\App\Counselor\assignLecturers.js" />
     <Content Include="Scripts\App\Counselor\fileDetail.js" />
     <Content Include="Scripts\App\Counselor\fileOverview.js" />
     <Content Include="Scripts\App\Counselor\garbage\CounselorSelect.js" />

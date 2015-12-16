@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VTP2015.ServiceLayer.Counselor.Models
+﻿namespace VTP2015.ServiceLayer.Counselor.Models
 {
     public class PartimInformation
     {
-        public string ModuleName;
-        public string PartimName;
-        public string SuperCode;
+        public string ModuleName { get; set; }
+        public string PartimName { get; set; }
+        public string SuperCode { get; set; }
     }
 }

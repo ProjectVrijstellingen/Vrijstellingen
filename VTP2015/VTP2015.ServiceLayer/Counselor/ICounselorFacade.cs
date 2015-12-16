@@ -18,6 +18,7 @@ namespace VTP2015.ServiceLayer.Counselor
         bool IsFileAvailable(int fileId);
         int GetNrNoLecturersPartims(string email);
         IQueryable<PartimInformation> GetPartimsNoLecturer(string email);
+        string[] AssignLector(string email, string superCode);
     }
 }
 
