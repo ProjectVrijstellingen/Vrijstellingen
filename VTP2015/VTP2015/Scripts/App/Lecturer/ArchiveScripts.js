@@ -46,14 +46,13 @@
         }
         else {
             if ($('.partimpointer.active').length > 0) {
-                $(".modulecontainer").addClass("hide");
-                $("[data-super=" + $(".studentpointer.active").data("supercode") + "]").parent().removeClass("hide");
+                $(".modulecontainer").parent().addClass("hide");
+                $("[data-super=" + $(".partimpointer.active").data("supercode") + "]").parent().removeClass("hide");
             }
             else {
                 $(".modulecontainer").parent().removeClass("hide");
             }
         }
-        scroll_to($(".aanvraagcontainer"));
     });
 
     $(".partimpointer").click(function (event) {
@@ -73,14 +72,13 @@
         }
         else {
             if ($('.studentpointer.active').length > 0) {
-                $(".modulecontainer").addClass("hide");
+                $(".modulecontainer").parent().addClass("hide");
                 $("[data-studentid='" + $(".studentpointer.active").data("studentid") + "']").parent().removeClass("hide");
             }
             else {
                 $(".modulecontainer").parent().removeClass("hide");
             }
         }
-        scroll_to($(".aanvraagcontainer"));
     });
 
     $("#filter").bind("keyup", function () {
