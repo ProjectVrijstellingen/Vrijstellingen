@@ -46,6 +46,10 @@
                                 }
                             }
                             
+                            @if (aanvraag.Evidence.Count() > 0)
+                            {
+                                <label for="bewijzen" class="control-label">Ingediende bewijzen:</label>
+                            }
 
                             @foreach (var bewijs in aanvraag.Evidence)
                             {
