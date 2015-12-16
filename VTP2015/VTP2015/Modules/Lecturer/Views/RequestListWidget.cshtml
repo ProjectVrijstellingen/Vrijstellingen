@@ -10,9 +10,9 @@
         @foreach (var partim in Model.GroupBy(g => g.SuperCode).Select(grp => grp.First()))
         {
             <div id="@partim.SuperCode" class="panel panel-info clearfix inheritWidth modulecontainer">
-                <h3 class="panel-title">@partim.PartimName - @partim.ModuleName</h3>
+                <h3 class="panel-title partim">@partim.PartimName - @partim.ModuleName</h3>
+                <hr />
                 <div class="panel-body">
-
                     @foreach (var aanvraag in Model.Where(m => m.PartimName.Equals(partim.PartimName) && m.ModuleName.Equals(partim.ModuleName)))
                     {
                         <script>

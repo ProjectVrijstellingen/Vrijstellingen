@@ -76,6 +76,12 @@
     padding: 0;
 }
 
+.panel-title.partim{
+    padding-left: 15px;
+    padding-top: 15px;
+    font-size: 23px;
+}
+
 #kader {
     width:100%;
     text-align: center;
