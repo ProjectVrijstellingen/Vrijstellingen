@@ -6,7 +6,7 @@
     </div>
     <div class="panel-body" id="partimPointerDiv">
         <ul class="list-group">
-            @foreach (var partim in Model)
+            @foreach (var partim in Model.OrderBy(o=>o.SuperCode))
             {
                 <li class="list-group-item partimpointer" data-supercode="@partim.SuperCode">
                     <span class="name">@partim.PartimName - @partim.ModuleName</span>
