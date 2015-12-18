@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<VTP2015.Modules.Lecturer.ViewModels.RequestListViewModel>
+@{
     ViewBag.Title = "Docent";
 }
 
@@ -12,7 +13,7 @@
                 <h3 class="panel-title">Docent</h3>
             </div>
             <div class="panel-body">
-                <a class="btn btn-info" href="/Lecturer/OpenRequests">Openstaande aanvragen</a>
+                <a class="btn btn-info" href="/Lecturer/OpenRequests">Openstaande aanvragen<span id="spnOpenstaandeAanvragen" class="badge badge-success" style="margin-left: 1em">@ViewBag.AantalAanvragen</span></a>
                 <a class="btn btn-info" href="/Lecturer/Archive">Aanvraag archief</a>
                 <a class="btn btn-info" href="/Lecturer/Partim">Partims verwijderen</a>
 

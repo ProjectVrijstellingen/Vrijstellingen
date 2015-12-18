@@ -125,5 +125,10 @@ namespace VTP2015.ServiceLayer.Lecturer
         {
             throw new NotImplementedException();
         }
+
+        public int getAantal(string email, Status status)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

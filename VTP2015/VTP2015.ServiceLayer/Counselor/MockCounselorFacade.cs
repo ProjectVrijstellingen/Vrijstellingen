@@ -300,5 +300,10 @@ namespace VTP2015.ServiceLayer.Counselor
         {
             throw new NotImplementedException();
         }
+
+        public string[] AssignLector(string email, string superCode)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

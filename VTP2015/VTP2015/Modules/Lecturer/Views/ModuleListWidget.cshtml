@@ -9,7 +9,7 @@
             @foreach (var partim in Model.OrderBy(o=>o.SuperCode))
             {
                 <li class="list-group-item partimpointer" data-supercode="@partim.SuperCode">
-                    <span class="name">@partim.PartimName - @partim.ModuleName</span>
+                    <span class="name">@partim.ModuleName - @partim.PartimName</span>
                     @{
                         string url = HttpContext.Current.Request.Url.AbsolutePath;
                         if (url.Equals("/Lecturer/OpenRequests"))
