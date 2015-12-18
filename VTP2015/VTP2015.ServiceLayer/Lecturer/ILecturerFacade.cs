@@ -13,5 +13,6 @@ namespace VTP2015.ServiceLayer.Lecturer
         IQueryable<Motivation> GetMotivations();
         bool RemovePartimLecturer(string supercode);
         IQueryable<Models.Student> GetTreadedStudent(string email);
+        int getAantal(string email, Status status);
     }
 }

@@ -9,7 +9,7 @@
         
         @foreach (var partim in Model.GroupBy(g => g.SuperCode).Select(grp => grp.First()).OrderBy(o=> o.SuperCode))
         {
-            <div id="@partim.SuperCode" class="panel panel-info clearfix inheritWidth modulecontainer">
+            <div id="@partim.SuperCode" class="clearfix inheritWidth modulecontainer">
                 <h3 class="panel-title partim">@partim.PartimName - @partim.ModuleName</h3>
                 <hr />
                 <div class="panel-body">

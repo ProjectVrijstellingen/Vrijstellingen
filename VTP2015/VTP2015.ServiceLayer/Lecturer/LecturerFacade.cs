@@ -137,5 +137,14 @@ namespace VTP2015.ServiceLayer.Lecturer
                 .Select(f => f.File).Select(s => s.Student).Distinct().AsQueryable();
             return result.ProjectTo<Models.Student>();
         }
+
+        public int getAantal(string email, Status status)
+        {
+            return _lecturerRepository.Table.Where(x => x.Email == email)
+                .SelectMany(p => p.PartimInformation)
+                .SelectMany(p => p.RequestPartimInformations)
+                .Where(a => a.Status == (Entities.Status)(int)status)
+                .Count();
+        }
     }
 }

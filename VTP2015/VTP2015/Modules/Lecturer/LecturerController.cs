@@ -22,7 +22,8 @@ namespace VTP2015.Modules.Lecturer
         [HttpGet]
         [Route("")]
         public ViewResult Index()
-        {  
+        {
+            ViewBag.AantalAanvragen = _lecturerFacade.getAantal(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Untreated);
             return View();
         }
 
