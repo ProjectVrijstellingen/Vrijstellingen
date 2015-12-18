@@ -13,15 +13,15 @@
         @Html.Action("AddFeedbackWidget", "Feedback")
     </div>
     <div id="bewijzenColumn" class="col-md-6">
-        @using (Html.BeginPanel("Bewijzen"))
-        {
-            @Html.Action("EvidenceListWidget")
-            @Html.Action("AddFileWidget")
-        }
         @using (Html.BeginPanel("Vorige opleidingen"))
         {
             @Html.Action("EducationListWidget")
             @Html.Action("AddEducationWidget")
+        }
+        @using (Html.BeginPanel("Bewijzen"))
+        {
+            @Html.Action("EvidenceListWidget")
+            @Html.Action("AddFileWidget")
         }
     </div>
 </div>
