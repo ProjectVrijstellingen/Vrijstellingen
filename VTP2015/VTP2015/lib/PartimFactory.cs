@@ -4,6 +4,8 @@ using VTP2015.Modules.Student.ViewModels;
 
 namespace VTP2015.lib
 {
+
+    //TODO: Uitleg
     public class PartimFactory
     {
         public PartimFactory(PartimViewModel[] viewModels)
@@ -28,7 +30,9 @@ namespace VTP2015.lib
 
             if (Semesters.All(s => s.Number != viewModel.Semester))
                 Semesters.Add(new Semester {Number = viewModel.Semester});
+
             var semester = Semesters.First(s => s.Number == viewModel.Semester);
+
             if (semester.Modules.All(m => m.Code != viewModel.Code))
                 semester.Modules.Add(new Module
                 {

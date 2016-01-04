@@ -49,17 +49,23 @@ namespace VTP2015.Migrations
             database.SaveChanges();
         }
 
+        //TODO: Uitleg
         bool AddRoles()
         {
             var im = new IdentityManager();
             if (im.UserExists("begeleider@howest.be")) return true;
+
             var success = false;
+
             success = im.CreateRole("Student");
             if (!success) return success;
+
             success = im.CreateRole("Lecturer");
             if (!success) return success;
+
             success = im.CreateRole("Counselor");
             if (!success) return success;
+
             success = im.CreateRole("Admin");
             if (!success) return success;
 

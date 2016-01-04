@@ -20,6 +20,7 @@ namespace VTP2015.Modules.Counselor
     public class CounselorController : Controller
     {
         private readonly ICounselorFacade _counselorFacade;
+
         private readonly ConfigFile _configFile;
 
         public CounselorController(ICounselorFacade counselorFacade)
@@ -27,6 +28,7 @@ namespace VTP2015.Modules.Counselor
             _counselorFacade = counselorFacade;
             _configFile = new ConfigFile();
         }
+
 
         //
         // GET: /Counselors/
