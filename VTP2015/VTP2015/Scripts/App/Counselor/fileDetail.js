@@ -177,6 +177,7 @@ function loadFileById(fileId) {
             var newModule = $("#dummyModule").clone();
             newModule.removeClass("hide");
             newModule.removeAttr("id");
+            newModule.addClass("moduleSpace");
             newModule.find(".moduleName").text(module.Name);
             partimList.append(newModule);
 

@@ -2,6 +2,10 @@
     
 }
 
+a, a:active, a:focus {
+outline: none;
+}
+
 .center {
     width: 450px;
     margin-left: auto;
@@ -111,6 +115,10 @@ li {
 
 .untreatedRow {
     background-color: #f39c12;
+}
+
+.approvedRow, .deniedRow, .untreatedRow {
+    color: white;
 }
 
 .hidden {
@@ -232,5 +240,18 @@ footer {
     font-weight: 900;
     line-height: 21px;
     height: 60px;
-    color: #18bc9c;
+    color: white;
+}
+
+.studentName {
+    font-size: 26px;
+}
+
+.btnRemovePartim {
+    top: -30px;   
+}
+
+.moduleGroup > .list-group-item:nth-child(2) {
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
 }
