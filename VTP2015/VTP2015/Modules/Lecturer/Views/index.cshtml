@@ -8,7 +8,7 @@
 <div class="container body-content">
     <div class="container-fix">
 
-        <div class="panel panel-info clearfix">
+        <div class="panel panel-default clearfix">
             <div class="panel-heading">
                 <h3 class="panel-title">Docent</h3>
             </div>
@@ -16,9 +16,9 @@
                 @if (ViewBag.AantalAanvragen > 0)
                     {<a class="btn btn-danger" href="/Lecturer/OpenRequests">Openstaande aanvragen<span id="spnOpenstaandeAanvragen" class="badge badge-success" style="margin-left: 1em">@ViewBag.AantalAanvragen</span></a>}
                 else
-                    {<a class="btn btn-info" href="/Lecturer/OpenRequests">Openstaande aanvragen<span id="spnOpenstaandeAanvragen" class="badge badge-success" style="margin-left: 1em">@ViewBag.AantalAanvragen</span></a>}
-                <a class="btn btn-info" href="/Lecturer/Archive">Reeds behandelde aanvragen</a>
-                <a class="btn btn-info" href="/Lecturer/Partim">Partims verwijderen</a>
+                    {<a class="btn btn-primary" href="/Lecturer/OpenRequests">Openstaande aanvragen<span id="spnOpenstaandeAanvragen" class="badge badge-success" style="margin-left: 1em">@ViewBag.AantalAanvragen</span></a>}
+                <a class="btn btn-primary" href="/Lecturer/Archive">Reeds behandelde aanvragen</a>
+                <a class="btn btn-primary" href="/Lecturer/Partim">Partims verwijderen</a>
 
             </div>
         </div>

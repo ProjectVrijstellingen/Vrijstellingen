@@ -19,7 +19,7 @@
         </ul>
         if (Model.All(x => configFile.CalcAcademieJaar(x.DateCreated.Year) != configFile.AcademieJaar()))
         {
-            @Html.ActionLink("Nieuw dossier aanmaken", "NewFile", "Student", new {@class = "btn btn-info"})
+            @Html.ActionLink("Nieuw dossier aanmaken", "NewFile", "Student", new {@class = "btn btn-primary" })
         }
         else
         {
@@ -27,7 +27,7 @@
 
             if (!submitted)
             {
-                <span id="btnIndienen" class="btn btn-info">Dien in</span>
+                <span id="btnIndienen" class="btn btn-primary">Dien in</span>
                 @Html.ValidationSummary(false, "", new { @class = "text-danger", @id = "indienErrors" })
             }
         }

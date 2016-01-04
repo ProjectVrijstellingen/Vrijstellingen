@@ -216,7 +216,7 @@ namespace VTP2015.Helpers
                 articleTag.InnerHtml += "<br />";
 
                 var buttonTag = new TagBuilder("button");
-                buttonTag.AddCssClass("btn btn-info");
+                buttonTag.AddCssClass("btn btn-primary");
                 buttonTag.Attributes.Add("onclick", "Return()");
                 buttonTag.Attributes.Add("type","button");
                 buttonTag.SetInnerText("Terug");

@@ -6,7 +6,7 @@ namespace VTP2015.Helpers
     {
         public static Panel BeginPanel(this HtmlHelper html, string title)
         {
-            var htmlText = "<div class=\"panel panel-info clearfix\">";
+            var htmlText = "<div class=\"panel panel-default clearfix\">";
             htmlText += "<div class=\"panel-heading\">";
             htmlText += "<h3 class=\"panel-title\">" + title + "</h3></div>";
             htmlText += "<div class=\"panel-body\">";
