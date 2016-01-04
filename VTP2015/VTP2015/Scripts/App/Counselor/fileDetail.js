@@ -167,9 +167,9 @@ function loadFileById(fileId) {
         newFile.removeAttr("id");
         newFile.attr("data-fileid", fileId);
         newFile.find(".studentName").text(data.StudentName);
-        newFile.find("#spnAmountOfUntreatedRequests").text(data.AmountOfUntreatedRequests);
+        newFile.find("#spnAmountOfApprovedRequests").text(data.AmountOfApprovedRequests);
         newFile.find("#spnAmountOfDeniedRequests").text(data.AmountOfDeniedRequests);
-        newFile.find("#AmountOfUntreatedRequests").text(data.AmountOfUntreatedRequests);
+        newFile.find("#spnAmountOfUntreatedRequests").text(data.AmountOfUntreatedRequests);
         newFile.find(".btnRemoveFile").attr("data-fileid", fileId);
         var partimList = newFile.find(".partimList");
 
@@ -230,14 +230,21 @@ function loadFileById(fileId) {
                     newEvidence.removeAttr("id");
                     newEvidence.attr("data-index", evidenceIndex + 1);
                     newEvidence.find(".argumentation").text(evidence.Argumentation);
-
-                    newEvidence.find(".downloadLink").attr("href", evidence.Path);
+                    var path = evidence.Path;
+                    console.log(path);
+                    var start = path.lastIndexOf("\\", path.lastIndexOf("\\", path.lastIndexOf("\\") - 1) - 1);
+                        console.log(start);
+                        path = path.substring(start);
+                        console.log(path);
+                        path = path.replace(/\\/g, "/");
+                        console.log(path);
+                    newEvidence.find(".downloadLink").attr("href", path);
                         if (evidence.Type === "pdf")
-                        newEvidence.find(".pdf").attr("src", evidence.Path);
+                            newEvidence.find(".pdf").attr("src", path);
                     else
-                        newEvidence.find(".image").attr("src", evidence.Path);
+                            newEvidence.find(".image").attr("src", path);
 
-                    console.log(evidence.Path);
+                    console.log(path);
                     newPartimDetail.find(".evidenceContainer").append(newEvidence);
                     //console.log("new evidence: ");
                     //console.log(newEvidence);

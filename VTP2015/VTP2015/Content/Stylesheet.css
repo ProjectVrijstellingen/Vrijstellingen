@@ -248,7 +248,7 @@ footer {
 }
 
 .btnRemovePartim {
-    top: -30px;   
+    margin-bottom: 15px;   
 }
 
 .moduleGroup > .list-group-item:nth-child(2) {
