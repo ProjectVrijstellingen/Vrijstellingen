@@ -10,7 +10,7 @@ namespace VTP2015.ServiceLayer.Counselor.Mappings
         {
             Mapper.CreateMap<File, Models.File>()
                 .ForMember(r => r.AmountOfRequests,
-                    opt => opt.MapFrom(r => r.Requests.Count))
+                    opt => opt.MapFrom(r => r.Requests.SelectMany(x => x.RequestPartimInformations).Count()))
                 .ForMember(r => r.PercentageOfRequestsDone,
                     opt =>
                         opt.MapFrom(
