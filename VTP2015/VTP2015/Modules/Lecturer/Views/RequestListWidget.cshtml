@@ -20,7 +20,8 @@
                         </script>
 
                         <div id="aanvraag-@getoondeAanvraagId" class="aanvraag " data-studentid="@aanvraag.Student.Email" data-aanvraagid="@aanvraag.Id" data-module="@aanvraag.ModuleName">
-                            <p>Student: @aanvraag.Student.Email</p>
+                            <h4>@aanvraag.Student.FirstName @aanvraag.Student.Name</h4>
+                            <p><a href="mailto:@aanvraag.Student.Email" target="_top">@aanvraag.Student.Email</a></p>
                             
                             @if (aanvraag.Argumentation != null)
                             {
@@ -54,7 +55,8 @@
                             @foreach (var bewijs in aanvraag.Evidence)
                             {
                                 <div data-evidenceid="@bewijs.Id" class="inheritWidth bewijs">
-                                    <input class="btn argumentatie" value="@bewijs.Description" type="button" data-bewijsid="@bewijs.Id">
+                                    <input class="btn argumentatie" value="@bewijs.Description.First().ToString().ToUpper()@bewijs.Description.Substring(1)" type="button" data-bewijsid="@bewijs.Id">
+                                    <br />
                                     <div class="inheritWidth bewijspointer hide" data-RequestPartimInformationid="RequestPartimInformation_@aanvraag.Id">
                                         <a href="~/bewijzen/@bewijs.Student.Email.Split(new Char[] {'@'}).First()/@bewijs.Path" download>
                                             Als onderstaande voorstelling niet werkt kunt u op deze link klikken om het evidence te downloaden
@@ -71,20 +73,20 @@
                                         </div>
                                     </div>
 
-                                    <input class="btn argumentatie hide" value="@bewijs.Description" type="button" data-bewijsid="@bewijs.Id">
+                                    <input class="btn argumentatie hide" value="@bewijs.Description.First().ToString().ToUpper()@bewijs.Description.Substring(1)" type="button" data-bewijsid="@bewijs.Id">
                                 </div>
                                 { getoondeAanvraagId++; }
                             }
                             <br />
                             <p>
                                 <label for="motivatie" class="control-label">Motivatie:</label>
-                                <select id="aanvraagform-@aanvraag.Id">
+                                <select class="form-control" id="aanvraagform-@aanvraag.Id">
                                     @Html.Action("MotivationListWidget")
                                 </select>
                             </p>
                             <div class="opinionButtons row" style="padding-left:15px">
-                                <input type="button" class="btn btn-success approveButton" value="Accepteren">
-                                <input type="button" class="btn btn-danger dissapproveButton" value="Weigeren">
+                                <input type="button" class="btn btn-success approveButton" value="Accepteer">
+                                <input type="button" class="btn btn-danger dissapproveButton" value="Weiger">
                             </div>
                             <hr>
                         </div>

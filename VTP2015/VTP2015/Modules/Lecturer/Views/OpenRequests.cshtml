@@ -9,12 +9,12 @@
         <div class="row" id="dossiers">
             @if (ViewBag.DocentHeeftAanvragen)
             {
-                <div class="col-md-4">
+                <div class="col-md-5">
                     @Html.Action("ModuleListWidget")
                     @Html.Action("StudentListWidget", "Lecturer", new { view = "Open" })
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-md-7">
                     @Html.Action("RequestListWidget")
                 </div>
             }

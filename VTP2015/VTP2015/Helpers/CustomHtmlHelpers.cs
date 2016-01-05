@@ -71,7 +71,7 @@ namespace VTP2015.Helpers
                         if (partim.Status == 0)
                             partimTag.InnerHtml += ShowGlyphicon(html, "remove", "btn crossPartim" + (deletable ? "" : " hide"));
                         else if (partim.Status == 2)
-                            partimTag.InnerHtml += ShowGlyphicon(html, "ban-cirkle", "ban");
+                            partimTag.InnerHtml += ShowGlyphicon(html, "ban-circle", "ban");
                         else if (partim.Status == 3)
                             partimTag.InnerHtml += ShowGlyphicon(html, "ok", "vinkje");
                         moduleTag.InnerHtml += partimTag;

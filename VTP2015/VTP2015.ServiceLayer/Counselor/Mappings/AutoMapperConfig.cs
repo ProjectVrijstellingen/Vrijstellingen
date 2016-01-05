@@ -9,7 +9,7 @@ namespace VTP2015.ServiceLayer.Counselor.Mappings
         public void Execute()
         {
             Mapper.CreateMap<File, Models.File>()
-                .ForMember(r => r.AmountOfRequestsOpen,
+                .ForMember(r => r.AmountOfRequests,
                     opt => opt.MapFrom(r => r.Requests.Count))
                 .ForMember(r => r.PercentageOfRequestsDone,
                     opt =>

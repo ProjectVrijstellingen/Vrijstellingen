@@ -96,14 +96,14 @@ $(document).ready(function () {
             $($(this).parent().children()[1]).removeClass("hide");
             $($(this).parent().children()[2]).removeClass("hide");
             $($(this).parent().children()[3]).removeClass("hide");
-            $('[data-bewijsid="' + $(this).data("bewijsid") + '"]').css("font-size", "17px").css("font-weight", "bold");
+            $('[data-bewijsid="' + $(this).data("bewijsid") + '"]');
         }
         else
         {
             $($(this).parent().children()[1]).addClass("hide");
             $($(this).parent().children()[2]).addClass("hide");
             $($(this).parent().children()[3]).addClass("hide");
-            $('[data-bewijsid="' + $(this).data("bewijsid") + '"]').css("font-size", "15px").css("font-weight", "normal");
+            $('[data-bewijsid="' + $(this).data("bewijsid") + '"]');
         }
 
     });

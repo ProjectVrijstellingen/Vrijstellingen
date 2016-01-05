@@ -10,8 +10,9 @@
         {
             <div class="panel clearfix inheritWidth ">
                 <div id="approvedaanvraag-@getoondeAanvraagId" class="aanvraag modulecontainer" data-studentid="@aanvraag.Student.Email" data-aanvraagid="@aanvraag.Id" data-module="@aanvraag.ModuleName" data-super="@aanvraag.SuperCode">
+                    <h4>@aanvraag.Student.FirstName @aanvraag.Student.Name</h4>
+                    <p><a href="mailto:@aanvraag.Student.Email" target="_top">@aanvraag.Student.Email</a></p>
                     <p>@aanvraag.ModuleName - @aanvraag.PartimName</p>
-                    <p>Student: @aanvraag.Student.Email</p>
                     <p>
                         <label for="motivatie" class="control-label">Motivatie:</label>
                         <label class="control-label">@aanvraag.Motivation.Text</label>
@@ -27,7 +28,8 @@
                     @foreach (var bewijs in aanvraag.Evidence)
                     {
                         <div data-evidenceid="@bewijs.Id" class="inheritWidth bewijs">
-                            <input class="btn argumentatie" value="@bewijs.Description" type="button" data-bewijsid="@bewijs.Id">
+                            <input class="btn argumentatie" value="@bewijs.Description.First().ToString().ToUpper()@bewijs.Description.Substring(1)" type="button" data-bewijsid="@bewijs.Id">
+                            <br/>
                             <div class="inheritWidth bewijspointer hide" data-RequestPartimInformationid="RequestPartimInformation_@aanvraag.Id">
                                 <a href="~/bewijzen/@bewijs.Student.Email.Split(new Char[] {'@'}).First()/@bewijs.Path" download>
                                     Als onderstaande voorstelling niet werkt kunt u op deze link klikken om het evidence te downloaden
@@ -43,7 +45,7 @@
                                     }
                                 </div>
                             </div>
-                            <input class="btn argumentatie hide" value="@bewijs.Description" type="button" data-bewijsid="@bewijs.Id">
+                            <input class="btn argumentatie hide" value="@bewijs.Description.First().ToString().ToUpper()@bewijs.Description.Substring(1)" type="button" data-bewijsid="@bewijs.Id">
                         </div>
                         { getoondeAanvraagId++; }
                     }

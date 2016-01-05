@@ -16,7 +16,7 @@ namespace VTP2015.ServiceLayer.Counselor.Models
         public string StudentFirstName { get; set; }
         public string StudentName { get; set; }
         public string StudentMail { get; set; }
-        public int AmountOfRequestsOpen { get; set; }
+        public int AmountOfRequests { get; set; }
         public int PercentageOfRequestsDone { get; set; }
         public string Route { get; set; }
         public string AcademicYear { get; set; }

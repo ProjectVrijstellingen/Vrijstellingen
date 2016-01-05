@@ -9,9 +9,9 @@
         {
             <div class="panel clearfix inheritWidth">
                 <div id="rejectedaanvraag-@getoondeAanvraagId" class="aanvraag modulecontainer" data-studentid="@aanvraag.Student.Email" data-aanvraagid="@aanvraag.Id" data-module="@aanvraag.ModuleName"  data-super="@aanvraag.SuperCode">
+                    <h4>@aanvraag.Student.FirstName @aanvraag.Student.Name</h4>
+                    <p><a href="mailto:@aanvraag.Student.Email" target="_top">@aanvraag.Student.Email</a></p>
                     <p>@aanvraag.ModuleName - @aanvraag.PartimName</p>
-                    <p>Student: @aanvraag.Student.Email</p>
-
                     <p>
                         <label for="motivatie" class="control-label">Motivatie:</label>
                         <label class="control-label">@aanvraag.Motivation.Text</label>
