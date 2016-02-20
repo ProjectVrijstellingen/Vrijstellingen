@@ -1,32 +1,28 @@
-﻿@using System.Linq;
-
-@model IQueryable<VTP2015.Modules.Lecturer.ViewModels.StudentListViewModel>
+﻿@model IEnumerable<VTP2015.Modules.Lecturer.ViewModels.RequestListViewModel>
 @{
-    ViewBag.Title = "Docent - Openstaande aanvragen";
+    ViewBag.Title = "Docent";
 }
 
 <br/>
 
-<div class="container">
-    <div class="container">
-        <div class="row" id="dossiers">
-            @if (ViewBag.DocentHeeftAanvragen)
-            {
-                <div class="col-md-4">
-                    @Html.Action("ModuleListWidget")
-                    @Html.Action("StudentListWidget")
-                </div>
-                
-                <div class="col-md-8">
-                    @Html.Action("RequestListWidget")
-                </div>
-            }
-            else
-            {
-                <h2 class="page-header">Er zijn geen openstaande aanvragen</h2>
-            }
+<div class="container body-content">
+    <div class="container-fix">
 
+        <div class="panel panel-default clearfix">
+            <div class="panel-heading">
+                <h3 class="panel-title">Docent</h3>
+            </div>
+            <div class="panel-body">
+                @if (ViewBag.AantalAanvragen > 0)
+                    {<a class="btn btn-danger" href="/Lecturer/OpenRequests">Openstaande aanvragen<span id="spnOpenstaandeAanvragen" class="badge badge-success" style="margin-left: 1em">@ViewBag.AantalAanvragen</span></a>}
+                else
+                    {<a class="btn btn-primary" href="/Lecturer/OpenRequests">Openstaande aanvragen<span id="spnOpenstaandeAanvragen" class="badge badge-success" style="margin-left: 1em">@ViewBag.AantalAanvragen</span></a>}
+                <a class="btn btn-primary" href="/Lecturer/Archive">Reeds behandelde aanvragen</a>
+                <a class="btn btn-primary" href="/Lecturer/Partim">Partims verwijderen</a>
+
+            </div>
         </div>
+
     </div>
 </div>
 

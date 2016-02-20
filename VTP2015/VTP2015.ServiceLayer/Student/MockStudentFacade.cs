@@ -7,6 +7,7 @@ using Evidence = VTP2015.ServiceLayer.Student.Models.Evidence;
 using File = VTP2015.ServiceLayer.Student.Models.File;
 using FileStatus = VTP2015.ServiceLayer.Student.Models.FileStatus;
 using PartimInformation = VTP2015.ServiceLayer.Student.Models.PartimInformation;
+using PrevEducation = VTP2015.ServiceLayer.Student.Models.PrevEducation;
 using Request = VTP2015.ServiceLayer.Student.Models.Request;
 using Status = VTP2015.ServiceLayer.Student.Models.Status;
 
@@ -103,7 +104,7 @@ namespace VTP2015.ServiceLayer.Student
             {
                 new Request
                 {
-                    Argumentation = "argumentation",
+                    //Argumentation = "argumentation",
                     //Status = Status.Untreated,
                     //Evidence = new List<Evidence>().AsQueryable(),
                     FileId = 1,
@@ -152,17 +153,12 @@ namespace VTP2015.ServiceLayer.Student
             return true;
         }
 
-        public Education GetEducation(string studentMail)
+        public string GetEducation(string studentMail)
         {
             throw new NotImplementedException();
         }
 
         public string AddRequestInFile(int fileId, string code)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SumbitFile(int fileId)
         {
             throw new NotImplementedException();
         }
@@ -178,6 +174,26 @@ namespace VTP2015.ServiceLayer.Student
         }
 
         public void SyncStudent(string email, string academicYear)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<PrevEducation> GetPrevEducationsByStudentEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InsertPrevEducation(string education, string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteEducation(int educationId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] SumbitFile(string email, string academicYear)
         {
             throw new NotImplementedException();
         }

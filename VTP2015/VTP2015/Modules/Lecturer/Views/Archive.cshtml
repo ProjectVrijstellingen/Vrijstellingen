@@ -1,7 +1,4 @@
-﻿@using System.Linq;
-
-@model IQueryable<VTP2015.Modules.Lecturer.ViewModels.StudentListViewModel>
-@{
+﻿@{
     ViewBag.Title = "Docent - Aanvraag archief";
 }
 
@@ -15,7 +12,8 @@
             {
                 <div class="col-md-4">
                     @Html.Action("ModuleListWidget")
-                    @Html.Action("StudentListWidget")
+                    @Html.Action("StudentListWidget", "Lecturer", new { view = "Archive" })
+                    
                 </div>
 
                 <div>

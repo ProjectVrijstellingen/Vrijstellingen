@@ -1,0 +1,14 @@
+﻿@using System.Web.Mvc.Html
+@model VTP2015.Modules.Student.ViewModels.AddEducationViewModel
+
+<br/>
+<form id="addEducation-form" class="form-horizontal" data-url="@Url.Action("AddEducation","Student")">
+    <div class="input-group">
+        @Html.LabelFor(m => m.Education, new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.Education, new { @class = "form-control" })
+    </div>
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <div class="input-group">
+        <button type="button" class="btn btn-primary">Voeg toe</button>
+    </div>
+</form>

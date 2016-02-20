@@ -34,7 +34,7 @@ namespace VTP2015.ServiceLayer.Counselor
             //                            {
             //                                Description =
             //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //                                EvidenceId = 1,
+            //                                Id = 1,
             //                                Path = "pdf-test.pdf",
             //                                StudentEmail = "test@student.howest.be"
             //                            },
@@ -42,7 +42,7 @@ namespace VTP2015.ServiceLayer.Counselor
             //                            {
             //                                Description =
             //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //                                EvidenceId = 1,
+            //                                Id = 1,
             //                                Path = "pdf-test.pdf",
             //                                StudentEmail = "test@student.howest.be"
             //                            }
@@ -59,7 +59,7 @@ namespace VTP2015.ServiceLayer.Counselor
             //                            {
             //                                Description =
             //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //                                EvidenceId = 1,
+            //                                Id = 1,
             //                                Path = "pdf-test.pdf",
             //                                StudentEmail = "test@student.howest.be"
             //                            },
@@ -67,7 +67,7 @@ namespace VTP2015.ServiceLayer.Counselor
             //                            {
             //                                Description =
             //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //                                EvidenceId = 1,
+            //                                Id = 1,
             //                                Path = "pdf-test.pdf",
             //                                StudentEmail = "test@student.howest.be"
             //                            }
@@ -84,7 +84,7 @@ namespace VTP2015.ServiceLayer.Counselor
             //                            {
             //                                Description =
             //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //                                EvidenceId = 1,
+            //                                Id = 1,
             //                                Path = "pdf-test.pdf",
             //                                StudentEmail = "test@student.howest.be"
             //                            },
@@ -92,7 +92,7 @@ namespace VTP2015.ServiceLayer.Counselor
             //                            {
             //                                Description =
             //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //                                EvidenceId = 1,
+            //                                Id = 1,
             //                                Path = "pdf-test.pdf",
             //                                StudentEmail = "test@student.howest.be"
             //                            }
@@ -116,7 +116,7 @@ namespace VTP2015.ServiceLayer.Counselor
             //                            {
             //                                Description =
             //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //                                EvidenceId = 1,
+            //                                Id = 1,
             //                                Path = "pdf-test.pdf",
             //                                StudentEmail = "test@student.howest.be"
             //                            },
@@ -124,7 +124,7 @@ namespace VTP2015.ServiceLayer.Counselor
             //                            {
             //                                Description =
             //                                    "Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.",
-            //                                EvidenceId = 1,
+            //                                Id = 1,
             //                                Path = "pdf-test.pdf",
             //                                StudentEmail = "test@student.howest.be"
             //                            }
@@ -152,26 +152,26 @@ namespace VTP2015.ServiceLayer.Counselor
                         {
                             new Evidence { Description = "evidence1", Path = "/bewijzen/test/pdf-test.pdf"},
                             new Evidence { Description = "evidence2", Path = "/bewijzen/test/pdf-test.pdf"},
-                        }, FileId = 1, RequestId = 1, Status = Status.Approved, Argumentation = "argumentation1"},
+                        }, FileId = 1, RequestId = 1, Status = Status.Approved, PrevEducations = new List<PrevEducation>{ new PrevEducation {Education = "education1"}}},
                         new Partim { Name = "Partim2", Evidence = new List<Evidence>{
                             new Evidence { Description = "evidence1", Path = "/bewijzen/test/pdf-test.pdf"},
                             new Evidence { Description = "evidence2", Path = "/bewijzen/test/pdf-test.pdf"},
-                        }, FileId = 1, RequestId = 1, Status = Status.Rejected, Argumentation = "argumentation2"},
+                        }, FileId = 1, RequestId = 1, Status = Status.Rejected, PrevEducations = new List<PrevEducation>{ new PrevEducation {Education = "education2"}}},
                         new Partim { Name = "Partim3", Evidence = new List<Evidence>{
                             new Evidence { Description = "evidence1", Path = "/bewijzen/test/pdf-test.pdf"},
                             new Evidence { Description = "evidence2", Path = "/bewijzen/test/pdf-test.pdf"},
-                        }, FileId = 1, RequestId = 1, Status = Status.Untreated, Argumentation = "argumentation3"},
+                        }, FileId = 1, RequestId = 1, Status = Status.Untreated, PrevEducations = new List<PrevEducation>{ new PrevEducation {Education = "education3"}}},
                     }},
                     new Module { Name = "Module2", Partims = new List<Partim>
                     {
                         new Partim { Name = "Partim4", Evidence = new List<Evidence>{
                             new Evidence { Description = "evidence1", Path = "/bewijzen/test/pdf-test.pdf"},
                             new Evidence { Description = "evidence2", Path = "path2"},
-                        }, FileId = 1, RequestId = 1, Status = Status.Approved, Argumentation = "argumentation4"},
+                        }, FileId = 1, RequestId = 1, Status = Status.Approved, PrevEducations = new List<PrevEducation>{ new PrevEducation {Education = "education4"}}},
                         new Partim { Name = "Partim5", Evidence = new List<Evidence>{
                             new Evidence { Description = "evidence1", Path = "path1"},
                             new Evidence { Description = "evidence2", Path = "path2"},
-                        }, FileId = 1, RequestId = 1, Status = Status.Rejected, Argumentation = "argumentation5"},
+                        }, FileId = 1, RequestId = 1, Status = Status.Rejected, PrevEducations = new List<PrevEducation>{ new PrevEducation {Education = "education5"}}},
                     }},
                 }
             };
@@ -202,7 +202,7 @@ namespace VTP2015.ServiceLayer.Counselor
                 {
                     AcademicYear = "2015-16",
                     Id = 1,
-                    AmountOfRequestsOpen = 3,
+                    AmountOfRequests = 3,
                     PercentageOfRequestsDone = 50,
                     Route = "ssd",
                     StudentFirstName = "Sam",
@@ -213,7 +213,7 @@ namespace VTP2015.ServiceLayer.Counselor
                 {
                     AcademicYear = "2015-16",
                     Id = 2,
-                    AmountOfRequestsOpen = 0,
+                    AmountOfRequests = 0,
                     PercentageOfRequestsDone = 0,
                     Route = "cccp",
                     StudentFirstName = "Toon",
@@ -224,7 +224,7 @@ namespace VTP2015.ServiceLayer.Counselor
                 {
                     AcademicYear = "2015-16",
                     Id = 3,
-                    AmountOfRequestsOpen = 8,
+                    AmountOfRequests = 8,
                     PercentageOfRequestsDone = 100,
                     Route = "cccp",
                     StudentFirstName = "Joachim",
@@ -235,7 +235,7 @@ namespace VTP2015.ServiceLayer.Counselor
                 {
                     AcademicYear = "2015-16",
                     Id = 4,
-                    AmountOfRequestsOpen = 9,
+                    AmountOfRequests = 9,
                     PercentageOfRequestsDone = 90,
                     Route = "ssd",
                     StudentFirstName = "Olivier",
@@ -246,7 +246,7 @@ namespace VTP2015.ServiceLayer.Counselor
                 {
                     AcademicYear = "2015-16",
                     Id = 5,
-                    AmountOfRequestsOpen = 3,
+                    AmountOfRequests = 3,
                     PercentageOfRequestsDone = 75,
                     Route = "ssd",
                     StudentFirstName = "Joske",
@@ -282,11 +282,26 @@ namespace VTP2015.ServiceLayer.Counselor
             throw new NotImplementedException();
         }
 
+        public int GetNrNoLecturersPartims(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<PartimInformation> GetPartimsNoLecturer(string email)
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemovePartimFromFile(int partimInformationId)
         {
         }
 
         public void RemovePartimFromFile(int partimInformationId, int fileId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] AssignLector(string email, string superCode)
         {
             throw new NotImplementedException();
         }

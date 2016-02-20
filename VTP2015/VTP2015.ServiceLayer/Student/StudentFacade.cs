@@ -25,7 +25,8 @@ namespace VTP2015.ServiceLayer.Student
         private readonly IRepository<Education> _educationRepository;
         private readonly IRepository<RequestPartimInformation> _requestPartimInformationRepository;
         private readonly IBamaflexSynchroniser _synchroniser;
-        private readonly IRepository<Motivation> _motivationRepository; 
+        private readonly IRepository<Motivation> _motivationRepository;
+        private readonly IRepository<PrevEducation> _prevEducationRepository; 
 
         public StudentFacade(IUnitOfWork unitOfWork, IBamaflexRepository bamaflexRepository, IIdentityRepository identityRepository)
         {
@@ -41,6 +42,7 @@ namespace VTP2015.ServiceLayer.Student
             var moduleRepository = unitOfWork.Repository<Module>();
             _requestPartimInformationRepository = unitOfWork.Repository<RequestPartimInformation>();
             _motivationRepository = unitOfWork.Repository<Motivation>();
+            _prevEducationRepository = unitOfWork.Repository<PrevEducation>();
 
             _synchroniser = new BamaflexSynchroniser(_studentRepository, _educationRepository,
                 bamaflexRepository, _partimInformationRepository, partimRepository, moduleRepository,
@@ -123,7 +125,7 @@ namespace VTP2015.ServiceLayer.Student
             switch (partimMode)
             { 
                 case PartimMode.Requested:
-                    return requestedPartims.ProjectTo<Models.PartimInformation>();
+                    return requestedPartims.Where(x => x.PartimInformation.Module.Semester != 0).ProjectTo<Models.PartimInformation>();
                 case PartimMode.Available:
                     return
                         _fileRepository.Table.Where(s => s.Id == fileId)
@@ -131,6 +133,7 @@ namespace VTP2015.ServiceLayer.Student
                             .SelectMany(e => e.Routes)
                             .SelectMany(r => r.PartimInformation)
                             .Except(requestedPartims.Select(x => x.PartimInformation))
+                            .Where(x => x.Module.Semester != 0)
                             .ProjectTo<Models.PartimInformation>();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(partimMode), partimMode, null);
@@ -140,32 +143,37 @@ namespace VTP2015.ServiceLayer.Student
         public IQueryable<Models.Request> GetRequestByFileId(int fileId)
         {
             var requests = _requestRepository.Table.Where(request => request.FileId == fileId);
-            var requestList = requests.Where(request => request.RequestPartimInformations.All(x => x.Status == Status.Empty))
-                .Select(request => new Models.Request
-                {
-                    FileId = request.FileId,
-                    Id = request.Id,
-                    ModuleName = request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Name,
-                    PartimName =
-                        request.RequestPartimInformations.Count ==
-                        request.RequestPartimInformations.FirstOrDefault()
-                            .PartimInformation.Module.PartimInformation.Count
-                            ? ""
-                            : request.RequestPartimInformations.FirstOrDefault().PartimInformation.Partim.Name,
-                    Code =
-                        request.RequestPartimInformations.Count ==
-                        request.RequestPartimInformations.FirstOrDefault()
-                            .PartimInformation.Module.PartimInformation.Count
-                            ? request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Code
-                            : request.RequestPartimInformations.FirstOrDefault().PartimInformation.SuperCode,
-                    Argumentation = request.Argumentation,
-                    Evidence =
-                        request.Evidence.Select(
-                            x => new Models.Evidence {Id = x.Id, Description = x.Description, Path = x.Path})
+            var requestList =
+                requests.Where(request => request.RequestPartimInformations.All(x => x.Status == Status.Empty))
+                    .Select(request => new Models.Request
+                    {
+                        FileId = request.FileId,
+                        Id = request.Id,
+                        ModuleName = request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Name,
+                        PartimName =
+                            request.RequestPartimInformations.Count ==
+                            request.RequestPartimInformations.FirstOrDefault()
+                                .PartimInformation.Module.PartimInformation.Count
+                                ? ""
+                                : request.RequestPartimInformations.FirstOrDefault().PartimInformation.Partim.Name,
+                        Code =
+                            (request.RequestPartimInformations.Count ==
+                             request.RequestPartimInformations.FirstOrDefault()
+                                 .PartimInformation.Module.PartimInformation.Count &&
+                             request.RequestPartimInformations.FirstOrDefault()
+                                 .PartimInformation.Module.PartimInformation.Count > 1)
+                                ? request.RequestPartimInformations.FirstOrDefault().PartimInformation.Module.Code
+                                : request.RequestPartimInformations.FirstOrDefault().PartimInformation.SuperCode,
+                        Educations = request.PrevEducations.Select(
+                            x => new Models.PrevEducation {Id = x.Id, Education = x.Education})
                             .AsQueryable(),
-                    Submitted = false,
-                    Motivation = request.RequestPartimInformations.FirstOrDefault().Motivation.Text
-                }).ToList();
+                        Evidence =
+                            request.Evidence.Select(
+                                x => new Models.Evidence {Id = x.Id, Description = x.Description, Path = x.Path})
+                                .AsQueryable(),
+                        Submitted = false,
+                        Motivation = request.RequestPartimInformations.FirstOrDefault().Motivation.Text
+                    }).ToList();
             requests.Where(request => request.RequestPartimInformations.All(x => x.Status != Status.Empty))
                 .Each(request => requestList.AddRange(request.RequestPartimInformations.Select(partiminfo => new Models.Request
                 {
@@ -174,7 +182,9 @@ namespace VTP2015.ServiceLayer.Student
                     ModuleName = partiminfo.PartimInformation.Module.Name,
                     PartimName = partiminfo.PartimInformation.Partim.Name,
                     Code = partiminfo.PartimInformation.SuperCode,
-                    Argumentation = request.Argumentation,
+                    Educations = request.PrevEducations.Select(
+                            x => new Models.PrevEducation { Id = x.Id, Education = x.Education })
+                            .AsQueryable(),
                     Evidence =
                         request.Evidence.Select(
                             x => new Models.Evidence { Id = x.Id, Description = x.Description, Path = x.Path })
@@ -193,6 +203,28 @@ namespace VTP2015.ServiceLayer.Student
         public void SyncStudent(string email, string academicYear)
         {
             _synchroniser.SyncStudentByUser(email, academicYear);
+        }
+
+        public IQueryable<Models.PrevEducation> GetPrevEducationsByStudentEmail(string email)
+        {
+            return _prevEducationRepository.Table.Where(x => x.Student.Email == email).ProjectTo<Models.PrevEducation>();
+        }
+
+        public void InsertPrevEducation(string education, string email)
+        {
+            _prevEducationRepository.Insert(new PrevEducation
+            {
+                Education = education,
+                Student = _studentRepository.Table.First(x => x.Email == email)
+            });
+        }
+
+        public bool DeleteEducation(int educationId)
+        {
+            if (!_prevEducationRepository.Table.Any(x => x.Id == educationId)) return false;
+
+            _prevEducationRepository.Delete(educationId);
+            return true;
         }
 
         public Models.Evidence GetEvidenceById(int evidenceId)
@@ -261,25 +293,31 @@ namespace VTP2015.ServiceLayer.Student
             return newRequest.Id.ToString();
         }
 
-        public void SumbitFile(int fileId)
+        public string[] SumbitFile(string email, string academicYear)
         {
-            var file = _fileRepository.GetById(fileId);
-            if (file.Requests.Count < 1) return;
+            var file = _fileRepository.Table.First(x => x.Student.Email == email && x.AcademicYear == academicYear);
+            if (file.Requests.Count < 1) return new [] {"Dossier bevat geen aanvragen"};
             if(file.FileStatus == FileStatus.InProgress) file.DateCreated = DateTime.Now;
             file.FileStatus = FileStatus.Submitted;
+            var errorList = new List<string>();
             foreach (var partiminfo in file.Requests.SelectMany(request => request.RequestPartimInformations.Where(x => x.Status == Status.Empty)))
             {
-                if (partiminfo.Request.Evidence.Count < 1)
+                if (partiminfo.Request.Evidence.Count < 1 && partiminfo.Request.PrevEducations.Count < 1)
                 {
-                    partiminfo.Status = Status.Rejected;
-                    partiminfo.Motivation = _motivationRepository.GetById(6);
+                    var name = partiminfo.Request.RequestPartimInformations.Count > 1
+                        ? partiminfo.PartimInformation.Module.Name
+                        : partiminfo.PartimInformation.Partim.Name;
+                    errorList.Add(name + " ontbreekt argumentatie!");
                 }
                 else
                 {
                     partiminfo.Status = Status.Untreated;
                 }
             }
+            if (errorList.Count > 0) return errorList.Distinct().ToArray();
             _fileRepository.Update(file);
+            errorList.Add("Done!");
+            return errorList.ToArray();
         }
 
         public Models.FileStatus GetFileStatus(int fileId)
@@ -296,7 +334,6 @@ namespace VTP2015.ServiceLayer.Student
         {
             var request = _requestRepository.GetById(requestModel.Id);
             if (request.RequestPartimInformations.Any(x => x.Status != Status.Empty)) return false;
-            request.Argumentation = requestModel.Argumentation;
             request.LastChanged = DateTime.Now;
             _requestRepository.Update(request);
             if (requestModel.Evidence != null)
@@ -306,6 +343,14 @@ namespace VTP2015.ServiceLayer.Student
 
                 request.Evidence.Except(evidence).ToList().ForEach(e => request.Evidence.Remove(e));
                 evidence.Except(request.Evidence).ToList().ForEach(e => request.Evidence.Add(e));
+            }
+            if (requestModel.Educations != null)
+            {
+                var educations = requestModel.Educations.Select(e => _prevEducationRepository.GetById(e.Id))
+                    .Where(e => e.Student.Files.Last().Id == requestModel.FileId);
+
+                request.PrevEducations.Except(educations).ToList().ForEach(e => request.PrevEducations.Remove(e));
+                educations.Except(request.PrevEducations).ToList().ForEach(e => request.PrevEducations.Add(e));
             }
             _requestRepository.Update(request);
             return true;
@@ -322,9 +367,9 @@ namespace VTP2015.ServiceLayer.Student
             return true;
         }
 
-        public Education GetEducation(string studentMail)
+        public string GetEducation(string studentMail)
         {
-            return _studentRepository.Table.First(s => s.Email == studentMail).Education;
+            return _studentRepository.Table.First(s => s.Email == studentMail).Education.Name;
         }
     }
 }

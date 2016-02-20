@@ -1,0 +1,24 @@
+﻿@model VTP2015.Modules.Counselor.ViewModels.PartimInformationViewModel[]
+
+<div class="container body-content">
+    <div class="container-fix">
+        <div class="panel panel-default clearfix partimcontainer">
+            <div class="panel-heading">
+                <h3 class="panel-title">Partims</h3>
+            </div>
+            <div class="panel-body">
+                <ul id="assignList" class="list-group" data-url="@Url.Action("AssignLecturer")">
+                    @foreach (var partim in Model)
+                    {
+                        <li id="@partim.SuperCode" class="list-group-item">
+                            <b>@partim.ModuleName - @partim.PartimName</b>
+                            <input class="email" type="email"/>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/Scripts/App/Counselor/assignLecturers.js")

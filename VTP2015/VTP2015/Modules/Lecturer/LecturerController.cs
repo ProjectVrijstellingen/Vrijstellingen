@@ -23,19 +23,46 @@ namespace VTP2015.Modules.Lecturer
         [Route("")]
         public ViewResult Index()
         {
-            ViewBag.DocentHeeftAanvragen = _lecturerFacade.hasAny(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Untreated);
-              
+            ViewBag.AantalAanvragen = _lecturerFacade.getAantal(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Untreated);
             return View();
         }
 
         [HttpGet]
-        [Route("StudentListWidget")]
-        public PartialViewResult StudentListWidget()
+        [Route("OpenRequests")]
+        public ViewResult OpenRequests()
         {
-            var viewModel = _lecturerFacade.GetUntreadedStudent(User.Identity.Name)
-                .ProjectTo<StudentListViewModel>();
+            ViewBag.DocentHeeftAanvragen = _lecturerFacade.hasAny(User.Identity.Name, ServiceLayer.Lecturer.Models.Status.Untreated);
 
-            return PartialView(viewModel);
+            return View();
+        }
+
+        [HttpGet]
+        [Route("Partim")]
+        public ViewResult Partim()
+        {
+            return View();
+        }
+        
+        [HttpGet]
+        [Route("StudentListWidget/{view}")]
+        public PartialViewResult StudentListWidget(string view)
+        {
+            switch (view)
+            {
+                case "Archive":
+                    var viewModelA = _lecturerFacade.GetTreadedStudent(User.Identity.Name)
+                    .ProjectTo<StudentListViewModel>();
+
+                    return PartialView(viewModelA);
+
+                default:
+                    var viewModel = _lecturerFacade.GetUntreadedStudent(User.Identity.Name)
+                    .ProjectTo<StudentListViewModel>();
+
+                    return PartialView(viewModel);
+            }
+
+
         }
 
         [HttpGet]
@@ -109,6 +136,13 @@ namespace VTP2015.Modules.Lecturer
             return Content(_lecturerFacade.Approve(aanvraagId, false, User.Identity.Name, motivationId) 
                 ? "Voltooid!" 
                 : "De aanvraag mag niet beoordeeld worden door u!");
+        }
+
+        [Route("RemovePartimLecturer")]
+        [HttpPost]
+        public ActionResult RemovePartimLecturer(string supercodeId)
+        {
+            return Content(_lecturerFacade.RemovePartimLecturer(supercodeId)?"Voltooid!":"Error");
         }
 
         [HttpGet]

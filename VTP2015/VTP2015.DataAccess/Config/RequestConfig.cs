@@ -29,6 +29,15 @@ namespace VTP2015.DataAccess.Config
                     m.MapLeftKey("RequestId");
                     m.MapRightKey("EvidenceId");
                 });
+
+            HasMany(t => t.PrevEducations)
+                .WithMany(t => t.Requests)
+                .Map(m =>
+                {
+                    m.ToTable("PrevEducationRequest");
+                    m.MapLeftKey("RequestId");
+                    m.MapRightKey("PrevEducationId");
+                });
         }
     }
 }

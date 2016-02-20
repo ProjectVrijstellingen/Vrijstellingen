@@ -49,6 +49,12 @@
         removePartim(partimInformationId, fileId);
     });
 
+    $("#files").on("click", ".btnRemoveFile", function(e) {
+        var fileId = $(e.currentTarget).data("fileid");
+
+        removeFile(fileId);
+    });
+
 });
 
 function removePartim(partimInformationId, fileId) {
@@ -66,6 +72,18 @@ function removePartim(partimInformationId, fileId) {
 
         if (moduleGroup.find("li").length < 2) 
             moduleGroup.parent().remove();
+    });
+}
+
+function removeFile(fileId) {
+    $.ajax({
+        url: "/Counselor/DeleteFile",
+        data: {
+            fileId: fileId
+        },
+        method: "post"
+    }).success(function(data) {
+        showFileOverview();
     });
 }
 
@@ -149,15 +167,17 @@ function loadFileById(fileId) {
         newFile.removeAttr("id");
         newFile.attr("data-fileid", fileId);
         newFile.find(".studentName").text(data.StudentName);
-        newFile.find("#spnAmountOfUntreatedRequests").text(data.AmountOfUntreatedRequests);
+        newFile.find("#spnAmountOfApprovedRequests").text(data.AmountOfApprovedRequests);
         newFile.find("#spnAmountOfDeniedRequests").text(data.AmountOfDeniedRequests);
-        newFile.find("#AmountOfUntreatedRequests").text(data.AmountOfUntreatedRequests);
+        newFile.find("#spnAmountOfUntreatedRequests").text(data.AmountOfUntreatedRequests);
+        newFile.find(".btnRemoveFile").attr("data-fileid", fileId);
         var partimList = newFile.find(".partimList");
 
         $(data.Modules).each(function (moduleIndex, module) {
             var newModule = $("#dummyModule").clone();
             newModule.removeClass("hide");
             newModule.removeAttr("id");
+            newModule.addClass("moduleSpace");
             newModule.find(".moduleName").text(module.Name);
             partimList.append(newModule);
 
@@ -182,10 +202,24 @@ function loadFileById(fileId) {
                 newPartimDetail.removeAttr("id");
                 newPartimDetail.attr("data-partiminformationid", partim.PartimInformationId);
                 newPartimDetail.attr("data-index", index);
-                newPartimDetail.find(".argumentation").text(partim.Argumentation);
-                newPartimDetail.find(".amountOfEvidence").text(partim.Evidence.length);
                 newPartimDetail.find(".btnRemovePartim").attr("data-partiminformationid", partim.PartimInformationId);
                 newPartimDetail.find(".btnRemovePartim").attr("data-fileid", partim.FileId);
+
+                if (partim.PrevEducations.length > 0) {
+                    $(partim.PrevEducations).each(function (educationIndex, education) {
+                        console.log("current education: " + educationIndex);
+
+                        var newEvidence = $("#educationDummy").clone();
+                        newEvidence.removeClass("hide");
+                        newEvidence.attr("data-index", educationIndex + 1);
+                        newEvidence.text(education.Education);
+
+                        console.log(education.Path);
+                        newPartimDetail.find(".opleidingen").append(newEvidence);
+                    });
+                } else {
+                    newPartimDetail.find(".opleidingenDiv").remove();
+                }
 
                 if (partim.Evidence.length > 0) {
                     newPartimDetail.find(".amountOfEvidence").text(partim.Evidence.length);
@@ -196,14 +230,21 @@ function loadFileById(fileId) {
                     newEvidence.removeAttr("id");
                     newEvidence.attr("data-index", evidenceIndex + 1);
                     newEvidence.find(".argumentation").text(evidence.Argumentation);
-
-                    newEvidence.find(".downloadLink").attr("href", evidence.Path);
+                    var path = evidence.Path;
+                    console.log(path);
+                    var start = path.lastIndexOf("\\", path.lastIndexOf("\\", path.lastIndexOf("\\") - 1) - 1);
+                        console.log(start);
+                        path = path.substring(start);
+                        console.log(path);
+                        path = path.replace(/\\/g, "/");
+                        console.log(path);
+                    newEvidence.find(".downloadLink").attr("href", path);
                         if (evidence.Type === "pdf")
-                        newEvidence.find(".pdf").attr("src", evidence.Path);
+                            newEvidence.find(".pdf").attr("src", path);
                     else
-                        newEvidence.find(".image").attr("src", evidence.Path);
+                            newEvidence.find(".image").attr("src", path);
 
-                    console.log(evidence.Path);
+                    console.log(path);
                     newPartimDetail.find(".evidenceContainer").append(newEvidence);
                     //console.log("new evidence: ");
                     //console.log(newEvidence);

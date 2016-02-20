@@ -1,25 +1,7 @@
-﻿var studentId;
-var huidigeStudent;
-var alleStudenten;
-var huidigeAanvragen;
-var huidigeBewijzen;
-var huidigeAanvraag;
-var huidigBewijs;
-
+﻿
 $(document).ready(function () {
-        
-    stopStudentenInArray();
-
-    //selectStudent(alleStudenten[0]);
 
     $(".studentpointer").click(function (event) {
-        //$(".studentpointer").click(function (event) {
-        //    if ($(document).width() <= 990) {
-        //        scroll_to($(".aanvraagcontainer"));
-        //    }
-        //});
-        //$(alleStudenten[huidigeStudent]).removeClass("active");
-        //selectStudent(this);
 
         var active = $(this).hasClass("active");
 
@@ -27,11 +9,12 @@ $(document).ready(function () {
 
         if (!active) {
             $(this).addClass("active");
-            //$(".aanvraag").addClass("hide");
             $(".modulecontainer").addClass("hide");
             if ($('.partimpointer.active').length > 0)
             {
                 $("#" + $(".partimpointer.active").data("supercode")).find('[data-studentid="' + $(this).data("studentid") + '"]').parent().parent().removeClass("hide");
+                $(".aanvraag").addClass("hide");
+                $(".aanvraag").parent().find('[data-studentid="' + $(".studentpointer.active").data("studentid") + '"]').removeClass("hide");
             }
             else
             {
@@ -40,16 +23,15 @@ $(document).ready(function () {
         }
         else {
             if ($('.partimpointer.active').length > 0) {
-                //$(".aanvraag").addClass("hide");
                 $(".modulecontainer").addClass("hide");
                 $("#" + $(".partimpointer.active").data("supercode")).find(".aanvraag").parent().parent().removeClass("hide");
+                $(".aanvraag").removeClass("hide");
             }
             else {
-                //$(".aanvraag").removeClass("hide");
                 $(".modulecontainer").removeClass("hide");
+                $(".aanvraag").removeClass("hide");
             }
         }
-        scroll_to($(".aanvraagcontainer"));
     });
 
     $(".partimpointer").click(function (event) {
@@ -59,10 +41,12 @@ $(document).ready(function () {
         if (!active)
         {
             $(this).addClass("active");
-            //$(".aanvraag").addClass("hide");
             $(".modulecontainer").addClass("hide");
+            
             if ($('.studentpointer.active').length > 0) {
                 $("#" + $(this).data("supercode")).find('[data-studentid="' + $(".studentpointer.active").data("studentid") + '"]').parent().parent().removeClass("hide");
+                $(".aanvraag").addClass("hide");
+                $(".aanvraag").parent().find('[data-studentid="' + $(".studentpointer.active").data("studentid") + '"]').removeClass("hide");
             }
             else {
                 $("#" + $(this).data("supercode")).find(".aanvraag").parent().parent().removeClass("hide");
@@ -71,16 +55,14 @@ $(document).ready(function () {
         else
         {
             if ($('.studentpointer.active').length > 0) {
-                //$(".aanvraag").addClass("hide");
                 $(".modulecontainer").addClass("hide");
                 $('[data-studentid="' + $(".studentpointer.active").data("studentid") + '"]').parent().parent().removeClass("hide");
             }
             else {
-                //$(".aanvraag").removeClass("hide");
                 $(".modulecontainer").removeClass("hide");
+                $(".aanvraag").removeClass("hide");
             }
         }
-        scroll_to($(".aanvraagcontainer"));
     });
 
     $($(".partimcontainer").children()[0]).click(function (event) {
@@ -114,118 +96,64 @@ $(document).ready(function () {
             $($(this).parent().children()[1]).removeClass("hide");
             $($(this).parent().children()[2]).removeClass("hide");
             $($(this).parent().children()[3]).removeClass("hide");
-            $('[data-bewijsid="' + $(this).data("bewijsid") + '"]').css("font-size", "17px").css("font-weight", "bold");
+            $('[data-bewijsid="' + $(this).data("bewijsid") + '"]');
         }
         else
         {
             $($(this).parent().children()[1]).addClass("hide");
             $($(this).parent().children()[2]).addClass("hide");
             $($(this).parent().children()[3]).addClass("hide");
-            $('[data-bewijsid="' + $(this).data("bewijsid") + '"]').css("font-size", "15px").css("font-weight", "normal");
+            $('[data-bewijsid="' + $(this).data("bewijsid") + '"]');
         }
 
     });
 
-
-    $(".vorigBewijs").click(function(event) {
-        event.preventDefault();
-        $(huidigeBewijzen[huidigBewijs]).addClass("hide");
-        if (huidigBewijs > 0) {
-            huidigBewijs--;
-        } else {
-            huidigBewijs = huidigeBewijzen.length - 1;
-        }
-        $(huidigeAanvragen[huidigeAanvraag]).find(".huidigBewijs").text(huidigBewijs + 1);
-        $(huidigeBewijzen[huidigBewijs]).removeClass("hide");
-    });
-
-    $(".volgendBewijs").click(function(event) {
-        event.preventDefault();
-        $(huidigeBewijzen[huidigBewijs]).addClass("hide");
-        if (huidigBewijs < huidigeBewijzen.length - 1) {
-            huidigBewijs++;
-        } else {
-            huidigBewijs = 0;
-        }
-        $(huidigeAanvragen[huidigeAanvraag]).find(".huidigBewijs").text(huidigBewijs + 1);
-        $(huidigeBewijzen[huidigBewijs]).removeClass("hide");
-    });
-
-    $("#vorigeAanvraag").click(function() {
-        vorigeAanvraag(event);
-    });
-
-    $("#volgendeAanvraag").click(function() {
-        volgendeAanvraag(event);
-    });
 
     $(".approveButton").click(function (event) {
-        //var aanvraagId = $(huidigeAanvragen[huidigeAanvraag]).data("aanvraagid");
         var aanvraagId = $(this).parent().parent().data("aanvraagid");
         var supercode = $(this).parent().parent().parent().parent().attr("id");
         var motivationId = $("#aanvraagform-" + aanvraagId + " option:checked").val();
 
-        $("#Aantal_" + supercode).html(parseInt($("#Aantal_" + supercode).html()) - 1);
+        if (motivationId > 1)
+        {
+            $("#Aantal_" + supercode).html(parseInt($("#Aantal_" + supercode).html()) - 1);
 
-        $.ajax({
-            url: "Lecturer/ApproveAanvraag",
-            data: { aanvraagID: aanvraagId, motivationID: motivationId},
-            type: "POST",
-            success: function (data) {
-                //removeCurrentAanvraag();
-                $('[data-aanvraagid="' + aanvraagId + '"]').addClass("hide");
-                console.log(data)
-            }
-        });
+            $.ajax({
+                url: "ApproveAanvraag",
+                data: { aanvraagID: aanvraagId, motivationID: motivationId },
+                type: "POST",
+                success: function (data) {
+                    $('[data-aanvraagid="' + aanvraagId + '"]').addClass("hide");
+                    console.log(data)
+                }
+            });
+        }
+        else
+        {
+            alert("Het is verplicht om een motivatie mee te geven");
+        }
     });
 
     $(".dissapproveButton").click(function (event) {
-        //var aanvraagId = $(huidigeAanvragen[huidigeAanvraag]).data("aanvraagid");
         var aanvraagId = $(this).parent().parent().data("aanvraagid");
         var supercode = $(this).parent().parent().parent().parent().attr("id");
         var motivationId = $("#aanvraagform-" + aanvraagId + " option:checked").val();
-        $("#Aantal_" + supercode).html(parseInt($("#Aantal_" + supercode).html()) - 1);
-
-        $.ajax({
-            url: "Lecturer/DissapproveAanvraag",
-            data: { aanvraagID: aanvraagId, motivationID: motivationId },
-            type: "POST",
-            success: function (data) {
-                //removeCurrentAanvraag();
-                $('[data-aanvraagid="' + aanvraagId + '"]').addClass("hide");
-                console.log(data);
-            }
-
-        });
+        if (motivationId > 1) {
+            $("#Aantal_" + supercode).html(parseInt($("#Aantal_" + supercode).html()) - 1);
+            $.ajax({
+                url: "DissapproveAanvraag",
+                data: { aanvraagID: aanvraagId, motivationID: motivationId },
+                type: "POST",
+                success: function (data) {
+                    $('[data-aanvraagid="' + aanvraagId + '"]').addClass("hide");
+                    console.log(data);
+                }
+            });
+        }
+        else {
+            alert("Het is verplicht om een motivatie mee te geven");
+        }
     });
-
-    //$(document).keydown(function (e) {
-    //    switch (e.which) {
-    //        case 37: vorigeAanvraag(e);
-    //            break; //left
-
-    //        case 38:
-    //            if (huidigeStudent != 0) {
-    //                $(alleStudenten[huidigeStudent]).removeClass("active");
-    //                $(selectStudent(alleStudenten[huidigeStudent - 1]));
-    //            }
-    //            break; //up
-
-    //        case 39: volgendeAanvraag(e);
-    //            break; //right
-
-    //        case 40:
-    //            if (huidigeStudent != (alleStudenten.length - 1)) {
-
-    //                $(alleStudenten[huidigeStudent]).removeClass("active");
-    //                $(selectStudent(alleStudenten[huidigeStudent + 1]));
-    //            }
-    //            break; //down
-
-    //        default: return; 
-    //    }
-    //    e.preventDefault(); // prevent the default action (scroll / move caret)
-    //});
 
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -245,6 +173,29 @@ $(document).ready(function () {
             $($(".aanvraagcontainer").children()[1]).addClass("hide")
     });
 
+    $(".remove").click(function (event) {
+        var supercode = $(this).attr("Id");
+        supercode = supercode.substr(supercode.indexOf("_") + 1, supercode.length);
+
+
+        if (confirm("Ben je zeker?")) {
+            $.ajax({
+                url: "RemovePartimLecturer",
+                data: { supercodeID: supercode },
+                type: "POST",
+                success: function (data) {
+                    $("#Verwijder_" + supercode).parent().addClass("hide");
+                    console.log(data);
+                }
+            }).fail(function (data) {
+                console.log("Error");
+                console.log(data);
+            });
+        } else { }
+
+    });
+
+
 });
 
 
@@ -253,74 +204,3 @@ function scroll_to(selectorOfElementToScrollTo) {
         scrollTop: $(selectorOfElementToScrollTo).offset().top
     }, 750);
 }
-
-function removeCurrentAanvraag() {
-    huidigeAanvragen[huidigeAanvraag].remove();
-    huidigeAanvragen.splice(huidigeAanvraag, 1);
-    if (huidigeAanvragen.length > 0) {
-        $(huidigeAanvragen[huidigeAanvraag]).removeClass("hide");
-        stopBewijzenVanHuidigeAanvraagInArrayEnToonDeEerste();
-        $("#aantalAanvragen").text(huidigeAanvragen.length);
-    } else {
-        $(".studentpointer[data-studentid='" + studentId + "']").remove();
-        alleStudenten.splice(huidigeStudent, 1);
-        selectStudent(alleStudenten[huidigeStudent]);
-    }
-}
-
-function volgendeAanvraag(event) {
-    event.preventDefault();
-    $(huidigeAanvragen[huidigeAanvraag]).addClass("hide");
-    if (huidigeAanvraag < huidigeAanvragen.length - 1) {
-        huidigeAanvraag++;
-    } else {
-        huidigeAanvraag = 0;
-    }
-    $("#huidigeAanvraag").text(huidigeAanvraag + 1);
-    stopBewijzenVanHuidigeAanvraagInArrayEnToonDeEerste();
-    $(huidigeAanvragen[huidigeAanvraag]).removeClass("hide");
-}
-
-function vorigeAanvraag(event) {
-    event.preventDefault();
-    $(huidigeAanvragen[huidigeAanvraag]).addClass("hide");
-    if (huidigeAanvraag > 0) {
-        huidigeAanvraag--;
-    } else {
-        huidigeAanvraag = huidigeAanvragen.length - 1;
-    }
-    $("#huidigeAanvraag").text(huidigeAanvraag + 1);
-    stopBewijzenVanHuidigeAanvraagInArrayEnToonDeEerste();
-    $(huidigeAanvragen[huidigeAanvraag]).removeClass("hide");
-
-}
-
-function stopBewijzenVanHuidigeAanvraagInArrayEnToonDeEerste() {
-    huidigeBewijzen = $(huidigeAanvragen[huidigeAanvraag]).find(".evidence").toArray(); //Alle bewijzen van een bepaalde aanvraag in een array stoppen
-    $(huidigeBewijzen[huidigBewijs]).removeClass("hide"); //Toont het eerste evidence van de geselecteerde aanvraag
-}
-
-function stopStudentenInArray() {
-    alleStudenten = $(".studentpointer").toArray();
-}
-
-function selectStudent(student) {
-    $(".aanvraag").addClass("hide"); //hide alle aanvragen
-    huidigeAanvraag = 0;
-    huidigBewijs = 0;
-    $(".huidigBewijs").text("1");
-    $(student).addClass("active");
-    studentId = $(student).data("studentid");
-    huidigeAanvragen = $(".aanvraag[data-studentid='" + studentId + "']").toArray(); //Alle aanvragen van een bepaalde student in een array stoppen
-    stopBewijzenVanHuidigeAanvraagInArrayEnToonDeEerste();
-    $("#aantalAanvragen").text(huidigeAanvragen.length);
-    $("#huidigeAanvraag").text(huidigeAanvraag + 1);
-    $(huidigeAanvragen[huidigeAanvraag]).removeClass("hide"); //Toont de eerste aanvraag van de geselecteerde student
-    for (var i = 0; i < alleStudenten.length; i++) {
-        if (alleStudenten[i] === student) {
-            huidigeStudent = i;
-            return;
-        }
-    }
-}
-

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using AutoMapper.Internal;
 using AutoMapper.QueryableExtensions;
 using VTP2015.DataAccess.UnitOfWork;
 using VTP2015.Entities;
@@ -12,6 +13,8 @@ using Education = VTP2015.Entities.Education;
 using Evidence = VTP2015.ServiceLayer.Counselor.Models.Evidence;
 using File = VTP2015.Entities.File;
 using Partim = VTP2015.ServiceLayer.Counselor.Models.Partim;
+using PartimInformation = VTP2015.ServiceLayer.Counselor.Models.PartimInformation;
+using PrevEducation = VTP2015.ServiceLayer.Counselor.Models.PrevEducation;
 using Request = VTP2015.Entities.Request;
 
 namespace VTP2015.ServiceLayer.Counselor
@@ -24,6 +27,8 @@ namespace VTP2015.ServiceLayer.Counselor
         private readonly IRepository<File> _fileRepository;
         private readonly IRepository<RequestPartimInformation> _requestPartimInformationRepository;
         private readonly IRepository<Motivation> _motivationRepository;
+        private readonly IRepository<Entities.PartimInformation> _partimInformationRepository;
+        private readonly IRepository<Entities.Lecturer> _lecturerRepository; 
 
         public CounselorFacade(IUnitOfWork unitOfWork)
         {
@@ -33,6 +38,8 @@ namespace VTP2015.ServiceLayer.Counselor
             _fileRepository = unitOfWork.Repository<File>();
             _motivationRepository = unitOfWork.Repository<Motivation>();
             _requestPartimInformationRepository = unitOfWork.Repository<RequestPartimInformation>();
+            _partimInformationRepository = unitOfWork.Repository<Entities.PartimInformation>();
+            _lecturerRepository = unitOfWork.Repository<Entities.Lecturer>();
 
             var autoMapperConfig = new AutoMapperConfig();
             autoMapperConfig.Execute();
@@ -69,6 +76,45 @@ namespace VTP2015.ServiceLayer.Counselor
             return _fileRepository.GetById(fileId).FileStatus != FileStatus.InProgress;
         }
 
+        public int GetNrNoLecturersPartims(string email)
+        {
+            return
+                _counselorRepository.Table
+                    .Where(x => x.Email == email)
+                    .Select(x => x.Education)
+                    .SelectMany(x => x.Routes)
+                    .SelectMany(x => x.PartimInformation)
+                    .Count(x => x.Lecturer.Email == "docent@howest.be");
+        }
+
+        public IQueryable<PartimInformation> GetPartimsNoLecturer(string email)
+        {
+            return _counselorRepository.Table
+                .Where(x => x.Email == email)
+                .Select(x => x.Education)
+                .SelectMany(x => x.Routes)
+                .SelectMany(x => x.PartimInformation)
+                .Where(x => x.Lecturer.Email == "docent@howest.be")
+                .ProjectTo<PartimInformation>();
+        }
+
+        public string[] AssignLector(string email, string superCode)
+        {
+            var errors = new List<string>();
+            if(!email.Contains("@howest.be")) errors.Add("Emailadres niet van Howest");
+            if(!_partimInformationRepository.Table.Any(x => x.SuperCode == superCode)) errors.Add("Verkeerde partim");
+            if (errors.Count > 0) return errors.ToArray();
+            
+            _partimInformationRepository.Table.Where(x => x.SuperCode == superCode).Each(x => x.Lecturer = _lecturerRepository.Table.FirstOrDefault(l => l.Email == email) ?? new Entities.Lecturer
+            {
+                Email = email,
+                InfoMail = DateTime.Now,
+                WarningMail = DateTime.Now
+            });
+            errors.Add("Finish");
+            return errors.ToArray();
+        }
+
         public Models.File GetFileByFileId(int fileId)
         {
             var file = _fileRepository.GetById(fileId);
@@ -92,10 +138,14 @@ namespace VTP2015.ServiceLayer.Counselor
                         {
                             Path = e.Path,
                             Description = e.Description,
-                            EvidenceId = e.Id,
+                            Id = e.Id,
                             StudentEmail = e.Student.Email
                         }),
-                        Argumentation = request.Argumentation,
+                        PrevEducations = request.PrevEducations.Select(e => new PrevEducation
+                        {
+                            Id = e.Id,
+                            Education = e.Education
+                        }),
                         FileId = request.FileId,
                         RequestId = request.Id,
                         Status = (Models.Status)requestPartimInformation.Status,
@@ -106,55 +156,10 @@ namespace VTP2015.ServiceLayer.Counselor
                 }
             }
 
+            
+
             return serviceFile;
         } 
-
-        public IQueryable<Models.Request> GetRequests()
-        {
-            Debug.WriteLine("Started GetRequests");
-
-            var starttime = DateTime.Now;
-
-            var requests = _requestRepository.Table;
-
-            var result = new List<Models.Request>();
-
-            foreach (var request in requests)
-            {
-                var modules = new List<Models.Module>();
-                foreach (var requestPartimInformation in request.RequestPartimInformations)
-                {
-                    var partimInformation = requestPartimInformation.PartimInformation;
-                    if (modules.All(module => module.Name != partimInformation.Module.Name))
-                        modules.Add(new Models.Module {Name = partimInformation.Module.Name, Partims = new List<Partim>()});
-
-                    var partims = (List<Partim>) modules
-                        .First(module => module.Name == partimInformation.Module.Name)
-                        .Partims;
-
-                    var partim = new Partim
-                    {
-                        Name = partimInformation.Partim.Name,
-                        Evidence = request.Evidence.Select(evidence => new Evidence
-                        {
-                            Description = evidence.Description,
-                            Path = evidence.Path,
-                        }),
-                        Status = (Models.Status) requestPartimInformation.Status
-                    };
-
-                    partims.Add(partim);
-
-                }
-                result.Add(new Models.Request { StudentName = request.File.Student.Name });
-            }
-
-            var endTime = DateTime.Now;
-
-            Debug.WriteLine("time to finish algorithm: " + (endTime.Millisecond - starttime.Millisecond));
-
-            return result.AsQueryable();
-        }
 
         public string GetEducationNameByCounselorEmail(string email)
         {
@@ -200,7 +205,7 @@ namespace VTP2015.ServiceLayer.Counselor
             var file = _fileRepository.GetById(fileId);
             var model = new FileView
             {
-                MotivationList = _motivationRepository.Table,
+                MotivationList = _motivationRepository.Table.Where(x => x.Text != "geen"),
                 Education = file.Education.Name,
                 Counselor = file.Education.Counselors.First().Email ?? "none",
                 DateCreated = file.DateCreated,
@@ -210,7 +215,7 @@ namespace VTP2015.ServiceLayer.Counselor
                 {
                     Module = x.RequestPartimInformations.First().PartimInformation.Module.Name,
                     Partims = x.RequestPartimInformations.Select(r => new PartimView { Name = r.PartimInformation.Partim.Name, Status = (int)r.Status, Motivation = r.MotivationId}),
-                    Argumentation  = x.Argumentation ?? "",
+                    PrevEducationId  = x.PrevEducations.Select(e => e.Id),
                     EvidenceIds = x.Evidence.Select(e => e.Id)
                 }),
                 Evidence = file.Requests.SelectMany(x => x.Evidence).Distinct().Select(x => new EvidenceView
@@ -218,6 +223,11 @@ namespace VTP2015.ServiceLayer.Counselor
                     Id = x.Id,
                     Path = x.Path,
                     Description = x.Description
+                }),
+                PrevEducations = file.Requests.SelectMany(x => x.PrevEducations).Distinct().Select(x => new PrevEducationView
+                {
+                    Id = x.Id,
+                    Education = x.Education
                 })
             };
             return model;

@@ -111,6 +111,7 @@ namespace VTP2015.Modules.Authentication
 
         #region Helpers
 
+        //TODO: Uitleg
         private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
         private async Task SignInAsync(ApplicationUser user, bool isPersistent)

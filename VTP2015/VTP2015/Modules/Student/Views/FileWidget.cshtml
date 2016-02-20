@@ -4,6 +4,8 @@
 @model VTP2015.Modules.Student.ViewModels.FileListViewModel[]
 @{
     var configFile = new ConfigFile();
+    var submitted = Model.All(x => x.FileStatus == FileStatus.Submitted);
+    if (Model.Length == 0) { submitted = false; }
 }
     @using (Html.BeginPanel("Mijn dossiers"))
     {
@@ -16,7 +18,18 @@
             }
         </ul>
         if (Model.All(x => configFile.CalcAcademieJaar(x.DateCreated.Year) != configFile.AcademieJaar()))
-         {
-             @Html.ActionLink("Nieuw dossier aanmaken", "NewFile", "Student", new {@class = "btn btn-info" })
-         }
+        {
+            <br/>
+            @Html.ActionLink("Nieuw dossier aanmaken", "NewFile", "Student", new {@class = "btn btn-primary" })
+        }
+        else
+        {
+            <br/>
+
+            if (!submitted)
+            {
+                <span id="btnIndienen" class="btn btn-primary">Dien in</span>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger", @id = "indienErrors" })
+            }
+        }
     }

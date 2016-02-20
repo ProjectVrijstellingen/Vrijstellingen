@@ -9,15 +9,16 @@ namespace VTP2015.Modules.Counselor.Mappings
     {
         public void Execute()
         {
-            Mapper.CreateMap<BusinessModels.File, ViewModels.FileOverviewViewModel>();
-            Mapper.CreateMap<BusinessModels.Request, ViewModels.RequestDetailViewModel>();
+            Mapper.CreateMap<BusinessModels.File, FileOverviewViewModel>();
+            Mapper.CreateMap<BusinessModels.Request, RequestDetailViewModel>();
             Mapper.CreateMap<BusinessModels.Module, ViewModels.Models.Module>();
             Mapper.CreateMap<BusinessModels.Partim, ViewModels.Models.Partim>()
                 .ForMember(opt => opt.Status,
                     src => src.MapFrom(r => (StatusViewModel)r.Status));
 
-            Mapper.CreateMap<BusinessModels.Education, ViewModels.EducationViewModel>();
+            Mapper.CreateMap<BusinessModels.Education, EducationViewModel>();
             Mapper.CreateMap<BusinessModels.Evidence, ViewModels.Models.Evidence>();
+            Mapper.CreateMap<BusinessModels.PartimInformation, PartimInformationViewModel>();
         }
     }
 }

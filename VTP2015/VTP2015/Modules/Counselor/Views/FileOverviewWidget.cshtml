@@ -7,29 +7,35 @@
         </div>
         <div class="form-group col-md-2">
             <div class="btn-group" data-toggle="buttons">
-                <label id="rbBlok" class="btn btn-default active" onclick="onBlok()">
+                <label id="rbBlok" class="btn btn-primary active" onclick="onBlok()">
                     <input type="radio" id="rBlok" value="Blok"/> <span class="glyphicon glyphicon-th"></span>
                 </label>
-                <label id="rbList" class="btn btn-default" onclick="onList()">
+                <label id="rbList" class="btn btn-primary" onclick="onList()">
                     <input type="radio" id="rLijst" value="Lijst"/> <span class="glyphicon glyphicon-list"></span>
                 </label>
             </div>
         </div>
-        <div class="form-group col-md-5">
+        <div class="form-group col-md-4">
             <div class="btn-group" data-toggle="buttons">
                 <span class="button-checkbox">
-                    <button id="btnGreen" type="button" class="btn" data-color="success" onclick="toggleGreen()">Afgewerkt<span id="spnFinishedFiles" class="badge badge-success" style="margin-left:1em">0</span></button>
+                    <button id="btnGreen" type="button" class="btn btn-default active" data-color="success" onclick="toggleGreen()">Afgewerkt<span id="spnFinishedFiles" class="badge badge-success" style="margin-left: 1em">0</span></button>
                     <input id="chGreen" type="checkbox" class="hidden"/>
                 </span>
                 <span class="button-checkbox">
-                    <button id="btnOrange" type="button" class="btn" data-color="warning" onclick="toggleOrange()">Bezig<span id="spnBusyFiles" class="badge badge-warning" style="margin-left:1em">0</span></button>
+                    <button id="btnOrange" type="button" class="btn" data-color="warning" onclick="toggleOrange()">Actief<span id="spnBusyFiles" class="badge badge-warning" style="margin-left: 1em">0</span></button>
                     <input id="chOrange" type="checkbox" class="hidden" checked/>
                 </span>
                 <span class="button-checkbox">
-                    <button id="btnRed" type="button" class="btn" data-color="danger" onclick="toggleRed()">Nieuw<span id="spnNewFiles" class="badge badge-danger" style="margin-left:1em">0</span></button>
+                    <button id="btnRed" type="button" class="btn" data-color="danger" onclick="toggleRed()">Nieuw<span id="spnNewFiles" class="badge badge-danger" style="margin-left: 1em">0</span></button>
                     <input id="chRed" type="checkbox" class="hidden" checked/>
                 </span>
             </div>
+        </div>
+        <div class="col-md-1">
+            @if (@ViewBag.Lecturers > 1)
+            {
+                <a href="@Url.Action("AssignLecturers", "Counselor")" id="btnLecturers" type="button" class="btn btn-danger">Geen docent!<span id="spnAssignLecturers" class="badge badge-danger" style="margin-left: 1em">@ViewBag.Lecturers</span></a>
+            }
         </div>
         @Html.Action("EducationSelectWidget")
     </div>
@@ -85,7 +91,7 @@
                                 <a href="#" id="links">
                                     <span class="glyphicon glyphicon-list-alt white btnShowOverview" aria-hidden="true" data-fileid="@file.Id" data-name="@file.StudentFirstName @file.StudentName"></span>
                                 </a>
-                                <span class="white percentage" id="middem">@file.AmountOfRequestsOpen</span>
+                                <span class="white percentage" id="midden">@file.AmountOfRequestsOpen</span>
                                 <span id="rechts" class="rechts chart" data-percent="@perc">
                                     <span id="cirlceNumber" class="cirlceNumber">@file.DaysRemaining</span>
                                 </span>

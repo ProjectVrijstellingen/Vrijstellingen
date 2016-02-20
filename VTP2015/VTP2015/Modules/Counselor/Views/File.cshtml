@@ -25,8 +25,8 @@
             <img src="~/bewijzen/howest.jpg" width="300"/>
             <h1>EVK - aanvraagdossier</h1>
             <p>
-                <b>Naam:&nbsp</b>@Model.Student.FirstName @Model.Student.Name<br/>
-                <b>E-mail:&nbsp</b>@Model.Student.Email
+                <b>Naam:&nbsp </b>@Model.Student.FirstName @Model.Student.Name<br/>
+                <b>E-mail:&nbsp </b>@Model.Student.Email
             </p>
             <p>
                 Ondergetekende,<br/>
@@ -48,32 +48,6 @@
                 <b style="padding-right: 300px">Handtekening student</b>
                 <b>Handtekening trajectbegeleider</b>
             </p>
-            <br/><br/><br/><br/>
-            <h2>Inventaris van bewijsstukken</h2>
-            <table class="table table-bordered">
-                <tr>
-                    <th>Nr.</th>
-                    <th>Bewijs</th>
-                    <th>Beschrijving</th>
-                </tr>
-                @foreach (var evidence in Model.Evidence)
-                {
-                    <tr>
-                        <td>B @evidence.Id</td>
-                        <td><a>@Server.MapPath("/bewijzen/" + Model.Student.Email.Split('@')[0] + "/" + evidence.Path)</a></td>
-                        <td>@evidence.Description</td>
-                    </tr>
-                }
-            </table>
-            <p>
-                <b>Motivatie:</b>
-                <ol type="1">
-                    @foreach (var motivation in Model.MotivationList)
-                    {
-                        <li>@motivation.Text</li>
-                    }
-                </ol> 
-            </p>
 
             <p class="breakhere"></p>
             <h2>Overzicht aangevraagde vrijstellingen</h2>
@@ -82,6 +56,7 @@
                     <th style="width: 40px">Nr.</th>
                     <th>Module</th>
                     <th>Partim</th>
+                    <th>Opleidingen</th>
                     <th>Bewijzen</th>
                     <th>Beslissing</th>
                     <th>Motivatie</th>
@@ -97,44 +72,78 @@
                             <td>@request.Module</td>
                             <td>@partim.Name</td>
                             <td>
+                                @foreach (var id in request.PrevEducationId.Select(x => ("O" + x.ToString() + " ")))
+                                {
+                                    @id
+                                }
+                            </td>
+                            <td>
                                 @foreach (var id in request.EvidenceIds.Select(x => ("B" + x.ToString() + " ")))
                                 {
                                     @id
                                 }
                             </td>
-                            <td>@status[partim.Status]</td>
-                            <td>@partim.Motivation</td>
+                            <td>@partim.Status</td>
+                            <td>@{ var motivatie = partim.Motivation - 1;}@motivatie</td>
                         </tr>
                     }
                 }
             </table>
-            @if (Model.Requests.Any(x => x.Argumentation != ""))
+            <table>
+                <tr>
+                    <th>Motivatie</th>
+                    <th>Beslissing</th>
+                </tr>
+                <tr>
+                    <td>
+                        <ol type="1">
+                            @foreach (var motivation in Model.MotivationList)
+                            {
+                                <li>@motivation.Text</li>
+                            }
+                        </ol>
+                    </td>
+                    <td>
+                        <ol type="0">
+                            @foreach (var s in status)
+                            {
+                                <li>@s</li>
+                            }
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+            <p class="breakhere"></p>
+            <h2>Inventaris van vorige opleidingen</h2>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Nr.</th>
+                    <th>Opleiding</th>
+                </tr>
+                @foreach (var education in Model.PrevEducations)
             {
-                <p class="breakhere"></p>
-                <h2>Extra argumentatie</h2>
-                <table class="table table-bordered">
                     <tr>
-                        <th>Argumentatie</th>
-                        <th>Vrijstellingen</th>
+                        <td>O @education.Id</td>
+                        <td>@education.Education</td>
                     </tr>
-                    @{ var j = 0; }
-                    @foreach (var request in Model.Requests.Where(x => x.Argumentation != ""))
-                    {
-                        <tr>
-                            <td>@request.Argumentation</td>
-                            <td>
-                                @{ var text = ""; }
-                                @foreach (var partim in request.Partims)
-                                {
-                                    j++;
-                                    text += "V" + j + " ";
-                                }
-                                @text
-                            </td>
-                        </tr>
-                    }
-                </table>
-            }
+                }
+            </table>
+            <h2>Inventaris van bewijsstukken</h2>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Nr.</th>
+                    <th>Bewijs</th>
+                    <th>Beschrijving</th>
+                </tr>
+                @foreach (var evidence in Model.Evidence)
+            {
+                    <tr>
+                        <td>B @evidence.Id</td>
+                        <td><a>@Server.MapPath("/bewijzen/" + Model.Student.Email.Split('@')[0] + "/" + evidence.Path)</a></td>
+                        <td>@evidence.Description</td>
+                    </tr>
+                }
+            </table>
         </div>
     </body>
 </html>

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<VTP2015.ViewModels.Docent.StudentListViewModel>
+
+<div class="panel panel-success clearfix">
+    <div class="panel-heading">
+        <h3 class="panel-title">Students</h3>
+    </div>
+    <div class="panel-body" id="aanvraagPointerDiv">
+        <ul class="list-group">
+            @foreach (var student in Model)
+            {
+                <li class="list-group-item studentpointer" data-studentid="@student.StudentId"><span class="name">@student.Voornaam @student.Naam</span></li>
+            }
+        </ul>
+    </div>
+</div>

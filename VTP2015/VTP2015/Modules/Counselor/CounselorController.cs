@@ -11,6 +11,7 @@ using Evidence = VTP2015.Modules.Counselor.DTOs.Evidence;
 using File = VTP2015.Modules.Counselor.DTOs.File;
 using Module = VTP2015.Modules.Counselor.DTOs.Module;
 using Partim = VTP2015.Modules.Counselor.DTOs.Partim;
+using PrevEducation = VTP2015.Modules.Counselor.DTOs.PrevEducation;
 
 namespace VTP2015.Modules.Counselor
 {
@@ -19,6 +20,7 @@ namespace VTP2015.Modules.Counselor
     public class CounselorController : Controller
     {
         private readonly ICounselorFacade _counselorFacade;
+
         private readonly ConfigFile _configFile;
 
         public CounselorController(ICounselorFacade counselorFacade)
@@ -26,6 +28,7 @@ namespace VTP2015.Modules.Counselor
             _counselorFacade = counselorFacade;
             _configFile = new ConfigFile();
         }
+
 
         //
         // GET: /Counselors/
@@ -46,9 +49,9 @@ namespace VTP2015.Modules.Counselor
             var dto = new File
             {
                 StudentName = file.StudentFirstName + " " + file.StudentName,
-                AmountOfUntreatedRequests = file.Modules.SelectMany(x => x.Partims).Count(x => x.Status == Status.Untreated),
-                AmountOfApprovedRequests = file.Modules.SelectMany(x => x.Partims).Count(x => x.Status == Status.Approved),
-                AmountOfDeniedRequests = file.Modules.SelectMany(x => x.Partims).Count(x => x.Status == Status.Rejected),
+                AmountOfUntreatedRequests = file.AmountOfUntreatedRequests,
+                AmountOfApprovedRequests = file.AmountOfApprovedRequests,
+                AmountOfDeniedRequests = file.AmountOfDeniedRequests,
                 Modules = file.Modules.Select(m => new Module
                 {
                     Name = m.Name,
@@ -64,7 +67,10 @@ namespace VTP2015.Modules.Counselor
                             Argumentation = e.Description,
                             Type = e.Path.Split('.').Last()
                         }),
-                        Argumentation = p.Argumentation,
+                        PrevEducations = p.PrevEducations.Select(e => new PrevEducation
+                        {
+                            Education = e.Education
+                        }),
                         PartimInformationId = p.PartimInformationId
                     })
                 })
@@ -122,9 +128,18 @@ namespace VTP2015.Modules.Counselor
         {
             var models = _counselorFacade.GetFilesByCounselorEmail(User.Identity.Name, _configFile.AcademieJaar())
                 .ProjectTo<FileOverviewViewModel>();
+            ViewBag.Lecturers = _counselorFacade.GetNrNoLecturersPartims(User.Identity.Name);
 
             return PartialView(models);
 
+        }
+
+        [Route("AssignLecturers")]
+        [HttpGet]
+        public ActionResult AssignLecturers()
+        {
+            var models = _counselorFacade.GetPartimsNoLecturer(User.Identity.Name).ProjectTo<PartimInformationViewModel>();
+            return View(models.ToArray());
         }
 
         [Route("SendReminder")]
@@ -170,6 +185,17 @@ namespace VTP2015.Modules.Counselor
         public ActionResult PrintFile(int id)
         {
             return new ActionAsPdf("File",new {fileId = id}){FileName = "Dossier" + id + ".pdf"};
+        }
+
+        [Route("AssignLecturer")]
+        public ActionResult AssignLecturer(AssignLectorViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return
+                    Json(
+                        (from modelstate in ModelState.Values from error in modelstate.Errors select error.ErrorMessage)
+                            .ToArray());
+            return Json(_counselorFacade.AssignLector(viewModel.Email, viewModel.SuperCode));
         }
     }
 }

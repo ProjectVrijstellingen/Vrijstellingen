@@ -1,6 +1,8 @@
+using System;
 using VTP2015.DataAccess;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using AutoMapper.Internal;
 using VTP2015.Entities;
 using VTP2015.Identity;
 
@@ -25,11 +27,8 @@ namespace VTP2015.Migrations
         private void UpdateChanges()
         {
             var database = new Context();
-            var motivation = database.Motivations.First(x => x.Text == "geen");
-            foreach (var request in database.RequestPartimInformations.Where(x => x.Motivation == null))
-            {
-                request.Motivation = motivation;
-            }
+            var lecturer = database.Lecturers.Add(new Lecturer {Email = "docent2@howest.be",InfoMail = DateTime.Now, WarningMail = DateTime.Now});
+            database.PartimInformation.Where(x => x.SuperCode == "06500894009730008844").Each(x => x.Lecturer = lecturer);
             database.SaveChanges();
         }
 
@@ -50,17 +49,23 @@ namespace VTP2015.Migrations
             database.SaveChanges();
         }
 
+        //TODO: Uitleg
         bool AddRoles()
         {
             var im = new IdentityManager();
             if (im.UserExists("begeleider@howest.be")) return true;
+
             var success = false;
+
             success = im.CreateRole("Student");
             if (!success) return success;
+
             success = im.CreateRole("Lecturer");
             if (!success) return success;
+
             success = im.CreateRole("Counselor");
             if (!success) return success;
+
             success = im.CreateRole("Admin");
             if (!success) return success;
 
@@ -87,6 +92,9 @@ namespace VTP2015.Migrations
             if (!success) return success;
             success = im.AddUserToRole(newUser.Id, "Lecturer");
             if (!success) return success;
+
+            var database = new Context();
+            database.Lecturers.Add(new Lecturer { Email = "docent@howest.be", InfoMail = DateTime.Now, WarningMail = DateTime.Now });
 
             newUser = new ApplicationUser()
             {

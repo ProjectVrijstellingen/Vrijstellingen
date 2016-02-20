@@ -1,13 +1,10 @@
 ﻿@using VTP2015.Helpers
 @using VTP2015.ServiceLayer.Student.Models
 @model VTP2015.Modules.Student.ViewModels.PartimViewModel[]
-@{
-    var submitted = Model.All(x => x.Status != 0);
-    if (Model.Length == 0) { submitted = false;}
-}
+
 
 <div id="aangevraagdePartimsColumn" data-url="@Url.Action("DeleteAanvraag", "Student")" class="col-md-6">
-    @using (Html.BeginPanel("Aangevraagde modules" + (submitted ? "<span class=\"badge\">Ingediend</span>" : "<span id=\"btnIndienen\" class=\"btn badge\" style=\"float: right;\">Indienen</span>")))
+    @using (Html.BeginPanel("Aangevraagde modules"))
     {
         @Html.ShowPartimList(Model, true)
     }

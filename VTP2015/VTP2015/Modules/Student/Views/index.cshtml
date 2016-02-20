@@ -7,17 +7,22 @@
 </div>
 
 <div class="container-fix">
-    <div class="col-md-6">
+    <div id="infoSide" class="col-md-6" data-url="@Url.Action("SubmitFile","Student")">
         @Html.Action("InfoWidget")
         @Html.Action("FileWidget")
+        @Html.Action("AddFeedbackWidget", "Feedback")
     </div>
     <div id="bewijzenColumn" class="col-md-6">
+        @using (Html.BeginPanel("Vorige opleidingen"))
+        {
+            @Html.Action("EducationListWidget")
+            @Html.Action("AddEducationWidget")
+        }
         @using (Html.BeginPanel("Bewijzen"))
         {
             @Html.Action("EvidenceListWidget")
             @Html.Action("AddFileWidget")
         }
-        @Html.Action("AddFeedbackWidget", "Feedback")
     </div>
 </div>
 

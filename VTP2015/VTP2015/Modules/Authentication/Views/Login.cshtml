@@ -3,7 +3,7 @@
     ViewBag.Title = "Log in";
 }
 
-<div id="login" class="container center" ng-controller="loginCtrl">
+<div id="login" class="center" ng-controller="loginCtrl">
     <h1>@ViewBag.Title</h1>
     @using (Html.BeginForm(
         "Login",
@@ -42,7 +42,7 @@
 
         <div class="input-group">
             <div>
-                <button type="submit" class="btn btn-info">Log in</button>
+                <button type="submit" class="btn btn-primary">Log in</button>
             </div>
         </div>
     }

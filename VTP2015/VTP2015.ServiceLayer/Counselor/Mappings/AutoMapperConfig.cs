@@ -9,8 +9,8 @@ namespace VTP2015.ServiceLayer.Counselor.Mappings
         public void Execute()
         {
             Mapper.CreateMap<File, Models.File>()
-                .ForMember(r => r.AmountOfRequestsOpen,
-                    opt => opt.MapFrom(r => r.Requests.Count))
+                .ForMember(r => r.AmountOfRequests,
+                    opt => opt.MapFrom(r => r.Requests.SelectMany(x => x.RequestPartimInformations).Count()))
                 .ForMember(r => r.PercentageOfRequestsDone,
                     opt =>
                         opt.MapFrom(
@@ -22,6 +22,10 @@ namespace VTP2015.ServiceLayer.Counselor.Mappings
             Mapper.CreateMap<Evidence, Models.Evidence>()
                 .ForMember(r => r.StudentEmail,
                     opt => opt.MapFrom(r => r.Student.Email));
+            Mapper.CreateMap<PrevEducation, Models.PrevEducation>();
+            Mapper.CreateMap<PartimInformation, Models.PartimInformation>()
+                .ForMember(p => p.ModuleName, opt => opt.MapFrom(x => x.Module.Name))
+                .ForMember(p => p.PartimName, opt => opt.MapFrom(x => x.Partim.Name));
         }
     }
 }

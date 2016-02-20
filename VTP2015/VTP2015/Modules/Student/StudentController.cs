@@ -107,11 +107,71 @@ namespace VTP2015.Modules.Student
             return PartialView(models.ToArray());
         }
 
+        [Route("EducationListWidget")]
+        [HttpGet]
+        public PartialViewResult EducationListWidget()
+        {
+            var models = _studentFacade.GetPrevEducationsByStudentEmail(User.Identity.Name)
+                .ProjectTo<EducationListViewModel>();
+
+            return PartialView(models.ToArray());
+        }
+
         [Route("AddFileWidget")]
         [HttpGet]
         public PartialViewResult AddFileWidget()
         {
             return PartialView();
+        }
+
+        [Route("AddEducationWidget")]
+        [HttpGet]
+        public PartialViewResult AddEducationWidget()
+        {
+            return PartialView();
+        }
+
+        [PreventSpam]
+        [Route("AddEducation")]
+        [HttpPost]
+        public ActionResult AddEducation(AddEducationViewModel viewModel)
+        {
+
+            ModelState.Clear();
+            var validation = TryValidateModel(viewModel);
+            var errors = (from modelstate in ModelState.Values from error in modelstate.Errors select error.ErrorMessage).ToList();
+
+            if (!validation) return Json(errors.ToArray());
+
+            _studentFacade.InsertPrevEducation(viewModel.Education, User.Identity.Name);
+            errors.Add("Finish");
+            return Json(errors.ToArray());
+        }
+
+        [Route("DeleteEducation")]
+        [HttpPost]
+        public ActionResult DeleteEducation(int educationId)
+        {
+            return Content(!_studentFacade.DeleteEducation(educationId)
+                ? "gegeven opleiding kon niet verwijdert worden!"
+                : "Voltooid!");
+        }
+
+        [PreventSpam(DelayRequest = 3600)]
+        [Route("StudentSync")]
+        public ActionResult StudentSync()
+        {
+            var configFile = new ConfigFile();
+            if (ViewData.ModelState.IsValid) _studentFacade.SyncStudent(User.Identity.Name, configFile.AcademieJaar());
+            return RedirectToAction("Index");
+        }
+
+        [Route("Submit")]
+        [HttpPost]
+        public ActionResult SubmitFile()
+        {
+            var configFile = new ConfigFile();
+            return Json(_studentFacade.SumbitFile(User.Identity.Name, configFile.AcademieJaar()));
         }
 
         #endregion
@@ -165,6 +225,18 @@ namespace VTP2015.Modules.Student
             return PartialView(models.ToArray());
         }
 
+        [Route("SelectEducationWidget")]
+        [HttpGet]
+        public PartialViewResult SelectEducationWidget(int fileId)
+        {
+            var models =
+                _studentFacade.GetPrevEducationsByStudentEmail(User.Identity.Name).ProjectTo<EducationListViewModel>();
+
+            ViewBag.FileStatus = _studentFacade.GetFileStatus(fileId);
+
+            return PartialView(models.ToArray());
+        }
+
         [Route("RequestDetailWidget")]
         [HttpGet]
         public PartialViewResult RequestDetailWidget(int fileId)
@@ -190,13 +262,13 @@ namespace VTP2015.Modules.Student
             {
                 StudentMail = User.Identity.Name,
                 DateCreated = DateTime.Now,
-                Education = education.Name,
+                Education = education,
                 AcademicYear = academieJaar
             };
 
             var newId = _studentFacade.InsertFile(dossier);
 
-            return this.RedirectToAction(c => c.File(newId));
+            return RedirectToAction("Index");
         }
 
         [Route("AddAanvraag")]
@@ -217,8 +289,7 @@ namespace VTP2015.Modules.Student
             var request = new Request
             {
                 Id = requestId,
-                FileId = viewModel.FileId,
-                Argumentation = viewModel.Argumentation
+                FileId = viewModel.FileId
             }; ;
             if (viewModel.Evidence != null)
             {
@@ -227,6 +298,14 @@ namespace VTP2015.Modules.Student
                 {
                     Id = evidenceId
                     }).AsQueryable();
+            }
+            if (viewModel.Educations != null)
+            {
+                viewModel.Educations = viewModel.Educations.Distinct().ToArray();
+                request.Educations = viewModel.Educations.Select(educationId => new PrevEducation
+                {
+                    Id = educationId
+                }).AsQueryable();
             }
 
 
@@ -244,24 +323,6 @@ namespace VTP2015.Modules.Student
                     ? "RequestPartimInformation bestaat niet!"
                     : "Voltooid!");
         }
-
-        [Route("Submit")]
-        [HttpPost]
-        public ActionResult SubmitFile(int fileId)
-        {
-            _studentFacade.IsFileFromStudent(User.Identity.Name, fileId);
-            _studentFacade.SumbitFile(fileId);
-            return Content("Submitted!");
-        }
         #endregion
-
-        [PreventSpam(DelayRequest = 3600)]
-        [Route("StudentSync")]
-        public ActionResult StudentSync()
-        {
-            var configFile = new ConfigFile();
-            if (ViewData.ModelState.IsValid) _studentFacade.SyncStudent(User.Identity.Name, configFile.AcademieJaar());
-            return RedirectToAction("Index");
-        }
     }
 }

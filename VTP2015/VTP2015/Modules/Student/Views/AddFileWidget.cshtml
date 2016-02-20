@@ -3,18 +3,18 @@
 
 @*@using (Ajax.BeginForm("AddFileStudentName", "Student", new AjaxOptions{HttpMethod = "Post", OnSuccess = "BewijsSuccess"} ,new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
 {*@
+<br/>
 <form id="addBewijs-form" class="form-horizontal" data-url="@Url.Action("AddFile","Student")">
     <div class="input-group">
         @Html.LabelFor(m => m.File, new { @class = "form-label" })
         <div class="input-group">
             <span class="input-group-btn">
-                <span class="btn btn-info btn-file">
+                <span class="btn btn-primary btn-file">
                     Browse&hellip; <input id="File" type="file" name="FileStudentName">
                 </span>
             </span>
             <input type="text" class="form-control" readonly>
         </div>
-@*        <input id="File" type="file" name="FileStudentName">*@
     </div>
     <br />
     <div class="input-group">
@@ -23,6 +23,6 @@
     </div>
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     <div class="input-group">
-        <button type="button" class="btn btn-info">Toevoegen</button>
+        <button type="button" class="btn btn-primary">Voeg toe</button>
     </div>
 </form>

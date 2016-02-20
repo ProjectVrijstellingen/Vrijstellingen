@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace VTP2015.ServiceLayer.Lecturer.Models
 {
@@ -17,7 +18,6 @@ namespace VTP2015.ServiceLayer.Lecturer.Models
         public Student Student { get; set; }
         public string SuperCode { get; set; }
         public Motivation Motivation { get; set; }
-        //public virtual Request Request { get; set; }
-        //public virtual PartimInformation PartimInformation { get; set; }
+        public IQueryable<PrevEducation> PrevEducation { get; set; }
     }
 }

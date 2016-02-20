@@ -115,5 +115,20 @@ namespace VTP2015.ServiceLayer.Lecturer
         {
             throw new NotImplementedException();
         }
+
+        public bool RemovePartimLecturer(string supercode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Models.Student> GetTreadedStudent(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getAantal(string email, Status status)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

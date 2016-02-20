@@ -18,7 +18,7 @@
 <body>
 @if (Request.IsAuthenticated)
 {
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -26,39 +26,25 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.RouteLink("Vrijstellingen", new { controller = "Authentication", action = "Home"}, new { area = "", @class = "navbar-brand" })
+                <div class="navbar-title">VRIJSTELLINGEN</div>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        @* TODO: Misschien ENUM gebruiken ipv string *@
-                        @if (im.HasRole(User.Identity.Name, "Student"))
-                        {
-                            @Html.RouteLink("Student panel", new {controller = "Student", action = "Index"})
-                        }
-                    </li>
-                    <li>
-                        @if (im.HasRole(User.Identity.Name, "Lecturer"))
-                        {
-                            @Html.RouteLink("Openstaande aanvragen", new { controller = "Lecturer", action = "Index" })
-                        }
-                    </li>
-                    <li>
-                        @if (im.HasRole(User.Identity.Name, "Lecturer"))
-                        {
-                            @Html.RouteLink("Aanvraag archief", new { controller = "Lecturer", action = "Archive" })
-                        }
+                        @Html.RouteLink("Dashboard", new { controller = "Authentication", action = "Home" })
                     </li>
                     <li>
                         @if (im.HasRole(User.Identity.Name, "Counselor"))
                         {
-                            @Html.RouteLink("Traject begeleider panel", new { controller = "Counselor", action = "Index" })
+                            <li>
+                                @Html.RouteLink("Docent", new { controller = "Lecturer", action = "Index" })
+                            </li>
                         }
                     </li>
-                    <li>                        
+                    <li>
                         @if (im.HasRole(User.Identity.Name, "Admin"))
                         {
-                            @Html.RouteLink("Admin panel", new { controller = "Admin", action = "Index" })
+                            @Html.RouteLink("Admin", new { controller = "Admin", action = "Index" })
                         }
                     </li>
                 </ul>
@@ -67,9 +53,10 @@
         </div>
     </div>
     }
-    <div class="container body-content">
-        @RenderBody()
-    </div>
+<div class="container body-content">
+    <br/>
+    @RenderBody()
+</div>
     @if (Request.IsAuthenticated)
     {
         <hr/>

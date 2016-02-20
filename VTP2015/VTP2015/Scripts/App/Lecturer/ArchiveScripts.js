@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $(".aantal").addClass("hide");
+    //$(".aantal").addClass("hide");
 
     $($(".approvedaanvraagcontainer").children()[0]).click(function (event) {
         if ($($(".approvedaanvraagcontainer").children()[1]).hasClass("hide"))
@@ -36,24 +36,23 @@
 
         if (!active) {
             $(this).addClass("active");
-            $(".modulecontainer").addClass("hide");
+            $(".modulecontainer").parent().addClass("hide");
             if ($('.partimpointer.active').length > 0) {
-                $("[data-super=" + $(".partimpointer.active").data("supercode") + "][data-studentid='" + $(".studentpointer.active").data("studentid") + "']").removeClass("hide");
+                $("[data-super=" + $(".partimpointer.active").data("supercode") + "][data-studentid='" + $(".studentpointer.active").data("studentid") + "']").parent().removeClass("hide");
             }
             else {
-                $("[data-studentid='" + $(".studentpointer.active").data("studentid") + "']").removeClass("hide");
+                $("[data-studentid='" + $(".studentpointer.active").data("studentid") + "']").parent().removeClass("hide");
             }
         }
         else {
             if ($('.partimpointer.active').length > 0) {
-                $(".modulecontainer").addClass("hide");
-                $("[data-super=" + $(".studentpointer.active").data("supercode") + "]").removeClass("hide");
+                $(".modulecontainer").parent().addClass("hide");
+                $("[data-super=" + $(".partimpointer.active").data("supercode") + "]").parent().removeClass("hide");
             }
             else {
-                $(".modulecontainer").removeClass("hide");
+                $(".modulecontainer").parent().removeClass("hide");
             }
         }
-        scroll_to($(".aanvraagcontainer"));
     });
 
     $(".partimpointer").click(function (event) {
@@ -62,25 +61,24 @@
 
         if (!active) {
             $(this).addClass("active");
-            $(".modulecontainer").addClass("hide");
+            $(".modulecontainer").parent().addClass("hide");
             if ($('.studentpointer.active').length > 0) {
-                $("[data-super=" + $(this).data("supercode") + "][data-studentid='" + $(".studentpointer.active").data("studentid") + "']").removeClass("hide");
+                $("[data-super=" + $(this).data("supercode") + "][data-studentid='" + $(".studentpointer.active").data("studentid") + "']").parent().removeClass("hide");
 
             }
             else {
-                $("[data-super=" + $(this).data("supercode") + "]").removeClass("hide");
+                $("[data-super=" + $(this).data("supercode") + "]").parent().removeClass("hide");
             }
         }
         else {
             if ($('.studentpointer.active').length > 0) {
-                $(".modulecontainer").addClass("hide");
-                $("[data-studentid='" + $(".studentpointer.active").data("studentid") + "']").removeClass("hide");
+                $(".modulecontainer").parent().addClass("hide");
+                $("[data-studentid='" + $(".studentpointer.active").data("studentid") + "']").parent().removeClass("hide");
             }
             else {
-                $(".modulecontainer").removeClass("hide");
+                $(".modulecontainer").parent().removeClass("hide");
             }
         }
-        scroll_to($(".aanvraagcontainer"));
     });
 
     $("#filter").bind("keyup", function () {
@@ -101,13 +99,13 @@
             $($(this).parent().children()[1]).removeClass("hide");
             $($(this).parent().children()[2]).removeClass("hide");
             $($(this).parent().children()[3]).removeClass("hide");
-            $('[data-bewijsid="' + $(this).data("bewijsid") + '"]').css("font-size", "17px").css("font-weight", "bold");
+            $('[data-bewijsid="' + $(this).data("bewijsid") + '"]');
         }
         else {
             $($(this).parent().children()[1]).addClass("hide");
             $($(this).parent().children()[2]).addClass("hide");
             $($(this).parent().children()[3]).addClass("hide");
-            $('[data-bewijsid="' + $(this).data("bewijsid") + '"]').css("font-size", "15px").css("font-weight", "normal");
+            $('[data-bewijsid="' + $(this).data("bewijsid") + '"]');
         }
 
     });
